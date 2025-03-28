@@ -1,0 +1,25 @@
+{
+  "name": "@app/api",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "tsx --watch ./src/index.ts",
+    "build": "exit 0"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@app/backend-shared": "*",
+    "@app/shared": "*",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "kysely": "^0.27.6"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/react": "^19.0.12",
+    "tsx": "^4.19.3"
+  }
+}

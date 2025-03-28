@@ -1,0 +1,23 @@
+{
+  "name": "@app/migrations",
+  "type": "module",
+  "scripts": {
+    "migrations:generate": "tsx ./src/lib/migrations/generate",
+    "migrations:generate:sql": "tsx ./src/lib/migrations/generate --with-sql",
+    "migrations:latest": "tsx ./src/lib/migrations/latest",
+    "migrations:up": "tsx ./src/lib/migrations/up",
+    "migrations:down": "tsx ./src/lib/migrations/down"
+  },
+  "devDependencies": {
+    "commander": "^11.1.0",
+    "tsx": "^4.19.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "kysely": "^0.27.6",
+    "@app/shared": "*",
+    "@app/backend-shared": "*"
+  }
+}

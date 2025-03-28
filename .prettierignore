@@ -1,0 +1,13 @@
+# Add files here to ignore them from prettier formatting
+
+dist
+build
+coverage
+node_modules
+.expo
+.vscode
+.vite
+packages/frontend/mobile/ios
+packages/frontend/mobile/android
+deployment/mysql/data
+**/types/database.ts

@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "stivo.tailwind-fold",
+    "YoavBls.pretty-ts-errors",
+    "MylesMurphy.prettify-ts",
+  ]
+}
