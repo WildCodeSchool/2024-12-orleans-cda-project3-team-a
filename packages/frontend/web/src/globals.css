@@ -9,30 +9,44 @@ body {
 
 @theme {
   --color-blue-text: #0c5985; /* Couleur du texte dans les logs, rules, bienvenue...*/
-  --color-white-background: rgb(255, 248, 248, 90);/* le rectangle blanc de la page des logs, des achats, classement..*/
+  --color-white-background: rgb(
+    255,
+    248,
+    248,
+    90
+  ); /* le rectangle blanc de la page des logs, des achats, classement..*/
   --color-blue-background: #d2e7f5; /* background des inputs dans les logs */
   --color-grey-input: #bfbfc5; /*Couleur du texte des inputs*/
   --color-grey-btn-inactive: #d9d9d9; /* Couleur des boutons quand les creature on faim*/
   --color-grey-background-modale: #e5e5e5; /*Couleur du rectangle sous l'image des créatures */
   --color-grey-input-creature: #949494; /*Couleur de texte input quand tu achete des creatures */
-  --tw-gradient-to-btn: linear-gradient(to bottom, #ffffff 0%, #d8d8d8 100%); /*Couleur des boutons */
+  --tw-gradient-to-btn: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    #d8d8d8 100%
+  ); /*Couleur des boutons */
   --drop-shadow-xs-creature: 0 0px 8px rgb(0 0 0 / 0.05); /*Drop shadows des creature dans les enclos */
-  --color-infos-creature: rgb(255, 255, 255, 50); /*Dans l'enclos, ce qui te dit combien tu a de créatures  */
-  --color-blue-background-fairy: #68C9F4; /*Couleur enclot fairy */
-  --color-green-background-fairy: #92D635;/*Couleur enclot fairy */
-  --color-red-background-winged: #F75A61; /*Couleur enclot winged */
-  --color-yellow-background-winged: #EBE364;/*Couleur enclot winged */
-  --color-beige-background-mythologic : #EBC682; /*Couleur enclot mythologic */
-  --color-violet-background-shadow: #615269; /*Couleur enclot shadow */
-  --color-green-background-shadow: #3F6F35;/*Couleur enclot shadow */
-  --font-family: 'Jua', serif; 
+  --color-infos-creature: rgb(
+    255,
+    255,
+    255,
+    50
+  ); /*Dans l'enclos, ce qui te dit combien tu a de créatures  */
+  --color-blue-background-fairy: #68c9f4; /*Couleur enclot fairy */
+  --color-green-background-fairy: #92d635; /*Couleur enclot fairy */
+  --color-red-background-winged: #f75a61; /*Couleur enclot winged */
+  --color-yellow-background-winged: #ebe364; /*Couleur enclot winged */
+  --color-beige-background-mythologic: #ebc682; /*Couleur enclot mythologic */
+  --color-purple-background-shadow: #615269; /*Couleur enclot shadow */
+  --color-green-background-shadow: #3f6f35; /*Couleur enclot shadow */
+  --font-family: 'Jua', sans-serif;
   --text-size11: 0.69rem;
   --text-size12: 0.75rem;
   --text-size14: 0.88rem;
   --text-size16: 1rem;
   --text-size18: 1.13rem;
+  --text-size20: 1.25rem;
   --text-size24: 1.5rem;
   --text-size28: 1.75rem;
   --text-size36: 2.25rem;
 }
-
