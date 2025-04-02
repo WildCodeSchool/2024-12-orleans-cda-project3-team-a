@@ -5,7 +5,7 @@ import * as path from 'node:path';
 
 import { db } from '@app/backend-shared';
 
-import { FileMigrationProvider } from './lib/file-migration-provider';
+import { FileMigrationProvider } from './file-migration-provider';
 
 const migrator = new Migrator({
   db,

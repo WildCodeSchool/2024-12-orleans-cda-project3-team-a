@@ -7,7 +7,7 @@ export async function up(db: Kysely<DB>): Promise<void> {
 
   await db.transaction().execute(async (trx) => {
     await sql`
-        CREATE TABLE avatar_list (
+        CREATE TABLE avatars_list (
           id INT AUTO_INCREMENT PRIMARY KEY,
           src_image VARCHAR(100) NOT NULL
         );
@@ -17,12 +17,12 @@ export async function up(db: Kysely<DB>): Promise<void> {
       CREATE TABLE user (
         id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(50) NOT NULL,
-        email VARCHAR(100) NOT NULL UNIQUE,
+        email VARCHAR(255) NOT NULL UNIQUE,
         password_hash VARCHAR(255) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         src_image VARCHAR(100),
         avatar_id INT, 
-        CONSTRAINT fk_user_avatar_id FOREIGN KEY (avatar_id) REFERENCES avatar_list(id)
+        CONSTRAINT fk_user_avatar_id FOREIGN KEY (avatar_id) REFERENCES avatars_list(id)
       );
     `.execute(trx);
 
@@ -61,9 +61,9 @@ export async function up(db: Kysely<DB>): Promise<void> {
       CREATE TABLE zone (
         id INT AUTO_INCREMENT PRIMARY KEY,
         park_id INT NOT NULL,
-        zone_list_id INT NOT NULL,
+        zones_list_id INT NOT NULL,
         CONSTRAINT fk_zone_park_id FOREIGN KEY (park_id) REFERENCES park(id),
-        CONSTRAINT fk_zone_zone_list_id FOREIGN KEY (zone_list_id) REFERENCES zones_list(id)
+        CONSTRAINT fk_zone_zones_list_id FOREIGN KEY (zones_list_id) REFERENCES zones_list(id)
       );
     `.execute(trx);
 
@@ -76,25 +76,25 @@ export async function up(db: Kysely<DB>): Promise<void> {
         unlock_cost INT,
         src_image VARCHAR(100),
         src_background VARCHAR(100),
-        zone_list_id INT NOT NULL,
-        CONSTRAINT fk_creatures_list_zone_list_id FOREIGN KEY (zone_list_id) REFERENCES zones_list(id)
+        zones_list_id INT NOT NULL,
+        CONSTRAINT fk_creatures_list_zones_list_id FOREIGN KEY (zones_list_id) REFERENCES zones_list(id)
       );
     `.execute(trx);
 
     await sql`
-      CREATE TABLE creatures (
+      CREATE TABLE creature (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(50),
-        gender ENUM('male','female'),
-        is_adult BOOLEAN,
-        is_parent BOOLEAN,
+        name VARCHAR(50) NOT NULL,
+        gender ENUM('male','female') NOT NULL,
+        is_adult BOOLEAN NOT NULL,
+        is_parent BOOLEAN NOT NULL,
         is_active BOOLEAN DEFAULT true,
         feed_date TIMESTAMP,
-        adult_at TIMESTAMP,
+        adult_at TIMESTAMP NOT NULL,
         park_id INT NOT NULL, 
-        creature_list_id INT NOT NULL,
-        CONSTRAINT fk_creatures_park_id FOREIGN KEY (park_id) REFERENCES park(id),
-        CONSTRAINT fk_creatures_creature_list_id FOREIGN KEY (creature_list_id) REFERENCES creatures_list(id)
+        creatures_list_id INT NOT NULL,
+        CONSTRAINT fk_creature_park_id FOREIGN KEY (park_id) REFERENCES park(id),
+        CONSTRAINT fk_creature_creatures_list_id FOREIGN KEY (creatures_list_id) REFERENCES creatures_list(id)
       );
     `.execute(trx);
 
@@ -106,20 +106,20 @@ export async function up(db: Kysely<DB>): Promise<void> {
         spending_time INT NOT NULL,
         unlock_cost INT,
         src_image VARCHAR(100),
-        zone_list_id INT,
-        CONSTRAINT fk_visitors_list_zone_list_id FOREIGN KEY (zone_list_id) REFERENCES zones_list(id)
+        zones_list_id INT,
+        CONSTRAINT fk_visitors_list_zones_list_id FOREIGN KEY (zones_list_id) REFERENCES zones_list(id)
       );
     `.execute(trx);
 
     await sql`
-      CREATE TABLE visitors (
+      CREATE TABLE visitor (
         id INT AUTO_INCREMENT PRIMARY KEY,
         entry_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         exit_time TIMESTAMP,
         park_id INT NOT NULL,
-        visitor_list_id INT NOT NULL,
-        CONSTRAINT fk_visitors_park_id FOREIGN KEY (park_id) REFERENCES park(id),
-        CONSTRAINT fk_visitors_visitor_list_id FOREIGN KEY (visitor_list_id) REFERENCES visitors_list(id)
+        visitors_list_id INT NOT NULL,
+        CONSTRAINT fk_visitor_park_id FOREIGN KEY (park_id) REFERENCES park(id),
+        CONSTRAINT fk_visitor_visitors_list_id FOREIGN KEY (visitors_list_id) REFERENCES visitors_list(id)
       );
     `.execute(trx);
 
@@ -129,29 +129,29 @@ export async function up(db: Kysely<DB>): Promise<void> {
         name VARCHAR(50) NOT NULL,
         price INT,
         src_image VARCHAR(100),
-        zone_list_id INT NOT NULL,
-        CONSTRAINT fk_decorations_list_zone_list_id FOREIGN KEY (zone_list_id) REFERENCES zones_list(id)
+        zones_list_id INT NOT NULL,
+        CONSTRAINT fk_decorations_list_zones_list_id FOREIGN KEY (zones_list_id) REFERENCES zones_list(id)
       );
     `.execute(trx);
 
     await sql`
-      CREATE TABLE decorations (
+      CREATE TABLE decoration (
         id INT AUTO_INCREMENT PRIMARY KEY,
         park_id INT NOT NULL,
         deco_list_id INT NOT NULL,
-        CONSTRAINT fk_decorations_park_id FOREIGN KEY (park_id) REFERENCES park(id),
-        CONSTRAINT fk_decorations_deco_list_id FOREIGN KEY (deco_list_id) REFERENCES decorations_list(id)
+        CONSTRAINT fk_decoration_park_id FOREIGN KEY (park_id) REFERENCES park(id),
+        CONSTRAINT fk_decoration_deco_list_id FOREIGN KEY (deco_list_id) REFERENCES decorations_list(id)
       );
     `.execute(trx);
 
     await sql`
-      CREATE TABLE potion_list (
+      CREATE TABLE potions_list (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(50) NOT NULL,
         price INT,
         src_image VARCHAR(100),
-        zone_list_id INT NOT NULL,
-        CONSTRAINT fk_potion_list_zone_list_id FOREIGN KEY (zone_list_id) REFERENCES zones_list(id)
+        zones_list_id INT NOT NULL,
+        CONSTRAINT fk_potions_list_zones_list_id FOREIGN KEY (zones_list_id) REFERENCES zones_list(id)
       );
     `.execute(trx);
   });
@@ -161,11 +161,11 @@ export async function down(db: Kysely<DB>): Promise<void> {
   // Migration code that reverts the database to the previous state.
   await db.transaction().execute(async (trx) => {
     await sql`
-      DROP TABLE IF EXISTS potion_list;
+      DROP TABLE IF EXISTS potions_list;
     `.execute(trx);
 
     await sql`
-      DROP TABLE IF EXISTS decorations;
+      DROP TABLE IF EXISTS decoration;
     `.execute(trx);
 
     await sql`
@@ -173,7 +173,7 @@ export async function down(db: Kysely<DB>): Promise<void> {
     `.execute(trx);
 
     await sql`
-      DROP TABLE IF EXISTS visitors;
+      DROP TABLE IF EXISTS visitor;
     `.execute(trx);
 
     await sql`
@@ -181,7 +181,7 @@ export async function down(db: Kysely<DB>): Promise<void> {
     `.execute(trx);
 
     await sql`
-      DROP TABLE IF EXISTS creatures;
+      DROP TABLE IF EXISTS creature;
     `.execute(trx);
 
     await sql`
@@ -209,7 +209,7 @@ export async function down(db: Kysely<DB>): Promise<void> {
     `.execute(trx);
 
     await sql`
-      DROP TABLE IF EXISTS avatar_list;
+      DROP TABLE IF EXISTS avatars_list;
     `.execute(trx);
   });
 }
