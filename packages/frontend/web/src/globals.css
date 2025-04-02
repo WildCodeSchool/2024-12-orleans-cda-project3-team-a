@@ -8,38 +8,19 @@ body {
 }
 
 @theme {
-  --color-text-blue: #0c5985; /* Couleur du texte dans les logs, rules, bienvenue...*/
-  --color-bg-white: rgb(
-    255,
-    248,
-    248,
-    90
-  ); /* le rectangle blanc de la page des logs, des achats, classement..*/
-  --color-bg-blue: #d2e7f5; /* background des inputs dans les logs */
-  --color-input-grey: #bfbfc5; /*Couleur du texte des inputs*/
-  --color-btn-disabel-grey: #d9d9d9; /* Couleur des boutons quand les creature on faim*/
-  --color-bg-modale-grey: #e5e5e5; /*Couleur du rectangle sous le pattern */
-  --color-input-creature-grey: #949494; /*Couleur de texte input quand tu achete des creatures */
-  --tw-gradient-to-btn: linear-gradient(
-    to bottom,
-    #ffffff 0%,
-    #d8d8d8 100%
-  ); /*Couleur des boutons */
-  --drop-shadow-xs-creature: 0 0px 8px rgb(0 0 0 / 0.05); /*Drop shadows des creature dans les enclos */
-  --color-infos-creature: rgb(
-    255,
-    255,
-    255,
-    50
-  ); /*Dans l'enclos, ce qui te dit combien tu a de créatures  */
+  --color-primary-blue: #d2e7f5; /* background des inputs dans les logs */
+  --color-secondary-blue: #0c5985; /*Couleur des stroks, et du texte rules, bievneue...*/
+  --color-primary-grey: #bfbfc5; /*Couleur du texte des inputs*/
+  --color-seondary-grey: #e5e5e5; /*Couleur du rectangle sous le pattern */
+  --color-tertiary-grey: #d9d9d9; /* Couleur des boutons quand les creature on faim*/
 
-  --color-bg-fairy-blue: #68c9f4; /*Couleur enclot fairy */
-  --color-bg-fairy-green: #92d635; /*Couleur enclot fairy */
-  --color-bg-winged-red: #f75a61; /*Couleur enclot winged */
-  --color-bg-winged-yellow: #ebe364; /*Couleur enclot winged */
-  --color-bg-mythologic-beige: #ebc682; /*Couleur enclot mythologic */
-  --color-bg-shadow-purple: #615269; /*Couleur enclot shadow */
-  --color-bg-shadow-green: #3f6f35; /*Couleur enclot shadow */
+  --color-fairy-blue: #68c9f4; /*Couleur enclot fairy */
+  --color-fairy-green: #92d635; /*Couleur enclot fairy */
+  --color-winged-red: #f75a61; /*Couleur enclot winged */
+  --color-winged-yellow: #ebe364; /*Couleur enclot winged */
+  --color-mythologic-beige: #ebc682; /*Couleur enclot mythologic */
+  --color-shadow-purple: #615269; /*Couleur enclot shadow */
+  --color-shadow-green: #3f6f35; /*Couleur enclot shadow */
 
   --font-family: 'Jua', sans-serif;
 }
