@@ -8,18 +8,18 @@ body {
 }
 
 @theme {
-  --color-blue-text: #0c5985; /* Couleur du texte dans les logs, rules, bienvenue...*/
-  --color-white-background: rgb(
+  --color-text-blue: #0c5985; /* Couleur du texte dans les logs, rules, bienvenue...*/
+  --color-bg-white: rgb(
     255,
     248,
     248,
     90
   ); /* le rectangle blanc de la page des logs, des achats, classement..*/
-  --color-blue-background: #d2e7f5; /* background des inputs dans les logs */
-  --color-grey-input: #bfbfc5; /*Couleur du texte des inputs*/
-  --color-grey-btn-inactive: #d9d9d9; /* Couleur des boutons quand les creature on faim*/
-  --color-grey-background-modale: #e5e5e5; /*Couleur du rectangle sous l'image des créatures */
-  --color-grey-input-creature: #949494; /*Couleur de texte input quand tu achete des creatures */
+  --color-bg-blue: #d2e7f5; /* background des inputs dans les logs */
+  --color-input-grey: #bfbfc5; /*Couleur du texte des inputs*/
+  --color-btn-disabel-grey: #d9d9d9; /* Couleur des boutons quand les creature on faim*/
+  --color-bg-modale-grey: #e5e5e5; /*Couleur du rectangle sous le pattern */
+  --color-input-creature-grey: #949494; /*Couleur de texte input quand tu achete des creatures */
   --tw-gradient-to-btn: linear-gradient(
     to bottom,
     #ffffff 0%,
@@ -32,21 +32,14 @@ body {
     255,
     50
   ); /*Dans l'enclos, ce qui te dit combien tu a de créatures  */
-  --color-blue-background-fairy: #68c9f4; /*Couleur enclot fairy */
-  --color-green-background-fairy: #92d635; /*Couleur enclot fairy */
-  --color-red-background-winged: #f75a61; /*Couleur enclot winged */
-  --color-yellow-background-winged: #ebe364; /*Couleur enclot winged */
-  --color-beige-background-mythologic: #ebc682; /*Couleur enclot mythologic */
-  --color-purple-background-shadow: #615269; /*Couleur enclot shadow */
-  --color-green-background-shadow: #3f6f35; /*Couleur enclot shadow */
+
+  --color-bg-fairy-blue: #68c9f4; /*Couleur enclot fairy */
+  --color-bg-fairy-green: #92d635; /*Couleur enclot fairy */
+  --color-bg-winged-red: #f75a61; /*Couleur enclot winged */
+  --color-bg-winged-yellow: #ebe364; /*Couleur enclot winged */
+  --color-bg-mythologic-beige: #ebc682; /*Couleur enclot mythologic */
+  --color-bg-shadow-purple: #615269; /*Couleur enclot shadow */
+  --color-bg-shadow-green: #3f6f35; /*Couleur enclot shadow */
+
   --font-family: 'Jua', sans-serif;
-  --text-size11: 0.69rem;
-  --text-size12: 0.75rem;
-  --text-size14: 0.88rem;
-  --text-size16: 1rem;
-  --text-size18: 1.13rem;
-  --text-size20: 1.25rem;
-  --text-size24: 1.5rem;
-  --text-size28: 1.75rem;
-  --text-size36: 2.25rem;
 }
