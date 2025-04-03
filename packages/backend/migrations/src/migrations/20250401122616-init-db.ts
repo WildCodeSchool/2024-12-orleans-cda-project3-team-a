@@ -61,9 +61,9 @@ export async function up(db: Kysely<DB>): Promise<void> {
       CREATE TABLE park_zones (
         id INT AUTO_INCREMENT PRIMARY KEY,
         park_id INT NOT NULL,
-        zones_id INT NOT NULL,
+        zone_id INT NOT NULL,
         CONSTRAINT fk_park_zones_park_id FOREIGN KEY (park_id) REFERENCES parks(id),
-        CONSTRAINT fk_park_zones_zones_id FOREIGN KEY (zones_id) REFERENCES zones(id)
+        CONSTRAINT fk_park_zones_zone_id FOREIGN KEY (zone_id) REFERENCES zones(id)
       );
     `.execute(trx);
 
@@ -76,8 +76,8 @@ export async function up(db: Kysely<DB>): Promise<void> {
         unlock_cost INT,
         src_image VARCHAR(100),
         src_background VARCHAR(100),
-        zones_id INT NOT NULL,
-        CONSTRAINT fk_creatures_zones_id FOREIGN KEY (zones_id) REFERENCES zones(id)
+        zone_id INT NOT NULL,
+        CONSTRAINT fk_creatures_zone_id FOREIGN KEY (zone_id) REFERENCES zones(id)
       );
     `.execute(trx);
 
@@ -92,9 +92,9 @@ export async function up(db: Kysely<DB>): Promise<void> {
         feed_date TIMESTAMP,
         adult_at TIMESTAMP NOT NULL,
         park_id INT NOT NULL, 
-        creatures_id INT NOT NULL,
+        creature_id INT NOT NULL,
         CONSTRAINT fk_park_creatures_park_id FOREIGN KEY (park_id) REFERENCES parks(id),
-        CONSTRAINT fk_park_creatures_creatures_id FOREIGN KEY (creatures_id) REFERENCES creatures(id)
+        CONSTRAINT fk_park_creatures_creature_id FOREIGN KEY (creature_id) REFERENCES creatures(id)
       );
     `.execute(trx);
 
@@ -106,8 +106,8 @@ export async function up(db: Kysely<DB>): Promise<void> {
         spending_time INT NOT NULL,
         unlock_cost INT,
         src_image VARCHAR(100),
-        zones_id INT,
-        CONSTRAINT fk_visitors_zones_id FOREIGN KEY (zones_id) REFERENCES zones(id)
+        zone_id INT,
+        CONSTRAINT fk_visitors_zone_id FOREIGN KEY (zone_id) REFERENCES zones(id)
       );
     `.execute(trx);
 
@@ -117,9 +117,9 @@ export async function up(db: Kysely<DB>): Promise<void> {
         entry_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         exit_time TIMESTAMP,
         park_id INT NOT NULL,
-        visitors_id INT NOT NULL,
+        visitor_id INT NOT NULL,
         CONSTRAINT fk_park_visitors_park_id FOREIGN KEY (park_id) REFERENCES parks(id),
-        CONSTRAINT fk_park_visitors_visitors_id FOREIGN KEY (visitors_id) REFERENCES visitors(id)
+        CONSTRAINT fk_park_visitors_visitor_id FOREIGN KEY (visitor_id) REFERENCES visitors(id)
       );
     `.execute(trx);
 
@@ -129,8 +129,8 @@ export async function up(db: Kysely<DB>): Promise<void> {
         name VARCHAR(50) NOT NULL,
         price INT,
         src_image VARCHAR(100),
-        zones_id INT NOT NULL,
-        CONSTRAINT fk_decorations_zones_id FOREIGN KEY (zones_id) REFERENCES zones(id)
+        zone_id INT NOT NULL,
+        CONSTRAINT fk_decorations_zone_id FOREIGN KEY (zone_id) REFERENCES zones(id)
       );
     `.execute(trx);
 
@@ -150,8 +150,8 @@ export async function up(db: Kysely<DB>): Promise<void> {
         name VARCHAR(50) NOT NULL,
         price INT,
         src_image VARCHAR(100),
-        zones_id INT NOT NULL,
-        CONSTRAINT fk_potions_zones_id FOREIGN KEY (zones_id) REFERENCES zones(id)
+        zone_id INT NOT NULL,
+        CONSTRAINT fk_potions_zone_id FOREIGN KEY (zone_id) REFERENCES zones(id)
       );
     `.execute(trx);
   });
