@@ -33,7 +33,7 @@ export async function up(db: Kysely<DB>): Promise<void> {
         park_name VARCHAR(50) NOT NULL,
         wallet INT NOT NULL,
         entry_price INT NOT NULL,
-        CONSTRAINT fk_parks_user_id FOREIGN KEY (user_id) REFERENCES user(id)
+        CONSTRAINT fk_parks_user_id FOREIGN KEY (user_id) REFERENCES users(id)
       );
     `.execute(trx);
 
