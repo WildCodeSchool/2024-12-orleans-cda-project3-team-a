@@ -38,8 +38,8 @@ export default function Home() {
           {'Edit pages/home.tsx to edit this screen'}
         </div>
         <div className='bg-primary-blue flex w-2xs items-center justify-center rounded-2xl'>
-          <button className='text-4xl' onClick={test}>
-            {'on test'}
+          <button type='button' className='text-4xl' onClick={test}>
+            {'Page test'}
           </button>
         </div>
 

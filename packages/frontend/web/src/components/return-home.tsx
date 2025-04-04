@@ -10,13 +10,14 @@ export default function ReturnHome() {
   };
 
   return (
-    <div className='flex justify-end pt-4 pr-4'>
-      <img
-        className='bg-tertiary-gray w-14 rounded-2xl p-1'
+    <div>
+      <button
+        type='button'
         onClick={handleClick}
-        src={backImg}
-        alt=''
-      />
+        className='bg-tertiary-gray w-14 rounded-2xl p-1 shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
+      >
+        <img src={backImg} alt='' />
+      </button>
     </div>
   );
 }

@@ -4,7 +4,8 @@ const test = () => {
   return (
     <div>
       <ReturnHome />
-      <p className='text-2xl'>{' Laisse courire ton imagination 🦅'}</p>
+      <p>{'PAGE TEST A SUPPRIMER PLUS TARD'}</p>
+      <p className='text-2xl'>{' Laisse courrir ton imagination 🦅'}</p>
     </div>
   );
 };
