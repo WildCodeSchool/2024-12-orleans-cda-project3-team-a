@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import type { SomeInterface } from '@app/shared';
 
@@ -25,13 +26,25 @@ export default function Home() {
     };
   }, []);
 
-  return (
-    <div className='font-display flex h-screen w-screen flex-col items-center justify-center gap-4'>
-      <div className='rounded-2xl bg-red-500 p-1 px-2 text-white transition-all hover:bg-green-400 active:bg-amber-500'>
-        {'Edit pages/home.tsx to edit this screen'}
-      </div>
+  const navigate = useNavigate();
+  const test = () => {
+    void navigate('/test');
+  };
 
-      <div>{someData.someProperty}</div>
+  return (
+    <div>
+      <div className='font-display flex h-screen w-screen flex-col items-center justify-center gap-4'>
+        <div className='rounded-2xl bg-red-500 p-1 px-2 text-white transition-all hover:bg-green-400 active:bg-amber-500'>
+          {'Edit pages/home.tsx to edit this screen'}
+        </div>
+        <div className='bg-primary-blue flex w-2xs items-center justify-center rounded-2xl'>
+          <button className='text-4xl' onClick={test}>
+            {'on test'}
+          </button>
+        </div>
+
+        <div>{someData.someProperty}</div>
+      </div>
     </div>
   );
 }
