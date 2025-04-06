@@ -14,7 +14,7 @@ export default function ReturnHome() {
       <button
         type='button'
         onClick={handleClick}
-        className='bg-tertiary-gray w-14 rounded-2xl p-1 shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
+        className='bg-tertiary-gray w-14 cursor-pointer rounded-2xl p-1 shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
       >
         <img src={backImg} alt='' />
       </button>
