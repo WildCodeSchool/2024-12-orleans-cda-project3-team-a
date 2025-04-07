@@ -13,15 +13,13 @@ const Input = ({ type, placeholder }: InputProps) => {
   };
 
   return (
-    <div>
-      <input
-        className='border-secondary-blue bg-primary-blue w-85 rounded border px-2 py-1'
-        type={type}
-        placeholder={placeholder}
-        value={inputValue}
-        onChange={handleChange}
-      />
-    </div>
+    <input
+      className='border-secondary-blue bg-primary-blue w-51 rounded border px-2 md:h-11 md:w-86 md:rounded-md md:text-2xl'
+      type={type}
+      placeholder={placeholder}
+      value={inputValue}
+      onChange={handleChange}
+    />
   );
 };
 
