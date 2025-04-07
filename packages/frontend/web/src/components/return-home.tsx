@@ -10,14 +10,12 @@ export default function ReturnHome() {
   };
 
   return (
-    <div>
-      <button
-        type='button'
-        onClick={handleClick}
-        className='bg-tertiary-gray w-14 cursor-pointer rounded-2xl p-1 shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'
-      >
-        <img src={backImg} alt='' />
-      </button>
-    </div>
+    <button
+      type='button'
+      onClick={handleClick}
+      className='bg-tertiary-gray flex h-10 w-10 cursor-pointer items-center justify-center rounded shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none md:h-12 md:w-12 md:rounded-md'
+    >
+      <img src={backImg} alt='' className='w-8 md:w-10' />
+    </button>
   );
 }
