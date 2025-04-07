@@ -20,21 +20,20 @@ body {
 }
 
 @theme {
-  --color-primary-blue: #d2e7f5;
-  --color-secondary-blue: #0c5985;
-  --color-tertiary-blue: #F3FAFF;
-  --color-primary-gray: #bfbfc5;
-  --color-secondary-gray: #e5e5e5;
-  --color-tertiary-gray: #d9d9d9;
+  --color-primary-blue: #d2e7f5; /* background des inputs dans les logs */
+  --color-secondary-blue: #0c5985; /*Couleur des stroks, et du texte rules, bievneue...*/
+  --color-tertiary-blue: #F3FAFF; /*Couleur du button rules*/
+  --color-primary-gray: #e5e5e5; /*Couleur du rectangle sous le pattern */
+  --color-secondary-gray: #d9d9d9; /* Couleur des boutons quand les creature on faim*/
 
-  --color-fairy-blue: #68c9f4;
-  --color-fairy-green: #92d635;
-  --color-winged-red: #f75a61;
-  --color-winged-yellow: #ebe364;
-  --color-mythologic-beige: #ebc682;
-  --color-shadow-purple: #615269;
-  --color-shadow-green: #3f6f35;
+  --color-fairy-blue: #68c9f4; /*Couleur bleu enclot fairy */
+  --color-fairy-green: #92d635; /*Couleur verte enclot fairy */
+  --color-winged-red: #f75a61; /*Couleur rouge enclot winged */
+  --color-winged-yellow: #ebe364; /*Couleur jaune enclot winged */
+  --color-mythologic-beige: #ebc682; /*Couleur beige enclot mythologic */
+  --color-shadow-purple: #615269; /*Couleur violet enclot shadow */
+  --color-shadow-green: #3f6f35; /*Couleur verte enclot shadow */
 
-  --font-Fredoka: 'Fredoka', sans-serif;
-  --font-Aerokids: 'Aerokids', sans-serif;
+  --font-Fredoka: 'Fredoka', sans-serif; /*Police par defaut*/
+  --font-Aerokids: 'Aerokids', sans-serif; /*Police Park's name*/
 }

@@ -14,7 +14,7 @@ export default function Close() {
   return (
     <button
       type='button'
-      className='bg-tertiary-gray flex h-10 w-10 cursor-pointer items-center justify-center rounded shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none md:h-12 md:w-12 md:rounded-md'
+      className='bg-secondary-gray flex h-10 w-10 cursor-pointer items-center justify-center rounded shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none md:h-12 md:w-12 md:rounded-md'
       onClick={closeWindow}
     >
       <img src={close} alt='close' className='w-5 md:w-7' />
