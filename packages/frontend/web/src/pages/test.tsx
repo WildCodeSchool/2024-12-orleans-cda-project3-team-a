@@ -7,7 +7,7 @@ const test = () => {
       <ReturnHome />
       <p>{'PAGE TEST A SUPPRIMER PLUS TARD'}</p>
       <p className='text-2xl'>{' Laisse courrir ton imagination 🦅'}</p>
-      <Input placeholder='Email' />
+      <Input type='email' placeholder='Email' />
     </div>
   );
 };
