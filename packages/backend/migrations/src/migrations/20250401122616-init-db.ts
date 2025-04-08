@@ -43,7 +43,7 @@ export async function up(db: Kysely<DB>): Promise<void> {
         gift_date TIMESTAMP,
         value VARCHAR(50) NOT NULL,
         park_id INT NOT NULL,
-        CONSTRAINT fk_gifts_park_id FOREIGN KEY (park_id) REFERENCES parks(id)
+        CONSTRAINT fk_park_gifts_park_id FOREIGN KEY (park_id) REFERENCES parks(id)
       );
     `.execute(trx);
 
