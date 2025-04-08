@@ -42,6 +42,7 @@ export default function Home() {
             {'Page test'}
           </button>
         </div>
+
         <div>{someData.someProperty}</div>
       </div>
     </div>
