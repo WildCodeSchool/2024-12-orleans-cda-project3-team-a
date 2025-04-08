@@ -1,10 +1,10 @@
-export default function ButtonBlue({
-  children,
-  bg,
-}: {
-  readonly children: string;
-  readonly bg: string;
-}) {
+import type { PropsWithChildren } from 'react';
+
+type ButtonBlueProps = PropsWithChildren<{
+  readonly bg: 'bg-primary-blue' | 'bg-tertiary-blue';
+}>;
+
+export default function ButtonBlue({ children, bg }: ButtonBlueProps) {
   return (
     <button
       type='button'
