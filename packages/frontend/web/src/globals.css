@@ -2,10 +2,10 @@
 @import 'tailwindcss';
 
 @font-face {
-  font-family: 'Aerokids';
+  font-family: 'aerokids';
   font-style: normal;
   font-weight: normal;
-  src: url('packages/frontend/web/public/Aerokids.otf') format('opentype');
+  src: url('packages/frontend/web/public/aerokids.otf') format('opentype');
 }
 
 body {
@@ -16,7 +16,7 @@ body {
 }
 
 * {
-  @apply font-Fredoka;
+  @apply font-fredoka;
 }
 
 @theme {
@@ -34,6 +34,6 @@ body {
   --color-shadow-purple: #615269; /*Couleur violet enclot shadow */
   --color-shadow-green: #3f6f35; /*Couleur verte enclot shadow */
 
-  --font-Fredoka: 'Fredoka', sans-serif; /*Police par defaut*/
-  --font-Aerokids: 'Aerokids', sans-serif; /*Police Park's name*/
+  --font-fredoka: 'Fredoka', sans-serif; /*Police par defaut*/
+  --font-aerokids: 'aerokids', sans-serif; /*Police Park's name*/
 }

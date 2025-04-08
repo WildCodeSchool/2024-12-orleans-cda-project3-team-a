@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import close from '../assets/images/icons-buttons/close.png';
 
-export default function Close() {
+export default function CloseWindow() {
   const [isOpen, setIsOpen] = useState(true);
 
   const closeWindow = () => {
