@@ -1,6 +1,6 @@
 import ReturnHome from '@/components/return-home';
 
-const test = () => {
+export default function Test() {
   return (
     <div>
       <ReturnHome />
@@ -8,5 +8,4 @@ const test = () => {
       <p className='text-2xl'>{' Laisse courrir ton imagination 🦅'}</p>
     </div>
   );
-};
-export default test;
+}
