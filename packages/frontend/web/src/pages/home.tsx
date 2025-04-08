@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import type { SomeInterface } from '@app/shared';
 
-import ButtonBlue from '@/components/button-blue';
-
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Home() {
