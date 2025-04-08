@@ -1,26 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka&display=swap');
 @import 'tailwindcss';
+
+@font-face {
+  font-family: 'Aerokids';
+  font-style: normal;
+  font-weight: normal;
+  src: url('/fonts/aerokids.otf') format('opentype');
+}
 
 body {
   height: 100dvh;
   width: 100dvw;
   margin: 0;
   padding: 0;
+  @apply font-fredoka;
 }
 
 @theme {
   --color-primary-blue: #d2e7f5; /* background des inputs dans les logs */
   --color-secondary-blue: #0c5985; /*Couleur des stroks, et du texte rules, bievneue...*/
-  --color-primary-gray: #bfbfc5; /*Couleur du texte des inputs*/
-  --color-secondary-gray: #e5e5e5; /*Couleur du rectangle sous le pattern */
-  --color-tertiary-gray: #d9d9d9; /* Couleur des boutons quand les creature on faim*/
+  --color-tertiary-blue: #f3faff; /*Couleur du button rules*/
+  --color-primary-gray: #e5e5e5; /*Couleur du rectangle sous le pattern */
+  --color-secondary-gray: #d9d9d9; /* Couleur des boutons quand les créatures ont faim*/
 
-  --color-fairy-blue: #68c9f4; /*Couleur enclot fairy */
-  --color-fairy-green: #92d635; /*Couleur enclot fairy */
-  --color-winged-red: #f75a61; /*Couleur enclot winged */
-  --color-winged-yellow: #ebe364; /*Couleur enclot winged */
-  --color-mythologic-beige: #ebc682; /*Couleur enclot mythologic */
-  --color-shadow-purple: #615269; /*Couleur enclot shadow */
-  --color-shadow-green: #3f6f35; /*Couleur enclot shadow */
+  --color-fairy-blue: #68c9f4; /*Couleur bleu enclot fairy */ /*couleur logo fantasy park*/
+  --color-fairy-green: #92d635; /*Couleur verte enclot fairy */ /*couleur logo fantasy park*/
+  --color-winged-red: #f75a61; /*Couleur rouge enclot winged */ /*couleur logo fantasy park*/
+  --color-winged-yellow: #ebe364; /*Couleur jaune enclot winged */
+  --color-mythologic-beige: #ebc682; /*Couleur beige enclot mythologic */
+  --color-shadow-purple: #615269; /*Couleur violet enclot shadow */
+  --color-shadow-green: #3f6f35; /*Couleur verte enclot shadow */
 
-  --font-family: 'Jua', sans-serif;
+  --color-title-purple: #b19ebb; /*couleur logo fantasy park*/
+  --color-title-orange: #e8bd41; /*couleur logo fantasy park*/
+
+  --font-fredoka: 'Fredoka', sans-serif; /*Police par defaut*/
+  --font-aerokids: 'Aerokids', sans-serif; /*Police Park's name*/
 }
