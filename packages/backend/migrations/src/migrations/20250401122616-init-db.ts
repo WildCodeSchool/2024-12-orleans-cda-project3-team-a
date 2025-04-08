@@ -20,7 +20,6 @@ export async function up(db: Kysely<DB>): Promise<void> {
         email VARCHAR(255) NOT NULL UNIQUE,
         password_hash VARCHAR(255) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        src_image VARCHAR(100),
         avatar_id INT, 
         CONSTRAINT fk_users_avatar_id FOREIGN KEY (avatar_id) REFERENCES avatars(id)
       );
@@ -38,7 +37,7 @@ export async function up(db: Kysely<DB>): Promise<void> {
     `.execute(trx);
 
     await sql`
-      CREATE TABLE gifts (
+      CREATE TABLE park_gifts (
         id INT AUTO_INCREMENT PRIMARY KEY,
         type VARCHAR(50) NOT NULL,
         gift_date TIMESTAMP,
@@ -75,7 +74,6 @@ export async function up(db: Kysely<DB>): Promise<void> {
         price INT NOT NULL,
         unlock_cost INT,
         src_image VARCHAR(100),
-        src_background VARCHAR(100),
         zone_id INT NOT NULL,
         CONSTRAINT fk_creatures_zone_id FOREIGN KEY (zone_id) REFERENCES zones(id)
       );
@@ -197,7 +195,7 @@ export async function down(db: Kysely<DB>): Promise<void> {
     `.execute(trx);
 
     await sql`
-      DROP TABLE IF EXISTS gifts;
+      DROP TABLE IF EXISTS park_gifts;
     `.execute(trx);
 
     await sql`
