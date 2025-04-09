@@ -1,4 +1,4 @@
-import Input from '@/components/input';
+import Input from '@/components/input-blue';
 import ReturnHome from '@/components/return-home';
 
 export default function Test() {
