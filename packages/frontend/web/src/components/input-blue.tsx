@@ -1,5 +1,3 @@
-import type { ChangeEvent } from 'react';
-
 type InputProps = {
   readonly type: 'email' | 'password' | 'text';
   readonly placeholder: string;
