@@ -1,7 +1,7 @@
 import Input from '@/components/input';
 import ReturnHome from '@/components/return-home';
 
-const test = () => {
+export default function Test() {
   return (
     <div>
       <ReturnHome />
@@ -10,5 +10,4 @@ const test = () => {
       <Input type='email' placeholder='Email' />
     </div>
   );
-};
-export default test;
+}
