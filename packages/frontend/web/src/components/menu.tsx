@@ -36,19 +36,20 @@ export default function Menu() {
           className='cursor-pointer md:h-7 md:w-7'
         />
       </button>
-      {isMenuOpen ? (
-        <div className='flex h-screen flex-col justify-between md:h-auto md:flex-1 md:flex-row'>
-          <div className='flex flex-col gap-7 md:flex-row'>
-            <img src={iconDashboard} alt='' className='h-6 md:h-7' />
-            <img src={iconShop} alt='' className='h-6 md:h-7' />
-            <img src={iconRanking} alt='' className='h-6 md:h-7' />
-          </div>
-          <div className='flex flex-col gap-7 md:flex-row'>
-            <img src={iconProfil} alt='' className='h-6 md:h-7' />
-            <img src={iconRules} alt='' className='h-6 md:h-7' />
-          </div>
+
+      <div
+        className={` ${isMenuOpen ? 'flex h-screen flex-col justify-between md:h-auto md:flex-1 md:flex-row' : 'hidden'}`}
+      >
+        <div className='flex flex-col gap-7 md:flex-row'>
+          <img src={iconDashboard} alt='' className='h-6 md:h-7' />
+          <img src={iconShop} alt='' className='h-6 md:h-7' />
+          <img src={iconRanking} alt='' className='h-6 md:h-7' />
         </div>
-      ) : null}
+        <div className='flex flex-col gap-7 md:flex-row'>
+          <img src={iconProfil} alt='' className='h-6 md:h-7' />
+          <img src={iconRules} alt='' className='h-6 md:h-7' />
+        </div>
+      </div>
     </div>
   );
 }
