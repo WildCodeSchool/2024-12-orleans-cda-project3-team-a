@@ -15,6 +15,7 @@ const PORT = process.env.BACKEND_PORT ?? 3000;
 app.use(express.json());
 app.use(
   cors({
+    //ici on gere l'erreur corse
     origin: `http://${process.env.FRONTEND_HOST}:${process.env.FRONTEND_PORT}`,
     credentials: true,
   }),
