@@ -17,7 +17,7 @@ export default function Menu() {
   return (
     //Ouvrir ou fermer menu selon la valeur isMenuOpen
     <div
-      className={`flex h-8 flex-1 items-center gap-5 rounded md:h-9 md:rounded-lg ${
+      className={`flex h-screen w-8 flex-col items-center gap-5 rounded pb-2 md:h-9 md:flex-1 md:flex-row md:rounded-lg md:pr-2 md:pb-0 ${
         isMenuOpen
           ? 'bg-primary-gray shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none'
           : ''
@@ -25,7 +25,7 @@ export default function Menu() {
     >
       <button
         type='button'
-        className={`flex items-center justify-center rounded px-2 ${
+        className={`items-center justify-center rounded p-1 md:p-2 ${
           !isMenuOpen
             ? 'bg-primary-gray h-8 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none md:h-9'
             : ''
@@ -35,19 +35,19 @@ export default function Menu() {
           src={iconMenu}
           alt='Menu'
           onClick={handleMenu}
-          className='h-5 cursor-pointer md:h-7'
+          className='cursor-pointer md:h-7 md:w-7'
         />
       </button>
       {isMenuOpen ? (
-        <div className='flex flex-1 justify-between'>
-          <div className='flex gap-7'>
-            <img src={iconDashboard} alt='' className='h-5 md:h-7' />
-            <img src={iconShop} alt='' className='h-5 md:h-7' />
-            <img src={iconRanking} alt='' className='h-5 md:h-7' />
+        <div className='flex h-screen flex-col justify-between md:h-auto md:flex-1 md:flex-row'>
+          <div className='flex flex-col gap-7 md:flex-row'>
+            <img src={iconDashboard} alt='' className='h-6 md:h-7' />
+            <img src={iconShop} alt='' className='h-6 md:h-7' />
+            <img src={iconRanking} alt='' className='h-6 md:h-7' />
           </div>
-          <div className='flex gap-7'>
-            <img src={iconProfil} alt='' className='h-5 md:h-7' />
-            <img src={iconRules} alt='' className='h-5 md:h-7' />
+          <div className='flex flex-col gap-7 md:flex-row'>
+            <img src={iconProfil} alt='' className='h-6 md:h-7' />
+            <img src={iconRules} alt='' className='h-6 md:h-7' />
           </div>
         </div>
       ) : null}
