@@ -4,37 +4,19 @@ import Logo from '../assets/images/logo/fp-logo-arc.png';
 export default function Login() {
   return (
     <div
-      className='flex h-screen justify-center bg-cover bg-center'
+      className='flex min-h-screen justify-center bg-black bg-cover bg-center px-4 py-8 md:h-dvh md:bg-contain md:bg-center md:bg-no-repeat'
       style={{ backgroundImage: `url(${BgHome})` }}
     >
-      <img
-        src={Logo}
-        alt='Fantasy Park'
-        className='absolute top-30 z-2 min-h-23 min-w-80 md:h-80 md:min-w-266'
-      />
-      <div className='flex items-center justify-center pt-45 md:pt-45'>
-        <div className='h-83 w-74 rounded-lg bg-white opacity-90 shadow-[0px_8px_4px_rgba(0,0,0,0.25)] md:h-135 md:w-156'>
-          <form>{'coucou'}</form>
+      <div className='flex w-full items-center justify-center pt-15 md:pt-45'>
+        <img
+          src={Logo}
+          alt='Fantasy Park'
+          className='absolute top-27 z-2 h-23 w-80 md:top-18 md:h-80 md:min-w-266'
+        />
+        <div className='h-83 w-74 rounded-lg bg-white/90 shadow-[0px_8px_4px_rgba(0,0,0,0.25)] md:h-133 md:w-142'>
+          <p className='text-center'>{'coucou'}</p>
         </div>
       </div>
     </div>
   );
 }
-
-//faire la carré blanc aussi
-
-//  w-80 ,w-266 h23
-
-// h-80, h-23
-
-// <img
-// src={Logo}
-// alt='Fantasy Park'
-// className='z-2 min-h-23 min-w-80 pt-15 md:absolute md:h-80 md:min-w-266 md:pl-55'
-// />
-// <div className='flex items-center justify-center pt-45'>
-// <div className='h-83 w-73 bg-white opacity-90 md:h-135 md:w-156'>
-//   <form>{'coucou'}</form>
-// </div>
-// </div>
-// </div>
