@@ -11,7 +11,7 @@ export default function Login() {
         <img
           src={Logo}
           alt='Fantasy Park'
-          className='absolute top-27 z-2 h-23 w-80 md:top-18 md:h-80 md:min-w-266'
+          className='absolute top-27 z-2 min-h-23 min-w-80 md:top-18 md:h-80 md:w-266'
         />
         <div className='h-83 w-74 rounded-lg bg-white/90 shadow-[0px_8px_4px_rgba(0,0,0,0.25)] md:h-133 md:w-142'>
           <p className='text-center'>{'coucou'}</p>
