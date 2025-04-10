@@ -15,6 +15,7 @@ postRegisterRouter.post('/register', async (req, res) => {
     .where('users.email', '=', email)
     .executeTakeFirst();
 
+  //check is mail is already existing
   if (user) {
     res.json({
       message: 'User already used',
