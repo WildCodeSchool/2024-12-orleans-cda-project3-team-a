@@ -13,7 +13,12 @@ const HOST = process.env.BACKEND_HOST ?? 'localhost';
 const PORT = process.env.BACKEND_PORT ?? 3000;
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: `http://${process.env.FRONTEND_HOST}:${process.env.FRONTEND_PORT}`,
+    credentials: true,
+  }),
+);
 
 app.use('/api', router);
 

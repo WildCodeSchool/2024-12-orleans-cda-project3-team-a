@@ -19,6 +19,7 @@ export interface Creatures {
   id: Generated<number>;
   price: number;
   species: string;
+  src_background: string | null;
   src_image: string | null;
   unlock_cost: number | null;
   zone_id: number;
@@ -30,6 +31,14 @@ export interface Decorations {
   price: number | null;
   src_image: string | null;
   zone_id: number;
+}
+
+export interface Gifts {
+  gift_date: Date | null;
+  id: Generated<number>;
+  park_id: number;
+  type: string;
+  value: string;
 }
 
 export interface ParkCreatures {
@@ -51,20 +60,12 @@ export interface ParkDecorations {
   park_id: number;
 }
 
-export interface ParkGifts {
-  gift_date: Date | null;
-  id: Generated<number>;
-  park_id: number;
-  type: string;
-  value: string;
-}
-
 export interface Parks {
   entry_price: number;
   id: Generated<number>;
   park_name: string;
   user_id: number;
-  wallet: number | null;
+  wallet: number;
 }
 
 export interface ParkVisitors {
@@ -95,6 +96,7 @@ export interface Users {
   email: string;
   id: Generated<number>;
   password_hash: string;
+  src_image: string | null;
   username: string;
 }
 
@@ -119,9 +121,9 @@ export interface DB {
   avatars: Avatars;
   creatures: Creatures;
   decorations: Decorations;
+  gifts: Gifts;
   park_creatures: ParkCreatures;
   park_decorations: ParkDecorations;
-  park_gifts: ParkGifts;
   park_visitors: ParkVisitors;
   park_zones: ParkZones;
   parks: Parks;
