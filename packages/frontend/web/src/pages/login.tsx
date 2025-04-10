@@ -30,8 +30,8 @@ export default function Login() {
     const data = await res.json();
 
     if (data.message === 'User logged in!') {
-        console.log('Redirection vers la page d\'accueil');
-        navigate('/');
+      console.log("Redirection vers la page d'accueil");
+      navigate('/');
     }
 
     console.log(data);
