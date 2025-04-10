@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Input from '@/components/input-blue';
+import InputBlue from '@/components/input-blue';
 import ReturnHome from '@/components/return-home';
 
 export default function Test() {
@@ -9,7 +9,7 @@ export default function Test() {
   return (
     <div>
       <ReturnHome />
-      <Input
+      <InputBlue
         type='email'
         placeholder='Votre email'
         value={email}

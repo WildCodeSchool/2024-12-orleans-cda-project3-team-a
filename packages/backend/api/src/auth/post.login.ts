@@ -32,7 +32,7 @@ postLoginRouter.post('/login', async (req, res) => {
   }
 
   res.json({
-    message: 'User loged in',
+    message: 'User logged in!',
   });
 });
 
