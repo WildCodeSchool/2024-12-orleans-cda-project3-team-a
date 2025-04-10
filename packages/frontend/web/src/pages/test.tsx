@@ -1,9 +1,8 @@
-
-import Loader from '@/components/loader';
-import Input from '@/components/input-blue';
-import ReturnHome from '@/components/return-home';
-
 import { useState } from 'react';
+
+import Input from '@/components/input-blue';
+import Loader from '@/components/loader';
+import ReturnHome from '@/components/return-home';
 
 export default function Test() {
   const [email, setEmail] = useState('test');
