@@ -9,11 +9,9 @@ import iconShop from '../assets/images/icons-buttons/shop.png';
 
 export default function Menu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const handleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
   return (
     //Ouvrir ou fermer menu selon la valeur isMenuOpen
     <div
@@ -25,7 +23,7 @@ export default function Menu() {
     >
       <button
         type='button'
-        className={`items-center justify-center rounded p-1 md:p-2 ${
+        className={`items-center justify-center rounded p-1 md:p-2 md:py-0 ${
           !isMenuOpen
             ? 'bg-primary-gray h-8 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none md:h-9'
             : ''
