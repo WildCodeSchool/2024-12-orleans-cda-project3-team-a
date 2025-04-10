@@ -13,8 +13,8 @@ export default function Login() {
   const navigate = useNavigate();
 
   const login = async () => {
-    console.log(email, password);
-    console.log('API_URL:', API_URL);
+    // console.log(email, password);
+    // console.log('API_URL:', API_URL);
 
     const res = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
@@ -30,18 +30,18 @@ export default function Login() {
     const data = await res.json();
 
     if (data.message === 'User logged in!') {
-      console.log("Redirection vers la page d'accueil");
-      navigate('/home');
+      // console.log("Redirection vers la page d'accueil");
+      await navigate('/home');
     }
 
-    console.log(data);
+    // console.log(data);
   };
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        login();
+      onSubmit={async (event) => {
+        event.preventDefault();
+        await login();
       }}
       className='flex flex-col items-center justify-center gap-3 p-4'
     >
@@ -64,7 +64,7 @@ export default function Login() {
       />
 
       <ButtonBlue bg='bg-primary-blue' type='submit'>
-        LOG IN
+        {'LOG IN'}
       </ButtonBlue>
     </form>
   );
