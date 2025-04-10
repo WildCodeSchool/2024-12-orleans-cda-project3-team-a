@@ -31,7 +31,7 @@ export default function Login() {
 
     if (data.message === 'User logged in!') {
       console.log("Redirection vers la page d'accueil");
-      navigate('/');
+      navigate('/home');
     }
 
     console.log(data);
