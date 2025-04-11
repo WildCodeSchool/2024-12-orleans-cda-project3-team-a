@@ -44,8 +44,11 @@ postLoginRouter.post('/login', async (req, res) => {
     .setProtectedHeader({
       alg: 'HS256',
     })
+    //a qu'elle moment le token est généré
     .setIssuedAt()
+    //par qui il est fais ? frontend
     .setIssuer(FRONTEND_HOST)
+    //generer pour l'user
     .setAudience(FRONTEND_HOST)
     .setExpirationTime('3h')
     .sign(secret);
