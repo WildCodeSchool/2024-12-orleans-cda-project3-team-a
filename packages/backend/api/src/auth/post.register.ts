@@ -25,7 +25,8 @@ postRegisterRouter.post('/register', async (req, res) => {
 
   //check if is the same password
   if (password !== confirmPassword) {
-    return res.status(400).json({ message: 'Passwords do not match!' });
+    res.status(400).json({ message: 'Passwords do not match!' });
+    return;
   }
 
   //hash of password
