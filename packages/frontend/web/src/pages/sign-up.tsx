@@ -46,8 +46,11 @@ export default function SignUp() {
         event.preventDefault();
         await signUp();
       }}
-      className='flex flex-col items-center justify-center gap-3 p-4'
+      className='flex flex-col items-center justify-center gap-5 p-4'
     >
+      <h2 className='text-secondary-blue pl-4 text-2xl font-extrabold tracking-[0.6em]'>
+        {'SIGN UP'}
+      </h2>
       <InputBlue
         type='email'
         placeholder='Email'

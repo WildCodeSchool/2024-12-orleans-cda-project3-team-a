@@ -44,8 +44,11 @@ export default function Login() {
         event.preventDefault();
         await login();
       }}
-      className='flex flex-col items-center justify-center gap-3 p-4'
+      className='flex flex-col items-center justify-center gap-5 p-4'
     >
+      <h2 className='text-secondary-blue pl-4 text-2xl font-extrabold tracking-[0.6em]'>
+        {'LOG IN'}
+      </h2>
       <InputBlue
         type='email'
         placeholder='Email'
@@ -67,6 +70,13 @@ export default function Login() {
       <ButtonBlue bg='bg-primary-blue' type='submit'>
         {'LOG IN'}
       </ButtonBlue>
+
+      <p>
+        {'Don’t have an account ? '}
+        <a href='/signup' className='text-secondary-blue underline'>
+          {'Sign up here.'}
+        </a>
+      </p>
     </form>
   );
 }
