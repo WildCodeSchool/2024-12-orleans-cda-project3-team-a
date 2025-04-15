@@ -10,7 +10,7 @@ export default function Test() {
   return (
     <div className='flex flex-col items-center justify-center gap-5'>
       <ReturnHome />
-      <InputBlue
+      <Input
         type='email'
         placeholder='Votre email'
         value={email}
