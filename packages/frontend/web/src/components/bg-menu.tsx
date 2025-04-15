@@ -7,7 +7,7 @@ type Pattern = PropsWithChildren;
 export default function Pattern({ children }: Pattern) {
   return (
     <div
-      className='bg-primary-gray rounded-2xl p-4'
+      className='bg-primary-gray rounded p-4 md:rounded-md'
       style={{ backgroundImage: `url(${BgPattern})` }}
     >
       {children}
