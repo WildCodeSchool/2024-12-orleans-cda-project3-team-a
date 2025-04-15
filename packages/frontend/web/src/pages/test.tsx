@@ -8,6 +8,7 @@ import ReturnHome from '@/components/return-home';
 import boat from '../assets/images/fairy-zone/boat.png';
 import elf from '../assets/images/fairy-zone/elf.png';
 import iceCream from '../assets/images/fairy-zone/ice-cream-shop.png';
+import locked from '../assets/images/fairy-zone/sign.png';
 
 export default function Test() {
   const [email, setEmail] = useState('test');
@@ -30,24 +31,40 @@ export default function Test() {
         srcImgDeco1={boat}
         srcImgDeco2={iceCream}
         srcImgCreature={elf}
+        price={1000}
+        srcLocked={locked}
+        nmbrCreature={1}
+        name={elf}
+      />
+      <Enclosure
+        bgColor='bg-fairy-green'
+        srcImgDeco1={boat}
+        srcImgDeco2={iceCream}
+        srcImgCreature={locked}
+        price={200}
+        srcLocked={locked}
+        nmbrCreature={1}
+        name={elf}
       />
       <Enclosure
         bgColor='bg-fairy-green'
         srcImgDeco1={boat}
         srcImgDeco2={iceCream}
         srcImgCreature={elf}
-      />
-      <Enclosure
-        bgColor='bg-fairy-green'
-        srcImgDeco1={boat}
-        srcImgDeco2={iceCream}
-        srcImgCreature={elf}
+        price={200}
+        srcLocked={locked}
+        nmbrCreature={2}
+        name={elf}
       />
       <Enclosure
         bgColor='bg-fairy-blue'
         srcImgDeco1={boat}
         srcImgDeco2={iceCream}
         srcImgCreature={elf}
+        price={300}
+        srcLocked={locked}
+        nmbrCreature={1}
+        name={elf}
       />
     </div>
   );
