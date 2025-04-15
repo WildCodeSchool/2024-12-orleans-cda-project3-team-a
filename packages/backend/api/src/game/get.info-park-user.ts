@@ -2,21 +2,20 @@ import express from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getWalletRouter = express.Router();
-// const USER_ID = 1;
+const getInfoParkUser = express.Router();
 
-getWalletRouter.get('/wallet', async (req, res) => {
+getInfoParkUser.get('/info-park-user', async (req, res) => {
   //on va récupérer le user id dans l'url
-  //http://192.168.0.54:3333/api/game/wallet?userId=1
+  //http://192.168.0.54:3333/api/game/info-park-user?userId=1
   const { userId } = req.query;
 
-  const park = await db
+  const parkInfo = await db
     .selectFrom('parks')
     .selectAll()
     .where('parks.user_id', '=', Number(userId))
     .executeTakeFirst();
 
-  if (!park) {
+  if (!parkInfo) {
     res.json({
       message: 'Pas de user correspondant',
     });
@@ -24,8 +23,8 @@ getWalletRouter.get('/wallet', async (req, res) => {
   }
 
   res.json({
-    park,
+    parkInfo,
   });
 });
 
-export default getWalletRouter;
+export default getInfoParkUser;

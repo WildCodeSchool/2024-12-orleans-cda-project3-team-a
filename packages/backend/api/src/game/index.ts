@@ -1,9 +1,9 @@
 import express from 'express';
 
-import getWalletRouter from './get.wallet';
+import getInfoParkUser from './get.info-park-user';
 
 const gameRouter = express.Router();
 
-gameRouter.use(getWalletRouter);
+gameRouter.use(getInfoParkUser);
 
 export default gameRouter;
