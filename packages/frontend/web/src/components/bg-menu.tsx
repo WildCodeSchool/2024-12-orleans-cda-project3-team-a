@@ -2,9 +2,9 @@ import type { PropsWithChildren } from 'react';
 
 import BgPattern from '../assets/images/icons-buttons/bg-pattern.png';
 
-type Pattern = PropsWithChildren;
+type PatternProps = PropsWithChildren;
 
-export default function Pattern({ children }: Pattern) {
+export default function BgMenu({ children }: PatternProps) {
   return (
     <div
       className='bg-primary-gray rounded p-4 md:rounded-md'

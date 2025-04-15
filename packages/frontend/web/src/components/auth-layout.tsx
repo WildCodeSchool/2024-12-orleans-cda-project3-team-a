@@ -3,9 +3,9 @@ import type { PropsWithChildren } from 'react';
 import BgHome from '../assets/images/background/bg-home.webp';
 import Logo from '../assets/images/logo/fp-logo-arc.png';
 
-type AuthLayout = PropsWithChildren;
+type AuthLayoutProps = PropsWithChildren;
 
-export default function authLayout({ children }: AuthLayout) {
+export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <div
       className='flex min-h-screen justify-center bg-cover bg-center p-3'
