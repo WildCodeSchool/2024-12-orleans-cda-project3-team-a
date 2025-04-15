@@ -8,7 +8,7 @@ import ButtonBuy from './button-buy';
 
 export default function Barrier() {
   //faire une requete pr savoir si c'est acheté ou non, ce qui permettra d'afficher ou non la direction
-  const isBought = false;
+  const isBought = true;
 
   return (
     <div className='relative flex items-center'>
