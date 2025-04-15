@@ -37,3 +37,13 @@ body {
   --font-fredoka: 'Fredoka', sans-serif; /*Police par defaut*/
   --font-aerokids: 'Aerokids', sans-serif; /*Police Park's name*/
 }
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 2s linear infinite;
+}
