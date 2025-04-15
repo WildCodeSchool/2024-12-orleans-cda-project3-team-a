@@ -40,6 +40,7 @@ postLoginRouter.post('/login', async (req, res) => {
   //ici on génère le payloads
   const token = await new jose.SignJWT({
     sub: email,
+    userId: user.id,
   })
     .setProtectedHeader({
       alg: 'HS256',
@@ -47,11 +48,16 @@ postLoginRouter.post('/login', async (req, res) => {
     .setIssuedAt()
     .setIssuer(FRONTEND_HOST)
     .setAudience(FRONTEND_HOST)
-    .setExpirationTime('3h')
+    .setExpirationTime('60s')
     .sign(secret);
-  console.log(token);
+  // console.log(token);
 
-  res.cookie('token', token);
+  res.cookie('token', token, {
+    httpOnly: true,
+    // sameSite: '',
+    // secure: '',
+    signed: true,
+  });
 
   res.json({
     message: 'User logged in!',
