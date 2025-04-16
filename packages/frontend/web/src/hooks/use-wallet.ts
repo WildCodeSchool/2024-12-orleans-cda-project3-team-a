@@ -1,5 +1,6 @@
-import numeral from 'numeral';
 import { useEffect, useState } from 'react';
+
+import { numberFormatter } from './number-formatter';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -11,11 +12,9 @@ export default function useWallet() {
   useEffect(() => {
     async function fetchWallet() {
       try {
-        const response = await fetch(`${API_URL}/game/info-park-user?userId=1`);
+        const response = await fetch(`${API_URL}/game/info-park-user`);
         const data = await response.json();
-        const roundedWallet = numeral(data.parkInfo.wallet)
-          .format('0,0a')
-          .toUpperCase();
+        const roundedWallet = numberFormatter(data.parkInfo.wallet);
         setWallet(roundedWallet);
       } catch (error) {
         console.error('fetch failed');

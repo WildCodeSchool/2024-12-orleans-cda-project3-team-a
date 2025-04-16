@@ -1,4 +1,4 @@
-import { createContext, useMemo } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 import type { PropsWithChildren } from 'react';
 
 import useWallet from '@/hooks/use-wallet';
@@ -32,3 +32,6 @@ export function GameInfoContextProvider({
     </gameInfoContext.Provider>
   );
 }
+
+// Hook created to call him in others components
+export const useGameInfoContext = () => useContext(gameInfoContext);

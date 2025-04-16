@@ -83,8 +83,5 @@
       "eslint --fix --report-unused-disable-directives",
       "prettier --write"
     ]
-  },
-  "dependencies": {
-    "numeral": "^2.0.6"
   }
 }

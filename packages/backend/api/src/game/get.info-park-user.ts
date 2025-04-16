@@ -5,14 +5,14 @@ import { db } from '@app/backend-shared';
 const getInfoParkUser = express.Router();
 
 getInfoParkUser.get('/info-park-user', async (req, res) => {
-  //on va récupérer le user id dans l'url
-  //http://192.168.0.54:3333/api/game/info-park-user?userId=1
-  const { userId } = req.query;
+  //PLUS TARD récupérer l'id dans le cookie !
+  //http://192.168.0.54:3333/api/game/info-park-user
+  const userId = 1;
 
   const parkInfo = await db
     .selectFrom('parks')
     .selectAll()
-    .where('parks.user_id', '=', Number(userId))
+    .where('parks.user_id', '=', userId)
     .executeTakeFirst();
 
   if (!parkInfo) {

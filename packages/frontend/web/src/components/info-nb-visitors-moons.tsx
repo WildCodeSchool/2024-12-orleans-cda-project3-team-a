@@ -1,13 +1,11 @@
-import { useContext } from 'react';
-
 import moon from '../assets/images/icons-buttons/moon.png';
 import visitor from '../assets/images/icons-buttons/visitors.png';
-import { gameInfoContext } from '../contexts/context-info-park';
+import { useGameInfoContext } from '../contexts/game-info-context';
 
 //Reste à faire le fetch pour nb visiteurs!! plus tard!
 
 export default function InfoNbVisitorsMoons() {
-  const { wallet } = useContext(gameInfoContext);
+  const { wallet } = useGameInfoContext();
 
   return (
     <div className='bg-secondary-gray flex h-8 w-fit cursor-default items-center justify-between gap-2 rounded px-2 py-0.5 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:h-9 md:rounded-md'>
