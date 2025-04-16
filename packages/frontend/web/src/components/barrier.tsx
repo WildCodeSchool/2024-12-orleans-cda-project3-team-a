@@ -6,14 +6,19 @@ import directionUp from '../assets/images/deco/direction-up.png';
 import moon from '../assets/images/icons-buttons/moon.png';
 import ButtonBuy from './button-buy';
 
-export default function Barrier() {
+type BarrierProps = {
+  readonly direction: 'directionDown' | 'directionLeft';
+};
+
+export default function Barrier(direction: BarrierProps) {
   //faire une requete pr savoir si c'est acheté ou non, ce qui permettra d'afficher ou non la direction
   const isBought = true;
+  // direction="directionDown";
 
   return (
     <div className='relative flex items-center'>
       {isBought ? (
-        <img src={directionDown} alt='direction down' className='w-16' />
+        <img src={directionUp} alt='' className='w-16' />
       ) : (
         <>
           <img
