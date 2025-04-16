@@ -4,7 +4,7 @@ import moon from '../assets/images/icons-buttons/moon.png';
 import visitor from '../assets/images/icons-buttons/visitors.png';
 import { gameInfoContext } from '../contexts/context-info-park';
 
-//faire le fetch dans le contexte!
+//Reste à faire le fetch pour nb visiteurs!! plus tard!
 
 export default function InfoNbVisitorsMoons() {
   const { wallet } = useContext(gameInfoContext);
