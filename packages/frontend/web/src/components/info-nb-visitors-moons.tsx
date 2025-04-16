@@ -7,11 +7,7 @@ import { gameInfoContext } from '../contexts/context-info-park';
 //faire le fetch dans le contexte!
 
 export default function InfoNbVisitorsMoons() {
-  const context = useContext(gameInfoContext);
-
-  if (!context) return null;
-
-  const { wallet } = context;
+  const { wallet } = useContext(gameInfoContext);
 
   return (
     <div className='bg-secondary-gray flex h-8 w-fit cursor-default items-center justify-between gap-2 rounded px-2 py-0.5 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:h-9 md:rounded-md'>
