@@ -11,17 +11,14 @@ export default function useWallet() {
   useEffect(() => {
     async function fetchWallet() {
       try {
-        const reponse = await fetch(`${API_URL}/game/info-park-user?userId=1`);
+        const reponse = await fetch(`${API_URL}/game/info-park-user?userId=15`);
         const data = await reponse.json();
         const roundedWallet = numeral(data.parkInfo.wallet)
           .format('0,0a')
           .toUpperCase();
         setWallet(roundedWallet);
       } catch (error) {
-        console.error(
-          "Erreur lors de la récupération des infos du park de l'utilisateur",
-          error,
-        );
+        console.error('fetch failed');
       }
     }
 
