@@ -16,7 +16,7 @@ type BarrierProps = {
 
 export default function Barrier({ direction }: BarrierProps) {
   //faire une requete pr savoir si c'est acheté ou non, ce qui permettra d'afficher ou non la direction
-  const isBought = true;
+  const isBought = false;
 
   return (
     <div className='relative flex items-center'>
@@ -42,7 +42,7 @@ export default function Barrier({ direction }: BarrierProps) {
             className='absolute z-0 w-16'
           />
           <div className='z-1'>
-            <ButtonBuy>
+            <ButtonBuy bg='bg-[rgba(255,255,255,0.65)]' border=''>
               {'100'} <img src={moon} alt='' className='w-5' />
             </ButtonBuy>
           </div>
