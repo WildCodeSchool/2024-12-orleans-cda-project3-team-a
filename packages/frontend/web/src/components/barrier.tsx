@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import barrierIcon from '../assets/images/deco/barrier.png';
 import directionDown from '../assets/images/deco/direction-down.png';
 import directionLeft from '../assets/images/deco/direction-left.png';
@@ -16,11 +18,24 @@ type BarrierProps = {
 
 export default function Barrier({ direction }: BarrierProps) {
   //faire une requete pr savoir si c'est acheté ou non, ce qui permettra d'afficher ou non la direction
-  const isBought = false;
+  const [isBought, setIsBought] = useState(false);
+  // const isBought = false;
+  const isEnoughMooney = true;
+
+  const buyBarrier = () => {
+    if (isEnoughMooney) {
+      console.log('barrière achetée');
+
+      setIsBought(true);
+    } else {
+      console.log("pas assez d'argent!");
+    }
+  };
 
   return (
     <div className='relative flex items-center'>
       {isBought ? (
+        // IF is bought -> display the correct picture for the direction thanks to the props
         <img
           src={
             direction === 'directionUp'
@@ -35,15 +50,25 @@ export default function Barrier({ direction }: BarrierProps) {
           className='w-16'
         />
       ) : (
+        // IF is NOT -> bought display the barrier in construction and display price to buy it
         <>
           <img
             src={barrierIcon}
             alt='Barrier to buy'
             className='absolute z-0 w-16'
           />
-          <div className='z-1'>
+
+          {/* if not enough mooney display in grey the amount and the moon */}
+          <div
+            title={
+              isEnoughMooney ? 'click to buy this barrier' : 'not enough mooney'
+            }
+            className={`z-1 ${!isEnoughMooney ? 'text-gray-400 grayscale-100' : ''}`}
+            onClick={buyBarrier}
+          >
+            {/* //créer la logique pour déduire l'argent de cette barrière dans le wallet */}
             <ButtonBuy bg='bg-[rgba(255,255,255,0.65)]' border=''>
-              {'100'} <img src={moon} alt='' className='w-5' />
+              {'100'} <img src={moon} alt='' className={`w-5`} />
             </ButtonBuy>
           </div>
         </>
