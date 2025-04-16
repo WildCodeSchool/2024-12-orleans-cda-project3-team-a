@@ -1,4 +1,6 @@
-import type { PropsWithChildren } from 'react';
+import { type PropsWithChildren, useState } from 'react';
+
+import ButtonBuy from './button-buy';
 
 type EnclosureProps = PropsWithChildren<{
   readonly bgColor:
@@ -16,6 +18,8 @@ type EnclosureProps = PropsWithChildren<{
   readonly srcLocked: string;
   readonly nmbrCreature: number;
   readonly name: string;
+  readonly positionDeco1: number;
+  readonly positionDeco2: number;
 }>;
 
 export default function Enclosure({
@@ -24,34 +28,43 @@ export default function Enclosure({
   srcImgDeco2,
   srcImgCreature,
   price,
-  srcLocked,
-  nmbrCreature,
+  positionDeco1,
+  positionDeco2,
   name,
 }: EnclosureProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleModale = () => {
+    setIsModalOpen(!isModalOpen);
+  };
   return (
     <div
-      className={`relative grid h-[50vh] w-[959px] grid-cols-3 grid-rows-3 place-items-center ${bgColor}`}
+      className={`flex h-[50vh] min-w-[33.3%] flex-col justify-between p-4 ${bgColor}`}
     >
-      <div className='col-start-1 row-start-1'>
-        <img className='w-15' src={srcImgDeco1} alt='' />
-      </div>
-      <div className='col-start-2 row-start-2'>
+      <img
+        className={`w-15 left-${positionDeco1} relative`}
+        src={srcImgDeco1}
+        alt=''
+      />
+      <div
+        onClick={handleModale}
+        className='relative flex flex-col items-center justify-center gap-2'
+      >
         <img className='w-30' src={srcImgCreature} alt='' />
+
+        <h1 className='absolute top-10'>{name}</h1>
+
+        <ButtonBuy>{price}</ButtonBuy>
       </div>
-      <div className='col-start-2 row-start-3 mb-30'>
-        <button
-          type='button'
-          className='h-10 w-20 cursor-pointer rounded-lg bg-gray-300 text-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none'
-        >
-          {price}
-        </button>
-      </div>
-      <div className='col-start-3 row-start-3'>
-        <img className='w-15' src={srcImgDeco2} alt='' />
-      </div>
+      <img
+        className={`relative left-${positionDeco2} w-15`}
+        src={srcImgDeco2}
+        alt=''
+      />
     </div>
   );
 }
+
+//Manque: si creature pas debloque, afficher le noms sur le panneaux, pouvoir acheter via le boutons sous le panneaux,
 
 // function buy() {
 //   if (wallet >= creature.price) {
@@ -68,26 +81,26 @@ export default function Enclosure({
   </div>
 
   <div className="row-start-2 col-start-2">
-    <img className="w-30" src={nmbrCreature>0 ? srcImgCreature : srcLocked} alt="" />
+  <img className="w-30" src={nmbrCreature>0 ? srcImgCreature : srcLocked} alt="" />
   </div>
-
+  
   <div className="row-start-2 col-start-2 mt-[-15px]">
-    {!unlocked && (
-      <button
-        onClick={buy}
-        className="cursor-pointer shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none bg-gray-300 w-20 h-10 rounded-lg text-center"
-      >
-        {locked ? price : nmbrCreature}
-      </button>
+  {!unlocked && (
+    <button
+    onClick={buy}
+    className="cursor-pointer shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none bg-gray-300 w-20 h-10 rounded-lg text-center"
+    >
+    {locked ? price : nmbrCreature}
+    </button>
     )}
-  </div>
-
-  <div className="row-start-3 col-start-3">
+    </div>
+    
+    <div className="row-start-3 col-start-3">
     <img className="w-15" src={srcImgDeco2} alt="" />
-  </div>
-</div>
-);
-} */
+    </div>
+    </div>
+    );
+    } */
 }
 
 // locked ? srcLocked :

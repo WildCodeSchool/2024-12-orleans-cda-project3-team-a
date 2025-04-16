@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import Enclosure from './components/enclosure';
+import Fairy from '../src/pages/world-fairy';
 import Home from './pages/home';
 import Test from './pages/test';
 
@@ -14,8 +14,8 @@ const router = createBrowserRouter([
     element: <Test />,
   },
   {
-    path: '/enclosure',
-    element: <Enclosure />,
+    path: '/fairy',
+    element: <Fairy />,
   },
 ]);
 
