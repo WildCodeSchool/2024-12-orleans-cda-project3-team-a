@@ -21,7 +21,7 @@ export default function Test() {
       <p>{'PAGE TEST A SUPPRIMER PLUS TARD'}</p>
       <p className='text-2xl'>{' Laisse courrir ton imagination 🦅'}</p>
       <Loader />
-      <Barrier direction={'directionDown'} />
+      <Barrier direction='directionUp' />
     </div>
   );
 }

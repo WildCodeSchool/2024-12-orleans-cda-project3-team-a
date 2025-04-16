@@ -7,18 +7,33 @@ import moon from '../assets/images/icons-buttons/moon.png';
 import ButtonBuy from './button-buy';
 
 type BarrierProps = {
-  readonly direction: 'directionDown' | 'directionLeft';
+  readonly direction:
+    | 'directionDown'
+    | 'directionLeft'
+    | 'directionRight'
+    | 'directionUp';
 };
 
-export default function Barrier(direction: BarrierProps) {
+export default function Barrier({ direction }: BarrierProps) {
   //faire une requete pr savoir si c'est acheté ou non, ce qui permettra d'afficher ou non la direction
   const isBought = true;
-  // direction="directionDown";
 
   return (
     <div className='relative flex items-center'>
       {isBought ? (
-        <img src={directionUp} alt='' className='w-16' />
+        <img
+          src={
+            direction === 'directionUp'
+              ? directionUp
+              : direction === 'directionDown'
+                ? directionDown
+                : direction === 'directionRight'
+                  ? directionRight
+                  : directionLeft
+          }
+          alt=''
+          className='w-16'
+        />
       ) : (
         <>
           <img
@@ -35,7 +50,4 @@ export default function Barrier(direction: BarrierProps) {
       )}
     </div>
   );
-  //si pas acheté afficher barriere travaux + argent
-
-  //sinon afficher barriere fleche + penser au sens
 }
