@@ -11,8 +11,8 @@ export default function useWallet() {
   useEffect(() => {
     async function fetchWallet() {
       try {
-        const reponse = await fetch(`${API_URL}/game/info-park-user?userId=15`);
-        const data = await reponse.json();
+        const response = await fetch(`${API_URL}/game/info-park-user?userId=1`);
+        const data = await response.json();
         const roundedWallet = numeral(data.parkInfo.wallet)
           .format('0,0a')
           .toUpperCase();
