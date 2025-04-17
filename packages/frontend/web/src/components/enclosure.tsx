@@ -15,7 +15,7 @@ type EnclosureProps = PropsWithChildren<{
   readonly srcImgDeco2: string;
   readonly srcImgCreature: string;
   readonly price: number;
-  readonly srcLocked: string;
+  readonly srcLockedCreature: string;
   readonly nmbrCreature: number;
   readonly name: string;
   readonly positionDeco1: number;
@@ -31,14 +31,18 @@ export default function Enclosure({
   positionDeco1,
   positionDeco2,
   name,
+  srcLockedCreature,
+  nmbrCreature,
 }: EnclosureProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [lockedCreature, setLockedCreature] = useState(true);
   const handleModale = () => {
     setIsModalOpen(!isModalOpen);
   };
+
   return (
     <div
-      className={`flex h-[50vh] min-w-[33.3%] flex-col justify-between p-4 ${bgColor}`}
+      className={`flex h-[50vh] w-[500px] flex-col justify-between p-4 ${bgColor}`}
     >
       <img
         className={`w-15 left-${positionDeco1} relative`}
@@ -49,11 +53,17 @@ export default function Enclosure({
         onClick={handleModale}
         className='relative flex flex-col items-center justify-center gap-2'
       >
-        <img className='w-30' src={srcImgCreature} alt='' />
+        <img
+          className='w-30'
+          src={lockedCreature ? srcLockedCreature : srcImgCreature}
+          alt=''
+        />
 
-        <h1 className='absolute top-10'>{name}</h1>
+        <h1 className={` ${lockedCreature ? 'absolute top-10' : 'hidden'} `}>
+          {name}
+        </h1>
 
-        <ButtonBuy>{price}</ButtonBuy>
+        <ButtonBuy>{lockedCreature ? price : nmbrCreature}</ButtonBuy>
       </div>
       <img
         className={`relative left-${positionDeco2} w-15`}
@@ -64,7 +74,10 @@ export default function Enclosure({
   );
 }
 
-//Manque: si creature pas debloque, afficher le noms sur le panneaux, pouvoir acheter via le boutons sous le panneaux,
+//Manque: pouvoir acheter via le boutons sous le panneaux
+//Grisé les creatures quand elles sont inactivent
+//la modale pour les nourrires
+//
 
 // function buy() {
 //   if (wallet >= creature.price) {

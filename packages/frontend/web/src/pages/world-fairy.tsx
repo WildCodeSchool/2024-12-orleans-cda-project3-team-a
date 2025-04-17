@@ -7,7 +7,7 @@ import locked from '../assets/images/fairy-zone/sign.png';
 
 export default function fairy() {
   return (
-    <div className='grid-col-2 grid min-w-[1250px]'>
+    <div className='grid-col-2 grid max-w-[1600px]'>
       <div className='flex flex-row'>
         <Enclosure
           bgColor='bg-fairy-green'
@@ -15,9 +15,9 @@ export default function fairy() {
           srcImgDeco2={iceCream}
           srcImgCreature={elf}
           price={1000}
-          srcLocked={locked}
+          srcLockedCreature={locked}
           nmbrCreature={1}
-          name={''}
+          name={'Elf'}
           positionDeco1={80}
           positionDeco2={30}
         />
@@ -25,11 +25,11 @@ export default function fairy() {
           bgColor='bg-fairy-blue'
           srcImgDeco1={boat}
           srcImgDeco2={iceCream}
-          srcImgCreature={locked}
+          srcImgCreature={elf}
           price={1000}
-          srcLocked={locked}
+          srcLockedCreature={locked}
           nmbrCreature={1}
-          name={'gargoyl'}
+          name={'Mermaid'}
           positionDeco1={10}
           positionDeco2={100}
         />
@@ -37,11 +37,11 @@ export default function fairy() {
           bgColor='bg-fairy-green'
           srcImgDeco1={boat}
           srcImgDeco2={iceCream}
-          srcImgCreature={locked}
+          srcImgCreature={elf}
           price={1000}
-          srcLocked={locked}
+          srcLockedCreature={locked}
           nmbrCreature={1}
-          name={'unicor'}
+          name={'Unicorn'}
           positionDeco1={90}
           positionDeco2={10}
         />
@@ -53,9 +53,9 @@ export default function fairy() {
           srcImgDeco2={iceCream}
           srcImgCreature={elf}
           price={1000}
-          srcLocked={locked}
+          srcLockedCreature={locked}
           nmbrCreature={1}
-          name={''}
+          name={'Fairy'}
           positionDeco1={70}
           positionDeco2={20}
         />{' '}
@@ -65,9 +65,9 @@ export default function fairy() {
           srcImgDeco2={iceCream}
           srcImgCreature={elf}
           price={1000}
-          srcLocked={locked}
-          nmbrCreature={1}
-          name={''}
+          srcLockedCreature={locked}
+          nmbrCreature={100}
+          name={'Mermaid'}
           positionDeco1={11}
           positionDeco2={90}
         />
@@ -75,11 +75,11 @@ export default function fairy() {
           bgColor='bg-fairy-blue'
           srcImgDeco1={boat}
           srcImgDeco2={iceCream}
-          srcImgCreature={locked}
+          srcImgCreature={elf}
           price={1000}
-          srcLocked={locked}
+          srcLockedCreature={locked}
           nmbrCreature={1}
-          name={'Phoenix'}
+          name={'Unicorn'}
           positionDeco1={10}
           positionDeco2={80}
         />
