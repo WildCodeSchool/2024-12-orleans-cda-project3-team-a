@@ -1,21 +1,16 @@
 import { useState } from 'react';
 
-import Enclosure from '@/components/enclosure';
+import InfoNbVisitorsMoons from '@/components/info-nb-visitors-moons';
 import Input from '@/components/input-blue';
 import Loader from '@/components/loader';
 import ReturnHome from '@/components/return-home';
-
-import boat from '../assets/images/fairy-zone/boat.png';
-import elf from '../assets/images/fairy-zone/elf.png';
-import iceCream from '../assets/images/fairy-zone/ice-cream-shop.png';
-import locked from '../assets/images/fairy-zone/sign.png';
 
 export default function Test() {
   const [email, setEmail] = useState('test');
 
   return (
     <div className='grid min-w-[1600px] grid-cols-2'>
-      {/* <ReturnHome />
+      <ReturnHome />
       <Input
         type='email'
         placeholder='Votre email'
@@ -25,83 +20,8 @@ export default function Test() {
       {email}
       <p>{'PAGE TEST A SUPPRIMER PLUS TARD'}</p>
       <p className='text-2xl'>{' Laisse courrir ton imagination 🦅'}</p>
-      <Loader /> */}
-      <div>
-        <Enclosure
-          bgColor='bg-fairy-blue'
-          srcImgDeco1={boat}
-          srcImgDeco2={iceCream}
-          srcImgCreature={elf}
-          price={1000}
-          srcLocked={locked}
-          nmbrCreature={1}
-          name={''}
-          positionX={175}
-          positionY={40}
-        />
-        <Enclosure
-          bgColor='bg-fairy-green'
-          srcImgDeco1={boat}
-          srcImgDeco2={iceCream}
-          srcImgCreature={locked}
-          price={200}
-          srcLocked={locked}
-          nmbrCreature={1}
-          name={'mermaid'}
-          positionX={50}
-          positionY={20}
-        />
-        <Enclosure
-          bgColor='bg-fairy-green'
-          srcImgDeco1={boat}
-          srcImgDeco2={iceCream}
-          srcImgCreature={elf}
-          price={200}
-          srcLocked={locked}
-          nmbrCreature={2}
-          name={''}
-          positionX={1}
-          positionY={60}
-        />
-      </div>
-      <div>
-        <Enclosure
-          bgColor='bg-fairy-green'
-          srcImgDeco1={boat}
-          srcImgDeco2={iceCream}
-          srcImgCreature={elf}
-          price={300}
-          srcLocked={locked}
-          nmbrCreature={1}
-          name={''}
-          positionX={30}
-          positionY={90}
-        />
-        <Enclosure
-          bgColor='bg-fairy-blue'
-          srcImgDeco1={boat}
-          srcImgDeco2={iceCream}
-          srcImgCreature={elf}
-          price={300}
-          srcLocked={locked}
-          nmbrCreature={1}
-          name={''}
-          positionX={30}
-          positionY={90}
-        />
-        <Enclosure
-          bgColor='bg-fairy-green'
-          srcImgDeco1={boat}
-          srcImgDeco2={iceCream}
-          srcImgCreature={elf}
-          price={300}
-          srcLocked={locked}
-          nmbrCreature={1}
-          name={''}
-          positionX={30}
-          positionY={90}
-        />
-      </div>
+      <Loader />
+      <InfoNbVisitorsMoons />
     </div>
   );
 }
