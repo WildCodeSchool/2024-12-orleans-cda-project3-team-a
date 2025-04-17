@@ -67,7 +67,7 @@ export default function Barrier({ direction }: BarrierProps) {
             onClick={buyBarrier}
           >
             {/* //créer la logique pour déduire l'argent de cette barrière dans le wallet */}
-            <ButtonBuy bg='bg-[rgba(255,255,255,0.65)]' border=''>
+            <ButtonBuy bg='bg-[rgba(255,255,255,0.65)]'>
               {'100'} <img src={moon} alt='' className={`w-5`} />
             </ButtonBuy>
           </div>

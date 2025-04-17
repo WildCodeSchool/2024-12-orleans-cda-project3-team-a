@@ -23,7 +23,7 @@ export default function Test() {
       <p className='text-2xl'>{' Laisse courrir ton imagination 🦅'}</p>
       <Loader />
       <InfoNbVisitorsMoons />
-      <Barrier direction='directionUp' />
+      <Barrier direction='directionRight' />
     </div>
   );
 }
