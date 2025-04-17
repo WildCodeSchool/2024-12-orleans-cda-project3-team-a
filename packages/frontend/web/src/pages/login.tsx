@@ -1,16 +1,29 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
+
 
 import ButtonBlue from '@/components/button-blue';
 import InputBlue from '@/components/input-blue';
+import { useAuth } from '@/contexts/auth-context';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Login() {
+  const auth = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const navigate = useNavigate();
+  const isLoggedIn = auth?.isLoggedIn;
+  const isLoading = auth?.isLoading;
+
+  if (isLoading) {
+    return;
+  }
+
+  if (isLoggedIn) {
+    return <Navigate to='/home' />;
+  }
+
 
   const login = async () => {
     // console.log(email, password);
@@ -31,7 +44,8 @@ export default function Login() {
     const data = await res.json();
 
     if (data.message === 'User logged in!') {
-      // console.log("Redirection vers la page d'accueil");
+      auth?.setIsLoggedIn(true);
+
       await navigate('/home');
     }
 
@@ -72,7 +86,7 @@ export default function Login() {
       </ButtonBlue>
 
       <p>
-        {'Don’t have an account ? '}
+        {"Don't have an account ? "}
         <a href='/signup' className='text-secondary-blue underline'>
           {'Sign up here.'}
         </a>

@@ -2,23 +2,20 @@ import express from 'express';
 import * as jose from 'jose';
 
 import { db } from '@app/backend-shared';
-import { env } from '@app/shared';
 
-env();
 const FRONTEND_HOST = process.env.FRONTEND_HOST ?? '';
-const JWT_SECRET = process.env.JWT_SECRET;
-const secret = new TextEncoder().encode(JWT_SECRET);
+const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
 const getMeRouter = express.Router();
 
 getMeRouter.get('/me', async (req, res) => {
-  const token = req.signedCookies.token;
-  //   console.log(token);
+  const authToken = req.signedCookies.authToken;
+  //   console.log(authToken);
 
   try {
     const { payload } = await jose.jwtVerify<{
       userId: number;
-    }>(token, secret, {
+    }>(authToken, secret, {
       audience: FRONTEND_HOST,
       issuer: FRONTEND_HOST,
     });

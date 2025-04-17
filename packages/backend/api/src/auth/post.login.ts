@@ -7,9 +7,7 @@ import { db } from '@app/backend-shared';
 const postLoginRouter = express.Router();
 //on recupere le .env
 const FRONTEND_HOST = process.env.FRONTEND_HOST ?? '';
-const JWT_SECRET = process.env.JWT_SECRET;
-
-const secret = new TextEncoder().encode(JWT_SECRET);
+const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
 postLoginRouter.post('/login', async (req, res) => {
   //on va récupérer email et password
@@ -38,7 +36,7 @@ postLoginRouter.post('/login', async (req, res) => {
   }
 
   //ici on génère le payloads
-  const token = await new jose.SignJWT({
+  const authToken = await new jose.SignJWT({
     sub: email,
     userId: user.id,
   })
@@ -50,9 +48,9 @@ postLoginRouter.post('/login', async (req, res) => {
     .setAudience(FRONTEND_HOST)
     .setExpirationTime('60s')
     .sign(secret);
-  // console.log(token);
+  // console.log(authToken);
 
-  res.cookie('token', token, {
+  res.cookie('authToken', authToken, {
     httpOnly: true,
     // sameSite: '',
     // secure: '',
