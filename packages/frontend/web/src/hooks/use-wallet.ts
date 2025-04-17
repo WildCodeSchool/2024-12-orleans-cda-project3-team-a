@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import { numberFormatter } from './number-formatter';
+import { useNumberFormatter } from './number-formatter';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function useWallet() {
-  const [wallet, setWallet] = useState('');
+  const [wallet, setWallet] = useState(0);
 
   //CHANGER ICI L'ID PLUS TARD !!
 
@@ -14,8 +14,8 @@ export default function useWallet() {
       try {
         const response = await fetch(`${API_URL}/game/info-park-user`);
         const data = await response.json();
-        const roundedWallet = numberFormatter(data.parkInfo.wallet);
-        setWallet(roundedWallet);
+        // const roundedWallet = data.parkInfo.wallet;
+        setWallet(data.parkInfo.wallet);
       } catch (error) {
         console.error('fetch failed');
       }
@@ -24,5 +24,7 @@ export default function useWallet() {
     void fetchWallet();
   }, []);
 
-  return wallet;
+  const walletFormated = useNumberFormatter(wallet);
+
+  return walletFormated;
 }
