@@ -10,7 +10,7 @@ import {
 type AuthProviderProps = PropsWithChildren<object>;
 type AuthProviderState = {
   isLoggedIn: boolean;
-  setIsLoggedIn: (value:  boolean) => void;
+  setIsLoggedIn: (value: boolean) => void;
   isLoading: boolean;
 };
 

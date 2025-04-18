@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
-
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import ButtonBlue from '@/components/button-blue';
 import InputBlue from '@/components/input-blue';
@@ -23,7 +22,6 @@ export default function Login() {
   if (isLoggedIn) {
     return <Navigate to='/home' />;
   }
-
 
   const login = async () => {
     // console.log(email, password);
@@ -58,7 +56,7 @@ export default function Login() {
         event.preventDefault();
         await login();
       }}
-      className='flex flex-col items-center justify-center gap-5 p-4 text-xs md:text-base'
+      className='flex flex-col items-center justify-center gap-5 p-4 px-6 text-xs md:px-10 md:text-base'
     >
       <h2 className='text-secondary-blue pl-4 text-xl font-extrabold tracking-[0.6em] md:text-2xl'>
         {'LOG IN'}
@@ -83,6 +81,10 @@ export default function Login() {
 
       <ButtonBlue bg='bg-primary-blue' type='submit'>
         {'LOG IN'}
+      </ButtonBlue>
+
+      <ButtonBlue bg='bg-tertiary-blue' type='button'>
+        <a href='/rules'>{'RULES'}</a>
       </ButtonBlue>
 
       <p>

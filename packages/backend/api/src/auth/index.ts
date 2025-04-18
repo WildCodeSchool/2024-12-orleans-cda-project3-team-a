@@ -1,8 +1,8 @@
 import express from 'express';
 
+import getMeRouter from './get.me';
 import postLoginRouter from './post.login';
 import postRegisterRouter from './post.register';
-import getMeRouter from './get.me';
 
 const authRouter = express.Router();
 
