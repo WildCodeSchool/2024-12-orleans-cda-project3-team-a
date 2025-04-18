@@ -34,6 +34,8 @@ export default function Enclosure({
   srcLockedCreature,
   nmbrCreature,
 }: EnclosureProps) {
+  console.log('positionDeco1:', positionDeco1);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [lockedCreature, setLockedCreature] = useState(true);
   const handleModale = () => {
@@ -42,10 +44,11 @@ export default function Enclosure({
 
   return (
     <div
-      className={`flex h-[50vh] w-[500px] flex-col justify-between p-4 ${bgColor}`}
+      className={`flex h-[50vh] w-full flex-col justify-between p-4 ${bgColor}`}
     >
       <img
-        className={`w-15 left-${positionDeco1} relative`}
+        style={{ left: `${positionDeco1}px` }}
+        className={`relative w-15`}
         src={srcImgDeco1}
         alt=''
       />
