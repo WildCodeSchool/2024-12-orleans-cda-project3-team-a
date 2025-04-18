@@ -7,7 +7,7 @@ const getInfoParkUser = express.Router();
 getInfoParkUser.get('/info-park-user', async (req, res) => {
   //PLUS TARD récupérer l'id dans le cookie !
   //http://192.168.0.54:3333/api/game/info-park-user
-  const userId = 1;
+  const userId = 2;
 
   const parkInfo = await db
     .selectFrom('parks')
@@ -22,8 +22,19 @@ getInfoParkUser.get('/info-park-user', async (req, res) => {
     return;
   }
 
+  const visitorsCountResult = await db
+    .selectFrom('park_visitors')
+    .select(({ fn }) => [fn.countAll().as('count')])
+    .where('park_visitors.park_id', '=', parkInfo.id)
+    .executeTakeFirst();
+
+  const visitorsCount = visitorsCountResult
+    ? Number(visitorsCountResult.count)
+    : 0;
+
   res.json({
     parkInfo,
+    visitorsCount,
   });
 });
 
