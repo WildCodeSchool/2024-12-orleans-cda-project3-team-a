@@ -60,6 +60,5 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
 
 export function useAuth() {
   const context = useContext(authProviderContext);
-
   return context;
 }

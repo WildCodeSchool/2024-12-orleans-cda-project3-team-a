@@ -15,11 +15,11 @@ export default function Login() {
   const isLoggedIn = auth?.isLoggedIn;
   const isLoading = auth?.isLoading;
 
-  if (isLoading) {
+  if (isLoading === true) {
     return;
   }
 
-  if (isLoggedIn) {
+  if (isLoggedIn === true) {
     return <Navigate to='/home' />;
   }
 
@@ -27,6 +27,7 @@ export default function Login() {
     // console.log(email, password);
     // console.log('API_URL:', API_URL);
 
+    //get the response to know if user and password ok
     const res = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       body: JSON.stringify({
@@ -40,10 +41,9 @@ export default function Login() {
     });
 
     const data = await res.json();
-
+    //if good user and password go to home
     if (data.message === 'User logged in!') {
       auth?.setIsLoggedIn(true);
-
       await navigate('/home');
     }
 
@@ -51,12 +51,13 @@ export default function Login() {
   };
 
   return (
+    //Form to login
     <form
       onSubmit={async (event) => {
         event.preventDefault();
         await login();
       }}
-      className='flex flex-col items-center justify-center gap-5 p-4 px-6 text-xs md:px-10 md:text-base'
+      className='z-3 flex flex-col items-center justify-center gap-5 p-4 px-6 text-xs md:px-10 md:text-base'
     >
       <h2 className='text-secondary-blue pl-4 text-xl font-extrabold tracking-[0.6em] md:text-2xl'>
         {'LOG IN'}

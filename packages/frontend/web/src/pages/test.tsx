@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import CloseWindow from '@/components/close-window';
+import Deconnection from '@/components/deconnection';
 import InfoNbVisitorsMoons from '@/components/info-nb-visitors-moons';
 import InputBlue from '@/components/input-blue';
 import Loader from '@/components/loader';
@@ -11,6 +13,7 @@ export default function Test() {
   return (
     <div className='flex flex-col items-center justify-center gap-5'>
       <ReturnHome />
+      <CloseWindow />
       <InputBlue
         type='email'
         placeholder='Votre email'
@@ -22,6 +25,7 @@ export default function Test() {
       <p className='text-2xl'>{' Laisse courrir ton imagination 🦅'}</p>
       <Loader />
       <InfoNbVisitorsMoons />
+      <Deconnection />
     </div>
   );
 }

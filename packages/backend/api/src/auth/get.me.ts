@@ -12,6 +12,7 @@ getMeRouter.get('/me', async (req, res) => {
   const authToken = req.signedCookies.authToken;
   //   console.log(authToken);
 
+  //verify if token is available
   try {
     const { payload } = await jose.jwtVerify<{
       userId: number;
