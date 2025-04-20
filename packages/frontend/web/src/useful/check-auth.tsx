@@ -1,19 +1,19 @@
-// import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
-// import { useAuth } from '@/contexts/auth-context';
+import { useAuth } from '@/contexts/auth-context';
 
-// export default function CheckAuth() {
-//   const auth = useAuth();
-//   const isLoggedIn = auth?.isLoggedIn;
-//   const isLoading = auth?.isLoading;
+export default function CheckAuth() {
+  const auth = useAuth();
+  const isLoggedIn = auth?.isLoggedIn;
+  const isLoading = auth?.isLoading;
 
-//   if (isLoading === true) {
-//     return;
-//   }
+  if (isLoading === true) {
+    return;
+  }
 
-//   if (isLoggedIn === false ) {
-//     return <Navigate to='/login' />;
-//   }
+  if (isLoggedIn === false) {
+    return <Navigate to='/' />;
+  }
 
-//   return <Outlet />;
-// }
+  return <Outlet />;
+}

@@ -15,7 +15,7 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   const signUp = async () => {
-    console.log(email, username, password, confirmPassword);
+    // console.log(email, username, password, confirmPassword);
 
     const res = await fetch(`${API_URL}/auth/register`, {
       method: 'POST',

@@ -13,11 +13,6 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const isLoggedIn = auth?.isLoggedIn;
-  const isLoading = auth?.isLoading;
-
-  if (isLoading === true) {
-    return;
-  }
 
   if (isLoggedIn === true) {
     return <Navigate to='/home' />;

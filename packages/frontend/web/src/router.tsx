@@ -6,6 +6,7 @@ import Login from './pages/login';
 import Rules from './pages/rules';
 import SignUp from './pages/sign-up';
 import Test from './pages/test';
+import CheckAuth from './useful/check-auth';
 
 const router = createBrowserRouter([
   {
@@ -17,8 +18,14 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: 'signup',
-        element: <SignUp />,
+        path: '',
+        element: <CheckAuth />,
+        children: [
+          {
+            path: 'signup',
+            element: <SignUp />,
+          },
+        ],
       },
       {
         path: 'rules',
@@ -26,10 +33,19 @@ const router = createBrowserRouter([
       },
     ],
   },
+  //Put pages in children to have the check for authentication
+  //if is loggedin we stay on the actual page if not we go on login
   {
-    path: '/home',
-    element: <Home />,
+    path: '/',
+    element: <CheckAuth />,
+    children: [
+      {
+        path: 'home',
+        element: <Home />,
+      },
+    ],
   },
+  //A supprimer plus tard!
   {
     path: '/test',
     element: <Test />,
