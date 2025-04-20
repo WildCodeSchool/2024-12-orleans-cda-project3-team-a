@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import ButtonBlue from '@/components/button-blue';
 import InputBlue from '@/components/input-blue';
@@ -11,8 +10,7 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [username, setUsername] = useState('');
-
-  const navigate = useNavigate();
+  const [isRegistered, setIsRegistered] = useState(false);
 
   const signUp = async () => {
     // console.log(email, username, password, confirmPassword);
@@ -33,14 +31,15 @@ export default function SignUp() {
     const data = await res.json();
 
     if (data.message === 'User registered') {
-      console.log('Redirection vers la page créer mon park');
-      await navigate('/home');
+      // console.log('Afficher composant créer mon park');
+      // await navigate('/welcome');
+      setIsRegistered(true);
     }
 
-    console.log(data);
+    // console.log(data);
   };
 
-  return (
+  return !isRegistered ? (
     <form
       onSubmit={async (event) => {
         event.preventDefault();
@@ -95,8 +94,11 @@ export default function SignUp() {
         {'Already have an account ? '}
         <a href='/' className='text-secondary-blue underline'>
           {'Log in here.'}
-        </a>{' '}
+        </a>
       </p>
     </form>
+  ) : (
+    //Page à faire sur une autre branche !
+    <p>{'Bientôt la page pour créer ton park ici !'}</p>
   );
 }
