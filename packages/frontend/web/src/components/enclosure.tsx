@@ -44,7 +44,7 @@ export default function Enclosure({
 
   return (
     <div
-      className={`flex h-[50vh] w-full flex-col justify-between p-4 ${bgColor}`}
+      className={`flex h-[50vh] w-[500px] flex-col justify-between p-4 ${bgColor}`}
     >
       <img
         style={{ left: `${positionDeco1}px` }}
