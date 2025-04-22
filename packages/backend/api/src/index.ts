@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 
@@ -11,7 +12,9 @@ const app = express();
 
 const HOST = process.env.BACKEND_HOST ?? 'localhost';
 const PORT = process.env.BACKEND_PORT ?? 3000;
+const COOKIE_SECRET = process.env.COOKIE_SECRET ?? 'secret';
 
+app.use(cookieParser(COOKIE_SECRET));
 app.use(express.json());
 app.use(
   cors({
