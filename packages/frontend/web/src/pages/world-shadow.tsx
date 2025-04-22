@@ -29,8 +29,8 @@ export default function shadow() {
           srcLockedCreature={Sign}
           nmbrCreature={1}
           name={'Elf'}
-          positionDeco1={80}
-          positionDeco2={30}
+          positionDeco1={200}
+          positionDeco2={3}
         />
         <Enclosure
           bgColor='bg-shadow-green'
@@ -42,7 +42,7 @@ export default function shadow() {
           nmbrCreature={1}
           name={'Mermaid'}
           positionDeco1={10}
-          positionDeco2={100}
+          positionDeco2={350}
         />
         <Enclosure
           bgColor='bg-shadow-purple'
@@ -54,7 +54,7 @@ export default function shadow() {
           nmbrCreature={1}
           name={'Mermaid'}
           positionDeco1={10}
-          positionDeco2={100}
+          positionDeco2={320}
         />
       </div>
       <div className='flex flex-row'>
@@ -68,7 +68,7 @@ export default function shadow() {
           nmbrCreature={1}
           name={'Fairy'}
           positionDeco1={70}
-          positionDeco2={150}
+          positionDeco2={250}
         />{' '}
         <Enclosure
           bgColor='bg-shadow-purple'
@@ -80,7 +80,7 @@ export default function shadow() {
           nmbrCreature={1}
           name={'Fairy'}
           positionDeco1={70}
-          positionDeco2={20}
+          positionDeco2={290}
         />{' '}
         <Enclosure
           bgColor='bg-shadow-green'
@@ -92,7 +92,7 @@ export default function shadow() {
           nmbrCreature={100}
           name={'Mermaid'}
           positionDeco1={11}
-          positionDeco2={90}
+          positionDeco2={210}
         />
       </div>
     </div>

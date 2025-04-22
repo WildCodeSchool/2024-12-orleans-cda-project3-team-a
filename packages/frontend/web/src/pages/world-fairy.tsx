@@ -7,7 +7,7 @@ import locked from '../assets/images/fairy-zone/sign.png';
 
 export default function fairy() {
   return (
-    <div className='grid-col-2 grid w-[1600px]'>
+    <div className='grid-col-2 grid max-w-[1600px]'>
       <div className='flex flex-row'>
         <Enclosure
           bgColor='bg-fairy-green'
@@ -18,8 +18,8 @@ export default function fairy() {
           srcLockedCreature={locked}
           nmbrCreature={1}
           name={'Elf'}
-          positionDeco1={200}
-          positionDeco2={70}
+          positionDeco1={300}
+          positionDeco2={400}
         />
         <Enclosure
           bgColor='bg-fairy-blue'
@@ -30,7 +30,7 @@ export default function fairy() {
           srcLockedCreature={locked}
           nmbrCreature={1}
           name={'Mermaid'}
-          positionDeco1={10}
+          positionDeco1={200}
           positionDeco2={100}
         />
       </div>

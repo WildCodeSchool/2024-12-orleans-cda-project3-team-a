@@ -44,7 +44,7 @@ export default function Enclosure({
 
   return (
     <div
-      className={`flex h-[50vh] w-[500px] flex-col justify-between p-4 ${bgColor}`}
+      className={`flex h-[50vh] min-w-[520px] flex-col justify-between p-4 ${bgColor}`}
     >
       <img
         style={{ left: `${positionDeco1}px` }}
@@ -69,7 +69,8 @@ export default function Enclosure({
         <ButtonBuy>{lockedCreature ? price : nmbrCreature}</ButtonBuy>
       </div>
       <img
-        className={`relative left-${positionDeco2} w-15`}
+        style={{ left: `${positionDeco2}px` }}
+        className={`relative w-15`}
         src={srcImgDeco2}
         alt=''
       />
