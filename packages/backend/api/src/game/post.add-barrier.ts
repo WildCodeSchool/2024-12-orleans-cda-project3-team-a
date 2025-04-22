@@ -1,12 +1,8 @@
 import express from 'express';
 
-import { db } from '@app/backend-shared';
+const postAddBarrier = express.Router();
 
-const getInfoParkUser = express.Router();
-
-getInfoParkUser.get('/info-park-user', async (req, res) => {
-  //PLUS TARD récupérer l'id dans le cookie !
-  //http://192.168.0.54:3333/api/game/info-park-user
+postAddBarrier.post('/add-barrier', async (req, res) => {
   const userId = 8;
 
   const parkInfo = await db
@@ -27,4 +23,4 @@ getInfoParkUser.get('/info-park-user', async (req, res) => {
   });
 });
 
-export default getInfoParkUser;
+export default postAddBarrier;

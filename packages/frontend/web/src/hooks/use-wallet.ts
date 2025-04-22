@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { useNumberFormatter } from './number-formatter';
+import { useNumberFormatter } from './use-number-formatter';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -16,7 +16,9 @@ export default function useWallet() {
         const data = await response.json();
         // const roundedWallet = data.parkInfo.wallet;
         setWallet(data.parkInfo.wallet);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('fetch failed');
       }
     }

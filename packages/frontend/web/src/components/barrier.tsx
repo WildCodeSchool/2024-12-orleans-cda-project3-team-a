@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import { useGameInfoContext } from '@/contexts/game-info-context';
 
 import barrierIcon from '../assets/images/deco/barrier.png';
 import directionDown from '../assets/images/deco/direction-down.png';
@@ -19,16 +21,25 @@ type BarrierProps = {
 export default function Barrier({ direction }: BarrierProps) {
   //faire une requete pr savoir si c'est acheté ou non, ce qui permettra d'afficher ou non la direction
   const [isBought, setIsBought] = useState(false);
-  // const isBought = false;
-  const isEnoughMooney = true;
+  const [isEnoughMooney, setIsEnoughMooney] = useState(false);
+
+  const { wallet } = useGameInfoContext();
+  const walletNumber = parseInt(wallet);
+  const barrierPrice = 300;
+
+  //Check if user has enough money
+  useEffect(() => {
+    if (walletNumber > barrierPrice) {
+      setIsEnoughMooney(true);
+    }
+  }, [walletNumber]);
 
   const buyBarrier = () => {
     if (isEnoughMooney) {
-      console.log('barrière achetée');
-
+      //Supprimer la barrière en travaux dans park_decorations
+      //Ajouter la barriere direction dans park_decorations
+      //Retirer l'argent dans wallet et dans bdd
       setIsBought(true);
-    } else {
-      console.log("pas assez d'argent!");
     }
   };
 
@@ -50,7 +61,7 @@ export default function Barrier({ direction }: BarrierProps) {
           className='w-16'
         />
       ) : (
-        // IF is NOT -> bought display the barrier in construction and display price to buy it
+        // IF is NOT bought->  display the barrier in construction and display price to buy it
         <>
           <img
             src={barrierIcon}
@@ -68,7 +79,7 @@ export default function Barrier({ direction }: BarrierProps) {
           >
             {/* //créer la logique pour déduire l'argent de cette barrière dans le wallet */}
             <ButtonBuy bg='bg-[rgba(255,255,255,0.65)]'>
-              {'100'} <img src={moon} alt='' className={`w-5`} />
+              {barrierPrice} <img src={moon} alt='' className={`w-5`} />
             </ButtonBuy>
           </div>
         </>
