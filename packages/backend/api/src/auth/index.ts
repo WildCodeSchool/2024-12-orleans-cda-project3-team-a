@@ -6,7 +6,6 @@ import postLogoutRouter from './post.logout';
 import postRegisterRouter from './post.register';
 
 const authRouter = express.Router();
-
 authRouter.use(getMeRouter);
 authRouter.use(postLoginRouter);
 authRouter.use(postRegisterRouter);

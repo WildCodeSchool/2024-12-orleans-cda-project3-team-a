@@ -32,3 +32,11 @@ app.listen(PORT, () => {
 });
 
 export default app;
+
+declare module 'express' {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+  interface Request {
+    isAuthenticated?: boolean;
+    userId?: number;
+  }
+}
