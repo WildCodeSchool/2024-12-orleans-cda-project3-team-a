@@ -14,12 +14,14 @@ postAddBarrier.post('/add-barrier', async (req, res) => {
     .innerJoin('decorations', 'decorations.id', 'park_decorations.deco_id')
     .select(['park_id', 'deco_id', 'name', 'price'])
     // .where('decorations.name', '=', directionName )
+
     .where((eb) =>
       eb.and([
         eb('park_decorations.park_id', '=', parkId),
         eb('decorations.name', '=', directionName),
       ]),
     )
+
     .executeTakeFirst();
 
   //if barrier  already exist do not add

@@ -10,6 +10,14 @@ import directionUp from '../assets/images/deco/direction-up.png';
 import moon from '../assets/images/icons-buttons/moon.png';
 import ButtonBuy from './button-buy';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+type BarrierType = {
+  id: number;
+  name: string;
+  deco_id: number;
+};
+
 type BarrierProps = {
   readonly direction:
     | 'directionDown'
@@ -19,6 +27,7 @@ type BarrierProps = {
 };
 
 export default function Barrier({ direction }: BarrierProps) {
+  // export default function Barrier() {
   //faire une requete pr savoir si c'est acheté ou non, ce qui permettra d'afficher ou non la direction
   const [isBought, setIsBought] = useState(false);
   const [isEnoughMooney, setIsEnoughMooney] = useState(false);
@@ -26,6 +35,24 @@ export default function Barrier({ direction }: BarrierProps) {
   const { wallet } = useGameInfoContext();
   const walletNumber = parseInt(wallet);
   const barrierPrice = -300;
+
+  const [barriers, setBarriers] = useState<BarrierType[]>([]);
+
+  //fetch pour tableau des barrières
+  useEffect(() => {
+    async function fetchBarrier() {
+      try {
+        const response = await fetch(`${API_URL}/game/barrier`);
+        const data = await response.json();
+        setBarriers(data.barrier);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    void fetchBarrier();
+  }, []);
+
+  console.log(barriers);
 
   //Check if user has enough money
   useEffect(() => {

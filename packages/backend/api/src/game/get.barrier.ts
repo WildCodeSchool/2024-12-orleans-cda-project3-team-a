@@ -5,13 +5,18 @@ import { db } from '@app/backend-shared';
 const getBarrier = express.Router();
 
 getBarrier.get('/barrier', async (req, res) => {
-  const parkId = 3;
+  const parkId = 5;
+  const zoneId = 1;
 
   const barrier = await db
-    .selectFrom('park_decorations')
-    .innerJoin('decorations', 'decorations.id', 'park_decorations.deco_id')
-    .select(['park_id', 'deco_id', 'name', 'price'])
-    .where('park_decorations.park_id', '=', parkId)
+    .selectFrom('decorations')
+    .leftJoin('park_decorations', (join) =>
+      join
+        .onRef('decorations.id', '=', 'park_decorations.deco_id')
+        .on('park_decorations.park_id', '=', parkId),
+    )
+    .where('decorations.zone_id', '=', zoneId) // ou un autre filtre selon le cas
+    .selectAll()
     .execute();
 
   if (!barrier) {
