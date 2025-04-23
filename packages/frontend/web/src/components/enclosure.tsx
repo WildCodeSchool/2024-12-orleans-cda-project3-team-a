@@ -37,14 +37,14 @@ export default function Enclosure({
   console.log('positionDeco1:', positionDeco1);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [lockedCreature, setLockedCreature] = useState(true);
+  const [lockedCreature, setLockedCreature] = useState(false);
   const handleModale = () => {
     setIsModalOpen(!isModalOpen);
   };
 
   return (
     <div
-      className={`flex h-[50vh] min-w-[520px] flex-col justify-between p-4 ${bgColor}`}
+      className={`flex h-[50vh] min-w-[500px] flex-col justify-between p-4 ${bgColor}`}
     >
       <img
         style={{ left: `${positionDeco1}px` }}
