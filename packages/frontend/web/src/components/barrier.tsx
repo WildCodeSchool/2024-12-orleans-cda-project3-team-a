@@ -25,7 +25,7 @@ export default function Barrier({ direction }: BarrierProps) {
 
   const { wallet } = useGameInfoContext();
   const walletNumber = parseInt(wallet);
-  const barrierPrice = 300;
+  const barrierPrice = -300;
 
   //Check if user has enough money
   useEffect(() => {
