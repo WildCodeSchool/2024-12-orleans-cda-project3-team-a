@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { useNumberFormatter } from './number-formatter';
+import { useNumberFormatter } from './use-number-formatter';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -27,9 +27,10 @@ export default function useParkInfo() {
   }, []);
 
   const walletFormated = useNumberFormatter(wallet);
+  const visitorsFormated = useNumberFormatter(visitorsCount);
 
   return {
     walletFormated,
-    visitorsCount,
+    visitorsFormated,
   };
 }
