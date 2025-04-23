@@ -18,7 +18,7 @@ app.use(cookieParser(COOKIE_SECRET));
 app.use(express.json());
 app.use(
   cors({
-    //ici on gere l'erreur corse
+    //Error Cors
     origin: `http://${process.env.FRONTEND_HOST}:${process.env.FRONTEND_PORT}`,
     credentials: true,
   }),
@@ -33,7 +33,7 @@ app.listen(PORT, () => {
 
 export default app;
 
-declare module 'express' {
+declare module 'Express' {
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface Request {
     isAuthenticated?: boolean;

@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 import ButtonBlue from '@/components/button-blue';
 import InputBlue from '@/components/input-blue';
+import { useAuth } from '@/contexts/auth-context';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -12,6 +14,11 @@ export default function SignUp() {
   const [username, setUsername] = useState('');
   const [isRegistered, setIsRegistered] = useState(false);
 
+  const auth = useAuth();
+  const isLoggedIn = auth?.isLoggedIn;
+  if (isLoggedIn === true) {
+    return <Navigate to='/home' />;
+  }
   const signUp = async () => {
     // console.log(email, username, password, confirmPassword);
 

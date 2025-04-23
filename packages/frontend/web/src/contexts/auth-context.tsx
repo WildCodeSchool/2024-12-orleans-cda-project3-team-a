@@ -23,6 +23,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 export default function AuthContext({ children, ...props }: AuthProviderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [userConnected, setUserConnected] = useState('');
 
   useEffect(() => {
     const fetchAuth = async () => {
@@ -31,17 +32,21 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
       });
       const data = (await res.json()) as {
         ok: boolean;
+        user?: {
+          id: string;
+          email: string;
+        };
       };
 
-      if (data.ok) {
+      if (data.user) {
         setIsLoggedIn(true);
+        setUserConnected(data.user.email);
       }
 
       setIsLoading(false);
     };
     void fetchAuth();
   }, []);
-
   const value = useMemo(
     () => ({
       isLoggedIn,

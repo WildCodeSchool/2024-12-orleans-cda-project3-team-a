@@ -22,49 +22,44 @@ export default async function authMiddleware(
       issuer: FRONTEND_HOST,
     });
 
-    //On verifie si on est connecté ou pas, si oui alor son a notre userId
     req.isAuthenticated = true;
     req.userId = payload.userId;
   } catch (atError) {
     req.isAuthenticated = false;
-  }
-  next();
+    const refreshToken = req.signedCookies.refreshToken;
+    try {
+      const { payload } = await jose.jwtVerify<{
+        userId: number;
+      }>(refreshToken, refreshTokenSecret, {
+        audience: FRONTEND_HOST,
+        issuer: FRONTEND_HOST,
+      });
 
-  //si invalide alors on check le refresh
-  const refreshToken = req.signedCookies.refreshToken;
-  try {
-    const { payload } = await jose.jwtVerify<{
-      userId: number;
-    }>(refreshToken, refreshTokenSecret, {
-      audience: FRONTEND_HOST,
-      issuer: FRONTEND_HOST,
-    });
-
-    const newAuthToken = await new jose.SignJWT({
-      sub: payload.sub,
-      userId: payload.userId,
-    })
-      .setProtectedHeader({
-        alg: 'HS256',
+      const newAuthToken = await new jose.SignJWT({
+        sub: payload.sub,
+        userId: payload.userId,
       })
-      .setIssuedAt()
-      .setIssuer(FRONTEND_HOST)
-      .setAudience(FRONTEND_HOST)
-      .setExpirationTime('60s')
-      .sign(secret);
+        .setProtectedHeader({
+          alg: 'HS256',
+        })
+        .setIssuedAt()
+        .setIssuer(FRONTEND_HOST)
+        .setAudience(FRONTEND_HOST)
+        .setExpirationTime('60s')
+        .sign(secret);
 
-    res.cookie('authToken', newAuthToken, {
-      httpOnly: true,
-      // sameSite: '',
-      // secure: ''
-      signed: true,
-    });
+      res.cookie('authToken', newAuthToken, {
+        httpOnly: true,
+        // sameSite: '',
+        // secure: ''
+        signed: true,
+      });
 
-    req.isAuthenticated = true;
-    req.userId = payload.userId;
-  } catch (rfError) {
-    //invalide
-    req.isAuthenticated = false;
+      req.isAuthenticated = true;
+      req.userId = payload.userId;
+    } catch (rfError) {
+      req.isAuthenticated = false;
+    }
   }
   next();
 }

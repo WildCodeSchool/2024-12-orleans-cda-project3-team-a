@@ -6,7 +6,6 @@ import { db } from '@app/backend-shared';
 const postRegisterRouter = express.Router();
 
 postRegisterRouter.post('/register', async (req, res) => {
-  //on va récupérer email et password dans le body
   const { username, email, password, confirmPassword, avatarId } = req.body;
 
   const user = await db
