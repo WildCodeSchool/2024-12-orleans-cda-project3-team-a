@@ -13,8 +13,9 @@ type BarrierType = {
   id: number;
   name: string;
   deco_id: number;
-  src_image: string;
   position: string;
+  direction: string;
+  price: number;
 };
 
 export default function Test() {

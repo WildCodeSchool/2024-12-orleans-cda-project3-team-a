@@ -1,20 +1,34 @@
+import { useEffect, useState } from 'react';
+
+import { useGameInfoContext } from '@/contexts/game-info-context';
+
 import barrierIcon from '../assets/images/deco/barrier.png';
 import directionDown from '../assets/images/deco/direction-down.png';
 import directionLeft from '../assets/images/deco/direction-left.png';
 import directionRight from '../assets/images/deco/direction-right.png';
 import directionUp from '../assets/images/deco/direction-up.png';
+import moon from '../assets/images/icons-buttons/moon.png';
+import ButtonBuy from './button-buy';
 
 type BarrierCardProps = {
   readonly barrier: {
     id: number;
     name: string;
     deco_id?: number | null;
-    src_image: string;
     position: string;
+    direction: string;
+    price: number;
   };
 };
 
 export default function BarrierBis({ barrier }: BarrierCardProps) {
+  const [isEnoughMooney, setIsEnoughMooney] = useState(true);
+  const { wallet } = useGameInfoContext();
+
+  const buyBarrier = () => {
+    console.log('acheter barriere');
+  };
+
   return (
     //Whatever the situation is unlock or not, we have to display it depending the position in bdd
     <div
@@ -40,11 +54,11 @@ export default function BarrierBis({ barrier }: BarrierCardProps) {
           {/* We check what is the correct direction to display */}
           <img
             src={
-              barrier.src_image === 'direction-up.png'
+              barrier.direction === 'up'
                 ? directionUp
-                : barrier.src_image === 'direction-down.png'
+                : barrier.direction === 'down'
                   ? directionDown
-                  : barrier.src_image === 'direction-right.png'
+                  : barrier.direction === 'right'
                     ? directionRight
                     : directionLeft
             }
@@ -54,7 +68,21 @@ export default function BarrierBis({ barrier }: BarrierCardProps) {
         </div>
       ) : (
         // If barrier is locked we display the barrier in construction to buy
-        <img src={barrierIcon} alt='Barrier icon' className='w-16' />
+        <div className='relative'>
+          <img src={barrierIcon} alt='Barrier to buy' className='w-16' />
+          <div
+            title={
+              isEnoughMooney ? 'click to buy this barrier' : 'not enough mooney'
+            }
+            className={`absolute top-1/2 z-1 -translate-y-1/2 ${!isEnoughMooney ? 'text-gray-500 grayscale-100' : ''} `}
+            onClick={buyBarrier}
+          >
+            {/* //créer la logique pour déduire l'argent de cette barrière dans le wallet */}
+            <ButtonBuy bg='bg-[rgba(255,255,255,0.75)]'>
+              {barrier.price} <img src={moon} alt='mooney' className={`w-5`} />
+            </ButtonBuy>
+          </div>
+        </div>
       )}
     </div>
   );

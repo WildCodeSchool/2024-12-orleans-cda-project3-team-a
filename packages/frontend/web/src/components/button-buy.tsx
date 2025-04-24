@@ -3,7 +3,7 @@ import type { PropsWithChildren } from 'react';
 type ButtonBuyProps = PropsWithChildren<{
   readonly bg:
     | 'bg-[linear-gradient(to_bottom,_#FFFFFF,_#D8D8D8)]'
-    | 'bg-[rgba(255,255,255,0.65)]';
+    | 'bg-[rgba(255,255,255,0.75)]';
   readonly border?: 'border border-black';
 }>;
 

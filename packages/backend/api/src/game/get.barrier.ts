@@ -6,7 +6,7 @@ const getBarrier = express.Router();
 
 getBarrier.get('/barrier', async (req, res) => {
   const parkId = 5;
-  const zoneId = 4;
+  const zoneId = 2;
 
   const barrier = await db
     .selectFrom('decorations')
