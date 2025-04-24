@@ -1,17 +1,17 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import AuthLayout from './pages/auth-layout';
 import Home from './pages/home';
 import Login from './pages/login';
 import Rules from './pages/rules';
 import SignUp from './pages/sign-up';
 import Test from './pages/test';
+import WelcomeLayout from './pages/welcome-layout';
 import CheckAuth from './useful/check-auth';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <AuthLayout />,
+    element: <WelcomeLayout />,
     children: [
       {
         index: true,

@@ -79,6 +79,7 @@ postLoginRouter.post('/login', async (req, res) => {
   });
   res.json({
     message: 'User logged in!',
+    ok: true,
   });
 });
 

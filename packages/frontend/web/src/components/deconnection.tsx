@@ -6,12 +6,8 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Deconnection() {
   const auth = useAuth();
-  //   const isLoggedIn = auth?.isLoggedIn;
-  //   const isLoading = auth?.isLoading;
-  //   const [isOpen, setIsOpen] = useState(true);
 
   const logout = async () => {
-    // setIsOpen(false);
     const res = await fetch(`${API_URL}/auth/logout`, {
       method: 'post',
       credentials: 'include',
@@ -23,8 +19,6 @@ export default function Deconnection() {
       auth?.setIsLoggedIn(false);
     }
   };
-
-  //   if (!isOpen) return null;
 
   return (
     <button

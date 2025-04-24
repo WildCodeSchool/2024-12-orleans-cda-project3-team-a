@@ -19,9 +19,6 @@ export default function Login() {
   }
 
   const login = async () => {
-    // console.log(email, password);
-    // console.log('API_URL:', API_URL);
-
     //get the response to know if user and password ok
     const res = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
@@ -41,8 +38,6 @@ export default function Login() {
       auth?.setIsLoggedIn(true);
       await navigate('/home');
     }
-
-    // console.log(data);
   };
 
   return (

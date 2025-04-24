@@ -20,8 +20,6 @@ export default function SignUp() {
     return <Navigate to='/home' />;
   }
   const signUp = async () => {
-    // console.log(email, username, password, confirmPassword);
-
     const res = await fetch(`${API_URL}/auth/register`, {
       method: 'POST',
       body: JSON.stringify({
@@ -38,12 +36,8 @@ export default function SignUp() {
     const data = await res.json();
 
     if (data.message === 'User registered') {
-      // console.log('Afficher composant créer mon park');
-      // await navigate('/welcome');
       setIsRegistered(true);
     }
-
-    // console.log(data);
   };
 
   return !isRegistered ? (

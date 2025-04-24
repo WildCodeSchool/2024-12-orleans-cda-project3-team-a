@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import BgHome from '../assets/images/background/bg-home.webp';
 import Logo from '../assets/images/logo/fp-logo-arc.png';
 
-export default function AuthLayout() {
+export default function WelcomeLayout() {
   return (
     <div
       className='flex min-h-screen justify-center bg-cover bg-center p-3'
