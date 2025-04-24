@@ -34,7 +34,7 @@ export default function Login() {
 
     const data = await res.json();
     //if good user and password go to home
-    if (data.message === 'User logged in!') {
+    if (data.ok === true) {
       auth?.setIsLoggedIn(true);
       await navigate('/home');
     }
