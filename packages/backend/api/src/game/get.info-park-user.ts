@@ -22,8 +22,17 @@ getInfoParkUser.get('/info-park-user', async (req, res) => {
     return;
   }
 
+  const visitorsCountResult = await db
+    .selectFrom('park_visitors')
+    .select(({ fn }) => [fn.countAll<number>().as('count')])
+    .where('park_visitors.park_id', '=', parkInfo.id)
+    .executeTakeFirst();
+
+  const visitorsCount = visitorsCountResult?.count ?? 0;
+
   res.json({
     parkInfo,
+    visitorsCount,
   });
 });
 
