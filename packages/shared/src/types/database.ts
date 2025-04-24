@@ -25,8 +25,10 @@ export interface Creatures {
 }
 
 export interface Decorations {
+  direction: string | null;
   id: Generated<number>;
   name: string;
+  position: string | null;
   price: number | null;
   src_image: string | null;
   zone_id: number;
@@ -110,8 +112,9 @@ export interface Visitors {
 
 export interface Zones {
   id: Generated<number>;
+  link: string;
   name: string;
-  src_image: string | null;
+  src_image: string;
   unlock_cost: number | null;
 }
 

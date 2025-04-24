@@ -15,7 +15,7 @@ export default function Menu() {
   return (
     //Ouvrir ou fermer menu selon la valeur isMenuOpen
     <div
-      className={`flex h-screen w-8 flex-col items-center gap-5 rounded pb-2 md:h-9 md:flex-1 md:flex-row md:rounded-lg md:pr-2 md:pb-0 ${
+      className={`flex h-[95vh] w-8 flex-col items-center gap-5 rounded pb-2 md:h-9 md:flex-1 md:flex-row md:rounded-lg md:pr-2 md:pb-0 ${
         isMenuOpen
           ? 'bg-primary-gray shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none'
           : ''
