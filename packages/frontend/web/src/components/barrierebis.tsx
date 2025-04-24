@@ -10,22 +10,22 @@ type BarrierCardProps = {
     name: string;
     deco_id?: number | null;
     src_image: string;
-    direction: string;
+    position: string;
   };
 };
 
 export default function BarrierBis({ barrier }: BarrierCardProps) {
   return (
-    //Whatever the situation is unlock or not, we have to display it depending the direction
+    //Whatever the situation is unlock or not, we have to display it depending the position in bdd
     <div
       className={`${
-        barrier.direction === 'top-left'
-          ? 'absolute top-0 left-1/3 w-32 -translate-x-1/2'
-          : barrier.direction === 'top-right'
-            ? 'absolute top-0 left-2/3 w-32 -translate-x-1/2'
-            : barrier.direction === 'bottom-center'
-              ? 'absolute bottom-0 left-1/2 w-32 -translate-x-1/2'
-              : barrier.direction === 'center-left'
+        barrier.position === 'top-left'
+          ? 'top-0 left-1/3 -translate-x-1/2'
+          : barrier.position === 'top-right'
+            ? 'top-0 left-2/3 -translate-x-1/2'
+            : barrier.position === 'bottom-center'
+              ? 'bottom-0 left-1/2 -translate-x-1/2'
+              : barrier.position === 'center-left'
                 ? 'top-1/2 left-0 -translate-y-1/2'
                 : 'top-1/2 right-0 -translate-y-1/2'
       } absolute transform`}
