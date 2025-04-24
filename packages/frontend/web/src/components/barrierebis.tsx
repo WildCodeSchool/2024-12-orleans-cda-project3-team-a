@@ -22,8 +22,11 @@ type BarrierCardProps = {
 };
 
 export default function BarrierBis({ barrier }: BarrierCardProps) {
-  const [isEnoughMooney, setIsEnoughMooney] = useState(true);
+  //   const [isEnoughMooney, setIsEnoughMooney] = useState(true);
   const { wallet } = useGameInfoContext();
+
+  const isEnoughMooney = wallet > barrier.price;
+  console.log('mon wallet : ', wallet);
 
   const buyBarrier = () => {
     console.log('acheter barriere');

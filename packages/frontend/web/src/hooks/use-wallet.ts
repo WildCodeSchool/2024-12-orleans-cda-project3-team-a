@@ -28,5 +28,5 @@ export default function useWallet() {
 
   const walletFormated = useNumberFormatter(wallet);
 
-  return walletFormated;
+  return { wallet, walletFormated };
 }

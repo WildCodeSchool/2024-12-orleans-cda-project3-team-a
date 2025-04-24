@@ -5,7 +5,8 @@ import useWallet from '@/hooks/use-wallet';
 
 // Define type for context
 type GameInfoContextState = {
-  wallet: string;
+  walletFormated: string;
+  wallet: number;
 };
 
 // Define the type for provider
@@ -13,7 +14,8 @@ type GameInfoContextProviderProps = PropsWithChildren;
 
 // create the context
 export const gameInfoContext = createContext<GameInfoContextState>({
-  wallet: '',
+  walletFormated: '',
+  wallet: 0,
 });
 
 // create the provider
@@ -21,10 +23,13 @@ export function GameInfoContextProvider({
   children,
 }: GameInfoContextProviderProps) {
   // get wallet with hook
-  const wallet = useWallet();
+  const { walletFormated, wallet } = useWallet();
 
   // memorize value to avoid unnecessary changes
-  const value = useMemo(() => ({ wallet }), [wallet]);
+  const value = useMemo(
+    () => ({ walletFormated, wallet }),
+    [walletFormated, wallet],
+  );
 
   return (
     <gameInfoContext.Provider value={value}>
