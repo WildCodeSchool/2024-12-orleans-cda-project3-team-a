@@ -1,5 +1,6 @@
 import { type PropsWithChildren, useState } from 'react';
 
+import alert from '../assets/images/icons-buttons/alert.png';
 import ButtonBuy from './button-buy';
 
 type EnclosureProps = PropsWithChildren<{
@@ -38,6 +39,7 @@ export default function Enclosure({
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [lockedCreature, setLockedCreature] = useState(false);
+  const [hungry, setHungry] = useState(true);
   const handleModale = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -56,6 +58,10 @@ export default function Enclosure({
         onClick={handleModale}
         className='relative flex flex-col items-center justify-center gap-2'
       >
+        <img
+          className='relative top-1 left-20 w-10'
+          src={hungry ? alert : ''}
+        />
         <img
           className='w-30'
           src={lockedCreature ? srcLockedCreature : srcImgCreature}
@@ -77,47 +83,3 @@ export default function Enclosure({
     </div>
   );
 }
-
-//Manque: pouvoir acheter via le boutons sous le panneaux
-//Grisé les creatures quand elles sont inactivent
-//la modale pour les nourrires
-//
-
-// function buy() {
-//   if (wallet >= creature.price) {
-//     wallet -= creature.price;
-//     creature.unlocked = true;
-//   } else {
-//     alert("Pas assez d'argent !");
-//   }
-// return (
-{
-  /* <div className={`relative grid h-[50vh] w-[959px] grid-cols-3 grid-rows-3 place-items-center ${bgColor}`}>
-  <div className="row-start-1 col-start-1">
-    <img className="w-15" src={srcImgDeco1} alt="" />
-  </div>
-
-  <div className="row-start-2 col-start-2">
-  <img className="w-30" src={nmbrCreature>0 ? srcImgCreature : srcLocked} alt="" />
-  </div>
-  
-  <div className="row-start-2 col-start-2 mt-[-15px]">
-  {!unlocked && (
-    <button
-    onClick={buy}
-    className="cursor-pointer shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none bg-gray-300 w-20 h-10 rounded-lg text-center"
-    >
-    {locked ? price : nmbrCreature}
-    </button>
-    )}
-    </div>
-    
-    <div className="row-start-3 col-start-3">
-    <img className="w-15" src={srcImgDeco2} alt="" />
-    </div>
-    </div>
-    );
-    } */
-}
-
-// locked ? srcLocked :
