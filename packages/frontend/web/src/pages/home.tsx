@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <div
-      className='h-[100vh] bg-cover bg-center p-3'
+      className='h-screen bg-cover bg-center p-3'
       style={{ backgroundImage: `url(${ParkMap})` }}
     >
       <header className='fixed flex w-[94%] justify-between gap-3 sm:z-2 md:w-[98%]'>
@@ -23,7 +23,7 @@ export default function Home() {
         {unlockedZones.map((zone) => (
           <div key={zone.zone_id} className='flex items-center justify-center'>
             <Link
-              to={zone.park_zone_id != null ? zone.link : ''}
+              to={zone.park_zone_id !== null ? zone.link : ''}
               className='flex h-full w-full items-center justify-center'
             >
               <img
