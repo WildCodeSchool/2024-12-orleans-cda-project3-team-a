@@ -1,6 +1,7 @@
 import { createContext, useContext, useMemo } from 'react';
 import type { PropsWithChildren } from 'react';
 
+import useCreature from '@/hooks/creature';
 import useWallet from '@/hooks/use-wallet';
 
 // Define type for context
@@ -22,9 +23,9 @@ export function GameInfoContextProvider({
 }: GameInfoContextProviderProps) {
   // get wallet with hook
   const wallet = useWallet();
-
+  const { creatures } = useCreature();
   // memorize value to avoid unnecessary changes
-  const value = useMemo(() => ({ wallet }), [wallet]);
+  const value = useMemo(() => ({ wallet, creatures }), [wallet, creatures]);
 
   return (
     <gameInfoContext.Provider value={value}>

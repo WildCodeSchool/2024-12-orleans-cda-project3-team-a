@@ -13,7 +13,7 @@ import Unicorn from '../assets/images/fairy-zone/unicorn.png';
 
 export default function fairy() {
   return (
-    <div className='grid-col-2 grid max-w-[1600px]'>
+    <div className='grid-col-2 grid min-w-[1600px]'>
       <div className='flex flex-row'>
         <Enclosure
           bgColor='bg-fairy-green'

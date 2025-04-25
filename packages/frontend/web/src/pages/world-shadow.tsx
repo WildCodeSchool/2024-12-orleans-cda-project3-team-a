@@ -18,7 +18,7 @@ import Wizard from '../assets/images/shadow-zone/wizard.png';
 
 export default function shadow() {
   return (
-    <div className='grid-col-2 grid max-w-[1600px]'>
+    <div className='grid-col-2 grid'>
       <div className='flex flex-row'>
         <Enclosure
           bgColor='bg-shadow-purple'
