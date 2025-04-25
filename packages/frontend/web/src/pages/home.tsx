@@ -23,11 +23,11 @@ export default function Home() {
         {unlockedZones.map((zone) => (
           <div key={zone.zone_id} className='flex items-center justify-center'>
             <Link
-              to={zone.park_zone_id !== null ? zone.link : ''}
+              to={Boolean(zone.park_zone_id) ? zone.link : ''}
               className='flex h-full w-full items-center justify-center'
             >
               <img
-                className={`absolute right-[calc(50%-32px)] w-[40%] sm:w-[40%] md:relative md:right-0 ${zone.park_zone_id != null ? '' : 'cursor-not-allowed grayscale'}`}
+                className={`absolute right-[calc(50%-32px)] w-[40%] sm:w-[40%] md:relative md:right-0 ${Boolean(zone.park_zone_id) ? '' : 'cursor-not-allowed grayscale'}`}
                 src={`/images/logo/${zone.src_image}`}
                 alt={zone.src_image}
               />
