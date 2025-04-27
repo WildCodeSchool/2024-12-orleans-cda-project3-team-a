@@ -1,3 +1,4 @@
+//Request to add the barrier in his park and deduct mooney in his wallet
 import express from 'express';
 
 import { db } from '@app/backend-shared';

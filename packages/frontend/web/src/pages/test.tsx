@@ -6,7 +6,6 @@ import useFetchBarrier from '@/hooks/use-fetch-barrier';
 
 export default function Test() {
   const { barriers, isLoading, refetch } = useFetchBarrier();
-  console.log(barriers);
 
   return (
     <div className='flex flex-col items-center justify-center gap-5'>
@@ -18,17 +17,21 @@ export default function Test() {
       <InfoNbVisitorsMoons />
 
       <div className='relative min-h-200 min-w-200 bg-blue-200'>
-        {isLoading ? <Loader /> : <p>{'Afficher la map de barriers ici :'}</p>}
-
-        {barriers.map((barrier) => {
-          return (
-            <Barrier
-              key={`${barrier.decoId}`}
-              barrier={barrier}
-              refetch={refetch}
-            />
-          );
-        })}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            {barriers.map((barrier) => {
+              return (
+                <Barrier
+                  key={`${barrier.decoId}`}
+                  barrier={barrier}
+                  refetch={refetch}
+                />
+              );
+            })}
+          </>
+        )}
       </div>
     </div>
   );

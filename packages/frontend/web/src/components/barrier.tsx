@@ -24,8 +24,6 @@ type BarrierProps = {
   readonly refetch: () => Promise<void>;
 };
 
-//Penser à formater le price des pancartes!
-
 export default function Barrier({ barrier, refetch }: BarrierProps) {
   const { wallet } = useGameInfoContext();
   const isEnoughMooney = wallet > barrier.price;
@@ -71,8 +69,7 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
                   : ''
       } absolute transform`}
     >
-      {/* if we have a line in park_decoration we display the right direction  */}
-
+      {/* if we have an id (=parkDecoId) in park_decoration we display the right direction else display the barrier in construction */}
       {barrier.parkDecoId !== null ? (
         // <div>We check what is the correct direction to display
         <img
@@ -91,7 +88,7 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
           className='w-16'
         />
       ) : (
-        // If barrier is locked we display the barrier in construction to buy
+        // display the barrier in construction
         <div className='relative flex items-center justify-center'>
           <img src={barrierIcon} alt='Barrier to buy' className='w-16' />
           <div
