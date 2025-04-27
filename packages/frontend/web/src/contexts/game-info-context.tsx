@@ -23,7 +23,7 @@ export const gameInfoContext = createContext<GameInfoContextState>({
 export function GameInfoContextProvider({
   children,
 }: GameInfoContextProviderProps) {
-  // get wallet with hook
+  // get wallet and visitors with hook
   const { walletFormated, visitorsFormated, wallet } = useParkInfo();
 
   // memorize value to avoid unnecessary changes

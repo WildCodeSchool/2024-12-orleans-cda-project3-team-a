@@ -15,7 +15,6 @@ export default function useParkInfo() {
       try {
         const response = await fetch(`${API_URL}/game/info-park-user`);
         const data = await response.json();
-        // const roundedWallet = data.parkInfo.wallet;
         setWallet(data.parkInfo.wallet);
         setVisitorsCount(data.visitorsCount);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
