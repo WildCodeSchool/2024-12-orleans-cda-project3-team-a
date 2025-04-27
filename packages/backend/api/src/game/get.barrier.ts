@@ -5,8 +5,8 @@ import { db } from '@app/backend-shared';
 const getBarrier = express.Router();
 
 getBarrier.get('/barrier', async (req, res) => {
-  const parkId = 5;
-  const zoneId = 2;
+  const parkId = 3;
+  const zoneId = 4;
 
   const barrier = await db
     .selectFrom('decorations')
@@ -15,11 +15,22 @@ getBarrier.get('/barrier', async (req, res) => {
         .onRef('decorations.id', '=', 'park_decorations.deco_id')
         .on('park_decorations.park_id', '=', parkId),
     )
-    .where('decorations.zone_id', '=', zoneId) // ou un autre filtre selon le cas
-    .selectAll()
+    .where('decorations.zone_id', '=', zoneId)
+    .select([
+      'decorations.id as decoId',
+      'decorations.name',
+      'decorations.price',
+      // 'decorations.src_image',
+      // 'decorations.zone_id',
+      'decorations.position',
+      'decorations.direction',
+      'park_decorations.id as parkDecoId',
+      // 'park_decorations.park_id as parkDecoParkId',
+      // 'park_decorations.deco_id as parkDecoDecoID',
+    ])
     .execute();
 
-  if (!barrier) {
+  if (barrier.length === 0) {
     res.json({
       ok: false,
     });

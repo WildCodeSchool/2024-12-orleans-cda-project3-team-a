@@ -25,8 +25,10 @@ export interface Creatures {
 }
 
 export interface Decorations {
+  direction: string | null;
   id: Generated<number>;
   name: string;
+  position: string | null;
   price: number | null;
   src_image: string | null;
   zone_id: number;

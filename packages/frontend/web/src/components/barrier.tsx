@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-
+/* eslint-disable no-console */
 import { useGameInfoContext } from '@/contexts/game-info-context';
+import { useNumberFormatter } from '@/hooks/use-number-formatter';
 
 import barrierIcon from '../assets/images/deco/barrier.png';
 import directionDown from '../assets/images/deco/direction-down.png';
@@ -12,104 +12,104 @@ import ButtonBuy from './button-buy';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-type BarrierType = {
-  id: number;
-  name: string;
-  deco_id: number;
-};
-
 type BarrierProps = {
-  readonly direction:
-    | 'directionDown'
-    | 'directionLeft'
-    | 'directionRight'
-    | 'directionUp';
+  readonly barrier: {
+    decoId: number;
+    name: string;
+    price: number;
+    position: string;
+    direction: string;
+    parkDecoId: number | null;
+  };
+  readonly refetch: () => Promise<void>;
 };
 
-export default function Barrier({ direction }: BarrierProps) {
-  // export default function Barrier() {
-  //faire une requete pr savoir si c'est acheté ou non, ce qui permettra d'afficher ou non la direction
-  const [isBought, setIsBought] = useState(false);
-  const [isEnoughMooney, setIsEnoughMooney] = useState(false);
+//Penser à formater le price des pancartes!
 
+export default function Barrier({ barrier, refetch }: BarrierProps) {
   const { wallet } = useGameInfoContext();
-  const walletNumber = parseInt(wallet);
-  const barrierPrice = -300;
+  const isEnoughMooney = wallet > barrier.price;
+  const priceFormatted = useNumberFormatter(barrier.price);
 
-  const [barriers, setBarriers] = useState<BarrierType[]>([]);
+  const buyBarrier = async () => {
+    //Buy only if we have enough mooney
+    if (!isEnoughMooney) return;
 
-  //fetch pour tableau des barrières
-  useEffect(() => {
-    async function fetchBarrier() {
-      try {
-        const response = await fetch(`${API_URL}/game/barrier`);
-        const data = await response.json();
-        setBarriers(data.barrier);
-      } catch (error) {
-        console.error(error);
+    try {
+      const response = await fetch(`${API_URL}/game/add-barrier`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: barrier.name,
+        }),
+      });
+      const result = await response.json();
+      if (result.ok === true) {
+        await refetch();
       }
-    }
-    void fetchBarrier();
-  }, []);
-
-  console.log(barriers);
-
-  //Check if user has enough money
-  useEffect(() => {
-    if (walletNumber > barrierPrice) {
-      setIsEnoughMooney(true);
-    }
-  }, [walletNumber]);
-
-  const buyBarrier = () => {
-    if (isEnoughMooney) {
-      //Supprimer la barrière en travaux dans park_decorations
-      //Ajouter la barriere direction dans park_decorations
-      //Retirer l'argent dans wallet et dans bdd
-      setIsBought(true);
+    } catch (error) {
+      console.error(error);
     }
   };
 
   return (
-    <div className='relative flex items-center'>
-      {isBought ? (
-        // IF is bought -> display the correct picture for the direction thanks to the props
+    //Whatever the situation is unlock or not, we have to display it depending the position in bdd
+    <div
+      className={`${
+        barrier.position === 'top-left'
+          ? 'top-0 left-1/3 -translate-x-1/2'
+          : barrier.position === 'top-right'
+            ? 'top-0 left-2/3 -translate-x-1/2'
+            : barrier.position === 'bottom-center'
+              ? 'bottom-0 left-1/2 -translate-x-1/2'
+              : barrier.position === 'center-left'
+                ? 'top-1/2 left-0 -translate-y-1/2'
+                : barrier.position === 'center-right'
+                  ? 'top-1/2 right-0 -translate-y-1/2'
+                  : ''
+      } absolute transform`}
+    >
+      {/* if we have a line in park_decoration we display the right direction  */}
+
+      {barrier.parkDecoId !== null ? (
+        // <div>We check what is the correct direction to display
         <img
           src={
-            direction === 'directionUp'
+            barrier.direction === 'up'
               ? directionUp
-              : direction === 'directionDown'
+              : barrier.direction === 'down'
                 ? directionDown
-                : direction === 'directionRight'
+                : barrier.direction === 'right'
                   ? directionRight
-                  : directionLeft
+                  : barrier.direction === 'left'
+                    ? directionLeft
+                    : ''
           }
-          alt=''
+          alt='direction'
           className='w-16'
         />
       ) : (
-        // IF is NOT bought->  display the barrier in construction and display price to buy it
-        <>
-          <img
-            src={barrierIcon}
-            alt='Barrier to buy'
-            className='absolute z-0 w-16'
-          />
-
-          {/* if not enough mooney display in grey the amount and the moon */}
+        // If barrier is locked we display the barrier in construction to buy
+        <div className='relative flex items-center justify-center'>
+          <img src={barrierIcon} alt='Barrier to buy' className='w-16' />
           <div
             title={
               isEnoughMooney ? 'click to buy this barrier' : 'not enough mooney'
             }
-            className={`z-1 ${!isEnoughMooney ? 'text-gray-400 grayscale-100' : ''}`}
+            className={`absolute ${!isEnoughMooney ? 'text-gray-500 grayscale-100' : ''}`}
             onClick={buyBarrier}
           >
-            {/* //créer la logique pour déduire l'argent de cette barrière dans le wallet */}
-            <ButtonBuy bg='bg-[rgba(255,255,255,0.65)]'>
-              {barrierPrice} <img src={moon} alt='' className={`w-5`} />
+            <ButtonBuy
+              bg='bg-[rgba(255,255,255,0.75)]'
+              cursor={!isEnoughMooney ? 'not-allowed' : 'pointer'}
+            >
+              {priceFormatted}
+              <img src={moon} alt='mooney' className={`w-5`} />
             </ButtonBuy>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

@@ -5,20 +5,19 @@ import { db } from '@app/backend-shared';
 const postAddBarrier = express.Router();
 
 postAddBarrier.post('/add-barrier', async (req, res) => {
-  const parkId = 5;
-  const directionName = 'direction-mythologic-up-2';
+  const parkId = 3;
+  const name = req.body.name;
 
   //check if we have already the barrier in parkId
   const barrier = await db
     .selectFrom('park_decorations')
     .innerJoin('decorations', 'decorations.id', 'park_decorations.deco_id')
     .select(['park_id', 'deco_id', 'name', 'price'])
-    // .where('decorations.name', '=', directionName )
 
     .where((eb) =>
       eb.and([
         eb('park_decorations.park_id', '=', parkId),
-        eb('decorations.name', '=', directionName),
+        eb('decorations.name', '=', name),
       ]),
     )
 
@@ -37,7 +36,7 @@ postAddBarrier.post('/add-barrier', async (req, res) => {
   const decoId = await db
     .selectFrom('decorations')
     .select(['id', 'price'])
-    .where('name', '=', directionName)
+    .where('name', '=', name)
     .executeTakeFirst();
 
   if (!decoId) {
@@ -65,8 +64,7 @@ postAddBarrier.post('/add-barrier', async (req, res) => {
     .executeTakeFirst();
 
   res.json({
-    message: 'decoration added',
-    barrier,
+    ok: true,
   });
 });
 
