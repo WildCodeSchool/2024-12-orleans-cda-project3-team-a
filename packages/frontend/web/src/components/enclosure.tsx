@@ -22,7 +22,6 @@ type EnclosureProps = PropsWithChildren<{
   readonly name: string;
   readonly positionDeco1: number;
   readonly positionDeco2: number;
-  // readonly sizeEnclosure:
 }>;
 
 export default function Enclosure({
@@ -36,7 +35,6 @@ export default function Enclosure({
   name,
   srcLockedCreature,
   nmbrCreature,
-  // siezEnclosure,
 }: EnclosureProps) {
   console.log('positionDeco1:', positionDeco1);
 
@@ -92,7 +90,3 @@ export default function Enclosure({
     </div>
   );
 }
-
-// A mettre dans la bdd :
-//Les decorations, les bg, les positionns
-// et ensuite map les creatures
