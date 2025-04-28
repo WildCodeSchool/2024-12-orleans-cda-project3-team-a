@@ -27,10 +27,8 @@ RENAME TO park_barriers;
 
     await sql` 
 ALTER TABLE park_barriers
-RENAME COLUMN deco_id TO barrieres_id;
+RENAME COLUMN deco_id TO barrier_id;
 `.execute(trx);
-
-    //rename park deco en park barriere
 
     await sql` 
 CREATE TABLE decorations(
@@ -53,8 +51,8 @@ export async function down(db: Kysely<DB>): Promise<void> {
     `.execute(trx);
 
     await sql`
-    ALTER TABLE park_decoration
-    RENAME COLUMN barrieres_id TO deco_id
+    ALTER TABLE park_decorations
+    RENAME COLUMN barrier_id TO deco_id
     `.execute(trx);
 
     await sql`
@@ -68,12 +66,7 @@ export async function down(db: Kysely<DB>): Promise<void> {
       `.execute(trx);
 
     await sql`
-    ALTER TABLE park_decoration 
-    DROP COLUMN decoration_id
-    `.execute(trx);
-
-    await sql`
-    ALTER TABLE barriere
+    ALTER TABLE barriers
     RENAME TO decorations
     `.execute(trx);
 
