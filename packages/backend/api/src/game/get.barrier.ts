@@ -5,11 +5,8 @@ import { db } from '@app/backend-shared';
 
 const getBarrier = express.Router();
 
-getBarrier.get('/barrier', async (req, res) => {
-  const parkId = 4;
-  const zoneId = 2;
-
-  const barrier = await db
+function barrier(parkId: number, zoneId: number) {
+  return db
     .selectFrom('decorations')
     .leftJoin('park_decorations', (join) =>
       join
@@ -25,8 +22,17 @@ getBarrier.get('/barrier', async (req, res) => {
       'park_decorations.id as parkDecoId',
     ])
     .execute();
+}
 
-  if (barrier.length === 0) {
+export type BarrierType = Awaited<ReturnType<typeof barrier>>[number];
+
+getBarrier.get('/barrier', async (req, res) => {
+  const parkId = 5;
+  const zoneId = 4;
+
+  const barrierResult = await barrier(parkId, zoneId);
+
+  if (barrierResult.length === 0) {
     res.json({
       ok: false,
     });
@@ -34,7 +40,7 @@ getBarrier.get('/barrier', async (req, res) => {
   }
 
   res.json({
-    barrier,
+    barrierResult,
   });
 });
 

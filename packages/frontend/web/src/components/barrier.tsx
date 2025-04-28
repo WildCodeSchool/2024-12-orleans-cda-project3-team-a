@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import type { BarrierType } from '@app/api';
+
 import { useGameInfoContext } from '@/contexts/game-info-context';
 import { useNumberFormatter } from '@/hooks/use-number-formatter';
 
@@ -13,13 +15,7 @@ import ButtonBuy from './button-buy';
 const API_URL = import.meta.env.VITE_API_URL;
 
 type BarrierProps = {
-  readonly barrier: {
-    decoId: number;
-    price: number;
-    position: string;
-    direction: string;
-    parkDecoId: number | null;
-  };
+  readonly barrier: BarrierType;
   readonly refetch: () => Promise<void>;
 };
 

@@ -29,7 +29,7 @@ export interface Decorations {
   id: Generated<number>;
   name: string;
   position: string | null;
-  price: number | null;
+  price: number;
   src_image: string | null;
   zone_id: number;
 }

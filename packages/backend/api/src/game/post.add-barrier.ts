@@ -6,7 +6,7 @@ import { db } from '@app/backend-shared';
 const postAddBarrier = express.Router();
 
 postAddBarrier.post('/add-barrier', async (req, res) => {
-  const parkId = 4;
+  const parkId = 5;
   const decoId = req.body.decoId;
 
   //check if we have already the barrier in parkId
