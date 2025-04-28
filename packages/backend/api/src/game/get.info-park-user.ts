@@ -4,7 +4,7 @@ import { db } from '@app/backend-shared';
 
 const getInfoParkUser = express.Router();
 
-getInfoParkUser.get('/info-park-user', async (req, res) => {
+getInfoParkUser.get('/info-park-user', async (_req, res) => {
   //PLUS TARD récupérer l'id dans le cookie !
   //http://192.168.0.54:3333/api/game/info-park-user
   const userId = 8;
