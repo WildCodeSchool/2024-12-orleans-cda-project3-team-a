@@ -32,6 +32,7 @@ app.listen(PORT, () => {
 });
 
 export default app;
+export type * from './types';
 
 declare module 'Express' {
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
