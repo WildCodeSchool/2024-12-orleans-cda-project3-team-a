@@ -32,9 +32,10 @@ postLoginRouter.post('/login', async (req, res) => {
 
   const isCorrectPassword = await argon2.verify(user.password_hash, password);
 
-  if (!Boolean(isCorrectPassword)) {
+  if (!isCorrectPassword) {
     res.json({
       message: 'User or password incorrect',
+      ok: false,
     });
     return;
   }

@@ -1,12 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import CheckAuth from './components/check-auth-layout';
+import CheckLoggedIn from './components/check-logged-in-layout';
 import Home from './pages/home';
 import Login from './pages/login';
 import Rules from './pages/rules';
 import SignUp from './pages/sign-up';
 import Test from './pages/test';
 import WelcomeLayout from './pages/welcome-layout';
-import CheckAuth from './useful/check-auth';
 
 const router = createBrowserRouter([
   {
@@ -14,12 +15,17 @@ const router = createBrowserRouter([
     element: <WelcomeLayout />,
     children: [
       {
-        index: true,
-        element: <Login />,
-      },
-      {
-        path: 'signup',
-        element: <SignUp />,
+        element: <CheckLoggedIn />,
+        children: [
+          {
+            index: true,
+            element: <Login />,
+          },
+          {
+            path: 'signup',
+            element: <SignUp />,
+          },
+        ],
       },
       {
         path: 'rules',

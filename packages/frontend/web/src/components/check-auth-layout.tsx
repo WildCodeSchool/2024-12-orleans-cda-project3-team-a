@@ -2,7 +2,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 import { useAuth } from '@/contexts/auth-context';
 
-export default function CheckAuth() {
+export default function CheckAuthLayout() {
   const auth = useAuth();
   const isLoggedIn = auth?.isLoggedIn;
   const isLoading = auth?.isLoading;

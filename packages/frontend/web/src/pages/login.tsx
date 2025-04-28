@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import ButtonBlue from '@/components/button-blue';
 import InputBlue from '@/components/input-blue';
@@ -12,11 +12,6 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const isLoggedIn = auth?.isLoggedIn;
-
-  if (isLoggedIn === true) {
-    return <Navigate to='/home' />;
-  }
 
   const login = async () => {
     //get the response to know if user and password ok
