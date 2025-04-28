@@ -112,8 +112,9 @@ export interface Visitors {
 
 export interface Zones {
   id: Generated<number>;
+  link: string;
   name: string;
-  src_image: string | null;
+  src_image: string;
   unlock_cost: number | null;
 }
 

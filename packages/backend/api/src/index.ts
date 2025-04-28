@@ -23,3 +23,4 @@ app.listen(PORT, () => {
 });
 
 export default app;
+export type * from './types';
