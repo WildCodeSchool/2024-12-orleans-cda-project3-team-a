@@ -26,7 +26,7 @@ function barrier(parkId: number, zoneId: number) {
 
 export type BarrierType = Awaited<ReturnType<typeof barrier>>[number];
 
-getBarrier.get('/barrier', async (req, res) => {
+getBarrier.get('/barrier', async (_req, res) => {
   const parkId = 5;
   const zoneId = 4;
 
