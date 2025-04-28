@@ -1,2 +1,2 @@
 export type * from './game/get.zones-count';
-export type * from './game/get.barrier';
+export type * from './game/get.barriers-route';
