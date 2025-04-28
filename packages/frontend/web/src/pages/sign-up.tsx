@@ -16,8 +16,8 @@ export default function SignUp() {
 
   const auth = useAuth();
   const isLoggedIn = auth?.isLoggedIn;
-  if (isLoggedIn === true) {
-    return <Navigate to='/home' />;
+  if (isLoggedIn === true || isRegistered) {
+    return <Navigate to='/' />;
   }
   const signUp = async () => {
     const res = await fetch(`${API_URL}/auth/register`, {
@@ -35,12 +35,12 @@ export default function SignUp() {
 
     const data = await res.json();
 
-    if (data.message === 'User registered') {
+    if (data.ok === true) {
       setIsRegistered(true);
     }
   };
 
-  return !isRegistered ? (
+  return (
     <form
       onSubmit={async (event) => {
         event.preventDefault();
@@ -98,8 +98,5 @@ export default function SignUp() {
         </a>
       </p>
     </form>
-  ) : (
-    //Page à faire sur une autre branche !
-    <p>{'Bientôt la page pour créer ton park ici !'}</p>
   );
 }

@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
 import CloseWindow from '@/components/close-window';
-import Deconnection from '@/components/deconnection';
 import InfoNbVisitorsMoons from '@/components/info-nb-visitors-moons';
 import InputBlue from '@/components/input-blue';
 import Loader from '@/components/loader';
+import Logout from '@/components/logout';
 import ReturnHome from '@/components/return-home';
 
 export default function Test() {
@@ -25,7 +25,7 @@ export default function Test() {
       <p className='text-2xl'>{' Laisse courrir ton imagination 🦅'}</p>
       <Loader />
       <InfoNbVisitorsMoons />
-      <Deconnection />
+      <Logout />
     </div>
   );
 }

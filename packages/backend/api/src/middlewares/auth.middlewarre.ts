@@ -2,10 +2,10 @@ import type { NextFunction, Request, Response } from 'express';
 import * as jose from 'jose';
 
 const FRONTEND_HOST = process.env.FRONTEND_HOST ?? '';
-const JWT_SRECRET = process.env.JWT_SECRET;
+const ACCESS_TOKEN_SRECRET = process.env.ACCESS_TOKEN_SECRET;
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 
-const secret = new TextEncoder().encode(JWT_SRECRET);
+const secret = new TextEncoder().encode(ACCESS_TOKEN_SRECRET);
 const refreshTokenSecret = new TextEncoder().encode(REFRESH_TOKEN_SECRET);
 
 export default async function authMiddleware(

@@ -17,14 +17,18 @@ postRegisterRouter.post('/register', async (req, res) => {
   //check is mail is already existing
   if (user) {
     res.json({
-      message: 'User already used',
+      message: 'Email already used',
+      ok: false,
     });
     return;
   }
 
   //check if is the same password
   if (password !== confirmPassword) {
-    res.status(400).json({ message: 'Passwords do not match!' });
+    res.status(400).json({
+      message: 'Passwords do not match!',
+      ok: false,
+    });
     return;
   }
 
@@ -48,6 +52,7 @@ postRegisterRouter.post('/register', async (req, res) => {
 
   res.json({
     message: 'User registered',
+    ok: true,
   });
 });
 

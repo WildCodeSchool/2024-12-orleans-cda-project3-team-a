@@ -6,10 +6,13 @@ import { db } from '@app/backend-shared';
 
 const postLoginRouter = express.Router();
 const FRONTEND_HOST = process.env.FRONTEND_HOST ?? '';
-const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+const secret = new TextEncoder().encode(process.env.ACCESS_TOKEN_SECRET);
 const refreshTokenSecret = new TextEncoder().encode(
   process.env.REFRESH_TOKEN_SECRET,
 );
+// console.log(FRONTEND_HOST);
+// console.log(secret);
+// console.log(refreshTokenSecret);
 
 postLoginRouter.post('/login', async (req, res) => {
   //get email and password in body
@@ -22,14 +25,19 @@ postLoginRouter.post('/login', async (req, res) => {
     .where('users.email', '=', email)
     .executeTakeFirst();
 
+  // console.log(user);
+
   if (!user) {
     res.json({
       message: 'User or password incorrect',
+      ok: false,
     });
     return;
   }
 
   const isCorrectPassword = await argon2.verify(user.password_hash, password);
+
+  // console.log(isCorrectPassword);
 
   if (!Boolean(isCorrectPassword)) {
     res.json({

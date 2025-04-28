@@ -1,4 +1,4 @@
-import Deconnection from '@/components/deconnection';
+import Logout from '@/components/logout';
 
 export default function Home() {
   return (
@@ -6,7 +6,7 @@ export default function Home() {
       <p className='font-aerokids bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text p-7 text-9xl text-transparent'>
         {'Fantasy Park !'}
       </p>
-      <Deconnection />
+      <Logout />
     </div>
   );
 }

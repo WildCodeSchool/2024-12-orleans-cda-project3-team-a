@@ -4,7 +4,7 @@ import icoDeconnection from '../assets/images/icons-buttons/deconnection.png';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function Deconnection() {
+export default function Logout() {
   const auth = useAuth();
 
   const logout = async () => {

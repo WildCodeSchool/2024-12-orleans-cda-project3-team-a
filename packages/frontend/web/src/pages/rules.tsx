@@ -1,6 +1,6 @@
 import ReturnHome from '@/components/return-home';
 
-export default function tRules() {
+export default function Rules() {
   return (
     <div className='text-secondary-blue z-3 flex flex-col items-center justify-center p-2'>
       <p className='mt-6 p-4 text-xl font-extrabold tracking-[0.6em] md:mt-14 md:text-2xl'>
