@@ -10,9 +10,6 @@ const secret = new TextEncoder().encode(process.env.ACCESS_TOKEN_SECRET);
 const refreshTokenSecret = new TextEncoder().encode(
   process.env.REFRESH_TOKEN_SECRET,
 );
-// console.log(FRONTEND_HOST);
-// console.log(secret);
-// console.log(refreshTokenSecret);
 
 postLoginRouter.post('/login', async (req, res) => {
   //get email and password in body
@@ -25,8 +22,6 @@ postLoginRouter.post('/login', async (req, res) => {
     .where('users.email', '=', email)
     .executeTakeFirst();
 
-  // console.log(user);
-
   if (!user) {
     res.json({
       message: 'User or password incorrect',
@@ -36,8 +31,6 @@ postLoginRouter.post('/login', async (req, res) => {
   }
 
   const isCorrectPassword = await argon2.verify(user.password_hash, password);
-
-  // console.log(isCorrectPassword);
 
   if (!Boolean(isCorrectPassword)) {
     res.json({
