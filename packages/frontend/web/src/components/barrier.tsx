@@ -15,7 +15,6 @@ const API_URL = import.meta.env.VITE_API_URL;
 type BarrierProps = {
   readonly barrier: {
     decoId: number;
-    name: string;
     price: number;
     position: string;
     direction: string;
@@ -40,7 +39,7 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: barrier.name,
+          decoId: barrier.decoId,
         }),
       });
       const result = await response.json();

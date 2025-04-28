@@ -6,22 +6,20 @@ import { db } from '@app/backend-shared';
 const postAddBarrier = express.Router();
 
 postAddBarrier.post('/add-barrier', async (req, res) => {
-  const parkId = 3;
-  const name = req.body.name;
+  const parkId = 4;
+  const decoId = req.body.decoId;
 
   //check if we have already the barrier in parkId
   const barrier = await db
     .selectFrom('park_decorations')
     .innerJoin('decorations', 'decorations.id', 'park_decorations.deco_id')
-    .select(['park_id', 'deco_id', 'name', 'price'])
-
+    .select(['decorations.id as decoId', 'park_id', 'deco_id', 'price'])
     .where((eb) =>
       eb.and([
         eb('park_decorations.park_id', '=', parkId),
-        eb('decorations.name', '=', name),
+        eb('park_decorations.id', '=', decoId),
       ]),
     )
-
     .executeTakeFirst();
 
   //if barrier  already exist do not add
@@ -33,24 +31,12 @@ postAddBarrier.post('/add-barrier', async (req, res) => {
     return;
   }
 
-  //Find the id of the deco to add it
-  const decoId = await db
-    .selectFrom('decorations')
-    .select(['id', 'price'])
-    .where('name', '=', name)
-    .executeTakeFirst();
-
-  if (!decoId) {
-    res.status(404).json({ message: 'Decoration not found' });
-    return;
-  }
-
   //insert the decoId in table park_decorations
   await db
     .insertInto('park_decorations')
     .values({
       park_id: parkId,
-      deco_id: decoId.id,
+      deco_id: decoId,
     })
     .executeTakeFirst();
 

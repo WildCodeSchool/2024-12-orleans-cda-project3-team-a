@@ -5,7 +5,6 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export type BarrierType = {
   decoId: number;
-  name: string;
   price: number;
   position: string;
   direction: string;

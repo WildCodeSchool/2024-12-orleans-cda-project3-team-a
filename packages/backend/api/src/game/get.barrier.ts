@@ -6,8 +6,8 @@ import { db } from '@app/backend-shared';
 const getBarrier = express.Router();
 
 getBarrier.get('/barrier', async (req, res) => {
-  const parkId = 3;
-  const zoneId = 3;
+  const parkId = 4;
+  const zoneId = 2;
 
   const barrier = await db
     .selectFrom('decorations')
@@ -19,7 +19,6 @@ getBarrier.get('/barrier', async (req, res) => {
     .where('decorations.zone_id', '=', zoneId)
     .select([
       'decorations.id as decoId',
-      'decorations.name',
       'decorations.price',
       'decorations.position',
       'decorations.direction',
