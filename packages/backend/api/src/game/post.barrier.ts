@@ -3,10 +3,10 @@ import express from 'express';
 
 import { db } from '@app/backend-shared';
 
-const postAddBarrier = express.Router();
+const postBarrier = express.Router();
 
-postAddBarrier.post('/add-barrier', async (req, res) => {
-  const parkId = 5;
+postBarrier.post('/barrier', async (req, res) => {
+  const parkId = 8;
   const decoId = req.body.decoId;
 
   //check if we have already the barrier in parkId
@@ -55,4 +55,4 @@ postAddBarrier.post('/add-barrier', async (req, res) => {
   });
 });
 
-export default postAddBarrier;
+export default postBarrier;

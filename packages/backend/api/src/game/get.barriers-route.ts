@@ -3,9 +3,9 @@ import express from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getBarrier = express.Router();
+const getBarriersRoute = express.Router();
 
-function barrier(parkId: number, zoneId: number) {
+function getBarriers(parkId: number, zoneId: number) {
   return db
     .selectFrom('decorations')
     .leftJoin('park_decorations', (join) =>
@@ -24,15 +24,15 @@ function barrier(parkId: number, zoneId: number) {
     .execute();
 }
 
-export type BarrierType = Awaited<ReturnType<typeof barrier>>[number];
+export type Barrier = Awaited<ReturnType<typeof getBarriers>>[number];
 
-getBarrier.get('/barrier', async (_req, res) => {
-  const parkId = 5;
-  const zoneId = 4;
+getBarriersRoute.get('/barriers', async (_req, res) => {
+  const parkId = 8;
+  const zoneId = 1;
 
-  const barrierResult = await barrier(parkId, zoneId);
+  const barriers = await getBarriers(parkId, zoneId);
 
-  if (barrierResult.length === 0) {
+  if (barriers.length === 0) {
     res.json({
       ok: false,
     });
@@ -40,8 +40,8 @@ getBarrier.get('/barrier', async (_req, res) => {
   }
 
   res.json({
-    barrierResult,
+    barriers,
   });
 });
 
-export default getBarrier;
+export default getBarriersRoute;

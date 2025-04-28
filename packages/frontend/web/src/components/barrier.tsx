@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import type { BarrierType } from '@app/api';
+import type { Barrier } from '@app/api/src/game/get.barriers-route';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
 import { useNumberFormatter } from '@/hooks/use-number-formatter';
@@ -15,7 +14,7 @@ import ButtonBuy from './button-buy';
 const API_URL = import.meta.env.VITE_API_URL;
 
 type BarrierProps = {
-  readonly barrier: BarrierType;
+  readonly barrier: Barrier;
   readonly refetch: () => Promise<void>;
 };
 
@@ -29,7 +28,7 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
     if (!isEnoughMooney) return;
 
     try {
-      const response = await fetch(`${API_URL}/game/add-barrier`, {
+      const response = await fetch(`${API_URL}/game/barrier`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,12 +36,14 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
         body: JSON.stringify({
           decoId: barrier.decoId,
         }),
+        // credentials: 'include',
       });
       const result = await response.json();
       if (result.ok === true) {
         await refetch();
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
     }
   };
@@ -94,7 +95,7 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
             onClick={buyBarrier}
           >
             <ButtonBuy
-              bg='bg-[rgba(255,255,255,0.75)]'
+              bg='bg-white/75'
               cursor={!isEnoughMooney ? 'not-allowed' : 'pointer'}
             >
               {priceFormatted}
