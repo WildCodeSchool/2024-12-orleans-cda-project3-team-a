@@ -2,7 +2,7 @@ import express from 'express';
 
 const postLogoutRouter = express.Router();
 
-postLogoutRouter.post('/logout', (req, res) => {
+postLogoutRouter.post('/logout', (_req, res) => {
   res.clearCookie('authToken');
   res.clearCookie('refreshToken');
 

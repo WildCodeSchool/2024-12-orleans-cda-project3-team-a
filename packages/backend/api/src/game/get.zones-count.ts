@@ -27,7 +27,7 @@ export type UnlockedZones = Awaited<ReturnType<typeof getZones>>;
 
 getZonesCount.get('/zones-count', async (_req, res) => {
   //PLUS TARD récupérer l'id dans le cookie !
-  const userId = 2;
+  const userId = 8;
 
   const park = await db
     .selectFrom('parks')

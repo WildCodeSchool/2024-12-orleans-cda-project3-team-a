@@ -10,7 +10,9 @@ export default function useZonesInfo() {
   useEffect(() => {
     async function fetchZonesInfo() {
       try {
-        const response = await fetch(`${API_URL}/game/zones-count`);
+        const response = await fetch(`${API_URL}/game/zones-count`, {
+          credentials: 'include',
+        });
         const data = await response.json();
         setUnlockedZones(data.unlockedZonesResult);
       } catch (error) {

@@ -31,9 +31,6 @@ app.listen(PORT, () => {
   console.log(`Server is listening on http://${HOST}:${PORT}`);
 });
 
-export default app;
-export type * from './types';
-
 declare module 'Express' {
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface Request {
@@ -41,3 +38,6 @@ declare module 'Express' {
     userId?: number;
   }
 }
+
+export default app;
+export type * from './types';
