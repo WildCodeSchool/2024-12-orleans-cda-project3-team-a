@@ -40,18 +40,28 @@ position VARCHAR(150) NOT NULL,
 CONSTRAINT fk_decorations_creature_id FOREIGN KEY (creature_id) REFERENCES creatures(id)
 );
 `.execute(trx);
+
+    await sql`
+ALTER TABLE zones
+ADD COLUMN src_sign VARCHAR(50) NOT NULL;
+`.execute(trx);
   });
 }
 
 export async function down(db: Kysely<DB>): Promise<void> {
   // Migration code that reverts the database to the previous state.
   await db.transaction().execute(async (trx) => {
+    await sql`
+ALTER TABLE zones
+DROP COLUMN src_sign
+`.execute(trx);
+
     await sql` 
     DROP TABLE decorations
     `.execute(trx);
 
     await sql`
-    ALTER TABLE park_decorations
+    ALTER TABLE park_barriers
     RENAME COLUMN barrier_id TO deco_id
     `.execute(trx);
 

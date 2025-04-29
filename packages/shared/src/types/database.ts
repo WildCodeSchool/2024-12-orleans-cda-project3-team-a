@@ -35,8 +35,16 @@ export interface Creatures {
   zone_id: number;
 }
 
+export interface Decorations {
+  creature_id: number;
+  id: Generated<number>;
+  name: string;
+  position: string;
+  src_image: string;
+}
+
 export interface ParkBarriers {
-  barrieres_id: number;
+  barrier_id: number;
   id: Generated<number>;
   park_id: number;
 }
@@ -123,6 +131,7 @@ export interface DB {
   avatars: Avatars;
   barriers: Barriers;
   creatures: Creatures;
+  decorations: Decorations;
   park_barriers: ParkBarriers;
   park_creatures: ParkCreatures;
   park_gifts: ParkGifts;
