@@ -8,14 +8,13 @@ export default function useParkInfo() {
   const [wallet, setWallet] = useState(0);
   const [visitorsCount, setVisitorsCount] = useState(0);
 
-  //CHANGER ICI L'ID PLUS TARD !!
-
   useEffect(() => {
     async function fetchParkInfo() {
       try {
-        const response = await fetch(`${API_URL}/game/info-park-user`);
+        const response = await fetch(`${API_URL}/game/info-park-user`, {
+          credentials: 'include',
+        });
         const data = await response.json();
-        // const roundedWallet = data.parkInfo.wallet;
         setWallet(data.parkInfo.wallet);
         setVisitorsCount(data.visitorsCount);
       } catch (error) {
