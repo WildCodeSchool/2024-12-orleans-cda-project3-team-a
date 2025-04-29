@@ -90,3 +90,21 @@ export default function Enclosure({
     </div>
   );
 }
+
+// {creatures.map((creature) => (
+//   <div key={creature.id} className={`${creature.background}`}>
+//     <h2>{creature.species}</h2>
+// {creature.lockedCreature ? (
+//   <div>
+//     <img src={Sign} alt="" />
+//     <p>{creature.unlock_cost}</p>
+//   </div>
+// ) : (
+//   <div>
+//     <img src={creature.src_image} alt={creature.species} />
+//     <p> : {creature.quantity}</p>
+//   </div>
+// )}
+//     <p>{creature.unlock_cost}</p>
+//   </div>
+// ))}
