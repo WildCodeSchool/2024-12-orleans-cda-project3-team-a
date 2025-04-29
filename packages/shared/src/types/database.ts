@@ -124,6 +124,7 @@ export interface Zones {
   link: string;
   name: string;
   src_image: string;
+  src_sign: string;
   unlock_cost: number | null;
 }
 
