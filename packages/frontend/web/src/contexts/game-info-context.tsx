@@ -1,12 +1,16 @@
 import { createContext, useContext, useMemo } from 'react';
 import type { PropsWithChildren } from 'react';
 
-import useCreature from '@/hooks/creature';
-import useWallet from '@/hooks/use-wallet';
+import type { UnlockedZones } from '@app/api';
 
-// Define type for context
+import useCreature from '@/hooks/creature';
+import useParkInfo from '@/hooks/use-park-info';
+import useZonesInfo from '@/hooks/use-zones-info';
+
 type GameInfoContextState = {
-  wallet: string;
+  walletFormated: string;
+  visitorsFormated: string;
+  unlockedZones: UnlockedZones;
 };
 
 // Define the type for provider
@@ -14,18 +18,30 @@ type GameInfoContextProviderProps = PropsWithChildren;
 
 // create the context
 export const gameInfoContext = createContext<GameInfoContextState>({
-  wallet: '',
+  walletFormated: '',
+  visitorsFormated: '',
+  unlockedZones: [],
 });
 
 // create the provider
 export function GameInfoContextProvider({
   children,
 }: GameInfoContextProviderProps) {
-  // get wallet with hook
-  const wallet = useWallet();
-  const { creatures } = useCreature();
+  // get wallet an visitors with useParkInfoHook
+  const { walletFormated, visitorsFormated } = useParkInfo();
+
+  // get unlocked zones with useZonesInfo
+  const { unlockedZones } = useZonesInfo();
+
   // memorize value to avoid unnecessary changes
-  const value = useMemo(() => ({ wallet, creatures }), [wallet, creatures]);
+  const value = useMemo(
+    () => ({
+      walletFormated,
+      visitorsFormated,
+      unlockedZones,
+    }),
+    [walletFormated, visitorsFormated, unlockedZones],
+  );
 
   return (
     <gameInfoContext.Provider value={value}>

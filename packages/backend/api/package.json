@@ -3,6 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "description": "",
+  "main": "src/index.ts",
   "scripts": {
     "dev": "tsx --watch ./src/index.ts",
     "build": "exit 0"
