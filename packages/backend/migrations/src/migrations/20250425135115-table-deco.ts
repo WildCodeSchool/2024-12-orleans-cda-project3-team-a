@@ -17,7 +17,7 @@ RENAME TO barriers;
 
     await sql`
 ALTER TABLE barriers
-MODIFY price BIGINT NOT NULL ;
+MODIFY price BIGINT NOT NULL;
 `.execute(trx);
 
     await sql`
@@ -72,7 +72,7 @@ DROP COLUMN src_sign
 
     await sql`
       ALTER TABLE barriers
-      MODIFY price INT NOT NULL
+      MODIFY price INT NULL 
       `.execute(trx);
 
     await sql`
