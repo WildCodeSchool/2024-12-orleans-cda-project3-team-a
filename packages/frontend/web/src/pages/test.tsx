@@ -24,7 +24,7 @@ export default function Test() {
             {barriers.map((barrier) => {
               return (
                 <Barrier
-                  key={`${barrier.decoId}`}
+                  key={`${barrier.barrierId}`}
                   barrier={barrier}
                   refetch={refetch}
                 />
