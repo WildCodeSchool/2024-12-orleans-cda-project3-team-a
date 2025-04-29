@@ -2,10 +2,10 @@ import Barrier from '@/components/barrier';
 import InfoNbVisitorsMoons from '@/components/info-nb-visitors-moons';
 import Loader from '@/components/loader';
 import ReturnHome from '@/components/return-home';
-import useFetchBarrier from '@/hooks/use-fetch-barrier';
+import useFetchBarriers from '@/hooks/use-fetch-barriers';
 
 export default function Test() {
-  const { barriers, isLoading, refetch } = useFetchBarrier();
+  const { barriers, isLoading, refetch } = useFetchBarriers();
 
   return (
     <div className='flex flex-col items-center justify-center gap-5'>
