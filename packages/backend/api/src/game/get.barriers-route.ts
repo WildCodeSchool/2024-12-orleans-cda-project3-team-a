@@ -28,7 +28,7 @@ export type Barrier = Awaited<ReturnType<typeof getBarriers>>[number];
 
 getBarriersRoute.get('/barriers', async (_req, res) => {
   const parkId = 8;
-  const zoneId = 1;
+  const zoneId = 2;
 
   const barriers = await getBarriers(parkId, zoneId);
 
