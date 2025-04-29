@@ -6,18 +6,18 @@ import { db } from '@app/backend-shared';
 const postBarrier = express.Router();
 
 postBarrier.post('/barrier', async (req, res) => {
-  const parkId = 8;
-  const decoId = req.body.decoId;
+  const parkId = 1;
+  const barrierId = req.body.barrierId;
 
   //check if we have already the barrier in parkId
   const barrier = await db
-    .selectFrom('park_decorations')
-    .innerJoin('decorations', 'decorations.id', 'park_decorations.deco_id')
-    .select(['decorations.id as decoId', 'park_id', 'deco_id', 'price'])
+    .selectFrom('park_barriers')
+    .innerJoin('barriers', 'barriers.id', 'park_barriers.barrier_id')
+    .select(['barriers.id as barrierId', 'park_id', 'barrier_id', 'price'])
     .where((eb) =>
       eb.and([
-        eb('park_decorations.park_id', '=', parkId),
-        eb('park_decorations.id', '=', decoId),
+        eb('park_barriers.park_id', '=', parkId),
+        eb('park_barriers.id', '=', barrierId),
       ]),
     )
     .executeTakeFirst();
@@ -31,12 +31,12 @@ postBarrier.post('/barrier', async (req, res) => {
     return;
   }
 
-  //insert the decoId in table park_decorations
+  //insert the barrierId in table park_barriers
   await db
-    .insertInto('park_decorations')
+    .insertInto('park_barriers')
     .values({
       park_id: parkId,
-      deco_id: decoId,
+      barrier_id: barrierId,
     })
     .executeTakeFirst();
 
@@ -44,10 +44,10 @@ postBarrier.post('/barrier', async (req, res) => {
   await db
     .updateTable('parks')
     .set((eb) => ({
-      wallet: eb('wallet', '-', decoId.price),
+      wallet: eb('wallet', '-', barrierId.price),
     }))
     .where('id', '=', parkId)
-    .where('wallet', '>=', decoId.price)
+    .where('wallet', '>=', barrierId.price)
     .executeTakeFirst();
 
   res.json({

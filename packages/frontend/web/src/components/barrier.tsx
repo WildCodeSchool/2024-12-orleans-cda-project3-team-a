@@ -34,7 +34,7 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          decoId: barrier.decoId,
+          barrierId: barrier.barrierId,
         }),
         // credentials: 'include',
       });
@@ -65,8 +65,8 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
                   : ''
       } absolute transform`}
     >
-      {/* if we have an id (=parkDecoId) in park_decoration we display the right direction else display the barrier in construction */}
-      {barrier.parkDecoId !== null ? (
+      {/* if we have an id (=parkBarrierId) in park_barriers we display the right direction else display the barrier in construction */}
+      {barrier.parkBarrierId !== null ? (
         // <div>We check what is the correct direction to display
         <img
           src={

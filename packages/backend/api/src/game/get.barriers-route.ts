@@ -7,19 +7,19 @@ const getBarriersRoute = express.Router();
 
 function getBarriers(parkId: number, zoneId: number) {
   return db
-    .selectFrom('decorations')
-    .leftJoin('park_decorations', (join) =>
+    .selectFrom('barriers')
+    .leftJoin('park_barriers', (join) =>
       join
-        .onRef('decorations.id', '=', 'park_decorations.deco_id')
-        .on('park_decorations.park_id', '=', parkId),
+        .onRef('barriers.id', '=', 'park_barriers.barrier_id')
+        .on('park_barriers.park_id', '=', parkId),
     )
-    .where('decorations.zone_id', '=', zoneId)
+    .where('barriers.zone_id', '=', zoneId)
     .select([
-      'decorations.id as decoId',
-      'decorations.price',
-      'decorations.position',
-      'decorations.direction',
-      'park_decorations.id as parkDecoId',
+      'barriers.id as barrierId',
+      'barriers.price',
+      'barriers.position',
+      'barriers.direction',
+      'park_barriers.id as parkBarrierId',
     ])
     .execute();
 }
@@ -27,8 +27,8 @@ function getBarriers(parkId: number, zoneId: number) {
 export type Barrier = Awaited<ReturnType<typeof getBarriers>>[number];
 
 getBarriersRoute.get('/barriers', async (_req, res) => {
-  const parkId = 8;
-  const zoneId = 2;
+  const parkId = 1;
+  const zoneId = 3;
 
   const barriers = await getBarriers(parkId, zoneId);
 
