@@ -18,7 +18,7 @@ export default function useFetchBarriers() {
       setBarriers(data.barriers);
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error('Erreur during loading barriers :', error);
+      console.error('Error loading barriers :', error);
     } finally {
       setIsLoading(false);
     }
