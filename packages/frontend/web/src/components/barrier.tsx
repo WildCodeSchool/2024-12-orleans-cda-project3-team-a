@@ -1,4 +1,4 @@
-import type { Barrier } from '@app/api/src/game/get.barriers-route';
+import type { Barrier } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
 import { useNumberFormatter } from '@/hooks/use-number-formatter';
@@ -20,15 +20,15 @@ type BarrierProps = {
 
 export default function Barrier({ barrier, refetch }: BarrierProps) {
   const { wallet } = useGameInfoContext();
-  const isEnoughMooney = wallet > barrier.price;
+  const hasEnoughMooney = wallet > barrier.price;
   const priceFormatted = useNumberFormatter(barrier.price);
 
   const buyBarrier = async () => {
     //Buy only if we have enough mooney
-    if (!isEnoughMooney) return;
+    if (!hasEnoughMooney) return;
 
     try {
-      const response = await fetch(`${API_URL}/game/barrier`, {
+      const response = await fetch(`${API_URL}/game/barriers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
         body: JSON.stringify({
           barrierId: barrier.barrierId,
         }),
-        // credentials: 'include',
+        credentials: 'include',
       });
       const result = await response.json();
       if (result.ok === true) {
@@ -48,26 +48,30 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
     }
   };
 
+  const getPositionClass = (position: string | null) => {
+    switch (position) {
+      case 'top-left':
+        return 'top-0 left-1/3 -translate-x-1/2';
+      case 'top-right':
+        return 'top-0 left-2/3 -translate-x-1/2';
+      case 'bottom-center':
+        return 'bottom-0 left-1/2 -translate-x-1/2';
+      case 'center-left':
+        return 'top-1/2 left-0 -translate-y-1/2';
+      case 'center-right':
+        return 'top-1/2 right-0 -translate-y-1/2';
+      default:
+        return '';
+    }
+  };
+
+  const positionClass = getPositionClass(barrier.position);
+
   return (
-    //Whatever the situation is unlock or not, we have to display it depending the position in bdd
-    <div
-      className={`${
-        barrier.position === 'top-left'
-          ? 'top-0 left-1/3 -translate-x-1/2'
-          : barrier.position === 'top-right'
-            ? 'top-0 left-2/3 -translate-x-1/2'
-            : barrier.position === 'bottom-center'
-              ? 'bottom-0 left-1/2 -translate-x-1/2'
-              : barrier.position === 'center-left'
-                ? 'top-1/2 left-0 -translate-y-1/2'
-                : barrier.position === 'center-right'
-                  ? 'top-1/2 right-0 -translate-y-1/2'
-                  : ''
-      } absolute transform`}
-    >
-      {/* if we have an id (=parkBarrierId) in park_barriers we display the right direction else display the barrier in construction */}
+    <div className={`${positionClass} absolute transform`}>
+      {/*Check if we have already bought the direction */}
       {barrier.parkBarrierId !== null ? (
-        // <div>We check what is the correct direction to display
+        // display the right direction
         <img
           src={
             barrier.direction === 'up'
@@ -89,14 +93,16 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
           <img src={barrierIcon} alt='Barrier to buy' className='w-16' />
           <div
             title={
-              isEnoughMooney ? 'click to buy this barrier' : 'not enough mooney'
+              hasEnoughMooney
+                ? 'click to buy this barrier'
+                : 'not enough mooney'
             }
-            className={`absolute ${!isEnoughMooney ? 'text-gray-500 grayscale-100' : ''}`}
+            className={`absolute ${!hasEnoughMooney ? 'text-gray-500 grayscale-100' : ''}`}
             onClick={buyBarrier}
           >
             <ButtonBuy
               bg='bg-white/75'
-              cursor={!isEnoughMooney ? 'not-allowed' : 'pointer'}
+              cursor={!hasEnoughMooney ? 'not-allowed' : 'pointer'}
             >
               {priceFormatted}
               <img src={moon} alt='mooney' className={`w-5`} />
