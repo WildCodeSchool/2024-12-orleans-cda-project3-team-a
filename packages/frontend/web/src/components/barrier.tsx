@@ -34,11 +34,12 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          barrierId: barrier.barrierId,
+          barrierFetched: barrier,
         }),
         credentials: 'include',
       });
       const result = await response.json();
+
       if (result.ok === true) {
         await refetch();
       }

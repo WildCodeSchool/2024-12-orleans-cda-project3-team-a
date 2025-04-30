@@ -6,8 +6,8 @@ import { db } from '@app/backend-shared';
 const postBarrier = express.Router();
 
 postBarrier.post('/', async (req, res) => {
-  const parkId = 1;
-  const barrierId = req.body.barrierId;
+  const parkId = 5;
+  const barrierFetched = req.body.barrierFetched;
 
   //check if we have already the barrier in parkId
   const barrier = await db
@@ -17,7 +17,7 @@ postBarrier.post('/', async (req, res) => {
     .where((eb) =>
       eb.and([
         eb('park_barriers.park_id', '=', parkId),
-        eb('park_barriers.id', '=', barrierId),
+        eb('park_barriers.id', '=', barrierFetched.barrierId),
       ]),
     )
     .executeTakeFirst();
@@ -36,10 +36,10 @@ postBarrier.post('/', async (req, res) => {
   const updateWallet = await db
     .updateTable('parks')
     .set((eb) => ({
-      wallet: eb('wallet', '-', barrierId.price),
+      wallet: eb('wallet', '-', barrierFetched.price),
     }))
     .where('id', '=', parkId)
-    .where('wallet', '>=', barrierId.price)
+    .where('wallet', '>=', barrierFetched.price)
     .executeTakeFirst();
 
   //if not enough mooney, update row = 0 so return to not add barrier in bdd
@@ -56,7 +56,7 @@ postBarrier.post('/', async (req, res) => {
     .insertInto('park_barriers')
     .values({
       park_id: parkId,
-      barrier_id: barrierId,
+      barrier_id: barrierFetched.barrierId,
     })
     .executeTakeFirst();
 
