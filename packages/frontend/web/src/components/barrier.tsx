@@ -20,12 +20,12 @@ type BarrierProps = {
 
 export default function Barrier({ barrier, refetch }: BarrierProps) {
   const { wallet } = useGameInfoContext();
-  const hasEnoughMooney = wallet > barrier.price;
+  const hasEnoughMoons = wallet > barrier.price;
   const priceFormatted = useNumberFormatter(barrier.price);
 
   const buyBarrier = async () => {
-    //Buy only if we have enough mooney
-    if (!hasEnoughMooney) return;
+    //Buy only if we have enough money
+    if (!hasEnoughMoons) return;
 
     try {
       const response = await fetch(`${API_URL}/game/barriers`, {
@@ -34,7 +34,7 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          barrierFetched: barrier,
+          barrierIdChosen: barrier.barrierId,
         }),
         credentials: 'include',
       });
@@ -94,19 +94,17 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
           <img src={barrierIcon} alt='Barrier to buy' className='w-16' />
           <div
             title={
-              hasEnoughMooney
-                ? 'click to buy this barrier'
-                : 'not enough mooney'
+              hasEnoughMoons ? 'click to buy this barrier' : 'not enough money'
             }
-            className={`absolute ${!hasEnoughMooney ? 'text-gray-500 grayscale-100' : ''}`}
+            className={`absolute ${!hasEnoughMoons ? 'text-gray-500 grayscale-100' : ''}`}
             onClick={buyBarrier}
           >
             <ButtonBuy
               bg='bg-white/75'
-              cursor={!hasEnoughMooney ? 'not-allowed' : 'pointer'}
+              cursor={!hasEnoughMoons ? 'not-allowed' : 'pointer'}
             >
               {priceFormatted}
-              <img src={moon} alt='mooney' className={`w-5`} />
+              <img src={moon} alt='money' className={`w-5`} />
             </ButtonBuy>
           </div>
         </div>

@@ -26,14 +26,23 @@ function getBarriers(parkId: number, zoneId: number) {
 
 export type Barrier = Awaited<ReturnType<typeof getBarriers>>[number];
 
-getBarriersRoute.get('/', async (_req, res) => {
+getBarriersRoute.get('/', async (req, res) => {
   const parkId = 5;
-  const zoneId = 1;
+  const zoneId = req.query.zoneId;
 
-  const barriers = await getBarriers(parkId, zoneId);
+  //check type of zoneId
+  if (typeof zoneId !== 'string') {
+    res.json({
+      ok: false,
+    });
+    return;
+  }
+
+  const barriers = await getBarriers(parkId, parseInt(zoneId));
 
   if (barriers.length === 0) {
     res.json({
+      message: 'no barriers loading',
       ok: false,
     });
     return;
