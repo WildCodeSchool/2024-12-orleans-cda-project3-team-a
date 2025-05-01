@@ -1,41 +1,35 @@
 import { type PropsWithChildren, useState } from 'react';
 
+import type { Decorations } from '@app/api';
+
 import alert from '../assets/images/icons-buttons/alert.png';
 import moon from '../assets/images/icons-buttons/moon.png';
 import ButtonBuy from './button-buy';
 
 type EnclosureProps = PropsWithChildren<{
-  readonly srcImgDeco1: string;
-  readonly srcImgDeco2: string;
   readonly srcImgCreature: string;
   readonly price: number;
   readonly lockedCreature: string | null;
   readonly nmbrCreature: number;
   readonly name: string;
-  readonly positionDeco1: number;
-  readonly positionDeco2: number;
-  readonly background: string | null;
+  readonly background: string;
+  readonly decorations: Decorations;
 }>;
 
 export default function Enclosure({
-  srcImgDeco1,
-  srcImgDeco2,
   srcImgCreature,
   price,
-  positionDeco1,
-  positionDeco2,
   name,
   lockedCreature,
   nmbrCreature,
   background,
+  decorations,
 }: EnclosureProps) {
-  console.log('positionDeco1:', positionDeco1);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hungry, setHungry] = useState(false);
   const isLocked = nmbrCreature === 0;
 
-  const getBackgound = (background: string | null) => {
+  const getBackgound = (background: string) => {
     switch (background) {
       case 'green':
         return 'bg-fairy-green';
@@ -58,20 +52,42 @@ export default function Enclosure({
     }
   };
 
+  const getPosition = (position: string) => {
+    switch (position) {
+      case ' top-left':
+        return 'absolute top-5 left-0';
+      case 'top-right':
+        return 'absolute top-5 left-0';
+      case 'bottom-left':
+        return 'absolute top-30 left-0';
+      case 'bottom-right':
+        return 'absolute top-30 left-0';
+    }
+  };
+
   const handleModale = () => {
     setIsModalOpen(!isModalOpen);
   };
   // min-w-[33.33%]
   return (
     <div
-      className={`flex h-[50vh] min-w-[50%] flex-col justify-between p-4 ${getBackgound(background)}`}
+      className={`flex h-[50vh] min-w-[33.33%] flex-col justify-between p-4 ${getBackgound(background)}`}
     >
-      <img
-        style={{ left: `${positionDeco1}px` }}
+      {/* <img
+        style={{ left: `${getPosition}px` }}
         className={`relative w-15`}
         src={srcImgDeco1}
         alt=''
-      />
+      /> */}
+      {decorations.map((decoration) => (
+        <img
+          key={decoration.creature_id}
+          style={{ left: getPosition(decoration.position) }}
+          className='relative w-15'
+          src={`/images/decorations/${decoration.src_image}`}
+          alt=''
+        />
+      ))}
       <div
         onClick={handleModale}
         className='relative flex flex-col items-center justify-center gap-2'
@@ -99,9 +115,9 @@ export default function Enclosure({
         )}
       </div>
       <img
-        style={{ left: `${positionDeco2}px` }}
+        style={{ left: `${getPosition}px` }}
         className={`relative w-15`}
-        src={srcImgDeco2}
+        src={''}
         alt=''
       />
     </div>
