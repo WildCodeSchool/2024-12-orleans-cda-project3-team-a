@@ -1,26 +1,26 @@
 import { useEffect, useState } from 'react';
 
-import type { Creatures } from '@app/api';
+import type { Decorations } from '@app/api';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function useCreatures() {
-  const [creatures, setCreatures] = useState<Creatures>([]);
+export default function useDecoration() {
+  const [decorElements, setDecorElements] = useState<Decorations>([]);
 
   useEffect(() => {
     async function fetchCreatures() {
       try {
-        const response = await fetch(`${API_URL}/game/info-creatures`, {
+        const response = await fetch(`${API_URL}/game/info-decoration`, {
           credentials: 'include',
         });
         const data = await response.json();
         console.log('donné recup', data);
-        setCreatures(data.creaturesList);
+        setDecorElements(data.decoration);
       } catch (error) {
         console.error('fetch failed', error);
       }
     }
     void fetchCreatures();
   }, []);
-  return { creatures };
+  return { decorElements };
 }

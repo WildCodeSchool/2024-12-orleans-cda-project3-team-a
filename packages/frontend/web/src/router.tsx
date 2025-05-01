@@ -9,6 +9,8 @@ import SignUp from './pages/sign-up';
 import Test from './pages/test';
 import WelcomeLayout from './pages/welcome-layout';
 import Fairy from './pages/world-fairy';
+import Mythologic from './pages/world-mythologic';
+import Shadow from './pages/world-shadow';
 import Winged from './pages/world-winged';
 
 const router = createBrowserRouter([
@@ -56,18 +58,18 @@ const router = createBrowserRouter([
     path: '/fairy',
     element: <Fairy />,
   },
-  {
-    path: '/winged',
-    element: <Winged />,
-  },
-  {
-    path: '/Mythologic',
-    element: <Mythologic />,
-  },
-  {
-    path: '/Shadow',
-    element: <Shadow />,
-  },
+  // {
+  //   path: '/winged',
+  //   element: <Winged />,
+  // },
+  // {
+  //   path: '/Mythologic',
+  //   element: <Mythologic />,
+  // },
+  // {
+  //   path: '/Shadow',
+  //   element: <Shadow />,
+  // },
 ]);
 
 export default router;

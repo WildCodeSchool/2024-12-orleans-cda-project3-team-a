@@ -5,27 +5,19 @@ import moon from '../assets/images/icons-buttons/moon.png';
 import ButtonBuy from './button-buy';
 
 type EnclosureProps = PropsWithChildren<{
-  readonly bgColor:
-    | 'bg-fairy-blue'
-    | 'bg-fairy-green'
-    | 'bg-winged-red'
-    | 'bg-winged-yellow'
-    | 'bg-mythologic-beige'
-    | 'bg-shadow-purple'
-    | 'bg-shadow-green';
   readonly srcImgDeco1: string;
   readonly srcImgDeco2: string;
   readonly srcImgCreature: string;
   readonly price: number;
-  readonly srcLockedCreature: string;
+  readonly lockedCreature: string | null;
   readonly nmbrCreature: number;
   readonly name: string;
   readonly positionDeco1: number;
   readonly positionDeco2: number;
+  readonly background: string | null;
 }>;
 
 export default function Enclosure({
-  bgColor,
   srcImgDeco1,
   srcImgDeco2,
   srcImgCreature,
@@ -33,21 +25,46 @@ export default function Enclosure({
   positionDeco1,
   positionDeco2,
   name,
-  srcLockedCreature,
+  lockedCreature,
   nmbrCreature,
+  background,
 }: EnclosureProps) {
   console.log('positionDeco1:', positionDeco1);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [lockedCreature, setLockedCreature] = useState(false);
   const [hungry, setHungry] = useState(false);
+  const isLocked = nmbrCreature === 0;
+
+  const getBackgound = (background: string | null) => {
+    switch (background) {
+      case 'green':
+        return 'bg-fairy-green';
+      case 'blue':
+        return 'bg-fairy-blue';
+      case 'yellow':
+        return 'bg-winged-yellow';
+      case 'red':
+        return 'bg-winged-red';
+      case 'center-right':
+        return 'top-1/2 right-0 -translate-y-1/2';
+      case 'beige':
+        return 'bg-mythologic-beige';
+      case 'dark-green':
+        return 'bg-shadow-green';
+      case 'purple':
+        return 'bg-shadow-purple';
+      default:
+        return '';
+    }
+  };
+
   const handleModale = () => {
     setIsModalOpen(!isModalOpen);
   };
-
+  // min-w-[33.33%]
   return (
     <div
-      className={`flex h-[50vh] min-w-[33.33%] flex-col justify-between p-4 ${bgColor}`}
+      className={`flex h-[50vh] min-w-[50%] flex-col justify-between p-4 ${getBackgound(background)}`}
     >
       <img
         style={{ left: `${positionDeco1}px` }}
@@ -65,14 +82,14 @@ export default function Enclosure({
         />
         <img
           className={`w-30 ${hungry ? 'grayscale' : ''}`}
-          src={lockedCreature ? srcLockedCreature : srcImgCreature}
+          src={isLocked ? (lockedCreature ?? '') : (srcImgCreature ?? '')}
           alt=''
         />
 
-        <h1 className={` ${lockedCreature ? 'absolute top-10' : 'hidden'} `}>
+        <h1 className={` ${isLocked ? 'absolute top-10' : 'hidden'} `}>
           {name}
         </h1>
-        {lockedCreature ? (
+        {isLocked ? (
           <div className='flex items-center gap-1'>
             <ButtonBuy>{price}</ButtonBuy>
             <img src={moon} alt='Prix' className='h-4 w-4' />
@@ -90,21 +107,3 @@ export default function Enclosure({
     </div>
   );
 }
-
-// {creatures.map((creature) => (
-//   <div key={creature.id} className={`${creature.background}`}>
-//     <h2>{creature.species}</h2>
-// {creature.lockedCreature ? (
-//   <div>
-//     <img src={Sign} alt="" />
-//     <p>{creature.unlock_cost}</p>
-//   </div>
-// ) : (
-//   <div>
-//     <img src={creature.src_image} alt={creature.species} />
-//     <p> : {creature.quantity}</p>
-//   </div>
-// )}
-//     <p>{creature.unlock_cost}</p>
-//   </div>
-// ))}
