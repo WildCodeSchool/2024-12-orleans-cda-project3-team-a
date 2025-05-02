@@ -39,31 +39,29 @@ export default function Enclosure({
         return 'bg-winged-yellow';
       case 'red':
         return 'bg-winged-red';
-      case 'center-right':
-        return 'top-1/2 right-0 -translate-y-1/2';
       case 'beige':
         return 'bg-mythologic-beige';
       case 'dark-green':
         return 'bg-shadow-green';
       case 'purple':
         return 'bg-shadow-purple';
-      default:
-        return '';
     }
   };
 
   const getPosition = (position: string) => {
     switch (position) {
-      case ' top-left':
-        return 'absolute top-5 left-0';
+      case 'top-left':
+        return 'absolute top-5 left-70';
       case 'top-right':
-        return 'absolute top-5 left-0';
+        return 'absolute top-5 left-100';
       case 'bottom-left':
-        return 'absolute top-30 left-0';
+        return 'absolute top-50 lef-0';
       case 'bottom-right':
-        return 'absolute top-30 left-0';
+        return 'absolute top-50 left-110';
     }
   };
+
+  // const positionDecor = getPosition(decorations.position)
 
   const handleModale = () => {
     setIsModalOpen(!isModalOpen);
@@ -82,8 +80,8 @@ export default function Enclosure({
       {decorations.map((decoration) => (
         <img
           key={decoration.creature_id}
-          style={{ left: getPosition(decoration.position) }}
-          className='relative w-15'
+          // style={{ left: getPosition(decoration.position) }}
+          className={`relative w-15 ${getPosition(decoration.position)}`}
           src={`/images/decorations/${decoration.src_image}`}
           alt=''
         />
@@ -114,12 +112,12 @@ export default function Enclosure({
           <ButtonBuy>{nmbrCreature}</ButtonBuy>
         )}
       </div>
-      <img
+      {/* <img
         style={{ left: `${getPosition}px` }}
         className={`relative w-15`}
         src={''}
         alt=''
-      />
+      /> */}
     </div>
   );
 }
