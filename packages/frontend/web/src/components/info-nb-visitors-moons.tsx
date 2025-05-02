@@ -13,7 +13,7 @@ export default function InfoNbVisitorsMoons() {
       </div>
       <div className='flex flex-row items-center gap-0.5 md:gap-1'>
         {walletFormated}
-        <img src={moon} alt='mooney' className='h-6 md:h-7' />
+        <img src={moon} alt='money' className='h-6 md:h-7' />
       </div>
     </div>
   );

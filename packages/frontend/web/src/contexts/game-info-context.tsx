@@ -8,6 +8,7 @@ import useZonesInfo from '@/hooks/use-zones-info';
 
 type GameInfoContextState = {
   walletFormated: string;
+  wallet: number;
   visitorsFormated: string;
   unlockedZones: UnlockedZones;
 };
@@ -18,6 +19,7 @@ type GameInfoContextProviderProps = PropsWithChildren;
 // create the context
 export const gameInfoContext = createContext<GameInfoContextState>({
   walletFormated: '',
+  wallet: 0,
   visitorsFormated: '',
   unlockedZones: [],
 });
@@ -26,8 +28,8 @@ export const gameInfoContext = createContext<GameInfoContextState>({
 export function GameInfoContextProvider({
   children,
 }: GameInfoContextProviderProps) {
-  // get wallet an visitors with useParkInfoHook
-  const { walletFormated, visitorsFormated } = useParkInfo();
+  // get wallet and visitors with hook
+  const { walletFormated, visitorsFormated, wallet } = useParkInfo();
 
   // get unlocked zones with useZonesInfo
   const { unlockedZones } = useZonesInfo();
@@ -38,8 +40,9 @@ export function GameInfoContextProvider({
       walletFormated,
       visitorsFormated,
       unlockedZones,
+      wallet,
     }),
-    [walletFormated, visitorsFormated, unlockedZones],
+    [walletFormated, visitorsFormated, unlockedZones, wallet],
   );
 
   return (
