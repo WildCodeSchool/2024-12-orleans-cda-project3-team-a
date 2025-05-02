@@ -1,6 +1,6 @@
 import { type PropsWithChildren, useState } from 'react';
 
-import type { Decorations } from '@app/api';
+import type { Creatures, Decorations } from '@app/api';
 
 import alert from '../assets/images/icons-buttons/alert.png';
 import moon from '../assets/images/icons-buttons/moon.png';
@@ -14,6 +14,7 @@ type EnclosureProps = PropsWithChildren<{
   readonly name: string;
   readonly background: string;
   readonly decorations: Decorations;
+  readonly totalCreaturesInZone: number;
 }>;
 
 export default function Enclosure({
@@ -24,6 +25,7 @@ export default function Enclosure({
   nmbrCreature,
   background,
   decorations,
+  totalCreaturesInZone,
 }: EnclosureProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hungry, setHungry] = useState(false);
@@ -48,39 +50,71 @@ export default function Enclosure({
     }
   };
 
-  const getPosition = (position: string) => {
+  const decoPositionFour = (position: string) => {
     switch (position) {
       case 'top-left':
-        return 'absolute top-5 left-70';
+        return 'absolute top-5 left-0';
       case 'top-right':
-        return 'absolute top-5 left-100';
+        return 'absolute top-5 left-170';
       case 'bottom-left':
-        return 'absolute top-50 lef-0';
+        return 'absolute top-60 lef-0';
       case 'bottom-right':
-        return 'absolute top-50 left-110';
+        return 'absolute top-60 left-170';
+      case 'top-center':
+        return 'absolute top-5 center';
+      default:
+        return '';
     }
   };
 
-  // const positionDecor = getPosition(decorations.position)
+  const decoPositionSix = (position: string) => {
+    switch (position) {
+      case 'top-left':
+        return 'absolute top-5 left-0';
+      case 'top-right':
+        return 'absolute top-5 left-105';
+      case 'bottom-left':
+        return 'absolute top-60 lef-0';
+      case 'bottom-right':
+        return 'absolute top-60 left-110';
+      case 'top-center':
+        return 'absolute top-5 center';
+      default:
+        return '';
+    }
+  };
+
+  const isFour = totalCreaturesInZone === 4;
+  const isSix = totalCreaturesInZone === 6;
+  const width = isFour ? 'w-[50%]' : isSix ? 'w-[33.33%]' : '';
+  const getPosition = isFour
+    ? decoPositionFour
+    : isSix
+      ? decoPositionSix
+      : () => '';
+
+  // const getPosition = () => {
+  //   if (creatureWord.length === 4) {
+  //     positions = decoPositionFour;
+  //     width = 50
+  //   } else if (creatureWord.length === 6) {
+  //     positions = decoPositionSix;
+  //     width = 33.33
+  //   }
 
   const handleModale = () => {
     setIsModalOpen(!isModalOpen);
   };
   // min-w-[33.33%]
+  // className={`flex h-[50vh] min-w-[33.33%] flex-col p-4 ${getBackgound(background)}`}
+
   return (
     <div
-      className={`flex h-[50vh] min-w-[33.33%] flex-col justify-between p-4 ${getBackgound(background)}`}
+      className={`flex h-[50vh] ${width} flex-col p-4 ${getBackgound(background)}`}
     >
-      {/* <img
-        style={{ left: `${getPosition}px` }}
-        className={`relative w-15`}
-        src={srcImgDeco1}
-        alt=''
-      /> */}
       {decorations.map((decoration) => (
         <img
           key={decoration.creature_id}
-          // style={{ left: getPosition(decoration.position) }}
           className={`relative w-15 ${getPosition(decoration.position)}`}
           src={`/images/decorations/${decoration.src_image}`}
           alt=''
@@ -96,7 +130,7 @@ export default function Enclosure({
         />
         <img
           className={`w-30 ${hungry ? 'grayscale' : ''}`}
-          src={isLocked ? (lockedCreature ?? '') : (srcImgCreature ?? '')}
+          src={isLocked ? (lockedCreature ?? '') : srcImgCreature}
           alt=''
         />
 
@@ -112,12 +146,6 @@ export default function Enclosure({
           <ButtonBuy>{nmbrCreature}</ButtonBuy>
         )}
       </div>
-      {/* <img
-        style={{ left: `${getPosition}px` }}
-        className={`relative w-15`}
-        src={''}
-        alt=''
-      /> */}
     </div>
   );
 }
