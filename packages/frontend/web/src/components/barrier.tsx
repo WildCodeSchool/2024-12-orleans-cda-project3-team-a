@@ -34,7 +34,7 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          barrierIdChosen: barrier.barrierId,
+          barrierId: barrier.barrierId,
         }),
         credentials: 'include',
       });

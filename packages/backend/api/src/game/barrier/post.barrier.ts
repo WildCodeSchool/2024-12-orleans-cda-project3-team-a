@@ -7,7 +7,7 @@ const postBarrier = express.Router();
 
 postBarrier.post('/', async (req, res) => {
   const parkId = 5;
-  const barrierIdChosen = req.body.barrierIdChosen;
+  const barrierId = req.body.barrierId;
 
   //check if we have already the barrier in parkId
   const barrier = await db
@@ -17,16 +17,25 @@ postBarrier.post('/', async (req, res) => {
         .onRef('barriers.id', '=', 'park_barriers.barrier_id')
         .on('park_barriers.park_id', '=', parkId),
     )
-    .where('barriers.id', '=', barrierIdChosen)
+    .where('barriers.id', '=', barrierId)
     .select([
       'barriers.id as barrierId',
       'barriers.price',
       'park_barriers.id as parkBarrierId',
     ])
-    .execute();
+    .executeTakeFirst();
 
-  //if barrier  already exist do not add
-  if (barrier[0]?.parkBarrierId !== null) {
+  //check if barrier exist
+  if (!barrier) {
+    res.json({
+      ok: false,
+      message: 'barrier not found',
+    });
+    return;
+  }
+
+  //if barrier already exist do not add
+  if (barrier.parkBarrierId !== null) {
     res.json({
       ok: false,
       message: 'direction already in stock',
@@ -35,14 +44,14 @@ postBarrier.post('/', async (req, res) => {
     return;
   }
 
-  //soustraction price of deco
+  //request for soustraction price of deco
   const updateWallet = await db
     .updateTable('parks')
     .set((eb) => ({
-      wallet: eb('wallet', '-', barrier[0].price),
+      wallet: eb('wallet', '-', barrier.price),
     }))
     .where('id', '=', parkId)
-    .where('wallet', '>=', barrier[0].price)
+    .where('wallet', '>=', barrier.price)
     .executeTakeFirst();
 
   //if not enough money, update row = 0 so return to not add barrier in bdd
@@ -59,7 +68,7 @@ postBarrier.post('/', async (req, res) => {
     .insertInto('park_barriers')
     .values({
       park_id: parkId,
-      barrier_id: barrier[0].barrierId,
+      barrier_id: barrier.barrierId,
     })
     .executeTakeFirst();
 
