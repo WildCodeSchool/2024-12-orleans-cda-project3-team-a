@@ -9,7 +9,7 @@ export default function useFetchBarriers() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   //A changer plus tard zoneId !!
-  const zoneId = 2;
+  const zoneId = 4;
 
   const fetchBarriers = useCallback(async () => {
     setIsLoading(true);
