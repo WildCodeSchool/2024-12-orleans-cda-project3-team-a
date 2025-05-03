@@ -12,5 +12,6 @@ export default function authGuard(
 
   res.json({
     ok: false,
+    message: 'failed authGuard',
   });
 }

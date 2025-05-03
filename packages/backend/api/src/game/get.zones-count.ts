@@ -1,8 +1,9 @@
 import express from 'express';
+import { type Request, Router } from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getZonesCount = express.Router();
+const getZonesCount = Router();
 
 function getZones(parkId: number) {
   return db
@@ -25,9 +26,17 @@ function getZones(parkId: number) {
 
 export type UnlockedZones = Awaited<ReturnType<typeof getZones>>;
 
-getZonesCount.get('/zones-count', async (_req, res) => {
+getZonesCount.get('/zones-count', async (req: Request, res) => {
   //PLUS TARD récupérer l'id dans le cookie !
-  const userId = 2;
+  const userId = req.userId;
+
+  //obligé ??
+  if (userId === undefined) {
+    res.json({
+      ok: false,
+    });
+    return;
+  }
 
   const park = await db
     .selectFrom('parks')

@@ -8,6 +8,7 @@ export default async function getParkIdMiddleware(
   next: NextFunction,
 ) {
   const userId = req.userId;
+
   if (userId == null) {
     res.json({
       ok: false,
@@ -33,7 +34,15 @@ export default async function getParkIdMiddleware(
     return;
   }
 
-  //take the parkId
+  if (typeof park.parkId !== 'number') {
+    res.json({
+      message: 'park id not found',
+      ok: false,
+    });
+    return;
+  }
+
+  //put the parkId in request
   req.parkId = park.parkId;
 
   next();

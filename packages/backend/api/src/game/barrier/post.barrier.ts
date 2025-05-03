@@ -1,13 +1,21 @@
 //Request to add the barrier in his park and deduct money in his wallet
-import express from 'express';
+import { type Request, Router } from 'express';
 
 import { db } from '@app/backend-shared';
 
-const postBarrier = express.Router();
+const postBarrier = Router();
 
-postBarrier.post('/', async (req, res) => {
-  const parkId = 5;
+postBarrier.post('/', async (req: Request, res) => {
+  const parkId = req.parkId;
   const barrierId = req.body.barrierId;
+
+  //obligé de mettre ca ??? on peut pas le mettre dans middleware?
+  if (parkId === undefined) {
+    res.json({
+      ok: false,
+    });
+    return;
+  }
 
   //check if we have already the barrier in parkId
   const barrier = await db

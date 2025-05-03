@@ -28,13 +28,21 @@ export type Barrier = Awaited<ReturnType<typeof getBarriers>>[number];
 
 getBarriersRoute.get('/', async (req: Request, res) => {
   const zoneId = req.query.zoneId;
-  // const userId = req.userId;
   const parkId = req.parkId;
+
+  //obligé de mettre ca ??? on peut pas le mettre dans middleware?
+  if (parkId === undefined) {
+    res.json({
+      ok: false,
+    });
+    return;
+  }
 
   //check type of zoneId
   if (typeof zoneId !== 'string') {
     res.json({
       ok: false,
+      message: 'zoneId missing',
     });
     return;
   }
@@ -44,6 +52,8 @@ getBarriersRoute.get('/', async (req: Request, res) => {
   if (barriers.length === 0) {
     res.json({
       message: 'no barriers loading',
+      parkId,
+      barriers,
       ok: false,
     });
     return;

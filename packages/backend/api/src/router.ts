@@ -12,7 +12,7 @@ router.use(authMiddleware);
 router.use('/auth', authRouter);
 
 router.use(authGuard);
-gameRouter.use(getParkIdMiddleware);
+router.use(getParkIdMiddleware);
 router.use('/game', gameRouter);
 
 export default router;
