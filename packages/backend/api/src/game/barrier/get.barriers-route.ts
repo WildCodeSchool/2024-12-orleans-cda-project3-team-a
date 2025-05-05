@@ -1,9 +1,9 @@
 //Request to know if the user has the barrier or not in his park
-import express from 'express';
+import { type Request, Router } from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getBarriersRoute = express.Router();
+const getBarriersRoute = Router();
 
 function getBarriers(parkId: number, zoneId: number) {
   return db
@@ -26,14 +26,22 @@ function getBarriers(parkId: number, zoneId: number) {
 
 export type Barrier = Awaited<ReturnType<typeof getBarriers>>[number];
 
-getBarriersRoute.get('/', async (req, res) => {
-  const parkId = 5;
+getBarriersRoute.get('/', async (req: Request, res) => {
   const zoneId = req.query.zoneId;
+  const parkId = req.parkId;
+
+  if (parkId === undefined) {
+    res.json({
+      ok: false,
+    });
+    return;
+  }
 
   //check type of zoneId
   if (typeof zoneId !== 'string') {
     res.json({
       ok: false,
+      message: 'zoneId missing',
     });
     return;
   }
