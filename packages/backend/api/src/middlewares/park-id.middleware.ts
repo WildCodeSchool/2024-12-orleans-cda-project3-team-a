@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from 'express';
 
 import { db } from '@app/backend-shared';
 
-export default async function getParkIdMiddleware(
+export default async function parkIdMiddleware(
   req: Request,
   res: Response,
   next: NextFunction,
