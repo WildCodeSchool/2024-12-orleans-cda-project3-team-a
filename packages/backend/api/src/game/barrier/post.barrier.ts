@@ -9,7 +9,6 @@ postBarrier.post('/', async (req: Request, res) => {
   const parkId = req.parkId;
   const barrierId = req.body.barrierId;
 
-  //obligé de mettre ca ??? on peut pas le mettre dans middleware?
   if (parkId === undefined) {
     res.json({
       ok: false,

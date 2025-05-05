@@ -30,7 +30,6 @@ getBarriersRoute.get('/', async (req: Request, res) => {
   const zoneId = req.query.zoneId;
   const parkId = req.parkId;
 
-  //obligé de mettre ca ??? on peut pas le mettre dans middleware?
   if (parkId === undefined) {
     res.json({
       ok: false,
@@ -52,8 +51,6 @@ getBarriersRoute.get('/', async (req: Request, res) => {
   if (barriers.length === 0) {
     res.json({
       message: 'no barriers loading',
-      parkId,
-      barriers,
       ok: false,
     });
     return;

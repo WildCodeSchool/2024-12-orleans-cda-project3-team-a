@@ -34,14 +34,6 @@ export default async function getParkIdMiddleware(
     return;
   }
 
-  if (typeof park.parkId !== 'number') {
-    res.json({
-      message: 'park id not found',
-      ok: false,
-    });
-    return;
-  }
-
   //put the parkId in request
   req.parkId = park.parkId;
 
