@@ -43,7 +43,8 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'create-park',
-        element: <CreatePark />,
+        element: <WelcomeLayout />,
+        children: [{ index: true, element: <CreatePark /> }],
       },
       {
         element: <CheckParkIdLayout />,
