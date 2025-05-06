@@ -6,6 +6,7 @@ import InputBlue from '@/components/input-blue';
 import Loader from '@/components/loader';
 import Logout from '@/components/logout';
 import ReturnHome from '@/components/return-home';
+import CreatureLine from '@/components/creature-line';
 
 export default function Test() {
   const [email, setEmail] = useState('test');
@@ -15,6 +16,8 @@ export default function Test() {
       <ReturnHome />
       <CloseWindow />
       <InputBlue
+      bgColor='bg-primary-blue'
+      borderColor='border-secondary-blue'
         type='email'
         placeholder='Votre email'
         value={email}
@@ -26,6 +29,7 @@ export default function Test() {
       <Loader />
       <InfoNbVisitorsMoons />
       <Logout />
+      <CreatureLine />
     </div>
   );
 }

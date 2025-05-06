@@ -48,6 +48,8 @@ export default function Login() {
         {'LOG IN'}
       </h2>
       <InputBlue
+        bgColor='bg-primary-blue'
+        borderColor='border-secondary-blue'
         type='email'
         placeholder='Email'
         value={email}
@@ -57,6 +59,8 @@ export default function Login() {
       />
 
       <InputBlue
+        bgColor='bg-primary-blue'
+        borderColor='border-secondary-blue'
         type='password'
         placeholder='Password'
         value={password}
