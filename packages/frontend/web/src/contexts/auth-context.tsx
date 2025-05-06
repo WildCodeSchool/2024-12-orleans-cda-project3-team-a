@@ -12,6 +12,7 @@ type AuthProviderState = {
   isLoggedIn: boolean;
   setIsLoggedIn: (value: boolean) => void;
   isLoading: boolean;
+  isParkId: boolean;
 };
 
 const authProviderContext = createContext<AuthProviderState | undefined>(
