@@ -7,13 +7,16 @@ export default function CheckLoggedInLayout() {
   const isLoggedIn = auth?.isLoggedIn;
   const isLoading = auth?.isLoading;
 
+  //if loading -> wait
   if (isLoading === true) {
     return;
   }
 
+  //if logged in -> go home ("/" & "/signup" are forbidden)
   if (isLoggedIn === true) {
     return <Navigate to='/home' />;
   }
 
+  //able to display pages in router if we are NOT logged in
   return <Outlet />;
 }
