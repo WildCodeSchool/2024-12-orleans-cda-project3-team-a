@@ -13,6 +13,7 @@ type AuthProviderState = {
   setIsLoggedIn: (value: boolean) => void;
   isLoading: boolean;
   isParkId: boolean;
+  setIsParkId: (value: boolean) => void;
 };
 
 const authProviderContext = createContext<AuthProviderState | undefined>(
@@ -27,27 +28,39 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
   const [isParkId, setIsParkId] = useState(false);
 
   useEffect(() => {
+    //fetch to know if we are logged in
     const fetchAuth = async () => {
       const res = await fetch(`${API_URL}/auth/me`, {
         credentials: 'include',
       });
       const data = (await res.json()) as {
         ok: boolean;
-        parkId: number | undefined;
       };
 
       if (data.ok) {
         setIsLoggedIn(true);
       }
 
-      //check if we have a parkId, allow after to display or not the page for create my park
-      if (data.parkId != null) {
-        setIsParkId(true);
-      }
-
       setIsLoading(false);
     };
     void fetchAuth();
+
+    //fetch to know if we have already a park id or not yet
+    const fetchParkId = async () => {
+      const res = await fetch(`${API_URL}/game/park`, {
+        credentials: 'include',
+      });
+      const data = (await res.json()) as {
+        parkId: number | undefined;
+      };
+      console.log('fetch parkid:', data);
+
+      if (data.parkId != null) {
+        setIsParkId(true);
+        console.log('park id not nul');
+      }
+    };
+    void fetchParkId();
   }, []);
 
   const value = useMemo(
@@ -56,6 +69,7 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
       setIsLoggedIn,
       isLoading,
       isParkId,
+      setIsParkId,
     }),
     [isLoggedIn, isLoading, isParkId],
   );

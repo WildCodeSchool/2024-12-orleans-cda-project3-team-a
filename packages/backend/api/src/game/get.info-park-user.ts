@@ -6,6 +6,7 @@ const getInfoParkUser = Router();
 
 getInfoParkUser.get('/info-park-user', async (req: Request, res) => {
   const userId = req.userId;
+  // const userId = 7;
 
   if (userId == null) {
     res.json({
@@ -23,7 +24,8 @@ getInfoParkUser.get('/info-park-user', async (req: Request, res) => {
 
   if (!parkInfo) {
     res.json({
-      message: 'no user corresponding',
+      ok: false,
+      message: 'no park for this user',
     });
     return;
   }

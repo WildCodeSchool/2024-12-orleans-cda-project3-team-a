@@ -8,7 +8,7 @@ const getMeRouter = Router();
 
 getMeRouter.get('/me', authGuard, async (req: Request, res) => {
   const userId = req.userId;
-  const parkId = req.parkId;
+  // const parkId = req.parkId;
 
   if (userId === undefined) {
     res.json({
@@ -16,14 +16,6 @@ getMeRouter.get('/me', authGuard, async (req: Request, res) => {
     });
     return;
   }
-
-  // if (parkId === undefined) {
-  //   res.json({
-  //     ok: false,
-  //     message: "parkId undefined"
-  //   });
-  //   return;
-  // }
 
   try {
     const user = await db
@@ -43,7 +35,7 @@ getMeRouter.get('/me', authGuard, async (req: Request, res) => {
     res.json({
       ok: true,
       user,
-      parkId,
+      // parkId,
     });
   } catch (error) {
     res.json({

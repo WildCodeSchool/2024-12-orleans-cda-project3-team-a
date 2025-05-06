@@ -81,6 +81,7 @@ postBarrier.post('/', async (req: Request, res) => {
 
   res.json({
     ok: true,
+    message: 'barrier added',
   });
 });
 

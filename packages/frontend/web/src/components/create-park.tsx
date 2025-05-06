@@ -3,25 +3,45 @@ import { Navigate } from 'react-router-dom';
 
 import { useAuth } from '@/contexts/auth-context';
 
+import ButtonBlue from './button-blue';
 import InputBlue from './input-blue';
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function CreatePark() {
   const [parkName, setParkName] = useState('');
 
   const auth = useAuth();
   const isParkId = auth?.isParkId;
+
   // if we have a parkid go Home
   if (isParkId === true) {
     return <Navigate to='/home' />;
   }
 
+  const createPark = async () => {
+    const res = await fetch(`${API_URL}/game/park`, {
+      method: 'POST',
+      body: JSON.stringify({
+        parkName,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    const data = await res.json();
+
+    if (data.ok === true) {
+      auth?.setIsParkId(true);
+    }
+  };
+
   return (
-    <div className='text-secondary-blue z-3 flex flex-col items-center justify-center gap-6 p-2'>
-      <h2 className='pl-4 text-xl font-extrabold tracking-[0.6em] md:text-2xl'>
-        {'WELCOME TO '}
-      </h2>
-      <h2 className='pl-4 text-xl font-extrabold tracking-[0.6em] md:text-2xl'>
-        {'FANTASY PARK'}
+    <div className='text-secondary-blue z-3 flex flex-col items-center justify-center gap-4 p-2'>
+      <h2 className='pl-4 text-center text-xl font-extrabold tracking-[0.6em] md:text-2xl'>
+        {'WELCOME TO FANTASY PARK'}
       </h2>
       <p>
         {
@@ -33,14 +53,25 @@ export default function CreatePark() {
           'First of all, you need to choose a wonderful name to your park :'
         }{' '}
       </p>
-      <InputBlue
-        type='text'
-        placeholder='Park name'
-        value={parkName}
-        onChangeInput={(value) => {
-          setParkName(value);
+      <form
+        className='flex flex-col items-center gap-4'
+        onSubmit={async (event) => {
+          event.preventDefault();
+          await createPark();
         }}
-      />
+      >
+        <InputBlue
+          type='text'
+          placeholder='Park name'
+          value={parkName}
+          onChangeInput={(value) => {
+            setParkName(value);
+          }}
+        />
+        <ButtonBlue bg='bg-primary-blue' type='submit'>
+          {'CREATE MY PARK'}
+        </ButtonBlue>
+      </form>
     </div>
   );
 }
