@@ -53,8 +53,15 @@ export function GameInfoContextProvider({
       creatures,
       decorElements,
     }),
-    [walletFormated, visitorsFormated, unlockedZones, wallet],
-    [walletFormated, visitorsFormated, unlockedZones, creatures, decorElements],
+    // [walletFormated, visitorsFormated, unlockedZones, wallet],
+    [
+      walletFormated,
+      visitorsFormated,
+      unlockedZones,
+      creatures,
+      decorElements,
+      wallet,
+    ],
   );
 
   return (

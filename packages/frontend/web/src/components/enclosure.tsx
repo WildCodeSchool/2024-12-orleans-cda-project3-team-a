@@ -16,7 +16,6 @@ type EnclosureProps = PropsWithChildren<{
   readonly decorations: Decorations;
   readonly totalCreaturesInZone: number;
 }>;
-
 export default function Enclosure({
   srcImgCreature,
   price,
@@ -84,6 +83,10 @@ export default function Enclosure({
     }
   };
 
+  // const { wallet } = useGameInfoContext();
+
+  // const hasEnoughMoons = wallet > barrier.price;
+  //   const priceFormatted = useNumberFormatter(barrier.price);
   const isFour = totalCreaturesInZone === 4;
   const isSix = totalCreaturesInZone === 6;
   const width = isFour ? 'w-[50%]' : isSix ? 'w-[33.33%]' : '';
@@ -92,15 +95,6 @@ export default function Enclosure({
     : isSix
       ? decoPositionSix
       : () => '';
-
-  // const getPosition = () => {
-  //   if (creatureWord.length === 4) {
-  //     positions = decoPositionFour;
-  //     width = 50
-  //   } else if (creatureWord.length === 6) {
-  //     positions = decoPositionSix;
-  //     width = 33.33
-  //   }
 
   const handleModale = () => {
     setIsModalOpen(!isModalOpen);
@@ -139,11 +133,23 @@ export default function Enclosure({
         </h1>
         {isLocked ? (
           <div className='flex items-center gap-1'>
-            <ButtonBuy>{price}</ButtonBuy>
+            <ButtonBuy
+              bg='bg-white/75'
+              border='border border-black'
+              cursor='pointer'
+            >
+              {price}
+            </ButtonBuy>
             <img src={moon} alt='Prix' className='h-4 w-4' />
           </div>
         ) : (
-          <ButtonBuy>{nmbrCreature}</ButtonBuy>
+          <ButtonBuy
+            bg='bg-white/75'
+            border='border border-black'
+            cursor='pointer'
+          >
+            {nmbrCreature}
+          </ButtonBuy>
         )}
       </div>
     </div>

@@ -1,4 +1,5 @@
 import express from 'express';
+import type { Request } from 'express';
 
 import { db } from '@app/backend-shared';
 
@@ -31,8 +32,15 @@ function getCreatures(parkId: number) {
 
 export type Creatures = Awaited<ReturnType<typeof getCreatures>>;
 
-getCreatureRoute.get('/info-creatures', async (_req, res) => {
-  const parkId = 1;
+getCreatureRoute.get('/info-creatures', async (req: Request, res) => {
+  const parkId = req.parkId;
+
+  if (parkId === undefined) {
+    res.json({
+      ok: false,
+    });
+    return;
+  }
 
   const creaturesList = await getCreatures(parkId);
 
