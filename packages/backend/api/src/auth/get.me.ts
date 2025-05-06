@@ -8,6 +8,7 @@ const getMeRouter = Router();
 
 getMeRouter.get('/me', authGuard, async (req: Request, res) => {
   const userId = req.userId;
+  const parkId = req.parkId;
 
   if (userId === undefined) {
     res.json({
@@ -15,6 +16,14 @@ getMeRouter.get('/me', authGuard, async (req: Request, res) => {
     });
     return;
   }
+
+  if (parkId === undefined) {
+    res.json({
+      ok: false,
+    });
+    return;
+  }
+
   try {
     const user = await db
       .selectFrom('users')
@@ -25,6 +34,7 @@ getMeRouter.get('/me', authGuard, async (req: Request, res) => {
     if (!user) {
       res.json({
         ok: false,
+        message: 'user is empty',
       });
       return;
     }
@@ -32,6 +42,7 @@ getMeRouter.get('/me', authGuard, async (req: Request, res) => {
     res.json({
       ok: true,
       user,
+      parkId,
     });
   } catch (error) {
     res.json({

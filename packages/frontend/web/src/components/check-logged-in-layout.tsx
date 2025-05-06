@@ -12,7 +12,7 @@ export default function CheckLoggedInLayout() {
     return;
   }
 
-  //if logged in -> go home ("/" & "/signup" are forbidden)
+  //if logged in -> go home ("/" & "/signup" are FORBIDDEN)
   if (isLoggedIn === true) {
     return <Navigate to='/home' />;
   }
