@@ -17,12 +17,13 @@ getMeRouter.get('/me', authGuard, async (req: Request, res) => {
     return;
   }
 
-  if (parkId === undefined) {
-    res.json({
-      ok: false,
-    });
-    return;
-  }
+  // if (parkId === undefined) {
+  //   res.json({
+  //     ok: false,
+  //     message: "parkId undefined"
+  //   });
+  //   return;
+  // }
 
   try {
     const user = await db

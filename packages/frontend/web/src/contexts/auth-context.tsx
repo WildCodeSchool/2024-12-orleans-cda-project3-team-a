@@ -23,6 +23,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 export default function AuthContext({ children, ...props }: AuthProviderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isParkId, setIsParkId] = useState(false);
 
   useEffect(() => {
     const fetchAuth = async () => {
@@ -31,10 +32,16 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
       });
       const data = (await res.json()) as {
         ok: boolean;
+        parkId: number | undefined;
       };
 
       if (data.ok) {
         setIsLoggedIn(true);
+      }
+
+      //check if we have a parkId, allow after to display or not the page for create my park
+      if (data.parkId != null) {
+        setIsParkId(true);
       }
 
       setIsLoading(false);
@@ -47,8 +54,9 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
       isLoggedIn,
       setIsLoggedIn,
       isLoading,
+      isParkId,
     }),
-    [isLoggedIn, isLoading],
+    [isLoggedIn, isLoading, isParkId],
   );
 
   return (
