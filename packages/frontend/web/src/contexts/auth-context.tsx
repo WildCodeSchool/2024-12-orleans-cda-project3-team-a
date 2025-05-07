@@ -53,11 +53,9 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
       const data = (await res.json()) as {
         parkId: number | undefined;
       };
-      console.log('fetch parkid:', data);
 
       if (data.parkId != null) {
         setIsParkId(true);
-        console.log('park id not nul');
       }
     };
     void fetchParkId();
