@@ -6,7 +6,6 @@ const getInfoParkUser = Router();
 
 getInfoParkUser.get('/info-park-user', async (req: Request, res) => {
   const userId = req.userId;
-  // const userId = 7;
 
   if (userId == null) {
     res.json({

@@ -9,7 +9,6 @@ getPark.get('/', (req: Request, res) => {
     res.json({
       ok: false,
       message: 'no park id',
-      parkId,
     });
     return;
   }

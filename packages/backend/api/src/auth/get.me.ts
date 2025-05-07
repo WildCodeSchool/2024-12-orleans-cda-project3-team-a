@@ -8,7 +8,6 @@ const getMeRouter = Router();
 
 getMeRouter.get('/me', authGuard, async (req: Request, res) => {
   const userId = req.userId;
-  // const parkId = req.parkId;
 
   if (userId === undefined) {
     res.json({
@@ -34,12 +33,13 @@ getMeRouter.get('/me', authGuard, async (req: Request, res) => {
 
     res.json({
       ok: true,
+      message: 'user retrieve',
       user,
-      // parkId,
     });
   } catch (error) {
     res.json({
       ok: false,
+      message: 'get me failed',
     });
   }
 });
