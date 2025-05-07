@@ -43,6 +43,11 @@ export interface Decorations {
   src_image: string;
 }
 
+export interface Item {
+  content: string;
+  id: Generated<number>;
+}
+
 export interface ParkBarriers {
   barrier_id: number;
   id: Generated<number>;
@@ -133,6 +138,7 @@ export interface DB {
   barriers: Barriers;
   creatures: Creatures;
   decorations: Decorations;
+  item: Item;
   park_barriers: ParkBarriers;
   park_creatures: ParkCreatures;
   park_gifts: ParkGifts;

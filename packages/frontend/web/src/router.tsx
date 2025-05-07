@@ -8,7 +8,7 @@ import Rules from './pages/rules';
 import SignUp from './pages/sign-up';
 import Test from './pages/test';
 import WelcomeLayout from './pages/welcome-layout';
-import Fairy from './pages/world-fairy';
+import Fairy from './pages/world-enclosure';
 
 const router = createBrowserRouter([
   {
