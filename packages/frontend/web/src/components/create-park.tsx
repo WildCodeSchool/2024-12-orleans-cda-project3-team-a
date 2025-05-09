@@ -12,10 +12,10 @@ export default function CreatePark() {
   const [parkName, setParkName] = useState('');
 
   const auth = useAuth();
-  const isParkId = auth?.isParkId;
+  const hasParkId = auth?.hasParkId;
 
   // if we have a parkid go Home
-  if (isParkId === true) {
+  if (hasParkId === true) {
     return <Navigate to='/home' />;
   }
 
@@ -34,7 +34,7 @@ export default function CreatePark() {
     const data = await res.json();
 
     if (data.ok === true) {
-      auth?.setIsParkId(true);
+      auth?.setHasParkId(true);
     }
   };
 

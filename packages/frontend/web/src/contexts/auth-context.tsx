@@ -12,8 +12,8 @@ type AuthProviderState = {
   isLoggedIn: boolean;
   setIsLoggedIn: (value: boolean) => void;
   isLoading: boolean;
-  isParkId: boolean;
-  setIsParkId: (value: boolean) => void;
+  hasParkId: boolean;
+  setHasParkId: (value: boolean) => void;
 };
 
 const authProviderContext = createContext<AuthProviderState | undefined>(
@@ -25,7 +25,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 export default function AuthContext({ children, ...props }: AuthProviderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isParkId, setIsParkId] = useState(false);
+  const [hasParkId, setHasParkId] = useState(false);
 
   useEffect(() => {
     //fetch to know if we are logged in
@@ -55,7 +55,7 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
       };
 
       if (data.parkId != null) {
-        setIsParkId(true);
+        setHasParkId(true);
       }
     };
     void fetchParkId();
@@ -66,10 +66,10 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
       isLoggedIn,
       setIsLoggedIn,
       isLoading,
-      isParkId,
-      setIsParkId,
+      hasParkId,
+      setHasParkId,
     }),
-    [isLoggedIn, isLoading, isParkId],
+    [isLoggedIn, isLoading, hasParkId],
   );
 
   return (

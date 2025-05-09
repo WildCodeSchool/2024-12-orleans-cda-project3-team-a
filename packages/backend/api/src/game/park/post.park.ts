@@ -20,7 +20,7 @@ postPark.post('/', async (req: Request, res) => {
   //check if we have already a park id for this user
   const park = await db
     .selectFrom('parks')
-    .selectAll()
+    .select('parks.id')
     .where('parks.user_id', '=', userId)
     .executeTakeFirst();
 

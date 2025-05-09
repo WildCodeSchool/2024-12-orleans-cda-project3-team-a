@@ -4,10 +4,10 @@ import { useAuth } from '@/contexts/auth-context';
 
 export default function CheckParkIdLayout() {
   const auth = useAuth();
-  const isParkId = auth?.isParkId;
+  const hasParkId = auth?.hasParkId;
 
   //if we have a parkId -> wait
-  if (isParkId === false) {
+  if (hasParkId === false) {
     return <Navigate to='/create-park' />;
   }
 
