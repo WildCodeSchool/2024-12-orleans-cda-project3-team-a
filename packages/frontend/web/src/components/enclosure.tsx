@@ -1,9 +1,8 @@
 import { type PropsWithChildren, useState } from 'react';
 
-import type { Creatures, Decorations } from '@app/api';
+import type { Decorations } from '@app/api';
 
 import alert from '../assets/images/icons-buttons/alert.png';
-import moon from '../assets/images/icons-buttons/moon.png';
 import ButtonBuy from './button-buy';
 
 type EnclosureProps = PropsWithChildren<{
@@ -40,6 +39,8 @@ export default function Enclosure({
         return 'bg-winged-red';
       case 'beige':
         return 'bg-mythologic-beige';
+      case 'dark-beige':
+        return 'bg-mythologic-dark-beige';
       case 'dark-green':
         return 'bg-shadow-green';
       case 'purple':
