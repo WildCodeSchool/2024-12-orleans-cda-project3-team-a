@@ -2,7 +2,7 @@ import express from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getDecorationRoute = express.Router();
+const getDecorationsRoute = express.Router();
 
 function getDecorations() {
   return db
@@ -13,14 +13,13 @@ function getDecorations() {
 
 export type Decorations = Awaited<ReturnType<typeof getDecorations>>;
 
-getDecorationRoute.get('/info-decoration', async (_req, res) => {
-  const parkId = 1;
-
+getDecorationsRoute.get('/decorations', async (_req, res) => {
   const decoration = await getDecorations();
 
-  if (!decoration) {
+  if (decoration.length === 0) {
     res.json({
-      message: 'Echec',
+      ok: false,
+      message: 'no decorations founded ',
     });
     return;
   }
@@ -30,4 +29,4 @@ getDecorationRoute.get('/info-decoration', async (_req, res) => {
   });
 });
 
-export default getDecorationRoute;
+export default getDecorationsRoute;

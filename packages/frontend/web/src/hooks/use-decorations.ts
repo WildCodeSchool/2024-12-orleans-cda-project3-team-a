@@ -10,11 +10,10 @@ export default function useDecoration() {
   useEffect(() => {
     async function fetchCreatures() {
       try {
-        const response = await fetch(`${API_URL}/game/info-decoration`, {
+        const response = await fetch(`${API_URL}/game/decorations`, {
           credentials: 'include',
         });
         const data = await response.json();
-        console.log('donné recup', data);
         setDecorElements(data.decoration);
       } catch (error) {
         console.error('fetch failed', error);

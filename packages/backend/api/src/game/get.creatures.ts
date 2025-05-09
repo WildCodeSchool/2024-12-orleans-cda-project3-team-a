@@ -1,11 +1,12 @@
+import { ok } from 'assert';
 import express from 'express';
 import type { Request } from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getCreatureRoute = express.Router();
+const getCreaturesRoute = express.Router();
 
-function getCreatures(parkId: number) {
+function creatures(parkId: number) {
   return db
     .selectFrom('creatures')
     .leftJoin('park_creatures', (join) =>
@@ -30,9 +31,9 @@ function getCreatures(parkId: number) {
     .execute();
 }
 
-export type Creatures = Awaited<ReturnType<typeof getCreatures>>;
+export type Creatures = Awaited<ReturnType<typeof creatures>>;
 
-getCreatureRoute.get('/info-creatures', async (req: Request, res) => {
+getCreaturesRoute.get('/creatures', async (req: Request, res) => {
   const parkId = req.parkId;
 
   if (parkId === undefined) {
@@ -42,11 +43,12 @@ getCreatureRoute.get('/info-creatures', async (req: Request, res) => {
     return;
   }
 
-  const creaturesList = await getCreatures(parkId);
+  const creaturesList = await creatures(parkId);
 
-  if (!creaturesList) {
+  if (creaturesList.length === 0) {
     res.json({
-      message: 'Echec',
+      ok: false,
+      message: 'no creatures founded ',
     });
     return;
   }
@@ -56,4 +58,4 @@ getCreatureRoute.get('/info-creatures', async (req: Request, res) => {
   });
 });
 
-export default getCreatureRoute;
+export default getCreaturesRoute;

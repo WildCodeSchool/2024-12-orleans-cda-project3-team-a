@@ -1,14 +1,12 @@
 import { type PropsWithChildren, useState } from 'react';
 
-import type { Creatures, Decorations } from '@app/api';
+import type { Decorations } from '@app/api';
 
 import alert from '../assets/images/icons-buttons/alert.png';
-import moon from '../assets/images/icons-buttons/moon.png';
 import ButtonBuy from './button-buy';
 
 type EnclosureProps = PropsWithChildren<{
   readonly srcImgCreature: string;
-  readonly price: number;
   readonly lockedCreature: string | null;
   readonly nmbrCreature: number;
   readonly name: string;
@@ -18,7 +16,6 @@ type EnclosureProps = PropsWithChildren<{
 }>;
 export default function Enclosure({
   srcImgCreature,
-  price,
   name,
   lockedCreature,
   nmbrCreature,
@@ -27,7 +24,7 @@ export default function Enclosure({
   totalCreaturesInZone,
 }: EnclosureProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [hungry, setHungry] = useState(false);
+  const [isHungry, setIsHungry] = useState(false);
   const isLocked = nmbrCreature === 0;
 
   const getBackgound = (background: string) => {
@@ -42,6 +39,8 @@ export default function Enclosure({
         return 'bg-winged-red';
       case 'beige':
         return 'bg-mythologic-beige';
+      case 'dark-beige':
+        return 'bg-mythologic-dark-beige';
       case 'dark-green':
         return 'bg-shadow-green';
       case 'purple':
@@ -69,13 +68,13 @@ export default function Enclosure({
   const decoPositionSix = (position: string) => {
     switch (position) {
       case 'top-left':
-        return 'absolute top-5 left-0';
+        return 'absolute top-0 left-0';
       case 'top-right':
-        return 'absolute top-5 left-105';
+        return 'absolute top-0 left-105';
       case 'bottom-left':
-        return 'absolute top-60 lef-0';
+        return 'absolute top-90 lef-0';
       case 'bottom-right':
-        return 'absolute top-60 left-110';
+        return 'absolute top-80 left-110';
       case 'top-center':
         return 'absolute top-5 center';
       default:
@@ -83,28 +82,23 @@ export default function Enclosure({
     }
   };
 
-  // const { wallet } = useGameInfoContext();
-
-  // const hasEnoughMoons = wallet > barrier.price;
-  //   const priceFormatted = useNumberFormatter(barrier.price);
   const isFour = totalCreaturesInZone === 4;
   const isSix = totalCreaturesInZone === 6;
-  const width = isFour ? 'w-[50%]' : isSix ? 'w-[33.33%]' : '';
+  const sizeEnclos = isFour ? 'w-[50%]' : isSix ? 'w-[33.33%]' : '';
   const getPosition = isFour
     ? decoPositionFour
     : isSix
       ? decoPositionSix
       : () => '';
 
+  //a utiliser quand la modale sera prete
   const handleModale = () => {
     setIsModalOpen(!isModalOpen);
   };
-  // min-w-[33.33%]
-  // className={`flex h-[50vh] min-w-[33.33%] flex-col p-4 ${getBackgound(background)}`}
 
   return (
     <div
-      className={`flex h-[50vh] ${width} flex-col p-4 ${getBackgound(background)}`}
+      className={`flex h-[50vh] ${sizeEnclos} flex-col p-4 ${getBackgound(background)}`}
     >
       {decorations.map((decoration) => (
         <img
@@ -120,10 +114,10 @@ export default function Enclosure({
       >
         <img
           className='absolute top-1 left-80 w-10'
-          src={hungry ? alert : ''}
+          src={isHungry ? alert : ''}
         />
         <img
-          className={`w-30 ${hungry ? 'grayscale' : ''}`}
+          className={`w-30 ${isHungry ? 'grayscale' : ''}`}
           src={isLocked ? (lockedCreature ?? '') : srcImgCreature}
           alt=''
         />
@@ -131,18 +125,7 @@ export default function Enclosure({
         <h1 className={` ${isLocked ? 'absolute top-10' : 'hidden'} `}>
           {name}
         </h1>
-        {isLocked ? (
-          <div className='flex items-center gap-1'>
-            <ButtonBuy
-              bg='bg-white/75'
-              border='border border-black'
-              cursor='pointer'
-            >
-              {price}
-            </ButtonBuy>
-            <img src={moon} alt='Prix' className='h-4 w-4' />
-          </div>
-        ) : (
+        {!isLocked && (
           <ButtonBuy
             bg='bg-white/75'
             border='border border-black'

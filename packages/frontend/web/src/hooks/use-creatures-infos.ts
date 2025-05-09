@@ -10,11 +10,10 @@ export default function useCreatures() {
   useEffect(() => {
     async function fetchCreatures() {
       try {
-        const response = await fetch(`${API_URL}/game/info-creatures`, {
+        const response = await fetch(`${API_URL}/game/creatures`, {
           credentials: 'include',
         });
         const data = await response.json();
-        console.log('donné recup', data);
         setCreatures(data.creaturesList);
       } catch (error) {
         console.error('fetch failed', error);
