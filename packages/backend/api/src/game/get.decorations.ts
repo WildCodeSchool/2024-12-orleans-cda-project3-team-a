@@ -14,13 +14,11 @@ function getDecorations() {
 export type Decorations = Awaited<ReturnType<typeof getDecorations>>;
 
 getDecorationRoute.get('/info-decoration', async (_req, res) => {
-  const parkId = 1;
-
   const decoration = await getDecorations();
 
   if (!decoration) {
     res.json({
-      message: 'Echec',
+      message: 'failedd',
     });
     return;
   }

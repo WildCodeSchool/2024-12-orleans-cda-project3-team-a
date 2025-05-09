@@ -14,7 +14,6 @@ export default function useDecoration() {
           credentials: 'include',
         });
         const data = await response.json();
-        console.log('donné recup', data);
         setDecorElements(data.decoration);
       } catch (error) {
         console.error('fetch failed', error);

@@ -14,7 +14,6 @@ export default function useCreatures() {
           credentials: 'include',
         });
         const data = await response.json();
-        console.log('donné recup', data);
         setCreatures(data.creaturesList);
       } catch (error) {
         console.error('fetch failed', error);

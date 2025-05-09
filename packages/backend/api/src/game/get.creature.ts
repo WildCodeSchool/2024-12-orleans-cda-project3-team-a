@@ -46,7 +46,7 @@ getCreatureRoute.get('/info-creatures', async (req: Request, res) => {
 
   if (!creaturesList) {
     res.json({
-      message: 'Echec',
+      message: 'failed',
     });
     return;
   }
