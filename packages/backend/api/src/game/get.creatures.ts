@@ -32,7 +32,7 @@ function getCreatures(parkId: number) {
 
 export type Creatures = Awaited<ReturnType<typeof getCreatures>>;
 
-getCreatureRoute.get('/info-creatures', async (req: Request, res) => {
+getCreatureRoute.get('/creatures', async (req: Request, res) => {
   const parkId = req.parkId;
 
   if (parkId === undefined) {
@@ -44,9 +44,10 @@ getCreatureRoute.get('/info-creatures', async (req: Request, res) => {
 
   const creaturesList = await getCreatures(parkId);
 
-  if (!creaturesList) {
+  if (creaturesList.length === 0) {
     res.json({
-      message: 'failed',
+      ok: false,
+      message: 'no creatures founded',
     });
     return;
   }

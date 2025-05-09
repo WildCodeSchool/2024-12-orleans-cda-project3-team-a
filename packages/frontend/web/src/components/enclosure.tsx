@@ -24,7 +24,7 @@ export default function Enclosure({
   totalCreaturesInZone,
 }: EnclosureProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [hungry, setHungry] = useState(false);
+  const [isHungry, setIsHungry] = useState(false);
   const isLocked = nmbrCreature === 0;
 
   const getBackgound = (background: string) => {
@@ -114,10 +114,10 @@ export default function Enclosure({
       >
         <img
           className='absolute top-1 left-80 w-10'
-          src={hungry ? alert : ''}
+          src={isHungry ? alert : ''}
         />
         <img
-          className={`w-30 ${hungry ? 'grayscale' : ''}`}
+          className={`w-30 ${isHungry ? 'grayscale' : ''}`}
           src={isLocked ? (lockedCreature ?? '') : srcImgCreature}
           alt=''
         />

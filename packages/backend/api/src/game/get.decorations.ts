@@ -2,23 +2,24 @@ import express from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getDecorationRoute = express.Router();
+const getDecorationsRoute = express.Router();
 
-function getDecorations() {
+function decorations() {
   return db
     .selectFrom('decorations')
     .select(['src_image', 'creature_id', 'position'])
     .execute();
 }
 
-export type Decorations = Awaited<ReturnType<typeof getDecorations>>;
+export type Decorations = Awaited<ReturnType<typeof decorations>>;
 
-getDecorationRoute.get('/info-decoration', async (_req, res) => {
-  const decoration = await getDecorations();
+getDecorationsRoute.get('/decoration', async (_req, res) => {
+  const decoration = await decorations();
 
-  if (!decoration) {
+  if (decoration.length === 0) {
     res.json({
-      message: 'failedd',
+      ok: false,
+      message: 'no decorations founded',
     });
     return;
   }
@@ -28,4 +29,4 @@ getDecorationRoute.get('/info-decoration', async (_req, res) => {
   });
 });
 
-export default getDecorationRoute;
+export default getDecorationsRoute;
