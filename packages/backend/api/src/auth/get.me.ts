@@ -15,6 +15,7 @@ getMeRouter.get('/me', authGuard, async (req: Request, res) => {
     });
     return;
   }
+
   try {
     const user = await db
       .selectFrom('users')
@@ -25,17 +26,20 @@ getMeRouter.get('/me', authGuard, async (req: Request, res) => {
     if (!user) {
       res.json({
         ok: false,
+        message: 'user is empty',
       });
       return;
     }
 
     res.json({
       ok: true,
+      message: 'user retrieve',
       user,
     });
   } catch (error) {
     res.json({
       ok: false,
+      message: 'get me failed',
     });
   }
 });

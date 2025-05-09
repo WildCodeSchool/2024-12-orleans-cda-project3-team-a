@@ -20,7 +20,7 @@ export default function useParkInfo() {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error('fetch failed');
+        console.error('fetchParkInfo failed');
       }
     }
 
