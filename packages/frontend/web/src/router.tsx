@@ -10,7 +10,7 @@ import Rules from './pages/rules';
 import SignUp from './pages/sign-up';
 import Test from './pages/test';
 import WelcomeLayout from './pages/welcome-layout';
-import Fairy from './pages/world-enclosure';
+import WorldEnclosure from './pages/world-enclosure';
 
 const router = createBrowserRouter([
   {
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/zone/:zone_id',
-    element: <Fairy />,
+    element: <WorldEnclosure />,
   },
 ]);
 

@@ -14,18 +14,7 @@ export interface Avatars {
   src_image: string;
 }
 
-export interface Barriers {
-  direction: string | null;
-  id: Generated<number>;
-  name: string;
-  position: string | null;
-  price: number;
-  src_image: string | null;
-  zone_id: number;
-}
-
 export interface Creatures {
-  background: string;
   feed_timer: number | null;
   id: Generated<number>;
   price: number;
@@ -36,22 +25,18 @@ export interface Creatures {
 }
 
 export interface Decorations {
-  creature_id: number;
+  direction: string | null;
   id: Generated<number>;
   name: string;
-  position: string;
-  src_image: string;
+  position: string | null;
+  price: number | null;
+  src_image: string | null;
+  zone_id: number;
 }
 
 export interface Item {
   content: string;
   id: Generated<number>;
-}
-
-export interface ParkBarriers {
-  barrier_id: number;
-  id: Generated<number>;
-  park_id: number;
 }
 
 export interface ParkCreatures {
@@ -64,6 +49,12 @@ export interface ParkCreatures {
   is_adult: number;
   is_parent: number;
   name: string;
+  park_id: number;
+}
+
+export interface ParkDecorations {
+  deco_id: number;
+  id: Generated<number>;
   park_id: number;
 }
 
@@ -129,18 +120,16 @@ export interface Zones {
   link: string;
   name: string;
   src_image: string;
-  src_sign: string;
   unlock_cost: number | null;
 }
 
 export interface DB {
   avatars: Avatars;
-  barriers: Barriers;
   creatures: Creatures;
   decorations: Decorations;
   item: Item;
-  park_barriers: ParkBarriers;
   park_creatures: ParkCreatures;
+  park_decorations: ParkDecorations;
   park_gifts: ParkGifts;
   park_visitors: ParkVisitors;
   park_zones: ParkZones;
