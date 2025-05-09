@@ -23,7 +23,8 @@ getInfoParkUser.get('/info-park-user', async (req: Request, res) => {
 
   if (!parkInfo) {
     res.json({
-      message: 'no user corresponding',
+      ok: false,
+      message: 'no park for this user',
     });
     return;
   }
