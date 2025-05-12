@@ -13,12 +13,12 @@ export default function useZonesInfo() {
       const response = await fetch(`${API_URL}/game/zones-count`, {
         credentials: 'include',
       });
+
       const data = await response.json();
 
       if (data.ok === false) {
         throw new Error('No zones');
       }
-      console.log(data);
 
       setUnlockedZones(data.unlockedZonesResult);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars

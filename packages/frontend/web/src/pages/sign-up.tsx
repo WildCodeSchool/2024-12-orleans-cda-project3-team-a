@@ -30,9 +30,12 @@ export default function SignUp() {
       },
     });
 
-    const data = await res.json();
+    //typage data
+    const data = (await res.json()) as {
+      ok: boolean;
+    };
 
-    if (data.ok === true) {
+    if (data.ok) {
       setIsRegistered(true);
     }
   };

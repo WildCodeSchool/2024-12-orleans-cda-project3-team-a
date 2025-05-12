@@ -33,9 +33,12 @@ export default function CreatePark() {
       credentials: 'include',
     });
 
-    const data = await res.json();
+    // typage du data
+    const data = (await res.json()) as {
+      ok: boolean;
+    };
 
-    if (data.ok === true) {
+    if (data.ok) {
       auth?.setHasParkId(true);
       //Refetch necessary fetch
       await fetchAll();

@@ -14,6 +14,7 @@ export default function useParkInfo() {
       const response = await fetch(`${API_URL}/game/info-park-user`, {
         credentials: 'include',
       });
+
       const data = await response.json();
 
       if (data.ok === false) {
@@ -22,6 +23,7 @@ export default function useParkInfo() {
 
       setWallet(data.parkInfo.wallet);
       setVisitorsCount(data.visitorsCount);
+
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       // eslint-disable-next-line no-console

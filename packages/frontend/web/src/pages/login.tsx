@@ -27,9 +27,13 @@ export default function Login() {
       credentials: 'include',
     });
 
-    const data = await res.json();
+    //typage data
+    const data = (await res.json()) as {
+      ok: boolean;
+    };
+
     //if good user put setisloggedin in true and hasParkId in true and go home
-    if (data.ok === true) {
+    if (data.ok) {
       auth?.setIsLoggedIn(true);
       auth?.setHasParkId(true);
       await navigate('/home');
