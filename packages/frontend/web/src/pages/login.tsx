@@ -28,9 +28,10 @@ export default function Login() {
     });
 
     const data = await res.json();
-    //if good user and password go to home
+    //if good user put setisloggedin in true and hasParkId in true and go home
     if (data.ok === true) {
       auth?.setIsLoggedIn(true);
+      auth?.setHasParkId(true);
       await navigate('/home');
     }
   };
