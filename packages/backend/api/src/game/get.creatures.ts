@@ -1,4 +1,3 @@
-import { ok } from 'assert';
 import express from 'express';
 import type { Request } from 'express';
 
@@ -48,7 +47,7 @@ getCreaturesRoute.get('/creatures', async (req: Request, res) => {
   if (creaturesList.length === 0) {
     res.json({
       ok: false,
-      message: 'no creatures founded ',
+      message: 'no creatures found ',
     });
     return;
   }
