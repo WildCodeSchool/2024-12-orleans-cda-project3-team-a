@@ -58,14 +58,14 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '/zone/:zone_id',
+    element: <WorldEnclosure />,
+  },
   //A supprimer plus tard!
   {
     path: '/test',
     element: <Test />,
-  },
-  {
-    path: '/zone/:zone_id',
-    element: <WorldEnclosure />,
   },
 ]);
 

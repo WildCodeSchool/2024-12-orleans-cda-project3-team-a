@@ -18,7 +18,7 @@ export default function WorldEnclosure() {
   const total = creatureWorld.length;
 
   return (
-    <div className='flex h-screen min-w-[1600px] flex-wrap'>
+    <div className='flex h-[100vh] min-w-[1200px] flex-wrap md:w-full'>
       {creatureWorld.map((creature) => {
         const decorations = decorElements.filter(
           (decoration) => decoration.creature_id === creature.id,
