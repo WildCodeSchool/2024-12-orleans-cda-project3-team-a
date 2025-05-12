@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo } from 'react';
+import { createContext, useCallback, useContext, useMemo } from 'react';
 import type { PropsWithChildren } from 'react';
 
 import type { UnlockedZones } from '@app/api';
@@ -11,6 +11,9 @@ type GameInfoContextState = {
   wallet: number;
   visitorsFormated: string;
   unlockedZones: UnlockedZones;
+  isLoadingPark: boolean;
+  isLoadingZones: boolean;
+  fetchAll: () => Promise<void>;
 };
 
 // Define the type for provider
@@ -22,6 +25,9 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   wallet: 0,
   visitorsFormated: '',
   unlockedZones: [],
+  isLoadingPark: true,
+  isLoadingZones: true,
+  fetchAll: () => Promise.resolve(),
 });
 
 // create the provider
@@ -29,10 +35,21 @@ export function GameInfoContextProvider({
   children,
 }: GameInfoContextProviderProps) {
   // get wallet and visitors with hook
-  const { walletFormated, visitorsFormated, wallet } = useParkInfo();
+  const {
+    walletFormated,
+    visitorsFormated,
+    wallet,
+    isLoadingPark,
+    refetchParkInfo,
+  } = useParkInfo();
 
   // get unlocked zones with useZonesInfo
-  const { unlockedZones } = useZonesInfo();
+  const { unlockedZones, isLoadingZones, refetchZonesInfo } = useZonesInfo();
+
+  //function to refetch hook necessary for home page
+  const fetchAll = useCallback(async () => {
+    await Promise.all([refetchParkInfo(), refetchZonesInfo()]);
+  }, [refetchParkInfo, refetchZonesInfo]);
 
   // memorize value to avoid unnecessary changes
   const value = useMemo(
@@ -41,8 +58,19 @@ export function GameInfoContextProvider({
       visitorsFormated,
       unlockedZones,
       wallet,
+      isLoadingPark,
+      isLoadingZones,
+      fetchAll,
     }),
-    [walletFormated, visitorsFormated, unlockedZones, wallet],
+    [
+      walletFormated,
+      visitorsFormated,
+      unlockedZones,
+      wallet,
+      isLoadingPark,
+      isLoadingZones,
+      fetchAll,
+    ],
   );
 
   return (

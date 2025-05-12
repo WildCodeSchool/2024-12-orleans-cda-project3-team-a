@@ -1,13 +1,19 @@
 import { Link } from 'react-router-dom';
 
 import InfoNbVisitorsMoons from '@/components/info-nb-visitors-moons';
+import Loader from '@/components/loader';
 import Menu from '@/components/menu';
 
 import ParkMap from '../assets/images/background/park-map.png';
 import { useGameInfoContext } from '../contexts/game-info-context';
 
 export default function Home() {
-  const { unlockedZones } = useGameInfoContext();
+  const { unlockedZones, isLoadingZones } = useGameInfoContext();
+  // console.log(unlockedZones);
+
+  //   if(isLoadingZones){
+  //     return <Loader />
+  //   }
 
   return (
     <div

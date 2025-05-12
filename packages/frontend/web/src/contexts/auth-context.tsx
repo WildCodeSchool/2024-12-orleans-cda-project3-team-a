@@ -54,7 +54,11 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
         parkId: number | undefined;
       };
 
-      if (data.parkId != null) {
+      if (!Boolean(data)) {
+        throw new Error('No park');
+      }
+
+      if (data.parkId !== undefined) {
         setHasParkId(true);
       }
     };
