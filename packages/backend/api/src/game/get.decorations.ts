@@ -4,19 +4,19 @@ import { db } from '@app/backend-shared';
 
 const getDecorationsRoute = express.Router();
 
-function decorations() {
+function getDecorations() {
   return db
     .selectFrom('decorations')
     .select(['src_image', 'creature_id', 'position'])
     .execute();
 }
 
-export type Decorations = Awaited<ReturnType<typeof decorations>>;
+export type Decorations = Awaited<ReturnType<typeof getDecorations>>;
 
-getDecorationsRoute.get('/decoration', async (_req, res) => {
-  const decoration = await decorations();
+getDecorationsRoute.get('/decorations', async (_req, res) => {
+  const decorations = await getDecorations();
 
-  if (decoration.length === 0) {
+  if (decorations.length === 0) {
     res.json({
       ok: false,
       message: 'no decorations founded',
@@ -25,7 +25,7 @@ getDecorationsRoute.get('/decoration', async (_req, res) => {
   }
 
   res.json({
-    decoration,
+    decorations,
   });
 });
 

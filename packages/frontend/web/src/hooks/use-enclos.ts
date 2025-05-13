@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import type { Creatures } from '@app/api';
+import type { Enclos } from '@app/api';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function useCreatures() {
-  const [creatures, setCreatures] = useState<Creatures>([]);
+export default function useEnclos() {
+  const [creaturesEnclos, setCreaturesEnclos] = useState<Enclos>([]);
 
   useEffect(() => {
     async function fetchCreatures() {
@@ -14,12 +14,12 @@ export default function useCreatures() {
           credentials: 'include',
         });
         const data = await response.json();
-        setCreatures(data.creaturesList);
+        setCreaturesEnclos(data.creaturesList);
       } catch (error) {
         console.error('fetch failed', error);
       }
     }
     void fetchCreatures();
   }, []);
-  return { creatures };
+  return { creaturesEnclos };
 }

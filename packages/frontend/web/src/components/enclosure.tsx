@@ -113,11 +113,11 @@ export default function Enclosure({
         className='relative flex flex-col items-center justify-center gap-2'
       >
         <img
-          className='absolute top-1 left-80 w-10'
-          src={isHungry ? alert : ''}
+          className={`absolute top-1 w-10 ${isFour ? 'left-115' : 'left-80'} `}
+          src={isLocked ? '' : isHungry ? alert : ''}
         />
         <img
-          className={`w-30 ${isHungry ? 'grayscale' : ''}`}
+          className={`w-30 ${isLocked ? '' : isHungry ? 'animate-none grayscale' : 'animate-move'}`}
           src={isLocked ? (lockedCreature ?? '') : srcImgCreature}
           alt=''
         />

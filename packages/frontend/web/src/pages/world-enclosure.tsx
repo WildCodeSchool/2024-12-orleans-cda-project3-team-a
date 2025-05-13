@@ -2,16 +2,15 @@ import { useParams } from 'react-router-dom';
 
 import Enclosure from '@/components/enclosure';
 import InfoNbVisitorsMoons from '@/components/info-nb-visitors-moons';
-import Menu from '@/components/menu';
 import ReturnHome from '@/components/return-home';
 import { useGameInfoContext } from '@/contexts/game-info-context';
 
 export default function WorldEnclosure() {
-  const { creatures, decorElements } = useGameInfoContext();
-  const { zone_id } = useParams();
-  const zoneId = Number(zone_id);
+  const { creaturesEnclos, decorElements } = useGameInfoContext();
+  const { zone_id: zoneid } = useParams();
+  const zoneId = Number(zoneid);
 
-  const creatureWorld = creatures.filter(
+  const creatureWorld = creaturesEnclos.filter(
     (creature) => creature.zone_id === zoneId,
   );
 
@@ -37,11 +36,10 @@ export default function WorldEnclosure() {
           />
         );
       })}
-      <div className='fixed flex w-[94%] justify-between gap-3 p-2 sm:z-2 md:w-[98%]'>
-        <Menu />
+      <header className='fixed flex w-[94%] justify-end gap-3 p-2 sm:z-2 md:w-[98%]'>
         <InfoNbVisitorsMoons />
         <ReturnHome />
-      </div>
+      </header>
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import { createContext, useContext, useMemo } from 'react';
 import type { PropsWithChildren } from 'react';
 
-import type { Creatures, Decorations, UnlockedZones } from '@app/api';
+import type { Decorations, Enclos, UnlockedZones } from '@app/api';
 
-import useCreatures from '@/hooks/use-creatures-infos';
 import useDecorations from '@/hooks/use-decorations';
+import useEnclos from '@/hooks/use-enclos';
 import useParkInfo from '@/hooks/use-park-info';
 import useZonesInfo from '@/hooks/use-zones-info';
 
@@ -13,7 +13,7 @@ type GameInfoContextState = {
   wallet: number;
   visitorsFormated: string;
   unlockedZones: UnlockedZones;
-  creatures: Creatures;
+  creaturesEnclos: Enclos;
   decorElements: Decorations;
 };
 
@@ -26,7 +26,7 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   wallet: 0,
   visitorsFormated: '',
   unlockedZones: [],
-  creatures: [],
+  creaturesEnclos: [],
   decorElements: [],
 });
 
@@ -41,7 +41,7 @@ export function GameInfoContextProvider({
   const { unlockedZones } = useZonesInfo();
 
   //get Creatures and decorations
-  const { creatures } = useCreatures();
+  const { creaturesEnclos } = useEnclos();
   const { decorElements } = useDecorations();
   // memorize value to avoid unnecessary changes
   const value = useMemo(
@@ -50,15 +50,14 @@ export function GameInfoContextProvider({
       visitorsFormated,
       unlockedZones,
       wallet,
-      creatures,
+      creaturesEnclos,
       decorElements,
     }),
-    // [walletFormated, visitorsFormated, unlockedZones, wallet],
     [
       walletFormated,
       visitorsFormated,
       unlockedZones,
-      creatures,
+      creaturesEnclos,
       decorElements,
       wallet,
     ],

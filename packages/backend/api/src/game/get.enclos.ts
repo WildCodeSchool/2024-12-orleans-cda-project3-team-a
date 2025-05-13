@@ -3,9 +3,9 @@ import type { Request } from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getCreaturesRoute = express.Router();
+const getEnclosRoute = express.Router();
 
-function creatures(parkId: number) {
+function enclos(parkId: number) {
   return db
     .selectFrom('creatures')
     .leftJoin('park_creatures', (join) =>
@@ -30,9 +30,9 @@ function creatures(parkId: number) {
     .execute();
 }
 
-export type Creatures = Awaited<ReturnType<typeof creatures>>;
+export type Enclos = Awaited<ReturnType<typeof enclos>>;
 
-getCreaturesRoute.get('/creatures', async (req: Request, res) => {
+getEnclosRoute.get('/creatures', async (req: Request, res) => {
   const parkId = req.parkId;
 
   if (parkId === undefined) {
@@ -42,7 +42,7 @@ getCreaturesRoute.get('/creatures', async (req: Request, res) => {
     return;
   }
 
-  const creaturesList = await creatures(parkId);
+  const creaturesList = await enclos(parkId);
 
   if (creaturesList.length === 0) {
     res.json({
@@ -57,4 +57,4 @@ getCreaturesRoute.get('/creatures', async (req: Request, res) => {
   });
 });
 
-export default getCreaturesRoute;
+export default getEnclosRoute;
