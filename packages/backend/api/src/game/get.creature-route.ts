@@ -1,10 +1,10 @@
-import express from 'express';
+import { type Request, Router } from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getCreatureRoute = express.Router();
+const getCreatureRoute = Router();
 
-function getCreature(parkId: number, creatureId : number) {
+function getCreature(parkId: number, creatureId: number) {
   return db
     .selectFrom('park_creatures')
     .innerJoin('creatures', 'park_creatures.creature_id', 'creatures.id')
@@ -16,9 +16,16 @@ function getCreature(parkId: number, creatureId : number) {
 
 export type GetCreature = Awaited<ReturnType<typeof getCreature>>;
 
-getCreatureRoute.get('/creature', async (_req, res) => {
-  //PLUS TARD récupérer l'id dans le cookie !
-  const parkId = 1;
+getCreatureRoute.get('/creature', async (req: Request, res) => {
+  const parkId = req.parkId;
+
+  if (parkId === undefined) {
+    res.json({
+      ok: false,
+    });
+    return;
+  }
+
   const creatureId = 6;
 
   const creature = await getCreature(parkId, creatureId);

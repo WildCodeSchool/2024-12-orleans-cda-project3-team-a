@@ -15,7 +15,8 @@ export default function useCreature() {
         const data = await response.json();
         setCreature(data.creature);
       } catch (error) {
-        console.error('fetch failed', error);
+        // eslint-disable-next-line no-console
+        console.error('fetch creature failed', error);
       }
     }
 

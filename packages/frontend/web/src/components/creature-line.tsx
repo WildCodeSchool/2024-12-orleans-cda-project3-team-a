@@ -11,9 +11,13 @@ export default function CreatureLine() {
 
   return (
     <div className='flex items-center justify-center gap-3'>
-      <div className='flex relative w-17'>
+      <div className='relative flex w-17'>
         <img src={Unicorn} alt='creature' className='w-15' />
-        <img src={Gender} alt='creature' className='w-5 absolute right-0 bottom-1' />
+        <img
+          src={Gender}
+          alt='creature'
+          className='absolute right-0 bottom-1 w-5'
+        />
       </div>
       <InputBlue
         bgColor={'bg-white'}
@@ -22,6 +26,10 @@ export default function CreatureLine() {
         placeholder={'Enter a name'}
         onChangeInput={setName}
         value={name}
+      />
+      <input
+        className='h-7 w-2 rounded border bg-gray-300 px-2 focus:border-2 focus:outline-none md:w-25 md:rounded-md'
+        disabled
       />
       <ButtonBuy>
         <img src={Potion} alt='potion' className='w-7 p-0.5' />
