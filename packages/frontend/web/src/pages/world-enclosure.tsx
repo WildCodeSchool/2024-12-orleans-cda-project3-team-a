@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 
 import Enclosure from '@/components/enclosure';
-import InfoNbVisitorsMoons from '@/components/info-nb-visitors-moons';
+import InfoNbVisitorsMoons from '@/components/nb-visitors-moons';
 import ReturnHome from '@/components/return-home';
 import { useGameInfoContext } from '@/contexts/game-info-context';
 

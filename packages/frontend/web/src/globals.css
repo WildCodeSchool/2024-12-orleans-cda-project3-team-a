@@ -62,17 +62,6 @@ body {
     transform: scaleY(1.05) scaleX(0.98) rotate(-1deg) translateX(-5px);
   }
 }
-/* @keyframes move {
-        0%, 50%, 100% {
-            transform: scaleY(1) scaleX(1) rotate(0deg);
-        }
-        25% {
-            transform: scaleY(1.05) scaleX(0.98) rotate(1deg) translateX(5px);
-        }
-        75% {
-            transform: scaleY(1.05) scaleX(0.98) rotate(-1deg) translateX(-5px);
-        }
-    } */
 
 .animate-spin {
   animation: spin 2s linear infinite;

@@ -4,7 +4,7 @@ import type { Decorations } from '@app/api';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function useDecoration() {
+export default function useDecorations() {
   const [decorElements, setDecorElements] = useState<Decorations>([]);
 
   useEffect(() => {

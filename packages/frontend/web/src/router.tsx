@@ -54,13 +54,13 @@ const router = createBrowserRouter([
             path: 'home',
             element: <Home />,
           },
+          {
+            path: '/zone/:zone_id',
+            element: <WorldEnclosure />,
+          },
         ],
       },
     ],
-  },
-  {
-    path: '/zone/:zone_id',
-    element: <WorldEnclosure />,
   },
   //A supprimer plus tard!
   {
