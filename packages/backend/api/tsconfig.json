@@ -4,6 +4,7 @@
     "paths": {
       "@/*": ["src/*"]
     },
+    "outDir": "dist",
     "lib": ["ESNext"],
     "module": "esnext",
     "target": "esnext",
