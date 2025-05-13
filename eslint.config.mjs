@@ -40,6 +40,8 @@ export default typescriptPlugin.config([
       'packages/frontend/mobile/ios',
       'packages/frontend/mobile/android',
       'deployment/mysql/data',
+      '**/*.tsbuildinfo',
+      '**/*.rollup.cache',
     ],
   },
   {
