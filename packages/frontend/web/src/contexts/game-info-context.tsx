@@ -3,8 +3,8 @@ import type { PropsWithChildren } from 'react';
 
 import type { UnlockedZones } from '@app/api';
 
-import useParkInfo from '@/hooks/use-park-info';
-import useZonesInfo from '@/hooks/use-zones-info';
+import usePark from '@/hooks/use-park';
+import useZones from '@/hooks/use-zones';
 
 type GameInfoContextState = {
   walletFormated: string;
@@ -40,16 +40,16 @@ export function GameInfoContextProvider({
     visitorsFormated,
     wallet,
     isLoadingPark,
-    refetchParkInfo,
-  } = useParkInfo();
+    refetchPark,
+  } = usePark();
 
-  // get unlocked zones with useZonesInfo
-  const { unlockedZones, isLoadingZones, refetchZonesInfo } = useZonesInfo();
+  // get unlocked zones with useZones
+  const { unlockedZones, isLoadingZones, refetchZones } = useZones();
 
   //function to refetch hook necessary for home page
   const fetchAll = useCallback(async () => {
-    await Promise.all([refetchParkInfo(), refetchZonesInfo()]);
-  }, [refetchParkInfo, refetchZonesInfo]);
+    await Promise.all([refetchPark(), refetchZones()]);
+  }, [refetchPark, refetchZones]);
 
   // memorize value to avoid unnecessary changes
   const value = useMemo(

@@ -7,6 +7,9 @@ export default function CheckParkIdLayout() {
   const hasParkId = auth?.hasParkId;
   const isLoading = auth?.isLoading;
 
+  console.log('2nd has park id', hasParkId);
+  // console.log('2nd has park id', hasParkId);
+
   //if loading -> wait
   if (isLoading === true) {
     return;

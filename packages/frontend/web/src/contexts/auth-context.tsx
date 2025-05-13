@@ -57,6 +57,8 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
       };
 
       if (!data.ok) {
+        console.log(data);
+
         throw new Error('No park');
       }
 

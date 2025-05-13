@@ -4,11 +4,11 @@ import type { UnlockedZones } from '@app/api';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function useZonesInfo() {
+export default function useZones() {
   const [unlockedZones, setUnlockedZones] = useState<UnlockedZones>([]);
   const [isLoadingZones, setIsLoadingZones] = useState(true);
 
-  const fetchZonesInfo = useCallback(async () => {
+  const fetchZones = useCallback(async () => {
     try {
       const response = await fetch(`${API_URL}/game/zones-count`, {
         credentials: 'include',
@@ -24,19 +24,19 @@ export default function useZonesInfo() {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error('fetch failed');
+      console.error('fetch zones failed');
     } finally {
       setIsLoadingZones(false);
     }
   }, []);
 
   useEffect(() => {
-    void fetchZonesInfo();
-  }, [fetchZonesInfo]);
+    void fetchZones();
+  }, [fetchZones]);
 
   return {
     unlockedZones,
     isLoadingZones,
-    refetchZonesInfo: fetchZonesInfo,
+    refetchZones: fetchZones,
   };
 }

@@ -30,12 +30,21 @@ export default function Login() {
     //typage data
     const data = (await res.json()) as {
       ok: boolean;
+      user: {
+        id: number;
+        email: string;
+        parkId: number | null;
+      };
     };
 
     //if good user put setisloggedin in true and hasParkId in true and go home
     if (data.ok) {
       auth?.setIsLoggedIn(true);
-      auth?.setHasParkId(true);
+
+      if (data.user.parkId !== null) {
+        auth?.setHasParkId(true);
+      }
+
       await navigate('/home');
     }
   };
