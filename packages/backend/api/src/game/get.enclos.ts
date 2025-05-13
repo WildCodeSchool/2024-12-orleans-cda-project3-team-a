@@ -32,7 +32,7 @@ function enclos(parkId: number) {
 
 export type Enclos = Awaited<ReturnType<typeof enclos>>;
 
-getEnclosRoute.get('/creatures', async (req: Request, res) => {
+getEnclosRoute.get('/enclos', async (req: Request, res) => {
   const parkId = req.parkId;
 
   if (parkId === undefined) {

@@ -10,7 +10,7 @@ export default function useEnclos() {
   useEffect(() => {
     async function fetchCreatures() {
       try {
-        const response = await fetch(`${API_URL}/game/creatures`, {
+        const response = await fetch(`${API_URL}/game/enclos`, {
           credentials: 'include',
         });
         const data = await response.json();
