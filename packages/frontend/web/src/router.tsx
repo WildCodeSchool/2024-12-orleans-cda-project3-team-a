@@ -12,66 +12,61 @@ import SignUp from './pages/sign-up';
 import Test from './pages/test';
 import WelcomeLayout from './pages/welcome-layout';
 
-const router = createBrowserRouter(
-  [
-    {
-      path: '/',
-      element: <WelcomeLayout />,
-      children: [
-        {
-          element: <CheckLoggedIn />,
-          children: [
-            {
-              index: true,
-              element: <Login />,
-            },
-            {
-              path: 'signup',
-              element: <SignUp />,
-            },
-          ],
-        },
-        {
-          path: 'rules',
-          element: <Rules />,
-        },
-      ],
-    },
-    //Put pages in children to have the check for authentication
-    //if is loggedin we stay on the actual page if not we go on login
-    {
-      path: '/',
-      element: <CheckAuth />,
-      children: [
-        {
-          path: 'create-park',
-          element: <WelcomeLayout />,
-          children: [{ index: true, element: <CreatePark /> }],
-        },
-        {
-          element: <CheckParkIdLayout />,
-          children: [
-            {
-              path: 'home',
-              element: <Home />,
-            },
-          ],
-        },
-      ],
-    },
-    //A supprimer plus tard!
-    {
-      path: '/test',
-      element: <Test />,
-    },
-    {
-      path: '/*',
-      element: <Page404 />,
-    },
-  ],
+const router = createBrowserRouter([
   {
-    basename: import.meta.env.BASE_URL,
+    path: '/',
+    element: <WelcomeLayout />,
+    children: [
+      {
+        element: <CheckLoggedIn />,
+        children: [
+          {
+            index: true,
+            element: <Login />,
+          },
+          {
+            path: 'signup',
+            element: <SignUp />,
+          },
+        ],
+      },
+      {
+        path: 'rules',
+        element: <Rules />,
+      },
+    ],
   },
-);
+  //Put pages in children to have the check for authentication
+  //if is loggedin we stay on the actual page if not we go on login
+  {
+    path: '/',
+    element: <CheckAuth />,
+    children: [
+      {
+        path: 'create-park',
+        element: <WelcomeLayout />,
+        children: [{ index: true, element: <CreatePark /> }],
+      },
+      {
+        element: <CheckParkIdLayout />,
+        children: [
+          {
+            path: 'home',
+            element: <Home />,
+          },
+        ],
+      },
+    ],
+  },
+  //A supprimer plus tard!
+  {
+    path: '/test',
+    element: <Test />,
+  },
+  {
+    path: '/*',
+    element: <Page404 />,
+  },
+]);
 
 export default router;
