@@ -51,13 +51,13 @@ export default function Enclosure({
   const decoPositionFour = (position: string) => {
     switch (position) {
       case 'top-left':
-        return 'absolute top-[10%] left-0';
+        return 'absolute top-[10%] left-[5%]';
       case 'top-right':
-        return 'absolute top-[10%] left-[90%]';
+        return 'absolute top-[10%] left-[85%]';
       case 'bottom-left':
-        return 'absolute top-[70%] left-0';
+        return 'absolute top-[70%] left-[5%]';
       case 'bottom-right':
-        return 'absolute top-[70%] left-[90%]';
+        return 'absolute top-[70%] left-[85%]';
       case 'top-center':
         return 'absolute top-[10%] center';
       default:
@@ -68,15 +68,15 @@ export default function Enclosure({
   const decoPositionSix = (position: string) => {
     switch (position) {
       case 'top-left':
-        return ' top-0 left-0';
+        return 'absolute top-5 left-[5%]';
       case 'top-right':
-        return ' top-0 left-105';
+        return 'absolute top-5 left-[75%]';
       case 'bottom-left':
-        return ' top-75 left-0';
+        return 'absolute top-60 left-[5%]';
       case 'bottom-right':
-        return ' bottom-10 right-5';
+        return 'absolute bottom-10 left-[75%]';
       case 'top-center':
-        return ' top-5 center';
+        return ' absolute top-5 center';
       default:
         return '';
     }
@@ -98,12 +98,12 @@ export default function Enclosure({
 
   return (
     <div
-      className={`relative flex h-[50vh] ${sizeEnclos} flex-col p-4 ${getBackgound(background)} `}
+      className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackgound(background)} `}
     >
       {decorations.map((decoration) => (
         <img
           key={decoration.creature_id}
-          className={`relative w-15 ${getPosition(decoration.position)}`}
+          className={`w-15 ${getPosition(decoration.position)}`}
           src={`/images/decorations/${decoration.src_image}`}
           alt=''
         />
