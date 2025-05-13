@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
-import InfoNbVisitorsMoons from '@/components/info-nb-visitors-moons';
 import Menu from '@/components/menu';
+import NbVisitorsMoons from '@/components/nb-visitors-moons';
 
 import ParkMap from '../assets/images/background/park-map.png';
 import { useGameInfoContext } from '../contexts/game-info-context';
@@ -16,7 +16,7 @@ export default function Home() {
     >
       <header className='fixed flex w-[94%] justify-between gap-3 sm:z-2 md:w-[98%]'>
         <Menu />
-        <InfoNbVisitorsMoons />
+        <NbVisitorsMoons />
       </header>
       <div className='mt-8 flex h-[95%] flex-col justify-around sm:grid sm:grid-cols-2 sm:gap-8'>
         {unlockedZones.map((zone) => (

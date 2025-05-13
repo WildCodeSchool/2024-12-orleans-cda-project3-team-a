@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import { useAuth } from '@/contexts/auth-context';
+import { useGameInfoContext } from '@/contexts/game-info-context';
 
 import ButtonBlue from './button-blue';
 import InputBlue from './input-blue';
@@ -13,6 +14,7 @@ export default function CreatePark() {
 
   const auth = useAuth();
   const hasParkId = auth?.hasParkId;
+  const { fetchAll } = useGameInfoContext();
 
   // if we have a parkid go Home
   if (hasParkId === true) {
@@ -31,10 +33,15 @@ export default function CreatePark() {
       credentials: 'include',
     });
 
-    const data = await res.json();
+    // typage du data
+    const data = (await res.json()) as {
+      ok: boolean;
+    };
 
-    if (data.ok === true) {
+    if (data.ok) {
       auth?.setHasParkId(true);
+      //Refetch necessary fetch
+      await fetchAll();
     }
   };
 

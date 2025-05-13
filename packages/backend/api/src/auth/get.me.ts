@@ -19,7 +19,8 @@ getMeRouter.get('/me', authGuard, async (req: Request, res) => {
   try {
     const user = await db
       .selectFrom('users')
-      .select(['users.id', 'users.email'])
+      .leftJoin('parks', 'parks.user_id', 'users.id')
+      .select(['users.id', 'users.email', 'parks.id as parkId'])
       .where('users.id', '=', userId)
       .executeTakeFirst();
 
@@ -36,6 +37,8 @@ getMeRouter.get('/me', authGuard, async (req: Request, res) => {
       message: 'user retrieve',
       user,
     });
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     res.json({
       ok: false,
