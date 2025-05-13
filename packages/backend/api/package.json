@@ -6,7 +6,7 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "tsx --watch ./src/index.ts",
-    "build": "exit 0"
+    "build": "rimraf ./dist && rollup -c"
   },
   "author": "",
   "license": "ISC",
@@ -21,10 +21,18 @@
     "kysely": "^0.27.6"
   },
   "devDependencies": {
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.2",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/react": "^19.0.12",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.40.2",
     "tsx": "^4.19.3"
   }
 }

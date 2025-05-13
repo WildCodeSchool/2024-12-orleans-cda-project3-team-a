@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
 import { useAuth } from '@/contexts/auth-context';
+import { GameInfoContextProvider } from '@/contexts/game-info-context';
 
 export default function CheckAuthLayout() {
   const auth = useAuth();
@@ -18,5 +19,9 @@ export default function CheckAuthLayout() {
   }
 
   //able to display pages in router if we are logged in
-  return <Outlet />;
+  return (
+    <GameInfoContextProvider>
+      <Outlet />
+    </GameInfoContextProvider>
+  );
 }
