@@ -36,6 +36,7 @@ declare module 'Express' {
   interface Request {
     isAuthenticated?: boolean;
     userId?: number;
+    parkId?: number;
   }
 }
 

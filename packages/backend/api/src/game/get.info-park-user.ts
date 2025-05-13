@@ -1,13 +1,19 @@
-import express from 'express';
+import { type Request, Router } from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getInfoParkUser = express.Router();
+const getInfoParkUser = Router();
 
-getInfoParkUser.get('/info-park-user', async (_req, res) => {
-  //PLUS TARD récupérer l'id dans le cookie !
-  //http://192.168.0.54:3333/api/game/info-park-user
-  const userId = 2;
+getInfoParkUser.get('/info-park-user', async (req: Request, res) => {
+  const userId = req.userId;
+
+  if (userId == null) {
+    res.json({
+      ok: false,
+      message: 'userId empty',
+    });
+    return;
+  }
 
   const parkInfo = await db
     .selectFrom('parks')
@@ -17,7 +23,8 @@ getInfoParkUser.get('/info-park-user', async (_req, res) => {
 
   if (!parkInfo) {
     res.json({
-      message: 'no user corresponding',
+      ok: false,
+      message: 'no park for this user',
     });
     return;
   }

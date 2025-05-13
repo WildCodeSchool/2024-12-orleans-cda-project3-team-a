@@ -2,6 +2,8 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import CheckAuth from './components/check-auth-layout';
 import CheckLoggedIn from './components/check-logged-in-layout';
+import CheckParkIdLayout from './components/check-park-id-layout';
+import CreatePark from './components/create-park';
 import Home from './pages/home';
 import Login from './pages/login';
 import Rules from './pages/rules';
@@ -40,8 +42,18 @@ const router = createBrowserRouter([
     element: <CheckAuth />,
     children: [
       {
-        path: 'home',
-        element: <Home />,
+        path: 'create-park',
+        element: <WelcomeLayout />,
+        children: [{ index: true, element: <CreatePark /> }],
+      },
+      {
+        element: <CheckParkIdLayout />,
+        children: [
+          {
+            path: 'home',
+            element: <Home />,
+          },
+        ],
       },
     ],
   },
