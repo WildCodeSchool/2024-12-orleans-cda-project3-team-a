@@ -1,11 +1,12 @@
 import Barrier from '@/components/barrier';
+import BuyCreature from '@/components/buy-creature';
 import InfoNbVisitorsMoons from '@/components/info-nb-visitors-moons';
 import Loader from '@/components/loader';
 import ReturnHome from '@/components/return-home';
 import useFetchBarriers from '@/hooks/use-fetch-barriers';
 
 export default function Test() {
-  const { barriers, isLoading, refetch } = useFetchBarriers();
+  // const { barriers, isLoading, refetch } = useFetchBarriers();
 
   return (
     <div className='flex flex-col items-center justify-center gap-5'>
@@ -16,7 +17,7 @@ export default function Test() {
 
       <InfoNbVisitorsMoons />
 
-      <div className='relative min-h-200 min-w-200 bg-blue-200'>
+      {/* <div className='relative min-h-200 min-w-200 bg-blue-200'>
         {isLoading ? (
           <Loader />
         ) : (
@@ -32,7 +33,8 @@ export default function Test() {
             })}
           </>
         )}
-      </div>
+      </div> */}
+      <BuyCreature />
     </div>
   );
 }
