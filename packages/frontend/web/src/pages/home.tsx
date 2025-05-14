@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import CloseWindow from '@/components/close-window';
+import Dashboard from '@/components/dashboard';
 import Menu from '@/components/menu';
 import NbVisitorsMoons from '@/components/nb-visitors-moons';
 
@@ -14,10 +16,13 @@ export default function Home() {
       className='h-screen bg-cover bg-center p-3'
       style={{ backgroundImage: `url(${ParkMap})` }}
     >
+      {/* Display the header menu and nb visitors and moons */}
       <header className='fixed flex w-[94%] justify-between gap-3 sm:z-2 md:w-[98%]'>
         <Menu />
         <NbVisitorsMoons />
       </header>
+
+      {/* Display of 4 worlds */}
       <div className='mt-8 flex h-[95%] flex-col justify-around sm:grid sm:grid-cols-2 sm:gap-8'>
         {unlockedZones.map((zone) => (
           <div key={zone.zone_id} className='flex items-center justify-center'>
@@ -33,6 +38,14 @@ export default function Home() {
             </Link>
           </div>
         ))}
+      </div>
+
+      {/* Display Dashboard in pop-up if is open*/}
+      <div className='absolute top-1/10 flex w-[94%] justify-center text-center md:w-[98%]'>
+        <Dashboard />
+      </div>
+      <div className='absolute top-1/10 flex w-[94%] justify-end md:w-[98%]'>
+        <CloseWindow />
       </div>
     </div>
   );

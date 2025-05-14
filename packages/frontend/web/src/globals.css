@@ -32,6 +32,7 @@ body {
   --color-shadow-green: #3f6f35; /*Couleur verte enclot shadow */
 
   --color-title-purple: #b19ebb; /*couleur logo fantasy park*/
+  --color-title-purple-dark: #4F49BE; /*couleur logo fantasy park*/
   --color-title-orange: #e8bd41; /*couleur logo fantasy park*/
 
   --font-fredoka: 'Fredoka', sans-serif; /*Police par defaut*/
@@ -46,4 +47,10 @@ body {
 
 .animate-spin {
   animation: spin 2s linear infinite;
+}
+
+.text-outline-white {
+  -webkit-text-stroke-width: 0.5px;
+  -webkit-text-stroke-color: white;
+  -webkit-text-fill-color: transparent;
 }
