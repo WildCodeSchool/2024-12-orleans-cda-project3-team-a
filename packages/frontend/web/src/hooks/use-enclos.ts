@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import type { Enclos } from '@app/api';
+import type { Enclosure } from '@app/api';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function useEnclos() {
-  const [creaturesEnclos, setCreaturesEnclos] = useState<Enclos>([]);
+export default function useEnclosures() {
+  const [creaturesEnclos, setCreaturesEnclos] = useState<Enclosure[]>([]);
 
   useEffect(() => {
     async function fetchCreatures() {

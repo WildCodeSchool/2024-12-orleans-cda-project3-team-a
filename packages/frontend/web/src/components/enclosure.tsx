@@ -1,31 +1,25 @@
-import { type PropsWithChildren, useState } from 'react';
+import { useState } from 'react';
 
 import type { Decorations } from '@app/api';
+import type { Enclosure } from '@app/api';
 
 import alert from '../assets/images/icons-buttons/alert.png';
 import ButtonBuy from './button-buy';
 
-type EnclosureProps = PropsWithChildren<{
-  readonly srcImgCreature: string;
-  readonly lockedCreature: string | null;
-  readonly nmbrCreature: number;
-  readonly name: string;
-  readonly background: string;
+type EnclosureProps = {
   readonly decorations: Decorations;
   readonly totalCreaturesInZone: number;
-}>;
+  readonly enclosures: Enclosure;
+};
+
 export default function Enclosure({
-  srcImgCreature,
-  name,
-  lockedCreature,
-  nmbrCreature,
-  background,
   decorations,
   totalCreaturesInZone,
+  enclosures,
 }: EnclosureProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isHungry, setIsHungry] = useState(false);
-  const isLocked = nmbrCreature === 0;
+  const isLocked = enclosures.quantityCreature === 0;
 
   const getBackgound = (background: string) => {
     switch (background) {
@@ -47,19 +41,18 @@ export default function Enclosure({
         return 'bg-shadow-purple';
     }
   };
-
   const decoPositionFour = (position: string) => {
     switch (position) {
       case 'top-left':
-        return 'absolute top-[10%] left-[5%]';
+        return 'absolute top-1/10 left-1/20';
       case 'top-right':
-        return 'absolute top-[10%] left-[85%]';
+        return 'absolute top-1/10 left-17/20';
       case 'bottom-left':
-        return 'absolute top-[70%] left-[5%]';
+        return 'absolute top-7/10 left-1/20';
       case 'bottom-right':
-        return 'absolute top-[70%] left-[85%]';
+        return 'absolute top-7/10 left-17/20';
       case 'top-center':
-        return 'absolute top-[10%] center';
+        return 'absolute top-1/10 center';
       default:
         return '';
     }
@@ -68,15 +61,15 @@ export default function Enclosure({
   const decoPositionSix = (position: string) => {
     switch (position) {
       case 'top-left':
-        return 'absolute top-5 left-[5%]';
+        return 'absolute top-5 left-1/20';
       case 'top-right':
-        return 'absolute top-5 left-[75%]';
+        return 'absolute top-5 left-3/4';
       case 'bottom-left':
-        return 'absolute top-60 left-[5%]';
+        return 'absolute top-60 left-1/20';
       case 'bottom-right':
-        return 'absolute bottom-10 left-[75%]';
+        return 'absolute bottom-10 left-3/4';
       case 'top-center':
-        return ' absolute top-5 center';
+        return 'absolute top-5 center';
       default:
         return '';
     }
@@ -84,7 +77,7 @@ export default function Enclosure({
 
   const isFour = totalCreaturesInZone === 4;
   const isSix = totalCreaturesInZone === 6;
-  const sizeEnclos = isFour ? 'w-[50%]' : isSix ? 'w-[33.33%]' : '';
+  const sizeEnclos = isFour ? 'w-1/2' : isSix ? 'w-1/3' : '';
   const getPosition = isFour
     ? decoPositionFour
     : isSix
@@ -98,7 +91,7 @@ export default function Enclosure({
 
   return (
     <div
-      className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackgound(background)} `}
+      className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackgound(enclosures.background)} `}
     >
       {decorations.map((decoration) => (
         <img
@@ -118,12 +111,12 @@ export default function Enclosure({
         />
         <img
           className={`w-30 ${isLocked ? '' : isHungry ? 'animate-none grayscale' : 'animate-move'}`}
-          src={isLocked ? (lockedCreature ?? '') : srcImgCreature}
+          src={`/images/creatures/${isLocked ? enclosures.src_sign : enclosures.src_image}   `}
           alt=''
         />
 
         <h1 className={` ${isLocked ? 'absolute top-10' : 'hidden'} `}>
-          {name}
+          {enclosures.species}
         </h1>
         {!isLocked && (
           <ButtonBuy
@@ -131,7 +124,7 @@ export default function Enclosure({
             border='border border-black'
             cursor='pointer'
           >
-            {nmbrCreature}
+            {enclosures.quantityCreature}
           </ButtonBuy>
         )}
       </div>

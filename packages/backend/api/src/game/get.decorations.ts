@@ -19,7 +19,7 @@ getDecorationsRoute.get('/decorations', async (_req, res) => {
   if (decorations.length === 0) {
     res.json({
       ok: false,
-      message: 'no decorations founded',
+      message: 'no decorations found',
     });
     return;
   }

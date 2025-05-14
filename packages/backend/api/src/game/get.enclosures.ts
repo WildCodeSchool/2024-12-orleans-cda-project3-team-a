@@ -3,9 +3,9 @@ import type { Request } from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getEnclosRoute = express.Router();
+const getEnclosuresRoute = express.Router();
 
-function enclos(parkId: number) {
+function enclosures(parkId: number) {
   return db
     .selectFrom('creatures')
     .leftJoin('park_creatures', (join) =>
@@ -24,15 +24,15 @@ function enclos(parkId: number) {
       'creatures.zone_id',
       'creatures.background',
       'zones.src_sign',
-      db.fn.count('park_creatures.creature_id').as('nmbrCreature'),
+      db.fn.count('park_creatures.creature_id').as('quantityCreature'),
     ])
     .groupBy('creatures.id')
     .execute();
 }
 
-export type Enclos = Awaited<ReturnType<typeof enclos>>;
+export type Enclosure = Awaited<ReturnType<typeof enclosures>>[number];
 
-getEnclosRoute.get('/enclos', async (req: Request, res) => {
+getEnclosuresRoute.get('/enclos', async (req: Request, res) => {
   const parkId = req.parkId;
 
   if (parkId === undefined) {
@@ -42,7 +42,7 @@ getEnclosRoute.get('/enclos', async (req: Request, res) => {
     return;
   }
 
-  const creaturesList = await enclos(parkId);
+  const creaturesList = await enclosures(parkId);
 
   if (creaturesList.length === 0) {
     res.json({
@@ -53,8 +53,9 @@ getEnclosRoute.get('/enclos', async (req: Request, res) => {
   }
 
   res.json({
+    ok: true,
     creaturesList,
   });
 });
 
-export default getEnclosRoute;
+export default getEnclosuresRoute;

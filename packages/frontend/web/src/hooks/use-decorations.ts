@@ -5,7 +5,7 @@ import type { Decorations } from '@app/api';
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function useDecorations() {
-  const [decorElements, setDecorElements] = useState<Decorations>([]);
+  const [decorations, setDecorations] = useState<Decorations>([]);
 
   useEffect(() => {
     async function fetchCreatures() {
@@ -14,12 +14,12 @@ export default function useDecorations() {
           credentials: 'include',
         });
         const data = await response.json();
-        setDecorElements(data.decorations);
+        setDecorations(data.decorations);
       } catch (error) {
         console.error('fetch failed', error);
       }
     }
     void fetchCreatures();
   }, []);
-  return { decorElements };
+  return { decorations };
 }

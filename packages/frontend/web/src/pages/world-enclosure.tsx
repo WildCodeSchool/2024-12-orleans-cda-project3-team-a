@@ -1,37 +1,33 @@
 import { useParams } from 'react-router-dom';
 
-import Enclosure from '@/components/enclosure';
+import type { Enclosure } from '@app/api';
+
+import EnclosureComponent from '@/components/enclosure';
 import InfoNbVisitorsMoons from '@/components/nb-visitors-moons';
 import ReturnHome from '@/components/return-home';
 import { useGameInfoContext } from '@/contexts/game-info-context';
 
 export default function WorldEnclosure() {
-  const { creaturesEnclos, decorElements } = useGameInfoContext();
-  const { zone_id: zoneid } = useParams();
-  const zoneId = Number(zoneid);
+  const { creaturesEnclos, decorations } = useGameInfoContext();
+  const { zone_id: zoneId } = useParams();
 
   const creatureWorld = creaturesEnclos.filter(
-    (creature) => creature.zone_id === zoneId,
+    (creature: Enclosure) => creature.zone_id === Number(zoneId),
   );
-
   const total = creatureWorld.length;
 
   return (
     <div className='flex min-w-[1200px] flex-wrap md:w-full'>
-      {creatureWorld.map((creature) => {
-        const decorations = decorElements.filter(
-          (decoration) => decoration.creature_id === creature.id,
+      {creatureWorld.map((enclosure: Enclosure) => {
+        const decorationsList = decorations.filter(
+          (decoration) => decoration.creature_id === enclosure.id,
         );
 
         return (
-          <Enclosure
-            key={creature.id}
-            name={creature.species}
-            srcImgCreature={`/images/creatures/${creature.src_image}`}
-            lockedCreature={`/images/creatures/${creature.src_sign}`}
-            background={creature.background}
-            nmbrCreature={Number(creature.nmbrCreature)}
-            decorations={decorations}
+          <EnclosureComponent
+            key={enclosure.id}
+            enclosures={enclosure}
+            decorations={decorationsList}
             totalCreaturesInZone={total}
           />
         );
