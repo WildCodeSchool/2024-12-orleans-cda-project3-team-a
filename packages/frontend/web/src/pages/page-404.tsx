@@ -1,16 +1,10 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import ButtonBuy from '@/components/button-buy';
 
 import mingush from '../assets/images/icons-buttons/minguch.png';
 
 export default function Page404() {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    void navigate('/home');
-  };
-
   return (
     <div className='text-secondary-blue relative h-screen bg-[url(/images/background/404-mobile.webp)] bg-cover bg-center px-4 py-10 md:items-start md:bg-[url(/images/background/404-desktop.webp)] md:py-3'>
       <div className='flex h-full flex-col items-center justify-between md:h-auto md:flex-row'>
@@ -19,14 +13,14 @@ export default function Page404() {
           <p>{'Impassable path... even your creatures refuse to go there! '}</p>
         </div>
 
-        <div onClick={handleClick} className='font-semibold'>
+        <Link to='/home' className='font-semibold'>
           <ButtonBuy
             bg='bg-[linear-gradient(to_bottom,_#FFFFFF,_#D8D8D8)]'
             cursor='pointer'
           >
             {'< Home '}
           </ButtonBuy>
-        </div>
+        </Link>
       </div>
 
       <div className='absolute top-3/8 flex items-center justify-center text-7xl md:text-8xl'>
