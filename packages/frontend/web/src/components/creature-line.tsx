@@ -61,7 +61,7 @@ export default function CreatureLine() {
 
           return (
             <div
-              key={creatureData.creature_id}
+              key={creatureData.id}
               className='flex items-center justify-center gap-3'
             >
               <div className='relative flex w-17'>
