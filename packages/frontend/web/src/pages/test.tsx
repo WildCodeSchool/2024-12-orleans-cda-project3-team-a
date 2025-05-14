@@ -1,12 +1,17 @@
+import { useState } from 'react';
 import Barrier from '@/components/barrier';
 import InfoNbVisitorsMoons from '@/components/info-nb-visitors-moons';
 import Loader from '@/components/loader';
 import ReturnHome from '@/components/return-home';
 import useFetchBarriers from '@/hooks/use-fetch-barriers';
 import CreatureLine from '@/components/creature-line';
+import CloseWindow from '@/components/close-window';
+import InputBlue from '@/components/input-blue';
+import Logout from '@/components/logout';
 
 export default function Test() {
   const { barriers, isLoading, refetch } = useFetchBarriers();
+  const [email, setEmail] = useState('');
 
   return (
     <div className='flex flex-col items-center justify-center gap-5'>

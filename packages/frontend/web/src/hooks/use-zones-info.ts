@@ -15,7 +15,9 @@ export default function useZonesInfo() {
         });
         const data = await response.json();
         setUnlockedZones(data.unlockedZonesResult);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('fetch failed');
       }
     }

@@ -5,6 +5,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export default function useCreature() {
   const [creature, setCreature] = useState<GetCreature>([]);
+  const [activeCreature, setActiveCreature] = useState<GetCreature>([]);
 
   useEffect(() => {
     async function fetchCreature() {
@@ -14,6 +15,7 @@ export default function useCreature() {
         });
         const data = await response.json();
         setCreature(data.creature);
+        setActiveCreature(data.activeCreature);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error('fetch creature failed', error);
@@ -25,5 +27,6 @@ export default function useCreature() {
 
   return {
     creature,
+    activeCreature,
   };
 }
