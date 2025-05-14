@@ -61,7 +61,10 @@ export default function Menu() {
           </div>
           <div className='flex flex-col gap-7 md:flex-row'>
             <img src={iconProfil} alt='' className='h-6 md:h-7' />
-            <img src={iconRules} alt='' className='h-6 md:h-7' />
+            <Link to='/rules'>
+              <img src={iconRules} alt='' className='h-6 md:h-7' />
+            </Link>
+
             <Logout />
           </div>
         </div>
