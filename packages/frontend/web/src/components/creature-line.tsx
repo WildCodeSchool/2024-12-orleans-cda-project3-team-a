@@ -1,11 +1,9 @@
-
 import useCreatures from '@/hooks/use-creature';
 
 import Potion from '../assets/images/fairy-zone/potion.png';
 import Female from '../assets/images/icons-buttons/female.png';
 import Male from '../assets/images/icons-buttons/male.png';
 import ButtonBuy from './button-buy';
-
 
 function remainingTimeToFeed(ComingDate: Date) {
   const now = new Date();
@@ -21,11 +19,11 @@ function remainingTimeToFeed(ComingDate: Date) {
   const remainingTime = [];
   if (days > 0) remainingTime.push(`${days} day${days > 1 ? 's' : ''}`);
   if (hours > 0) remainingTime.push(`${hours} hour${hours > 1 ? 's' : ''}`);
-  if (minutes > 0 && days === 0) remainingTime.push(`${minutes} min${minutes > 1 ? 's' : ''}`);
+  if (minutes > 0 && days === 0)
+    remainingTime.push(`${minutes} min${minutes > 1 ? 's' : ''}`);
 
   return ` ${remainingTime.join(' ')}`;
 }
-
 
 export default function CreatureLine() {
   const { creature } = useCreatures();
@@ -44,9 +42,16 @@ export default function CreatureLine() {
           const timeRemainingText = remainingTimeToFeed(feedDate);
 
           return (
-            <div key={creatureData.creature_id} className='flex items-center justify-center gap-3'>
+            <div
+              key={creatureData.creature_id}
+              className='flex items-center justify-center gap-3'
+            >
               <div className='relative flex w-17'>
-                <img src={`/images/creatures/${creatureData.src_image}`} alt={creatureData.species} className='w-15' />
+                <img
+                  src={`/images/creatures/${creatureData.src_image}`}
+                  alt={creatureData.species}
+                  className='w-15'
+                />
                 <img
                   src={creatureData.gender === 'female' ? Female : Male}
                   alt={creatureData.gender}
@@ -58,7 +63,7 @@ export default function CreatureLine() {
                 {creatureData.name}
               </div>
 
-              <div className='h-7 w-51 rounded border px-2 focus:border-2 focus:outline-none md:w-40 md:rounded-md bg-gray-300'>
+              <div className='h-7 w-51 rounded border bg-gray-300 px-2 focus:border-2 focus:outline-none md:w-40 md:rounded-md'>
                 {timeRemainingText}
               </div>
 

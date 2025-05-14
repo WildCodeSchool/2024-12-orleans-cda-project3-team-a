@@ -1,13 +1,14 @@
 import { useState } from 'react';
+
 import Barrier from '@/components/barrier';
+import CloseWindow from '@/components/close-window';
+import CreatureLine from '@/components/creature-line';
 import InfoNbVisitorsMoons from '@/components/info-nb-visitors-moons';
+import InputBlue from '@/components/input-blue';
 import Loader from '@/components/loader';
+import Logout from '@/components/logout';
 import ReturnHome from '@/components/return-home';
 import useFetchBarriers from '@/hooks/use-fetch-barriers';
-import CreatureLine from '@/components/creature-line';
-import CloseWindow from '@/components/close-window';
-import InputBlue from '@/components/input-blue';
-import Logout from '@/components/logout';
 
 export default function Test() {
   const { barriers, isLoading, refetch } = useFetchBarriers();
@@ -18,8 +19,8 @@ export default function Test() {
       <ReturnHome />
       <CloseWindow />
       <InputBlue
-      bgColor='bg-primary-blue'
-      borderColor='border-secondary-blue'
+        bgColor='bg-primary-blue'
+        borderColor='border-secondary-blue'
         type='email'
         placeholder='Votre email'
         value={email}
