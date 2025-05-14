@@ -1,8 +1,11 @@
-import useCreatures from '@/hooks/use-creature';
+import useCreatures from '@/hooks/use-creatures';
 
-import Potion from '../assets/images/fairy-zone/potion.png';
+import FairyPotion from '../assets/images/fairy-zone/potion.png';
 import Female from '../assets/images/icons-buttons/female.png';
 import Male from '../assets/images/icons-buttons/male.png';
+import MythologicPotion from '../assets/images/mythologic-zone/potion.png';
+import ShadowPotion from '../assets/images/shadow-zone/potion.png';
+import WingedPotion from '../assets/images/winged-zone/potion.png';
 import ButtonBuy from './button-buy';
 
 function remainingTimeToFeed(ComingDate: Date) {
@@ -25,10 +28,25 @@ function remainingTimeToFeed(ComingDate: Date) {
   return ` ${remainingTime.join(' ')}`;
 }
 
-export default function CreatureLine() {
-  const { creature } = useCreatures();
+function getPotionImage(zoneId: number) {
+  switch (zoneId) {
+    case 1:
+      return FairyPotion;
+    case 2:
+      return WingedPotion;
+    case 3:
+      return MythologicPotion;
+    case 4:
+      return ShadowPotion;
+    default:
+      return FairyPotion;
+  }
+}
 
-  if (creature.length === 0) {
+export default function CreatureLine() {
+  const { creatures } = useCreatures();
+
+  if (creatures.length === 0) {
     return (
       <p>{`You don't have any species yet. Buy your first species..! `}</p>
     );
@@ -37,7 +55,7 @@ export default function CreatureLine() {
   return (
     <div>
       <div className='flex flex-col gap-4'>
-        {creature.map((creatureData) => {
+        {creatures.map((creatureData) => {
           const feedDate = new Date(creatureData.feed_date);
           const timeRemainingText = remainingTimeToFeed(feedDate);
 
@@ -72,7 +90,11 @@ export default function CreatureLine() {
                 bg='bg-white/75'
                 cursor='pointer'
               >
-                <img src={Potion} alt='potion' className='w-7 p-0.5' />
+                <img
+                  src={getPotionImage(creatureData.zone_id)}
+                  alt='potion'
+                  className='w-7 p-0.5'
+                />
               </ButtonBuy>
             </div>
           );

@@ -4,9 +4,9 @@ import Barrier from '@/components/barrier';
 import CloseWindow from '@/components/close-window';
 import CreatureLine from '@/components/creature-line';
 import InputBlue from '@/components/input-blue';
-import NbVisitorsMoons from '@/components/nb-visitors-moons';
 import Loader from '@/components/loader';
 import Logout from '@/components/logout';
+import NbVisitorsMoons from '@/components/nb-visitors-moons';
 import ReturnHome from '@/components/return-home';
 import useFetchBarriers from '@/hooks/use-fetch-barriers';
 

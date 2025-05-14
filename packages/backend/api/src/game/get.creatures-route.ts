@@ -2,9 +2,9 @@ import { type Request, Router } from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getCreatureRoute = Router();
+const getCreaturesRoute = Router();
 
-function getCreature(parkId: number, creatureId: number) {
+function getCreatures(parkId: number, creatureId: number) {
   return db
     .selectFrom('park_creatures')
     .innerJoin('creatures', 'park_creatures.creature_id', 'creatures.id')
@@ -34,9 +34,13 @@ function getActiveCreatureCount(parkId: number, creatureId: number) {
     .execute();
 }
 
-export type GetCreature = Awaited<ReturnType<typeof getCreature>>;
+export type GetCreatures = Awaited<ReturnType<typeof getCreatures>>;
 
-getCreatureRoute.get('/creature', async (req: Request, res) => {
+export type GetActiveCreatureCount = Awaited<
+  ReturnType<typeof getActiveCreatureCount>
+>;
+
+getCreaturesRoute.get('/creatures', async (req: Request, res) => {
   const parkId = req.parkId;
 
   if (parkId === undefined) {
@@ -48,15 +52,15 @@ getCreatureRoute.get('/creature', async (req: Request, res) => {
 
   const creatureId = 6;
 
-  const creature = await getCreature(parkId, creatureId);
+  const creatures = await getCreatures(parkId, creatureId);
 
-  const activeCreature = await getActiveCreatureCount(parkId, creatureId);
+  const activeCreatures = await getActiveCreatureCount(parkId, creatureId);
 
   res.json({
     parkId,
-    creature,
-    activeCreature,
+    creatures,
+    activeCreatures,
   });
 });
 
-export default getCreatureRoute;
+export default getCreaturesRoute;
