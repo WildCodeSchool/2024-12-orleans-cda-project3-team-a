@@ -3,8 +3,8 @@ import { useState } from 'react';
 import Barrier from '@/components/barrier';
 import CloseWindow from '@/components/close-window';
 import CreatureLine from '@/components/creature-line';
-import InfoNbVisitorsMoons from '@/components/info-nb-visitors-moons';
 import InputBlue from '@/components/input-blue';
+import NbVisitorsMoons from '@/components/nb-visitors-moons';
 import Loader from '@/components/loader';
 import Logout from '@/components/logout';
 import ReturnHome from '@/components/return-home';
@@ -30,7 +30,7 @@ export default function Test() {
       <p>{'PAGE TEST A SUPPRIMER PLUS TARD'}</p>
       <p className='text-2xl'>{' Laisse courrir ton imagination 🦅'}</p>
 
-      <InfoNbVisitorsMoons />
+      <NbVisitorsMoons />
       <Logout />
       <CreatureLine />
 

@@ -50,11 +50,17 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
       const res = await fetch(`${API_URL}/game/park`, {
         credentials: 'include',
       });
+
       const data = (await res.json()) as {
         parkId: number | undefined;
+        ok: boolean;
       };
 
-      if (data.parkId != null) {
+      if (!data.ok) {
+        throw new Error('No park');
+      }
+
+      if (data.parkId !== undefined) {
         setHasParkId(true);
       }
     };

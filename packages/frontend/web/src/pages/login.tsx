@@ -27,10 +27,24 @@ export default function Login() {
       credentials: 'include',
     });
 
-    const data = await res.json();
-    //if good user and password go to home
-    if (data.ok === true) {
+    //typage data
+    const data = (await res.json()) as {
+      ok: boolean;
+      user: {
+        id: number;
+        email: string;
+        parkId: number | null;
+      };
+    };
+
+    //if good user put setisloggedin in true and hasParkId in true and go home
+    if (data.ok) {
       auth?.setIsLoggedIn(true);
+
+      if (data.user.parkId !== null) {
+        auth?.setHasParkId(true);
+      }
+
       await navigate('/home');
     }
   };
