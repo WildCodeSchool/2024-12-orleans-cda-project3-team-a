@@ -30,7 +30,7 @@ function getActiveCreatureCount(parkId: number, creatureId: number) {
     .select(({ fn }) => [fn.countAll().as('total_active_creatures')])
     .where('park_creatures.park_id', '=', parkId)
     .where('park_creatures.creature_id', '=', creatureId)
-    .where('park_creatures.is_active', '=', 1)
+    .where('park_creatures.is_active', '=', 0)
     .execute();
 }
 
