@@ -1,11 +1,15 @@
+import { useGameInfoContext } from '@/contexts/game-info-context';
+
 import BgMenu from './bg-menu';
 
 export default function Dashboard() {
+  const { parkName } = useGameInfoContext();
+
   return (
     <BgMenu>
       <div className='p-3'>
         <h1 className='font-aerokids text-outline-white mb-10 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>
-          {'Dahsboard Name'}
+          {parkName}
         </h1>
         {/* Container My park and My visitor */}
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>

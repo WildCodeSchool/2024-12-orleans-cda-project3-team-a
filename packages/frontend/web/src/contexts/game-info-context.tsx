@@ -14,6 +14,7 @@ type GameInfoContextState = {
   isLoadingPark: boolean;
   isLoadingZones: boolean;
   fetchAll: () => Promise<void>;
+  parkName: string;
 };
 
 // Define the type for provider
@@ -28,6 +29,7 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   isLoadingPark: true,
   isLoadingZones: true,
   fetchAll: () => Promise.resolve(),
+  parkName: '',
 });
 
 // create the provider
@@ -41,6 +43,7 @@ export function GameInfoContextProvider({
     wallet,
     isLoadingPark,
     refetchPark,
+    parkName,
   } = usePark();
 
   // get unlocked zones with useZones
@@ -61,6 +64,7 @@ export function GameInfoContextProvider({
       isLoadingPark,
       isLoadingZones,
       fetchAll,
+      parkName,
     }),
     [
       walletFormated,
@@ -70,6 +74,7 @@ export function GameInfoContextProvider({
       isLoadingPark,
       isLoadingZones,
       fetchAll,
+      parkName,
     ],
   );
 
