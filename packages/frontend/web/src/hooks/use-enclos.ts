@@ -14,7 +14,7 @@ export default function useEnclosures() {
           credentials: 'include',
         });
         const data = await response.json();
-        setCreaturesEnclos(data.creaturesList);
+        setCreaturesEnclos(data.enclosure);
       } catch (error) {
         console.error('fetch failed', error);
       }

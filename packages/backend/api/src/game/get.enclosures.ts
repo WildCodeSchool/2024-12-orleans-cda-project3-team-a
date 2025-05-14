@@ -5,7 +5,7 @@ import { db } from '@app/backend-shared';
 
 const getEnclosuresRoute = express.Router();
 
-function enclosures(parkId: number) {
+function getEnclosures(parkId: number) {
   return db
     .selectFrom('creatures')
     .leftJoin('park_creatures', (join) =>
@@ -30,7 +30,7 @@ function enclosures(parkId: number) {
     .execute();
 }
 
-export type Enclosure = Awaited<ReturnType<typeof enclosures>>[number];
+export type Enclosure = Awaited<ReturnType<typeof getEnclosures>>[number];
 
 getEnclosuresRoute.get('/enclos', async (req: Request, res) => {
   const parkId = req.parkId;
@@ -42,9 +42,9 @@ getEnclosuresRoute.get('/enclos', async (req: Request, res) => {
     return;
   }
 
-  const creaturesList = await enclosures(parkId);
+  const enclosure = await getEnclosures(parkId);
 
-  if (creaturesList.length === 0) {
+  if (enclosure.length === 0) {
     res.json({
       ok: false,
       message: 'no creatures found ',
@@ -54,7 +54,7 @@ getEnclosuresRoute.get('/enclos', async (req: Request, res) => {
 
   res.json({
     ok: true,
-    creaturesList,
+    enclosure,
   });
 });
 

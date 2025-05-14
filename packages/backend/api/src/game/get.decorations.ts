@@ -25,6 +25,7 @@ getDecorationsRoute.get('/decorations', async (_req, res) => {
   }
 
   res.json({
+    ok: true,
     decorations,
   });
 });
