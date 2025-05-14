@@ -32,7 +32,14 @@ export default function Dashboard() {
             </li>
           </div>
         </div>
-        {/* Container */}
+        {/* Container for display 4 worlds and nb of creatures */}
+        <div className='grid grid-cols-2 md:grid-cols-4'>
+          {/* faire un map pour les 4 mondes */}
+          <h1>{'titre'}</h1>
+          <h1>{'titre'}</h1>
+          <h1>{'titre'}</h1>
+          <h1>{'titre'}</h1>
+        </div>
       </div>
     </BgMenu>
   );
