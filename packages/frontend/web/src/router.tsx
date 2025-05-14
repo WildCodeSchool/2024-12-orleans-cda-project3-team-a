@@ -4,6 +4,7 @@ import CheckAuth from './components/check-auth-layout';
 import CheckLoggedIn from './components/check-logged-in-layout';
 import CheckParkIdLayout from './components/check-park-id-layout';
 import CreatePark from './components/create-park';
+import Dashboard from './components/dashboard';
 import Home from './pages/home';
 import Login from './pages/login';
 import Rules from './pages/rules';
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
           {
             path: 'home',
             element: <Home />,
+          },
+          {
+            path: 'dashboard',
+            element: <Dashboard />,
           },
         ],
       },

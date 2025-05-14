@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import iconDashboard from '../assets/images/icons-buttons/dashboard.png';
 import iconMenu from '../assets/images/icons-buttons/menu.png';
@@ -42,7 +43,9 @@ export default function Menu() {
         className={` ${isMenuOpen ? 'flex h-screen flex-col justify-between md:h-auto md:flex-1 md:flex-row' : 'hidden'}`}
       >
         <div className='flex flex-col gap-7 md:flex-row'>
-          <img src={iconDashboard} alt='' className='h-6 md:h-7' />
+          <Link to='/dashboard'>
+            <img src={iconDashboard} alt='' className='h-6 md:h-7' />
+          </Link>
           <img src={iconShop} alt='' className='h-6 md:h-7' />
           <img src={iconRanking} alt='' className='h-6 md:h-7' />
         </div>
