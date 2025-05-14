@@ -66,6 +66,12 @@ body {
 .animate-spin {
   animation: spin 2s linear infinite;
 }
+
+.text-outline-purple {
+  -webkit-text-stroke-width: 4px;
+  -webkit-text-stroke-color: #4d40a8;
+  -webkit-text-fill-color: transparent;
+}
 .animate-move {
   animation: move 2s ease-in-out infinite;
 }
