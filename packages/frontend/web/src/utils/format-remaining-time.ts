@@ -1,6 +1,6 @@
-export function formatRemainingTime(ComingDate: Date) {
+export function formatRemainingTime(comingDate: Date) {
   const now = new Date();
-  const diff = ComingDate.getTime() - now.getTime();
+  const diff = comingDate.getTime() - now.getTime();
 
   if (diff <= 0) return 'Feed me !';
 
