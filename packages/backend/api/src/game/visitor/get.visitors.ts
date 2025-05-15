@@ -1,9 +1,12 @@
 import { type Request, Router } from 'express';
 
+import { db } from '@app/backend-shared';
+
 const getVisitors = Router();
 
-getVisitors.get('/', (req: Request, res) => {
+getVisitors.get('/', async (req: Request, res) => {
   const parkId = req.parkId;
+  // const parkId=6;
 
   if (parkId === undefined) {
     res.json({
@@ -14,8 +17,39 @@ getVisitors.get('/', (req: Request, res) => {
   }
 
   //faire la requete sur les visiteurs
+  const visitorsCountById = await db
+    .selectFrom('visitors')
+    .leftJoin('park_visitors', (join) =>
+      join
+        .onRef('park_visitors.visitor_id', '=', 'visitors.id')
+        .on('park_visitors.park_id', '=', parkId),
+    )
+    .select([
+      'park_visitors.visitor_id',
+      'visitors.src_image',
+      'visitors.spending',
+      'visitors.spending_time',
+      ({ fn }) => fn.count('park_visitors.visitor_id').as('visitor_count'),
+    ])
+    .groupBy([
+      'park_visitors.visitor_id',
+      'visitors.src_image',
+      'visitors.spending',
+      'visitors.spending_time',
+    ])
+    .execute();
+
+  if (!visitorsCountById) {
+    res.json({
+      ok: false,
+      message: 'no visitors finded',
+    });
+  }
 
   res.json({
-    //envoyer la valeur qu'on veut
+    ok: true,
+    visitorsCountById,
   });
 });
+
+export default getVisitors;

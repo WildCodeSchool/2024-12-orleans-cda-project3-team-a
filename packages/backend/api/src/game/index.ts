@@ -8,6 +8,7 @@ import getEnclosures from './get.enclosures';
 import getParkUser from './get.park-user';
 import getZonesCount from './get.zones-count';
 import parkRouter from './park';
+import visitorRouter from './visitor';
 
 const gameRouter = express.Router();
 
@@ -18,5 +19,6 @@ gameRouter.use(getZonesCount);
 gameRouter.use('/barriers', barrierRouter);
 gameRouter.use(getEnclosures);
 gameRouter.use(getDecorations);
+gameRouter.use('/visitors', visitorRouter);
 
 export default gameRouter;
