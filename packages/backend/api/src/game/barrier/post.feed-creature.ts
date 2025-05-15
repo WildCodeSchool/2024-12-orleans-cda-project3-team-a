@@ -26,7 +26,6 @@ postFeedCreature.post('/', async (req: Request, res) => {
 
   const isHungry = result?.is_active === 0;
 
-
   //verif ok: false
 
   // get potion price
@@ -36,7 +35,7 @@ postFeedCreature.post('/', async (req: Request, res) => {
     .select('price')
     .execute();
 
-    //verif si price nest pas null
+  //verif si price nest pas null
 
   //Add 3Hours to feed_date
   const newFeedDate = new Date();
