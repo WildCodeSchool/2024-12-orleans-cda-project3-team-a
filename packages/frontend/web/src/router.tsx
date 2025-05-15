@@ -2,12 +2,16 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import CheckAuth from './components/check-auth-layout';
 import CheckLoggedIn from './components/check-logged-in-layout';
+import CheckParkIdLayout from './components/check-park-id-layout';
+import CreatePark from './components/create-park';
 import Home from './pages/home';
 import Login from './pages/login';
+import Page404 from './pages/page-404';
 import Rules from './pages/rules';
 import SignUp from './pages/sign-up';
 import Test from './pages/test';
 import WelcomeLayout from './pages/welcome-layout';
+import WorldEnclosure from './pages/world-enclosure';
 
 const router = createBrowserRouter([
   {
@@ -40,8 +44,22 @@ const router = createBrowserRouter([
     element: <CheckAuth />,
     children: [
       {
-        path: 'home',
-        element: <Home />,
+        path: 'create-park',
+        element: <WelcomeLayout />,
+        children: [{ index: true, element: <CreatePark /> }],
+      },
+      {
+        element: <CheckParkIdLayout />,
+        children: [
+          {
+            path: 'home',
+            element: <Home />,
+          },
+          {
+            path: '/zone/:zone_id',
+            element: <WorldEnclosure />,
+          },
+        ],
       },
     ],
   },
@@ -49,6 +67,10 @@ const router = createBrowserRouter([
   {
     path: '/test',
     element: <Test />,
+  },
+  {
+    path: '/*',
+    element: <Page404 />,
   },
 ]);
 

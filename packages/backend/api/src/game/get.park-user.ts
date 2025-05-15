@@ -2,9 +2,9 @@ import { type Request, Router } from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getInfoParkUser = Router();
+const getParkUser = Router();
 
-getInfoParkUser.get('/info-park-user', async (req: Request, res) => {
+getParkUser.get('/park-user', async (req: Request, res) => {
   const userId = req.userId;
 
   if (userId == null) {
@@ -15,15 +15,16 @@ getInfoParkUser.get('/info-park-user', async (req: Request, res) => {
     return;
   }
 
-  const parkInfo = await db
+  const park = await db
     .selectFrom('parks')
     .selectAll()
     .where('parks.user_id', '=', userId)
     .executeTakeFirst();
 
-  if (!parkInfo) {
+  if (!park) {
     res.json({
-      message: 'no user corresponding',
+      ok: false,
+      message: 'no park for this user',
     });
     return;
   }
@@ -31,15 +32,15 @@ getInfoParkUser.get('/info-park-user', async (req: Request, res) => {
   const visitorsCountResult = await db
     .selectFrom('park_visitors')
     .select(({ fn }) => [fn.countAll<number>().as('count')])
-    .where('park_visitors.park_id', '=', parkInfo.id)
+    .where('park_visitors.park_id', '=', park.id)
     .executeTakeFirst();
 
   const visitorsCount = visitorsCountResult?.count ?? 0;
 
   res.json({
-    parkInfo,
+    park,
     visitorsCount,
   });
 });
 
-export default getInfoParkUser;
+export default getParkUser;

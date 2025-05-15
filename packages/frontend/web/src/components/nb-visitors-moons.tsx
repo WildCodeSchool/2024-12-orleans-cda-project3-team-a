@@ -2,7 +2,7 @@ import moon from '../assets/images/icons-buttons/moon.png';
 import visitor from '../assets/images/icons-buttons/visitors.png';
 import { useGameInfoContext } from '../contexts/game-info-context';
 
-export default function InfoNbVisitorsMoons() {
+export default function NbVisitorsMoons() {
   const { walletFormated, visitorsFormated, wallet } = useGameInfoContext();
 
   return (

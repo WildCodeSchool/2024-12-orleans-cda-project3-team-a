@@ -8,11 +8,15 @@
   src: url('/fonts/aerokids.otf') format('opentype');
 }
 
+html {
+  overflow-y: hidden;
+}
 body {
   height: 100dvh;
   width: 100dvw;
   margin: 0;
   padding: 0;
+  overflow-y: hidden;
   @apply font-fredoka;
 }
 
@@ -28,6 +32,7 @@ body {
   --color-winged-red: #f75a61; /*Couleur rouge enclot winged */ /*couleur logo fantasy park*/
   --color-winged-yellow: #ebe364; /*Couleur jaune enclot winged */
   --color-mythologic-beige: #ebc682; /*Couleur beige enclot mythologic */
+  --color-mythologic-dark-beige: #c69a4a; /* beige foncé pour mythologic */
   --color-shadow-purple: #615269; /*Couleur violet enclot shadow */
   --color-shadow-green: #3f6f35; /*Couleur verte enclot shadow */
 
@@ -44,6 +49,29 @@ body {
   }
 }
 
+@keyframes move {
+  0%,
+  50%,
+  100% {
+    transform: scaleY(1) scaleX(1) rotate(0deg);
+  }
+  25% {
+    transform: scaleY(1.05) scaleX(0.98) rotate(1deg) translateX(5px);
+  }
+  75% {
+    transform: scaleY(1.05) scaleX(0.98) rotate(-1deg) translateX(-5px);
+  }
+}
+
 .animate-spin {
   animation: spin 2s linear infinite;
+}
+
+.text-outline-purple {
+  -webkit-text-stroke-width: 4px;
+  -webkit-text-stroke-color: #4d40a8;
+  -webkit-text-fill-color: transparent;
+}
+.animate-move {
+  animation: move 2s ease-in-out infinite;
 }
