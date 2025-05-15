@@ -1,5 +1,6 @@
 //Request to add the barrier in his park and deduct money in his wallet
 import { type Request, Router } from 'express';
+import { sql } from 'kysely';
 
 import { db } from '@app/backend-shared';
 
@@ -40,12 +41,14 @@ postFeedCreature.post('/', async (req: Request, res) => {
     .select('price')
     .executeTakeFirst();
 
-    if (!potionPrice) {
+  if (!potionPrice) {
     res.json({
       ok: false,
     });
     return;
   }
+
+  // console.log(potionPrice);
 
   //Add 3Hours to feed_date
   const newFeedDate = new Date();
@@ -72,11 +75,8 @@ postFeedCreature.post('/', async (req: Request, res) => {
 
   //update feed_date et is_active
   await db
-    .insertInto('park_barriers')
-    .values({
-      park_id: parkId,
-      barrier_id: barrier.barrierId,
-    })
+    .updateTable('park_creatures')
+    .set({ feed_date: sql`NOW() INTERVAL 110 MINUTE` })
     .executeTakeFirst();
 
   res.json({
