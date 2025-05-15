@@ -15,7 +15,7 @@ export default function Test() {
   const [email, setEmail] = useState('');
 
   return (
-    <div className='flex flex-col items-center justify-center gap-5'>
+    <div className='grid min-w-[1600px] grid-cols-2'>
       <ReturnHome />
       <CloseWindow />
       <InputBlue
