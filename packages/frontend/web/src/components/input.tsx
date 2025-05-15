@@ -7,7 +7,7 @@ type InputProps = {
   readonly value: string;
 };
 
-export default function InputBlue({
+export default function Input({
   bgColor,
   borderColor,
   type,

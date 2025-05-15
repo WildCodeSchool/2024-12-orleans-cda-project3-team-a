@@ -1,20 +1,26 @@
 import { useEffect, useState } from 'react';
 
-import type { GetActiveCreatureCount, GetCreatures } from '@app/api';
+import type { ActiveCreatureCount, Creatures } from '@app/api';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function useCreatures() {
-  const [creatures, setCreatures] = useState<GetCreatures>([]);
-  const [activeCreatures, setActiveCreatures] =
-    useState<GetActiveCreatureCount>([]);
+  const [creatures, setCreatures] = useState<Creatures>([]);
+  const [activeCreatures, setActiveCreatures] = useState<ActiveCreatureCount>(
+    [],
+  );
+
+  const creatureId = 8;
 
   useEffect(() => {
     async function fetchCreatures() {
       try {
-        const response = await fetch(`${API_URL}/game/creatures`, {
-          credentials: 'include',
-        });
+        const response = await fetch(
+          `${API_URL}/game/creatures?creature_id=${creatureId}`,
+          {
+            credentials: 'include',
+          },
+        );
         const data = await response.json();
         setCreatures(data.creatures);
         setActiveCreatures(data.activeCreatures);
