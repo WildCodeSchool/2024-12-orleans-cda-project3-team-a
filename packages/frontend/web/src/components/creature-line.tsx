@@ -12,7 +12,7 @@ function remainingTimeToFeed(ComingDate: Date) {
   const now = new Date();
   const diff = ComingDate.getTime() - now.getTime();
 
-  if (diff <= 0) return 'No date available';
+  if (diff <= 0) return 'Feed me !';
 
   const totalMins = Math.floor(diff / 1000 / 60);
   const days = Math.floor(totalMins / 1440);
