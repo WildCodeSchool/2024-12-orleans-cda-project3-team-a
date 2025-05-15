@@ -1,11 +1,7 @@
 import useCreatures from '@/hooks/use-creatures';
 
-import FairyPotion from '../assets/images/fairy-zone/potion.png';
 import Female from '../assets/images/icons-buttons/female.png';
 import Male from '../assets/images/icons-buttons/male.png';
-import MythologicPotion from '../assets/images/mythologic-zone/potion.png';
-import ShadowPotion from '../assets/images/shadow-zone/potion.png';
-import WingedPotion from '../assets/images/winged-zone/potion.png';
 import ButtonBuy from './button-buy';
 
 function remainingTimeToFeed(ComingDate: Date) {
@@ -31,15 +27,15 @@ function remainingTimeToFeed(ComingDate: Date) {
 function getPotionImage(zoneId: number) {
   switch (zoneId) {
     case 1:
-      return FairyPotion;
+      return 'fairy-potion.png';
     case 2:
-      return WingedPotion;
+      return 'winged-potion.png';
     case 3:
-      return MythologicPotion;
+      return 'mythologic-potion.png';
     case 4:
-      return ShadowPotion;
+      return 'shadow-potion.png';
     default:
-      return FairyPotion;
+      return 'winged-potion.png';
   }
 }
 
@@ -91,7 +87,7 @@ export default function CreatureLine() {
                 cursor='pointer'
               >
                 <img
-                  src={getPotionImage(creatureData.zone_id)}
+                  src={`/images/decorations/${getPotionImage(creatureData.zone_id)}`}
                   alt='potion'
                   className='w-7 p-0.5'
                 />
