@@ -27,7 +27,7 @@ export default function Home() {
         {unlockedZones.map((zone) => (
           <div key={zone.zone_id} className='flex items-center justify-center'>
             <Link
-              to={zone.park_zone_id === null ? '' : zone.link}
+              to={zone.park_zone_id === null ? '' : `/zone/${zone.zone_id}`}
               className='flex h-full w-full items-center justify-center'
             >
               <img

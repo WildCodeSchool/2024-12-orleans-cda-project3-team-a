@@ -1,8 +1,10 @@
 import { createContext, useCallback, useContext, useMemo } from 'react';
 import type { PropsWithChildren } from 'react';
 
-import type { UnlockedZones } from '@app/api';
+import type { Decorations, Enclosure, UnlockedZones } from '@app/api';
 
+import useDecorations from '@/hooks/use-decorations';
+import useEnclos from '@/hooks/use-enclos';
 import usePark from '@/hooks/use-park';
 import useZones from '@/hooks/use-zones';
 
@@ -14,6 +16,8 @@ type GameInfoContextState = {
   isLoadingPark: boolean;
   isLoadingZones: boolean;
   fetchAll: () => Promise<void>;
+  creaturesEnclos: Enclosure[];
+  decorations: Decorations;
   parkName: string;
 };
 
@@ -29,6 +33,8 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   isLoadingPark: true,
   isLoadingZones: true,
   fetchAll: () => Promise.resolve(),
+  creaturesEnclos: [],
+  decorations: [],
   parkName: '',
 });
 
@@ -54,6 +60,9 @@ export function GameInfoContextProvider({
     await Promise.all([refetchPark(), refetchZones()]);
   }, [refetchPark, refetchZones]);
 
+  //get Creatures and decorations
+  const { creaturesEnclos } = useEnclos();
+  const { decorations } = useDecorations();
   // memorize value to avoid unnecessary changes
   const value = useMemo(
     () => ({
@@ -64,12 +73,16 @@ export function GameInfoContextProvider({
       isLoadingPark,
       isLoadingZones,
       fetchAll,
+      creaturesEnclos,
+      decorations,
       parkName,
     }),
     [
       walletFormated,
       visitorsFormated,
       unlockedZones,
+      creaturesEnclos,
+      decorations,
       wallet,
       isLoadingPark,
       isLoadingZones,

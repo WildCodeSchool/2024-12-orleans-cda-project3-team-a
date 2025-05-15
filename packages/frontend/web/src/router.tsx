@@ -12,6 +12,7 @@ import Rules from './pages/rules';
 import SignUp from './pages/sign-up';
 import Test from './pages/test';
 import WelcomeLayout from './pages/welcome-layout';
+import WorldEnclosure from './pages/world-enclosure';
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
           {
             path: 'home',
             element: <Home />,
+          },
+          {
+            path: '/zone/:zone_id',
+            element: <WorldEnclosure />,
           },
           {
             path: 'dashboard',
