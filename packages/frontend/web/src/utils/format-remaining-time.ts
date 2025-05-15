@@ -1,4 +1,4 @@
-export function remainingTimeToFeed(ComingDate: Date) {
+export function formatRemainingTime(ComingDate: Date) {
   const now = new Date();
   const diff = ComingDate.getTime() - now.getTime();
 

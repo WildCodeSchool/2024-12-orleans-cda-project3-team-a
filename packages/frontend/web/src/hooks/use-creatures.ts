@@ -10,7 +10,7 @@ export default function useCreatures() {
     [],
   );
 
-  const creatureId = 8;
+  const creatureId = 6;
 
   useEffect(() => {
     async function fetchCreatures() {

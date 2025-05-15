@@ -1,5 +1,5 @@
 import useCreatures from '@/hooks/use-creatures';
-import { remainingTimeToFeed } from '@/hooks/use-format-time-until';
+import { formatRemainingTime } from '@/utils/format-remaining-time';
 
 import Female from '../assets/images/icons-buttons/female.png';
 import Male from '../assets/images/icons-buttons/male.png';
@@ -34,7 +34,7 @@ export default function CreatureLine() {
       <div className='flex flex-col gap-4'>
         {creatures.map((creatureData) => {
           const feedDate = new Date(creatureData.feed_date);
-          const timeRemainingText = remainingTimeToFeed(feedDate);
+          const timeRemainingText = formatRemainingTime(feedDate);
 
           return (
             <div
