@@ -8,7 +8,7 @@ export default function Test() {
   const { barriers, isLoading, refetch } = useFetchBarriers();
 
   return (
-    <div className='flex flex-col items-center justify-center gap-5'>
+    <div className='grid min-w-[1600px] grid-cols-2'>
       <ReturnHome />
 
       <p>{'PAGE TEST A SUPPRIMER PLUS TARD'}</p>
