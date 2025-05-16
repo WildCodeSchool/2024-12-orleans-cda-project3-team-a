@@ -21,7 +21,6 @@ export default async function authMiddleware(
       audience: FRONTEND_HOST,
       issuer: FRONTEND_HOST,
     });
-
     req.isAuthenticated = true;
     req.userId = payload.userId;
   } catch (atError) {

@@ -1,5 +1,5 @@
 import { type Request, Router } from 'express';
-import { Kysely, sql } from 'kysely';
+import { sql } from 'kysely';
 
 import { db } from '@app/backend-shared';
 
@@ -7,8 +7,8 @@ const postBuyCreature = Router();
 
 postBuyCreature.post('/buyCreature', async (req: Request, res) => {
   const parkId = req.parkId;
-  const name = 'toto';
-  const creatureId = 6;
+  const name = req.body.name;
+  const creatureId = req.query.creatureId;
 
   if (parkId === undefined) {
     res.json({
@@ -17,10 +17,18 @@ postBuyCreature.post('/buyCreature', async (req: Request, res) => {
     return;
   }
 
+  if (typeof creatureId !== 'string') {
+    res.json({
+      ok: false,
+      message: 'creatureId missing',
+    });
+    return;
+  }
+
   const creature = await db
     .selectFrom('creatures')
     .select(['id', 'price', 'feed_timer'])
-    .where('id', '=', creatureId)
+    .where('id', '=', parseInt(creatureId))
     .executeTakeFirst();
 
   if (!creature) {
@@ -38,9 +46,9 @@ postBuyCreature.post('/buyCreature', async (req: Request, res) => {
     }))
     .where('id', '=', parkId)
     .where('wallet', '>=', creature.price)
-    .execute();
+    .executeTakeFirst();
 
-  if (!updateWallet) {
+  if (updateWallet.numUpdatedRows === 0n) {
     res.json({
       message: 'Not enought money',
       ok: false,
@@ -48,7 +56,7 @@ postBuyCreature.post('/buyCreature', async (req: Request, res) => {
     return;
   }
 
-  const addCreature = await db
+  await db
     .insertInto('park_creatures')
     .values({
       name,
@@ -59,7 +67,7 @@ postBuyCreature.post('/buyCreature', async (req: Request, res) => {
       feed_date: sql`NOW() + INTERVAL ${creature.feed_timer} MINUTE`,
       adult_at: sql`NOW() + INTERVAL 2 DAY`,
       park_id: parkId,
-      creature_id: creatureId,
+      creature_id: parseInt(creatureId),
     })
     .executeTakeFirst();
 
@@ -68,5 +76,4 @@ postBuyCreature.post('/buyCreature', async (req: Request, res) => {
     message: 'creature add',
   });
 });
-
 export default postBuyCreature;

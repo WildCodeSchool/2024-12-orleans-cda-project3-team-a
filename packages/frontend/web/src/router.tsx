@@ -59,15 +59,15 @@ const router = createBrowserRouter([
             path: '/zone/:zone_id',
             element: <WorldEnclosure />,
           },
+          {
+            path: '/test',
+            element: <Test />,
+          },
         ],
       },
     ],
   },
   //A supprimer plus tard!
-  {
-    path: '/test',
-    element: <Test />,
-  },
   {
     path: '/*',
     element: <Page404 />,

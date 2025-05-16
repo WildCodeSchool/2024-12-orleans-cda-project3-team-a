@@ -1,13 +1,14 @@
 import Barrier from '@/components/barrier';
 import BuyCreature from '@/components/buy-creature';
-// import InfoNbVisitorsMoons from '@/components/info-nb-visitors-moons';
 import Loader from '@/components/loader';
 import NbVisitorsMoons from '@/components/nb-visitors-moons';
 import ReturnHome from '@/components/return-home';
 import useFetchBarriers from '@/hooks/use-fetch-barriers';
 
 export default function Test() {
-  // const { barriers, isLoading, refetch } = useFetchBarriers();
+  const { barriers, isLoading, refetch } = useFetchBarriers();
+
+  const creatureId = 5;
 
   return (
     <div className='grid min-w-[1600px] grid-cols-2'>
@@ -18,7 +19,7 @@ export default function Test() {
 
       <NbVisitorsMoons />
 
-      {/* <div className='relative min-h-200 min-w-200 bg-blue-200'>
+      <div className='relative min-h-200 min-w-200 bg-blue-200'>
         {isLoading ? (
           <Loader />
         ) : (
@@ -34,8 +35,8 @@ export default function Test() {
             })}
           </>
         )}
-      </div> */}
-      <BuyCreature />
+      </div>
+      <BuyCreature creatureId={creatureId} />
     </div>
   );
 }
