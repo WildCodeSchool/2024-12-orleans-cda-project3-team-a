@@ -17,6 +17,13 @@ postBuyCreature.post('/buy-creature', async (req: Request, res) => {
     return;
   }
 
+  if (name === undefined) {
+    res.json({
+      ok: false,
+    });
+    return;
+  }
+
   if (typeof creatureId !== 'string') {
     res.json({
       ok: false,
