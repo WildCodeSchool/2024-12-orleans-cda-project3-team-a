@@ -12,7 +12,7 @@ import BgMenu from './bg-menu';
 export default function Dashboard() {
   const { parkName, walletFormated, visitorsFormated } = useGameInfoContext();
   const { visitors } = useVisitors();
-  const { countZones } = useZones();
+  const { countZones, unlockedZones } = useZones();
 
   console.log(countZones);
 
@@ -41,8 +41,7 @@ export default function Dashboard() {
               </ul>
               <ul className='flex items-center justify-center gap-2'>
                 <img src={padlock} alt='unlocked' className='h-6 md:h-7' />
-                {countZones}
-                {'/4 world unlocked'}
+                {`${countZones}/${unlockedZones.length} world unlocked`}
               </ul>
               <ul className='flex items-center justify-center gap-1'>
                 <img src={padlock} alt='unlocked' className='h-6 md:h-7' />
