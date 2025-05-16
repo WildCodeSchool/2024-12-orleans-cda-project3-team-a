@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
+import useEnclosures from '@/hooks/use-enclos';
 import useVisitors from '@/hooks/use-visitors';
 import useZones from '@/hooks/use-zones';
 
@@ -13,20 +14,24 @@ export default function Dashboard() {
   const { parkName, walletFormated, visitorsFormated } = useGameInfoContext();
   const { visitors } = useVisitors();
   const { countZones, unlockedZones } = useZones();
+  const { creaturesEnclos, countCreaturesIdUnlocked } = useEnclosures();
 
-  console.log(countZones);
+  console.log(countCreaturesIdUnlocked.length);
+
+  // const total = creatureWorld.length;
 
   return (
+    // <div className='h-full bg-blue-300'>
     <BgMenu>
-      <div className='p-3 text-xs md:text-base'>
+      <div className='h-full overflow-auto p-3 text-xs md:text-base'>
         <h1 className='font-aerokids text-outline-white mb-10 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>
           {parkName}
         </h1>
         {/* Container My park and My visitor */}
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+        <div className='mb-5 grid grid-cols-1 gap-4 md:grid-cols-2'>
           {/* MY PARK */}
 
-          <div className='relative min-h-20'>
+          <div className='relative mb-5 min-h-20 md:mb-0'>
             <h2 className='font-aerokids text-outline-white absolute w-full -translate-y-1/2 bg-[linear-gradient(to_right,var(--color-winged-yellow),var(--color-title-purple-dark),var(--color-winged-yellow))] bg-clip-text pb-3 text-3xl text-transparent md:text-5xl'>
               {'My park'}
             </h2>
@@ -45,14 +50,14 @@ export default function Dashboard() {
               </ul>
               <ul className='flex items-center justify-center gap-1'>
                 <img src={padlock} alt='unlocked' className='h-6 md:h-7' />
-                {'16/20 creatures unlocked'}
+                {`${countCreaturesIdUnlocked.length}/${creaturesEnclos.length} creatures unlocked`}
               </ul>
             </li>
           </div>
 
           {/* MY VISITORS */}
 
-          <div className='relative'>
+          <div className='relative min-h-20'>
             <h2 className='font-aerokids text-outline-white absolute w-full -translate-y-1/2 bg-[linear-gradient(to_right,var(--color-winged-yellow),var(--color-title-purple-dark),var(--color-winged-yellow))] bg-clip-text pb-3 text-3xl text-transparent md:text-5xl'>
               {'My visitors'}
             </h2>
@@ -81,14 +86,37 @@ export default function Dashboard() {
           </div>
         </div>
         {/* Container for display 4 worlds and nb of creatures */}
-        <div className='grid grid-cols-2 md:grid-cols-4'>
-          {/* faire un map pour les 4 mondes */}
-          <h1>{'titre'}</h1>
-          <h1>{'titre'}</h1>
-          <h1>{'titre'}</h1>
-          <h1>{'titre'}</h1>
+        <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
+          {unlockedZones.map((zone) => (
+            <div key={zone.zone_id} className='relative pt-9'>
+              <h2 className='absolute flex w-full -translate-y-1/2 items-center justify-center pb-3'>
+                <img
+                  src={`/images/logo/${zone.src_image}`}
+                  alt={zone.name}
+                  className='h-15 md:h-20'
+                />
+              </h2>
+              <div className='grid grid-cols-2 gap-4 rounded border-1 border-gray-500 bg-white/60 p-3 pt-8 md:rounded-md'>
+                {creaturesEnclos
+                  .filter((creature) => creature.zone_id === zone.zone_id)
+                  .map((creature) => (
+                    <div key={creature.id}>
+                      <p className='flex items-center justify-center gap-2'>
+                        {creature.quantityCreature}{' '}
+                        <img
+                          src={`/images/creatures/${creature.src_image}`}
+                          alt={creature.species}
+                          className='w-8 md:w-10'
+                        />
+                      </p>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </BgMenu>
+    // </div>
   );
 }

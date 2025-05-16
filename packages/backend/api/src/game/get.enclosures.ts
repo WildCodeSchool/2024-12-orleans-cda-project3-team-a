@@ -1,3 +1,4 @@
+import { count } from 'console';
 import express from 'express';
 import type { Request } from 'express';
 
@@ -52,9 +53,17 @@ getEnclosuresRoute.get('/enclos', async (req: Request, res) => {
     return;
   }
 
+  const creaturesUnlocked = await db
+    .selectFrom('park_creatures')
+    .select('creature_id')
+    .distinct()
+    .where('park_creatures.park_id', '=', parkId)
+    .execute();
+
   res.json({
     ok: true,
     enclosure,
+    creaturesUnlocked,
   });
 });
 

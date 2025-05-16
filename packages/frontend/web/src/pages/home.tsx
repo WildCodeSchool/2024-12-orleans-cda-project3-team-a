@@ -41,7 +41,7 @@ export default function Home() {
       </div>
 
       {/* Display Dashboard in pop-up if is open*/}
-      <div className='absolute top-1/10 flex w-[94%] justify-center text-center md:w-[98%]'>
+      <div className='absolute top-1/10 flex max-h-88/100 w-[94%] justify-center text-center md:w-[98%]'>
         <Dashboard />
       </div>
       <div className='absolute top-1/10 flex w-[94%] justify-end md:w-[98%]'>
