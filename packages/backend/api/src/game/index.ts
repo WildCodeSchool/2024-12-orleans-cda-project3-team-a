@@ -3,6 +3,7 @@ import express from 'express';
 import parkIdMiddleware from '@/middlewares/park-id.middleware';
 
 import barrierRouter from './barrier';
+import getCreaturesRoute from './get.creatures';
 import getDecorations from './get.decorations';
 import getEnclosures from './get.enclosures';
 import getParkUser from './get.park-user';
@@ -18,5 +19,6 @@ gameRouter.use(getZonesCount);
 gameRouter.use('/barriers', barrierRouter);
 gameRouter.use(getEnclosures);
 gameRouter.use(getDecorations);
+gameRouter.use(getCreaturesRoute);
 
 export default gameRouter;

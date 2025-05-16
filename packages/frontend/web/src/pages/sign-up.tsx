@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import ButtonBlue from '@/components/button-blue';
-import InputBlue from '@/components/input-blue';
+import Input from '@/components/input';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -51,7 +51,9 @@ export default function SignUp() {
       <h2 className='text-secondary-blue pl-4 text-xl font-extrabold tracking-[0.6em] md:text-2xl'>
         {'SIGN UP'}
       </h2>
-      <InputBlue
+      <Input
+        bgColor='bg-primary-blue'
+        borderColor='border-secondary-blue'
         type='email'
         placeholder='Email'
         value={email}
@@ -60,7 +62,9 @@ export default function SignUp() {
         }}
       />
 
-      <InputBlue
+      <Input
+        bgColor='bg-primary-blue'
+        borderColor='border-secondary-blue'
         type='text'
         placeholder='Pseudo'
         value={username}
@@ -69,7 +73,9 @@ export default function SignUp() {
         }}
       />
 
-      <InputBlue
+      <Input
+        bgColor='bg-primary-blue'
+        borderColor='border-secondary-blue'
         type='password'
         placeholder='Password'
         value={password}
@@ -78,7 +84,9 @@ export default function SignUp() {
         }}
       />
 
-      <InputBlue
+      <Input
+        bgColor='bg-primary-blue'
+        borderColor='border-secondary-blue'
         type='password'
         placeholder='Confirm password'
         value={confirmPassword}
