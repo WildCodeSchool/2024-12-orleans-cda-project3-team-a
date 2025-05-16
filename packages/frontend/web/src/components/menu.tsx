@@ -60,7 +60,7 @@ export default function Menu() {
           className={` ${isMenuOpen ? 'flex h-screen flex-col justify-between md:h-auto md:flex-1 md:flex-row' : 'hidden'}`}
         >
           <div className='flex flex-col gap-7 md:flex-row'>
-            <div onClick={handleDashboard} className='cursor-'>
+            <div onClick={handleDashboard} className='cursor-pointer'>
               <img src={iconDashboard} alt='' className='h-6 md:h-7' />
             </div>
 
