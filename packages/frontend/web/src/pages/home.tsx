@@ -4,12 +4,15 @@ import CloseWindow from '@/components/close-window';
 import Dashboard from '@/components/dashboard';
 import Menu from '@/components/menu';
 import NbVisitorsMoons from '@/components/nb-visitors-moons';
+import { useOpenWindowInMenuContext } from '@/contexts/open-window-in-menu';
 
 import ParkMap from '../assets/images/background/park-map.png';
 import { useGameInfoContext } from '../contexts/game-info-context';
 
 export default function Home() {
   const { unlockedZones } = useGameInfoContext();
+  const { isOpenDashboard } = useOpenWindowInMenuContext();
+  console.log(isOpenDashboard);
 
   return (
     <div
@@ -41,11 +44,14 @@ export default function Home() {
       </div>
 
       {/* Display Dashboard in pop-up if is open*/}
-      <div className='absolute top-1/10 flex max-h-88/100 w-[94%] justify-center text-center md:w-[98%]'>
-        <Dashboard />
-      </div>
-      <div className='absolute top-1/10 flex w-[94%] justify-end md:w-[98%]'>
-        <CloseWindow />
+
+      <div className={isOpenDashboard ? '' : 'hidden'}>
+        <div className='absolute top-1/10 flex max-h-88/100 w-[94%] justify-center text-center md:w-[98%]'>
+          <Dashboard />
+        </div>
+        <div className='absolute top-1/10 flex w-[94%] justify-end md:w-[98%]'>
+          <CloseWindow />
+        </div>
       </div>
     </div>
   );

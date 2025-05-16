@@ -1,15 +1,16 @@
-import { useState } from 'react';
+import { useOpenWindowInMenuContext } from '@/contexts/open-window-in-menu';
 
 import close from '../assets/images/icons-buttons/close.png';
 
 export default function CloseWindow() {
-  const [isOpen, setIsOpen] = useState(true);
+  // const [isOpen, setIsOpen] = useState(true);
+  const { setIsOpenDashboard, isOpenDashboard } = useOpenWindowInMenuContext();
 
   const closeWindow = () => {
-    setIsOpen(false);
+    setIsOpenDashboard(false);
   };
 
-  if (!isOpen) return null;
+  if (!isOpenDashboard) return null;
 
   return (
     <button

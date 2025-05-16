@@ -1,25 +1,33 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useOpenWindowInMenuContext } from '@/contexts/open-window-in-menu';
+
 import iconDashboard from '../assets/images/icons-buttons/dashboard.png';
 import iconMenu from '../assets/images/icons-buttons/menu.png';
 import iconProfil from '../assets/images/icons-buttons/profile.png';
 import iconRanking from '../assets/images/icons-buttons/ranking.png';
 import iconRules from '../assets/images/icons-buttons/rules.png';
 import iconShop from '../assets/images/icons-buttons/shop.png';
-import Dashboard from './dashboard';
 import Logout from './logout';
 
 export default function Menu() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDahsboardOpen, setIsDahsboardOpen] = useState(false);
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // const [isDahsboardOpen, setIsDahsboardOpen] = useState(false);
+  const { setIsOpenDashboard, setIsMenuOpen, isMenuOpen } =
+    useOpenWindowInMenuContext();
 
   const handleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const handleDashboard = () => {
-    setIsDahsboardOpen(!isDahsboardOpen);
+    setIsOpenDashboard(true);
+    //close menu only in mobile
+    if (window.innerWidth < 768) {
+      setIsMenuOpen(false);
+    }
   };
 
   return (
@@ -52,7 +60,7 @@ export default function Menu() {
           className={` ${isMenuOpen ? 'flex h-screen flex-col justify-between md:h-auto md:flex-1 md:flex-row' : 'hidden'}`}
         >
           <div className='flex flex-col gap-7 md:flex-row'>
-            <div onClick={handleDashboard}>
+            <div onClick={handleDashboard} className='cursor-'>
               <img src={iconDashboard} alt='' className='h-6 md:h-7' />
             </div>
 
