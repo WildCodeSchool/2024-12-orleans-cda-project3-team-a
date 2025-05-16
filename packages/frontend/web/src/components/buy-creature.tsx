@@ -32,7 +32,7 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
 
     try {
       const response = await fetch(
-        `${API_URL}/game/buyCreature?creatureId=${creatureId}`,
+        `${API_URL}/game/buy-creature?creatureId=${creatureId}`,
         {
           method: 'POST',
           headers: {
@@ -45,7 +45,8 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
           credentials: 'include',
         },
       );
-      const result = await response.json();
+      // on refetch plus tard
+      // const result = await response.json();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);

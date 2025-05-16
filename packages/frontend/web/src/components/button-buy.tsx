@@ -6,7 +6,7 @@ type ButtonBuyProps = PropsWithChildren<{
     | 'bg-white/75';
   readonly border?: 'border border-black';
   readonly cursor: 'pointer' | 'not-allowed';
-  readonly onClick: () => void;
+  readonly onClick?: () => void;
 }>;
 
 export default function ButtonBuy({

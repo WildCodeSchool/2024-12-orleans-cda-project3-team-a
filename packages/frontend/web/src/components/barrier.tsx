@@ -100,8 +100,6 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
             onClick={buyBarrier}
           >
             <ButtonBuy
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              onClick={() => {}}
               bg='bg-white/75'
               cursor={!hasEnoughMoons ? 'not-allowed' : 'pointer'}
             >
