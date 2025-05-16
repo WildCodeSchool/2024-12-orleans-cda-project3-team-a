@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ButtonBlue from '@/components/button-blue';
-import InputBlue from '@/components/input-blue';
+import Input from '@/components/input';
 import { useAuth } from '@/contexts/auth-context';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -61,7 +61,9 @@ export default function Login() {
       <h2 className='text-secondary-blue pl-4 text-xl font-extrabold tracking-[0.6em] md:text-2xl'>
         {'LOG IN'}
       </h2>
-      <InputBlue
+      <Input
+        bgColor='bg-primary-blue'
+        borderColor='border-secondary-blue'
         type='email'
         placeholder='Email'
         value={email}
@@ -70,7 +72,9 @@ export default function Login() {
         }}
       />
 
-      <InputBlue
+      <Input
+        bgColor='bg-primary-blue'
+        borderColor='border-secondary-blue'
         type='password'
         placeholder='Password'
         value={password}

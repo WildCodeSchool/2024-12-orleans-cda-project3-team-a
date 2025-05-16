@@ -8,7 +8,7 @@ import useEnclosures from '@/hooks/use-enclos';
 import Moon from '../assets/images/icons-buttons/moon.png';
 import Background from './bg-menu';
 import ButtonBuy from './button-buy';
-import InputBlue from './input-blue';
+import Input from './input';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -57,7 +57,9 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
       <div className='w-120 rounded-lg border-1'>
         <h1 className='p-2'>{'Buy a new Centaure'}</h1>
         <div className='bottom-5 flex items-center gap-5 p-2'>
-          <InputBlue
+          <Input
+            bgColor='bg-white'
+            borderColor='border-gray'
             type='text'
             placeholder='Name'
             value={name}
