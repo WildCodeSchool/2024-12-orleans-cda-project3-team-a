@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useOpenWindowInMenuContext } from '@/contexts/open-window-in-menu';
@@ -12,9 +11,6 @@ import iconShop from '../assets/images/icons-buttons/shop.png';
 import Logout from './logout';
 
 export default function Menu() {
-  // const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  // const [isDahsboardOpen, setIsDahsboardOpen] = useState(false);
   const { setIsOpenDashboard, setIsMenuOpen, isMenuOpen } =
     useOpenWindowInMenuContext();
 
@@ -32,7 +28,7 @@ export default function Menu() {
 
   return (
     <>
-      {/* //Ouvrir ou fermer menu selon la valeur isMenuOpen */}
+      {/* Display or not if isMenuOpen */}
       <div
         className={`flex w-8 flex-col items-center gap-5 rounded pb-2 md:h-9 md:flex-1 md:flex-row md:rounded-lg md:pr-2 md:pb-0 ${
           isMenuOpen

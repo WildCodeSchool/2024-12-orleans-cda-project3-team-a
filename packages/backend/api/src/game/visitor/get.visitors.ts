@@ -6,7 +6,6 @@ const getVisitors = Router();
 
 getVisitors.get('/', async (req: Request, res) => {
   const parkId = req.parkId;
-  // const parkId=6;
 
   if (parkId === undefined) {
     res.json({
@@ -16,7 +15,6 @@ getVisitors.get('/', async (req: Request, res) => {
     return;
   }
 
-  //faire la requete sur les visiteurs
   const visitorsCountById = await db
     .selectFrom('visitors')
     .leftJoin('park_visitors', (join) =>

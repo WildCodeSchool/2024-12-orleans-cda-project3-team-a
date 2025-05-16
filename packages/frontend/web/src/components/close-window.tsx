@@ -3,14 +3,12 @@ import { useOpenWindowInMenuContext } from '@/contexts/open-window-in-menu';
 import close from '../assets/images/icons-buttons/close.png';
 
 export default function CloseWindow() {
-  // const [isOpen, setIsOpen] = useState(true);
-  const { setIsOpenDashboard, isOpenDashboard } = useOpenWindowInMenuContext();
+  const { setIsOpenDashboard } = useOpenWindowInMenuContext();
 
+  //if you need to use this component, think to add in OpenWindowInMenuContext a const for your window and add it here
   const closeWindow = () => {
     setIsOpenDashboard(false);
   };
-
-  if (!isOpenDashboard) return null;
 
   return (
     <button

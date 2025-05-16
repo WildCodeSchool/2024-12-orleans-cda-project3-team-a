@@ -16,12 +16,7 @@ export default function Dashboard() {
   const { countZones, unlockedZones } = useZones();
   const { creaturesEnclos, countCreaturesIdUnlocked } = useEnclosures();
 
-  console.log(countCreaturesIdUnlocked.length);
-
-  // const total = creatureWorld.length;
-
   return (
-    // <div className='h-full bg-blue-300'>
     <BgMenu>
       <div className='h-full overflow-auto p-3 text-xs md:text-base'>
         <h1 className='font-aerokids text-outline-white mb-10 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>
@@ -117,6 +112,5 @@ export default function Dashboard() {
         </div>
       </div>
     </BgMenu>
-    // </div>
   );
 }

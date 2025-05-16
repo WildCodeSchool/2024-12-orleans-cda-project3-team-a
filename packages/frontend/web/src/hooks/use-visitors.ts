@@ -29,7 +29,6 @@ export default function useVisitors() {
             spending_time: number;
           }>;
         };
-        console.log(data);
 
         if (!data.ok) {
           throw new Error('No visitors');
@@ -43,6 +42,5 @@ export default function useVisitors() {
     }
     void fetchVisitors();
   }, []);
-  // console.log(visitors);
   return { visitors };
 }
