@@ -34,14 +34,15 @@ function getActiveCreatureCount(parkId: number, creatureId: number) {
     .execute();
 }
 
-export type GetCreatures = Awaited<ReturnType<typeof getCreatures>>;
+export type Creatures = Awaited<ReturnType<typeof getCreatures>>;
 
-export type GetActiveCreatureCount = Awaited<
+export type ActiveCreatureCount = Awaited<
   ReturnType<typeof getActiveCreatureCount>
 >;
 
 getCreaturesRoute.get('/creatures', async (req: Request, res) => {
   const parkId = req.parkId;
+  const creatureId = req.query.creature_id;
 
   if (parkId === undefined) {
     res.json({
@@ -50,11 +51,18 @@ getCreaturesRoute.get('/creatures', async (req: Request, res) => {
     return;
   }
 
-  const creatureId = 6;
+  if (typeof creatureId !== 'string') {
+    res.json({
+      ok: false,
+      message: 'creatureId missing',
+    });
+    return;
+  }
 
-  const creatures = await getCreatures(parkId, creatureId);
-
-  const activeCreatures = await getActiveCreatureCount(parkId, creatureId);
+  const [creatures, activeCreatures] = await Promise.all([
+    getCreatures(parkId, parseInt(creatureId)),
+    getActiveCreatureCount(parkId, parseInt(creatureId)),
+  ]);
 
   res.json({
     parkId,

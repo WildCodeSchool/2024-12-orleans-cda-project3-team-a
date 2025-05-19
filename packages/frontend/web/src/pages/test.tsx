@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Barrier from '@/components/barrier';
 import CloseWindow from '@/components/close-window';
 import CreatureLine from '@/components/creature-line';
-import InputBlue from '@/components/input-blue';
+import Input from '@/components/input';
 import Loader from '@/components/loader';
 import Logout from '@/components/logout';
 import NbVisitorsMoons from '@/components/nb-visitors-moons';
@@ -18,7 +18,7 @@ export default function Test() {
     <div className='grid min-w-[1600px] grid-cols-2'>
       <ReturnHome />
       <CloseWindow />
-      <InputBlue
+      <Input
         bgColor='bg-primary-blue'
         borderColor='border-secondary-blue'
         type='email'

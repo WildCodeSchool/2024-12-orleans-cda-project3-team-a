@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import ButtonBlue from '@/components/button-blue';
-import InputBlue from '@/components/input-blue';
-
-const API_URL = import.meta.env.VITE_API_URL;
+import Input from '@/components/input';
 
 export default function SignUp() {
   const [email, setEmail] = useState('');
@@ -17,7 +15,7 @@ export default function SignUp() {
     return <Navigate to='/' />;
   }
   const signUp = async () => {
-    const res = await fetch(`${API_URL}/auth/register`, {
+    const res = await fetch(`/api/auth/register`, {
       method: 'POST',
       body: JSON.stringify({
         email,
@@ -51,7 +49,9 @@ export default function SignUp() {
       <h2 className='text-secondary-blue pl-4 text-xl font-extrabold tracking-[0.6em] md:text-2xl'>
         {'SIGN UP'}
       </h2>
-      <InputBlue
+      <Input
+        bgColor='bg-primary-blue'
+        borderColor='border-secondary-blue'
         type='email'
         placeholder='Email'
         value={email}
@@ -60,7 +60,9 @@ export default function SignUp() {
         }}
       />
 
-      <InputBlue
+      <Input
+        bgColor='bg-primary-blue'
+        borderColor='border-secondary-blue'
         type='text'
         placeholder='Pseudo'
         value={username}
@@ -69,7 +71,9 @@ export default function SignUp() {
         }}
       />
 
-      <InputBlue
+      <Input
+        bgColor='bg-primary-blue'
+        borderColor='border-secondary-blue'
         type='password'
         placeholder='Password'
         value={password}
@@ -78,7 +82,9 @@ export default function SignUp() {
         }}
       />
 
-      <InputBlue
+      <Input
+        bgColor='bg-primary-blue'
+        borderColor='border-secondary-blue'
         type='password'
         placeholder='Confirm password'
         value={confirmPassword}

@@ -3,7 +3,7 @@ import express from 'express';
 import parkIdMiddleware from '@/middlewares/park-id.middleware';
 
 import barrierRouter from './barrier';
-import getCreaturesRoute from './get.creatures-route';
+import getCreaturesRoute from './get.creatures';
 import getDecorations from './get.decorations';
 import getEnclosures from './get.enclosures';
 import getParkUser from './get.park-user';

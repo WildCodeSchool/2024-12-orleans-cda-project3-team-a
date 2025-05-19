@@ -2,8 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 
 import type { Barrier } from '@app/api';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 export default function useFetchBarriers() {
   const [barriers, setBarriers] = useState<Barrier[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -14,12 +12,9 @@ export default function useFetchBarriers() {
   const fetchBarriers = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(
-        `${API_URL}/game/barriers?zoneId=${zoneId}`,
-        {
-          credentials: 'include',
-        },
-      );
+      const response = await fetch(`/api/game/barriers?zoneId=${zoneId}`, {
+        credentials: 'include',
+      });
       const data = await response.json();
       setBarriers(data.barriers);
     } catch (error) {
