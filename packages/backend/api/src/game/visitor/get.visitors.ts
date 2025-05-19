@@ -15,6 +15,7 @@ getVisitors.get('/', async (req: Request, res) => {
     return;
   }
 
+  // to have the number of each visitor (id 1,2 ,3, 4)
   const visitorsCountById = await db
     .selectFrom('visitors')
     .leftJoin('park_visitors', (join) =>
@@ -37,11 +38,12 @@ getVisitors.get('/', async (req: Request, res) => {
     ])
     .execute();
 
-  if (!visitorsCountById) {
+  if (visitorsCountById.length === 0) {
     res.json({
       ok: false,
       message: 'no visitors finded',
     });
+    return;
   }
 
   res.json({

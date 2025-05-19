@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { useGameInfoContext } from '@/contexts/game-info-context';
 import useEnclosures from '@/hooks/use-enclos';
 import useVisitors from '@/hooks/use-visitors';
@@ -58,11 +56,11 @@ export default function Dashboard() {
             </h2>
             <div className='grid min-h-30 grid-cols-2 items-center gap-2 rounded border-1 border-gray-500 bg-white/60 p-2 md:rounded-md'>
               {visitors.map((visitor) => (
-                <ul
+                <li
                   key={visitor.visitor_id}
                   className='flex list-none justify-center'
                 >
-                  <li className='flex items-center gap-1 md:gap-3'>
+                  <ul className='flex items-center gap-1 md:gap-3'>
                     <p>{visitor.visitor_count} </p>
                     <img
                       src={`/images/creatures/${visitor.src_image}`}
@@ -71,11 +69,11 @@ export default function Dashboard() {
                     />
                     <p className='flex items-center'>
                       {visitor.spending}{' '}
-                      <img src={moon} alt='money' className='h-3 px-1 md:h-4' />{' '}
+                      <img src={moon} alt='money' className='h-3 px-1 md:h-4' />
                       {'/'} {visitor.spending_time} {'min'}
                     </p>
-                  </li>
-                </ul>
+                  </ul>
+                </li>
               ))}
             </div>
           </div>

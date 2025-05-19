@@ -1,4 +1,3 @@
-import { count } from 'console';
 import express from 'express';
 import type { Request } from 'express';
 
