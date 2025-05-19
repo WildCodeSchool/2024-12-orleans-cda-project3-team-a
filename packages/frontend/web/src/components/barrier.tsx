@@ -28,7 +28,7 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
     if (!hasEnoughMoons) return;
 
     try {
-      const response = await fetch(`api/game/barriers`, {
+      const response = await fetch(`/api/game/barriers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

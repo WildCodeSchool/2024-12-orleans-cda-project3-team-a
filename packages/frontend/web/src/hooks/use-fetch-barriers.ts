@@ -2,8 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 
 import type { Barrier } from '@app/api';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 export default function useFetchBarriers() {
   const [barriers, setBarriers] = useState<Barrier[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);

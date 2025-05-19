@@ -2,8 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useNumberFormatter } from './use-number-formatter';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 export default function usePark() {
   const [wallet, setWallet] = useState(0);
   const [visitorsCount, setVisitorsCount] = useState(0);
