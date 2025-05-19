@@ -1,5 +1,4 @@
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
 import express from 'express';
 
 import { env } from '@app/shared';
@@ -16,13 +15,7 @@ const COOKIE_SECRET = process.env.COOKIE_SECRET ?? 'secret';
 
 app.use(cookieParser(COOKIE_SECRET));
 app.use(express.json());
-app.use(
-  cors({
-    //Error Cors
-    // origin: `http://${process.env.FRONTEND_HOST}`,
-    // credentials: true,
-  }),
-);
+app.use();
 
 app.use('/api', router);
 
