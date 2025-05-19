@@ -10,7 +10,7 @@ export default function useDecorations() {
   useEffect(() => {
     async function fetchCreatures() {
       try {
-        const response = await fetch(`${API_URL}/game/decorations`, {
+        const response = await fetch(`/api/game/decorations`, {
           credentials: 'include',
         });
         const data = await response.json();

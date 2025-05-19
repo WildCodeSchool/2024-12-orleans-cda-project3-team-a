@@ -19,8 +19,8 @@ app.use(express.json());
 app.use(
   cors({
     //Error Cors
-    origin: `http://${process.env.FRONTEND_HOST}:${process.env.FRONTEND_PORT}`,
-    credentials: true,
+    // origin: `http://${process.env.FRONTEND_HOST}`,
+    // credentials: true,
   }),
 );
 

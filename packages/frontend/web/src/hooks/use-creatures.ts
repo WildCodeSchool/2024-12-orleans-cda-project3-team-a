@@ -16,7 +16,7 @@ export default function useCreatures() {
     async function fetchCreatures() {
       try {
         const response = await fetch(
-          `${API_URL}/game/creatures?creature_id=${creatureId}`,
+          `/api/game/creatures?creature_id=${creatureId}`,
           {
             credentials: 'include',
           },
