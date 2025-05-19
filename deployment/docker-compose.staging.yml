@@ -30,7 +30,7 @@ services:
     restart: always
     ports:
       - ${GATEWAY_PORT}:80
-    volumes: 
+    volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - web-client-build:/web-client-build
   api:
