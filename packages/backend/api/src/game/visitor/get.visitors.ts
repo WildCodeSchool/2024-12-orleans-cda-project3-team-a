@@ -41,7 +41,7 @@ getVisitors.get('/', async (req: Request, res) => {
   if (visitorsCountById.length === 0) {
     res.json({
       ok: false,
-      message: 'no visitors finded',
+      message: 'no visitors found',
     });
     return;
   }

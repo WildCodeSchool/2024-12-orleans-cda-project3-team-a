@@ -1,4 +1,4 @@
-import { useOpenWindowInMenuContext } from '@/contexts/open-window-in-menu';
+import { useOpenWindowInMenuContext } from '@/contexts/open-window-in-menu-context';
 
 import close from '../assets/images/icons-buttons/close.png';
 
