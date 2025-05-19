@@ -15,7 +15,6 @@ const COOKIE_SECRET = process.env.COOKIE_SECRET ?? 'secret';
 
 app.use(cookieParser(COOKIE_SECRET));
 app.use(express.json());
-app.use();
 
 app.use('/api', router);
 
