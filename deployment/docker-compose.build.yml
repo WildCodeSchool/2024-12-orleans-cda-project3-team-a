@@ -5,7 +5,7 @@ services:
     build:
       dockerfile: ./packages/backend/api/Dockerfile
       context: ../
-  migration:
+  migrations:
     build:
       dockerfile: ./packages/backend/migrations/Dockerfile
       context: ../
