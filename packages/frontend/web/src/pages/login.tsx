@@ -15,7 +15,7 @@ export default function Login() {
 
   const login = async () => {
     //get the response to know if user and password ok
-    const res = await fetch(`${API_URL}/auth/login`, {
+    const res = await fetch(`/api/auth/login`, {
       method: 'POST',
       body: JSON.stringify({
         email,

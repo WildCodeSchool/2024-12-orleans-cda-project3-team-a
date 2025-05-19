@@ -5,7 +5,7 @@ import { defineConfig, loadEnv } from 'vite';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  const { FRONTEND_HOST, FRONTEND_PORT } = loadEnv(mode, process.cwd(), '');
+  const { FRONTEND_PORT } = loadEnv(mode, process.cwd(), '');
 
   return {
     plugins: [tailwindcss(), react()],
@@ -15,8 +15,9 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
-      host: FRONTEND_HOST,
+      host: '0.0.0.0',
       port: +FRONTEND_PORT,
+      allowedHosts: ['host.docker.internal'],
     },
     build: {
       sourcemap: true,
