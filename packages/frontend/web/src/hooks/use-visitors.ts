@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 export default function useVisitors() {
   const [visitors, setVisitors] = useState<
     Array<{
@@ -16,7 +14,7 @@ export default function useVisitors() {
   useEffect(() => {
     async function fetchVisitors() {
       try {
-        const resp = await fetch(`${API_URL}/game/visitors`, {
+        const resp = await fetch(`/api/game/visitors`, {
           credentials: 'include',
         });
         const data = (await resp.json()) as {
