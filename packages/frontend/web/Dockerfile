@@ -1,5 +1,7 @@
 FROM node:22.14.0-alpine3.21 AS build
 
+ENV NODE_ENV=production
+
 WORKDIR /app
 
 COPY package*.json /app
@@ -10,7 +12,9 @@ RUN npm ci --ignore-scripts
 
 RUN npm run build:frontend:web
 
-FROM scratch
+FROM node:22.14.0-alpine3.21 AS app
+
+ENV NODE_ENV=production
 
 WORKDIR /app
 
