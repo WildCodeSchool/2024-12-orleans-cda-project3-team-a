@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 
-import CloseWindow from '@/components/close-window';
 import Dashboard from '@/components/dashboard';
 import Menu from '@/components/menu';
 import NbVisitorsMoons from '@/components/nb-visitors-moons';
