@@ -11,8 +11,6 @@ import directionUp from '../assets/images/deco/direction-up.png';
 import moon from '../assets/images/icons-buttons/moon.png';
 import ButtonBuy from './button-buy';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 type BarrierProps = {
   readonly barrier: Barrier;
   readonly refetch: () => Promise<void>;

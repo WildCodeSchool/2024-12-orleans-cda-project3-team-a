@@ -7,8 +7,6 @@ import { useGameInfoContext } from '@/contexts/game-info-context';
 import ButtonBlue from './button-blue';
 import Input from './input';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 export default function CreatePark() {
   const [parkName, setParkName] = useState('');
 
@@ -22,7 +20,7 @@ export default function CreatePark() {
   }
 
   const createPark = async () => {
-    const res = await fetch(`${API_URL}/game/park`, {
+    const res = await fetch(`/api/game/park`, {
       method: 'POST',
       body: JSON.stringify({
         parkName,
