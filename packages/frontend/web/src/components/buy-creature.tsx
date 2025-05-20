@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import type { Enclosure } from '@app/api';
 
@@ -18,13 +19,18 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
   const [name, setName] = useState('');
   const { wallet } = useGameInfoContext();
   const { creaturesEnclos } = useEnclosures();
+  const { zone_id: zoneId } = useParams();
+
   const creaturesEnclosId = creaturesEnclos.find(
     (creature: Enclosure) => creature.id === creatureId,
   );
+
   if (!creaturesEnclosId) {
     return;
   }
+
   const hasEnoughMoons = wallet > creaturesEnclosId.price;
+
   const buyCreature = async () => {
     if (!hasEnoughMoons) return;
 
@@ -39,10 +45,12 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
           body: JSON.stringify({
             name,
             creatureId,
+            zoneId,
           }),
           credentials: 'include',
         },
       );
+
       // on refetch plus tard
       // const result = await response.json();
     } catch (error) {

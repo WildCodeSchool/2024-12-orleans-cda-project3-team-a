@@ -15,7 +15,7 @@ export default function Test() {
   const { barriers, isLoading, refetch } = useFetchBarriers();
   const [email, setEmail] = useState('');
 
-  const creatureId = 5;
+  const creatureId = 3;
 
   return (
     <div className='grid min-w-[1600px] grid-cols-2'>

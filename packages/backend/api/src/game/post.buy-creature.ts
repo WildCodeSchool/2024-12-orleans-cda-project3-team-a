@@ -7,8 +7,12 @@ const postBuyCreature = Router();
 
 postBuyCreature.post('/buy-creature', async (req: Request, res) => {
   const parkId = req.parkId;
-  const name = req.body.name;
   const creatureId = req.query.creatureId;
+
+  // const parkId=30;
+
+  const name = req.body.name;
+  const zoneId = req.body.zoneId;
 
   if (parkId === undefined) {
     res.json({
@@ -20,6 +24,7 @@ postBuyCreature.post('/buy-creature', async (req: Request, res) => {
   if (name === undefined) {
     res.json({
       ok: false,
+      message: 'name is undefined to buy creature',
     });
     return;
   }
@@ -27,7 +32,8 @@ postBuyCreature.post('/buy-creature', async (req: Request, res) => {
   if (typeof creatureId !== 'string') {
     res.json({
       ok: false,
-      message: 'creatureId missing',
+      message: 'creatureId is not a string',
+      creatureId,
     });
     return;
   }
@@ -36,12 +42,15 @@ postBuyCreature.post('/buy-creature', async (req: Request, res) => {
     .selectFrom('creatures')
     .select(['id', 'price', 'feed_timer'])
     .where('id', '=', parseInt(creatureId))
+    .where('zone_id', '=', zoneId)
     .executeTakeFirst();
 
   if (!creature) {
     res.json({
       ok: false,
-      message: 'no creature find',
+      message: 'no creature find in the zone chosen',
+      creatureId,
+      zoneId,
     });
     return;
   }
