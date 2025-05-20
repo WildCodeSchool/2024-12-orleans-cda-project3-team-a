@@ -21,8 +21,8 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
-  # prepare buildx for docker
+
+      # prepare buildx for docker
       - uses: docker/setup-buildx-action@v1
         name: Set up Docker Buildx
 
@@ -51,7 +51,6 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_MIGRATIONS_IMAGE_NAME_STAGING }}:latest
 
-    
       # build an push the newly created image
       - uses: docker/build-push-action@v2
         name: Build and push
