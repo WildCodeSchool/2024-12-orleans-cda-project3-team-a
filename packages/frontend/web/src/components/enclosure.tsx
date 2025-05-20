@@ -5,6 +5,7 @@ import type { Enclosure } from '@app/api';
 
 import alert from '../assets/images/icons-buttons/alert.png';
 import ButtonBuy from './button-buy';
+import FeedModale from './feed-modale';
 
 type EnclosureProps = {
   readonly decorations: Decorations;
@@ -17,7 +18,7 @@ export default function Enclosure({
   totalCreaturesInZone,
   enclosures,
 }: EnclosureProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [isHungry, setIsHungry] = useState(false);
   const isLocked = enclosures.quantityCreature === 0;
 
@@ -85,14 +86,19 @@ export default function Enclosure({
       : () => '';
 
   //a utiliser quand la modale sera prete
-  const handleModale = () => {
-    setIsModalOpen(!isModalOpen);
+  const handleOpen = () => {
+    setIsOpen(true);
   };
 
+  const handleClose = () => {
+    setIsOpen(false);
+  };
   return (
     <div
-      className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackgound(enclosures.background)} `}
+      onClick={handleOpen}
+      className={`relative flex h-[50vh] cursor-pointer ${sizeEnclos} flex-col justify-center p-4 ${getBackgound(enclosures.background)} `}
     >
+      {isOpen ? <FeedModale onClick={handleClose} /> : null}
       {decorations.map((decoration) => (
         <img
           key={decoration.creature_id}
@@ -101,10 +107,7 @@ export default function Enclosure({
           alt=''
         />
       ))}
-      <div
-        onClick={handleModale}
-        className='relative flex flex-col items-center justify-center gap-2'
-      >
+      <div className='relative flex flex-col items-center justify-center gap-2'>
         <img
           className={`absolute top-1 w-10 ${isFour ? 'left-115' : 'left-80'} `}
           src={isLocked ? '' : isHungry ? alert : ''}

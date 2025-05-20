@@ -31,7 +31,7 @@ export default function CreatureLine() {
 
   return (
     <div>
-      <div className='flex flex-col gap-4'>
+      <div className='grid grid-cols-2 gap-4'>
         {creatures.map((creatureData) => {
           const feedDate = new Date(creatureData.feed_date);
           const timeRemainingText = formatRemainingTime(feedDate);
