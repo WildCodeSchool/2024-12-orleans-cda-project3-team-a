@@ -61,6 +61,10 @@ const router = createBrowserRouter([
             element: <WorldEnclosure />,
           },
           {
+            path: '/test',
+            element: <Test />,
+          },
+          {
             path: 'dashboard',
             element: <Dashboard />,
           },
@@ -69,10 +73,6 @@ const router = createBrowserRouter([
     ],
   },
   //A supprimer plus tard!
-  {
-    path: '/test',
-    element: <Test />,
-  },
   {
     path: '/*',
     element: <Page404 />,

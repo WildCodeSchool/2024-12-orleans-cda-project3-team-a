@@ -18,7 +18,9 @@ postLoginRouter.post('/login', async (req, res) => {
   //get info in BDD for user, check if user or password are correct
   const user = await db
     .selectFrom('users')
-    .selectAll()
+    .leftJoin('parks', 'parks.user_id', 'users.id')
+    .selectAll('users')
+    .select(['parks.id as parkId'])
     .where('users.email', '=', email)
     .executeTakeFirst();
 
@@ -82,6 +84,7 @@ postLoginRouter.post('/login', async (req, res) => {
   res.json({
     message: 'User logged in!',
     ok: true,
+    user,
   });
 });
 
