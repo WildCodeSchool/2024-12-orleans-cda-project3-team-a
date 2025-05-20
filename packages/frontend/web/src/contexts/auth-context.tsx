@@ -20,8 +20,6 @@ const authProviderContext = createContext<AuthProviderState | undefined>(
   undefined,
 );
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 export default function AuthContext({ children, ...props }: AuthProviderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
