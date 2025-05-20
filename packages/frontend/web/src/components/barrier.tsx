@@ -11,8 +11,6 @@ import directionUp from '../assets/images/deco/direction-up.png';
 import moon from '../assets/images/icons-buttons/moon.png';
 import ButtonBuy from './button-buy';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 type BarrierProps = {
   readonly barrier: Barrier;
   readonly refetch: () => Promise<void>;
@@ -28,7 +26,7 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
     if (!hasEnoughMoons) return;
 
     try {
-      const response = await fetch(`${API_URL}/game/barriers`, {
+      const response = await fetch(`/api/game/barriers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

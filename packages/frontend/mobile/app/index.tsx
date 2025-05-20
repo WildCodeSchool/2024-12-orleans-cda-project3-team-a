@@ -3,8 +3,6 @@ import { Text, View } from 'react-native';
 
 import type { SomeInterface } from '@app/shared';
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL;
-
 export default function Index() {
   const [someData, setSomeData] = useState<SomeInterface>({
     someProperty: 'someValue',
@@ -14,7 +12,7 @@ export default function Index() {
     const abortController = new AbortController();
 
     (async () => {
-      const response = await fetch(`${API_URL}/api/demo`, {
+      const response = await fetch(`/api/demo`, {
         signal: abortController.signal,
       });
       const data = await response.json();

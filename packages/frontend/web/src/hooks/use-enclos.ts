@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 
 import type { Enclosure } from '@app/api';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 export default function useEnclosures() {
   const [creaturesEnclos, setCreaturesEnclos] = useState<Enclosure[]>([]);
   const [countCreaturesIdUnlocked, setCountCreaturesIdUnlocked] = useState<[]>(
@@ -13,7 +11,7 @@ export default function useEnclosures() {
   useEffect(() => {
     async function fetchCreatures() {
       try {
-        const response = await fetch(`${API_URL}/game/enclos`, {
+        const response = await fetch(`/api/game/enclos`, {
           credentials: 'include',
         });
         const data = await response.json();

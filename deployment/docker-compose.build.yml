@@ -1,0 +1,16 @@
+name: '2024-12-orleans-cda-project3-dev'
+
+services:
+  api:
+    build:
+      dockerfile: ./packages/backend/api/Dockerfile
+      context: ../
+  migrations:
+    build:
+      dockerfile: ./packages/backend/migrations/Dockerfile
+      context: ../
+
+  web:
+    build:
+      dockerfile: ./packages/frontend/web/Dockerfile
+      context: ../

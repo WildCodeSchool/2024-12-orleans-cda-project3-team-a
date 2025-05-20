@@ -4,8 +4,6 @@ import { Navigate } from 'react-router-dom';
 import ButtonBlue from '@/components/button-blue';
 import Input from '@/components/input';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,7 +15,7 @@ export default function SignUp() {
     return <Navigate to='/' />;
   }
   const signUp = async () => {
-    const res = await fetch(`${API_URL}/auth/register`, {
+    const res = await fetch(`/api/auth/register`, {
       method: 'POST',
       body: JSON.stringify({
         email,
