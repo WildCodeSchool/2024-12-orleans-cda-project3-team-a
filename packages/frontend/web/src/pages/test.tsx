@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import Barrier from '@/components/barrier';
+import BuyCreature from '@/components/buy-creature';
 import CloseWindow from '@/components/close-window';
 import CreatureLine from '@/components/creature-line';
 import Input from '@/components/input';
@@ -14,8 +15,11 @@ export default function Test() {
   const { barriers, isLoading, refetch } = useFetchBarriers();
   const [email, setEmail] = useState('');
 
+  const creatureId = 5;
+
   return (
     <div className='grid min-w-[1600px] grid-cols-2'>
+      <BuyCreature creatureId={creatureId} />
       <ReturnHome />
       <CloseWindow />
       <Input
