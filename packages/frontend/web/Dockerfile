@@ -10,7 +10,7 @@ RUN npm ci --ignore-scripts
 
 RUN npm run build:frontend:web
 
-FROM scratch
+FROM node:22.14.0-alpine3.21 AS app
 
 WORKDIR /app
 
