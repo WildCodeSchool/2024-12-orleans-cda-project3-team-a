@@ -5,8 +5,6 @@ import ButtonBlue from '@/components/button-blue';
 import Input from '@/components/input';
 import { useAuth } from '@/contexts/auth-context';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 export default function Login() {
   const auth = useAuth();
   const [email, setEmail] = useState('');
