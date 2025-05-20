@@ -52,7 +52,7 @@ export interface ParkBarriers {
 export interface ParkCreatures {
   adult_at: Date;
   creature_id: number;
-  feed_date: Date;
+  feed_date: Date | null;
   gender: "female" | "male";
   id: Generated<number>;
   is_active: Generated<number | null>;
