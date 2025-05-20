@@ -10,8 +10,6 @@ import Background from './bg-menu';
 import ButtonBuy from './button-buy';
 import Input from './input';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 type BuyCreatureProps = {
   readonly creatureId: number;
 };
@@ -32,7 +30,7 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
 
     try {
       const response = await fetch(
-        `${API_URL}/game/buy-creature?creatureId=${creatureId}`,
+        `/api/game/buy-creature?creatureId=${creatureId}`,
         {
           method: 'POST',
           headers: {
