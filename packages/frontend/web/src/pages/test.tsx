@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import Barrier from '@/components/barrier';
+import BuyCreature from '@/components/buy-creature';
 import CloseWindow from '@/components/close-window';
 import CreatureLine from '@/components/creature-line';
 import FeedModale from '@/components/feed-modale';

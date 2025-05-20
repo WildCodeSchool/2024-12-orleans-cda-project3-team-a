@@ -6,6 +6,7 @@ type ButtonBuyProps = PropsWithChildren<{
     | 'bg-white/75';
   readonly border?: 'border border-black';
   readonly cursor: 'pointer' | 'not-allowed';
+  readonly onClick?: () => void;
 }>;
 
 export default function ButtonBuy({
@@ -13,10 +14,12 @@ export default function ButtonBuy({
   bg,
   border,
   cursor,
+  onClick,
 }: ButtonBuyProps) {
   return (
     <button
       type='button'
+      onClick={onClick}
       className={`items-center justify-center rounded-md ${border} ${bg} px-2 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none`}
       style={{ cursor: cursor }}
     >
