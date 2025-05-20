@@ -8,7 +8,7 @@ const postFeedCreature = Router();
 
 postFeedCreature.post('/', async (req: Request, res) => {
   const parkId = req.parkId;
-  const { creatureId, zoneId, feed_timer } = req.body;
+  const { creatureId, zoneId, feedTimer } = req.body;
   // const zoneId = req.body.zoneId;
 
   if (parkId === undefined) {
@@ -44,6 +44,7 @@ postFeedCreature.post('/', async (req: Request, res) => {
   if (!potionPrice) {
     res.json({
       ok: false,
+      message: 'Potion price is null',
     });
     return;
   }
@@ -58,10 +59,10 @@ postFeedCreature.post('/', async (req: Request, res) => {
   const updateWallet = await db
     .updateTable('parks')
     .set((eb) => ({
-      wallet: eb('wallet', '-', potionPrice),
+      wallet: eb('wallet', '-', potionPrice.price),
     }))
     .where('id', '=', parkId)
-    .where('wallet', '>=', potionPrice)
+    .where('wallet', '>=', potionPrice.price)
     .executeTakeFirst();
 
   //if not enough money, update row = 0 so return to not add barrier in bdd
@@ -85,4 +86,4 @@ postFeedCreature.post('/', async (req: Request, res) => {
   });
 });
 
-export default postBarrier;
+export default postFeedCreature;
