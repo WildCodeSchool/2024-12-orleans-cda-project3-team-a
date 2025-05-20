@@ -20,8 +20,6 @@ const authProviderContext = createContext<AuthProviderState | undefined>(
   undefined,
 );
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 export default function AuthContext({ children, ...props }: AuthProviderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +28,7 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
   useEffect(() => {
     //fetch to know if we are logged in
     const fetchAuth = async () => {
-      const res = await fetch(`${API_URL}/auth/me`, {
+      const res = await fetch(`/api/auth/me`, {
         credentials: 'include',
       });
       const data = (await res.json()) as {
@@ -47,7 +45,7 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
 
     //fetch to know if we have already a park id or not yet
     const fetchParkId = async () => {
-      const res = await fetch(`${API_URL}/game/park`, {
+      const res = await fetch(`/api/game/park`, {
         credentials: 'include',
       });
 
