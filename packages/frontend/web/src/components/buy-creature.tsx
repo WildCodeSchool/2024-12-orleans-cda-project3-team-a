@@ -3,45 +3,50 @@ import { useState } from 'react';
 import type { Enclosure } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import { useNumberFormatter } from '@/hooks/use-number-formatter';
+import useEnclosures from '@/hooks/use-enclos';
 
 import Moon from '../assets/images/icons-buttons/moon.png';
 import Background from './bg-menu';
 import ButtonBuy from './button-buy';
-import InputBlue from './input-blue';
+import Input from './input';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-type BuyCreature = {
-  readonly enclosures: Enclosure;
+type BuyCreatureProps = {
+  readonly creatureId: number;
 };
 
-export default function BuyCreature() {
+export default function BuyCreature({ creatureId }: BuyCreatureProps) {
   const [name, setName] = useState('');
   const { wallet } = useGameInfoContext();
-  const hasEnoughMoons = wallet > creature.price;
-  const priceFormatted = useNumberFormatter(creature.price);
-
+  const { creaturesEnclos } = useEnclosures();
+  const creaturesEnclosId = creaturesEnclos.find(
+    (creature: Enclosure) => creature.id === creatureId,
+  );
+  if (!creaturesEnclosId) {
+    return;
+  }
+  const hasEnoughMoons = wallet > creaturesEnclosId.price;
   const buyCreature = async () => {
-    //Buy only if we have enough money
     if (!hasEnoughMoons) return;
 
     try {
-      const response = await fetch(`${API_URL}/game/buyCreature`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `${API_URL}/game/buy-creature?creatureId=${creatureId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name,
+            creatureId,
+          }),
+          credentials: 'include',
         },
-        body: JSON.stringify({
-          creatureId: creature.creatureId,
-        }),
-        credentials: 'include',
-      });
-      const result = await response.json();
-
-      if (result.ok === true) {
-        await refetch();
-      }
+      );
+      // on refetch plus tard
+      // const result = await response.json();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
@@ -50,10 +55,12 @@ export default function BuyCreature() {
 
   return (
     <Background>
-      <div className='w-130 rounded-lg border-1'>
+      <div className='w-120 rounded-lg border-1'>
         <h1 className='p-2'>{'Buy a new Centaure'}</h1>
-        <div className='bottom-5 flex items-center gap-10 p-2'>
-          <InputBlue
+        <div className='bottom-5 flex items-center gap-5 p-2'>
+          <Input
+            bgColor='bg-white'
+            borderColor='border-gray'
             type='text'
             placeholder='Name'
             value={name}
@@ -61,20 +68,23 @@ export default function BuyCreature() {
               setName(value);
             }}
           />
-          <h1>{enclosures.price}</h1>
-          <img className='h-7 w-7' src={Moon} alt='' />
-          <ButtonBuy
-            bg='bg-white/75'
-            border='border border-black'
-            cursor='pointer'
-          >
-            {'+'}
-            <img
-              className='w-10'
-              src='../public/images/creatures/centaur.png'
-              alt=''
-            />
-          </ButtonBuy>
+          <div className='flex items-center gap-1'>
+            <h1 className='text-xl'>{creaturesEnclosId.price}</h1>
+            <img className='h-5 w-5' src={Moon} alt='' />
+            <ButtonBuy
+              onClick={buyCreature}
+              bg='bg-white/75'
+              border='border border-black'
+              cursor='pointer'
+            >
+              <p className='text-2xl'>{'+'}</p>
+              <img
+                className='w-7 p-0.5'
+                src={`/images/creatures/${creaturesEnclosId.src_image}`}
+                alt=''
+              />
+            </ButtonBuy>
+          </div>
         </div>
       </div>
     </Background>
