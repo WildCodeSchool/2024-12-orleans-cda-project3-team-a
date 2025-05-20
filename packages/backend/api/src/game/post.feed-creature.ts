@@ -6,9 +6,9 @@ import { db } from '@app/backend-shared';
 
 const postFeedCreature = Router();
 
-postFeedCreature.post('/', async (req: Request, res) => {
+postFeedCreature.post('/feed-creature', async (req: Request, res) => {
   const parkId = req.parkId;
-  const { creatureId, zoneId, feedTimer } = req.body;
+  const { creatureId, zoneId } = req.body;
   // const zoneId = req.body.zoneId;
 
   if (parkId === undefined) {
@@ -19,20 +19,35 @@ postFeedCreature.post('/', async (req: Request, res) => {
   }
 
   // Check if the creature is active
-  const activeCreature = await db
-    .selectFrom('park_creatures')
-    .where('id', '=', creatureId)
-    .select('is_active')
-    .executeTakeFirst();
+  const creature = await db
+  .selectFrom('park_creatures')
+  .innerJoin('creatures', 'park_creatures.creature_id', 'creatures.id')
+  .select([
+    'park_creatures.is_active',
+    'park_creatures.feed_date',
+    'creatures.feed_timer',
+  ])
+  .where('park_creatures.id', '=', creatureId)
+  .executeTakeFirst();
 
-  if (!activeCreature) {
+
+  if (!creature) {
     res.json({
       ok: false,
+      message: 'active creature is null',
     });
     return;
   }
 
-  const isHungry = activeCreature?.is_active === 0;
+  // const isHungry = creature.is_active === 0;
+
+    if (typeof creature.feed_timer !== 'string') {
+    res.json({
+      ok: false,
+      message: 'format is not compatible'
+    });
+    return;
+  }
 
   // get potion price
   const potionPrice = await db
@@ -53,9 +68,9 @@ postFeedCreature.post('/', async (req: Request, res) => {
 
   //Add 3Hours to feed_date
   const newFeedDate = new Date();
-  newFeedDate.setHours(newFeedDate.getHours() + 3);
+  newFeedDate.setMinutes(newFeedDate.getMinutes() + parseInt(creature.feed_timer));
 
-  //request for soustraction price of deco
+  //request for soustraction price of potion
   const updateWallet = await db
     .updateTable('parks')
     .set((eb) => ({
@@ -65,24 +80,30 @@ postFeedCreature.post('/', async (req: Request, res) => {
     .where('wallet', '>=', potionPrice.price)
     .executeTakeFirst();
 
-  //if not enough money, update row = 0 so return to not add barrier in bdd
+  //if not enough money, update row = 0, no time will be added to feed_date
   if (updateWallet.numUpdatedRows === 0n) {
     res.json({
-      message: 'Not enough money',
       ok: false,
+      message: 'Not enough money',
     });
     return;
   }
 
   //update feed_date et is_active
   await db
-    .updateTable('park_creatures')
-    .set({ feed_date: sql`NOW() INTERVAL 110 MINUTE` })
-    .executeTakeFirst();
+  .updateTable('park_creatures')
+  .set({
+    feed_date: sql`NOW() + INTERVAL ${creature.feed_timer} MINUTE`,
+    is_active: 1,
+  })
+  .where('id', '=', creatureId) 
+  .executeTakeFirst();
 
   res.json({
     ok: true,
-    message: 'barrier added',
+    message: 'feed_date updated',
+    creature,
+    potionPrice: potionPrice.price,
   });
 });
 
