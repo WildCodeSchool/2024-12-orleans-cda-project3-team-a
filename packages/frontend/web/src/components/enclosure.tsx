@@ -94,7 +94,6 @@ export default function Enclosure({
     <div
       className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackgound(enclosures.background)} `}
     >
-      
       {decorations.map((decoration) => (
         <img
           key={decoration.creature_id}

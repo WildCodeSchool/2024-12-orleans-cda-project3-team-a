@@ -10,7 +10,7 @@ export default function useCreatures() {
 
   const creatureId = 6;
 
-  const fetchCreatures = useCallback (async () => {
+  const fetchCreatures = useCallback(async () => {
     try {
       const response = await fetch(
         `/api/game/creature?creature_id=${creatureId}`,

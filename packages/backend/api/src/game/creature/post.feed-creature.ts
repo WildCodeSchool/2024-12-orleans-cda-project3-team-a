@@ -19,15 +19,15 @@ postFeedCreature.post('/', async (req: Request, res) => {
 
   // Check if the creature is active
   const creature = await db
-  .selectFrom('park_creatures')
-  .innerJoin('creatures', 'creatures.id', 'park_creatures.creature_id')
-  .select([
-    'park_creatures.is_active',
-    'park_creatures.feed_date',
-    'creatures.feed_timer',
-  ])
-  .where('park_creatures.id', '=', parkCreatureId)
-  .executeTakeFirst();
+    .selectFrom('park_creatures')
+    .innerJoin('creatures', 'creatures.id', 'park_creatures.creature_id')
+    .select([
+      'park_creatures.is_active',
+      'park_creatures.feed_date',
+      'creatures.feed_timer',
+    ])
+    .where('park_creatures.id', '=', parkCreatureId)
+    .executeTakeFirst();
 
   if (!creature) {
     res.json({
@@ -38,11 +38,11 @@ postFeedCreature.post('/', async (req: Request, res) => {
     return;
   }
 
-    if (typeof creature.feed_timer === 'string' || creature.feed_timer === null) {
+  if (typeof creature.feed_timer === 'string' || creature.feed_timer === null) {
     res.json({
       ok: false,
       message: 'format is not compatible',
-      crature : creature.feed_timer,
+      crature: creature.feed_timer,
     });
     return;
   }
@@ -61,7 +61,7 @@ postFeedCreature.post('/', async (req: Request, res) => {
     });
     return;
   }
-  
+
   //request for soustraction price of potion
   const updateWallet = await db
     .updateTable('parks')
@@ -83,12 +83,12 @@ postFeedCreature.post('/', async (req: Request, res) => {
 
   //update feed_date et is_active
   await db
-  .updateTable('park_creatures')
-  .set({
-    feed_date: sql`NOW() + INTERVAL ${sql.lit(creature.feed_timer)} MINUTE`,
-  })
-  .where('id', '=', parkCreatureId) 
-  .executeTakeFirst();
+    .updateTable('park_creatures')
+    .set({
+      feed_date: sql`NOW() + INTERVAL ${sql.lit(creature.feed_timer)} MINUTE`,
+    })
+    .where('id', '=', parkCreatureId)
+    .executeTakeFirst();
 
   res.json({
     ok: true,
