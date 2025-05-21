@@ -4,10 +4,9 @@ import * as jose from 'jose';
 
 import { db } from '@app/backend-shared';
 
-const postLoginRouter = express.Router();
-
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
+const postLoginRouter = express.Router();
 const FRONTEND_HOST = process.env.FRONTEND_HOST ?? '';
 const secret = new TextEncoder().encode(process.env.ACCESS_TOKEN_SECRET);
 const refreshTokenSecret = new TextEncoder().encode(
