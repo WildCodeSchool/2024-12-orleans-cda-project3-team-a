@@ -11,6 +11,7 @@ export default function CloseWindow({ onClose }: FeedModaleProps) {
 
   const closeWindow = () => {
     setIsOpen(false);
+    if (onClose) onClose();
   };
 
   if (!isOpen) return null;

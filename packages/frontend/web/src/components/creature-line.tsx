@@ -51,7 +51,6 @@ export default function CreatureLine({ creatureId }: CreatureId) {
                   alt={creatureData.species}
                   className='w-15'
                 />
-                {/*ICI POUR V2 SI ON A LE TEMPS */}
                 <img
                   src={creatureData.gender === 'female' ? Female : Male}
                   alt={creatureData.gender}

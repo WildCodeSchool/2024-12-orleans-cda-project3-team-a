@@ -24,16 +24,10 @@ export default function FeedModale({ enclosure, onClose }: FeedModaleProps) {
       </div>
       <div className='fixed top-6 left-0 z-2 flex h-screen w-screen items-center justify-center'>
         <BgMenu>
-          <header className='flex flex-row-reverse'>
-            <button
-              type='button'
-              onClick={onClose}
-              className='bg-secondary-gray flex h-8 w-8 cursor-pointer items-center justify-center rounded shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none md:h-9 md:w-9 md:rounded-md'
-            >
-              <img className='w-5' src={Close} alt='' />
-            </button>
-            <CloseWindow />
-          </header>
+          <div className='flex flex-row-reverse'>
+            <CloseWindow onClose={onClose} />
+          </div>
+
           <div>
             <div className='flex gap-3 pt-2'>
               <BuyCreature creatureId={enclosure.id} />
