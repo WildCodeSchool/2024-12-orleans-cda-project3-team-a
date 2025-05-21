@@ -2,7 +2,11 @@ import { useState } from 'react';
 
 import close from '../assets/images/icons-buttons/close.png';
 
-export default function CloseWindow() {
+type FeedModaleProps = {
+  readonly onClose?: () => void;
+};
+
+export default function CloseWindow({ onClose }: FeedModaleProps) {
   const [isOpen, setIsOpen] = useState(true);
 
   const closeWindow = () => {

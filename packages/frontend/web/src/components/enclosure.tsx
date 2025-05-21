@@ -19,7 +19,6 @@ export default function Enclosure({
   enclosures,
   onClick,
 }: EnclosureProps) {
-  // const [isOpen, setIsOpen] = useState(false);
   const [isHungry, setIsHungry] = useState(false);
   const isLocked = enclosures.quantityCreature === 0;
 

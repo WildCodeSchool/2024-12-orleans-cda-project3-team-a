@@ -7,7 +7,7 @@ type BgMenuProps = PropsWithChildren;
 export default function BgMenu({ children }: BgMenuProps) {
   return (
     <div
-      className='bg-primary-gray h-150 w-90 overflow-y-scroll rounded p-4 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:h-190 md:w-380 md:rounded-md'
+      className='bg-primary-gray h-150 w-90 overflow-y-scroll rounded p-4 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:h-[90%] md:w-[94%] md:rounded-md'
       style={{ backgroundImage: `url(${BgPattern})` }}
     >
       {children}

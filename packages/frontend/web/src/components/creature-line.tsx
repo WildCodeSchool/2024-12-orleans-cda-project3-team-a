@@ -52,11 +52,11 @@ export default function CreatureLine({ creatureId }: CreatureId) {
                   className='w-15'
                 />
                 {/*ICI POUR V2 SI ON A LE TEMPS */}
-                {/* <img
+                <img
                   src={creatureData.gender === 'female' ? Female : Male}
                   alt={creatureData.gender}
-                  className='absolute right-0 bottom-1 w-5'
-                /> */}
+                  className='absolute right-0 bottom-1 w-2 md:w-5'
+                />
               </div>
 
               <div className='h-7 w-51 rounded border bg-white px-2 focus:border-2 focus:outline-none md:w-40 md:rounded-md'>

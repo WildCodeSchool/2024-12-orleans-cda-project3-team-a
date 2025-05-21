@@ -3,6 +3,7 @@ import type { Enclosure } from '@app/api';
 import Close from '../assets/images/icons-buttons/close.png';
 import BgMenu from './bg-menu';
 import BuyCreature from './buy-creature';
+import CloseWindow from './close-window';
 import CreatureLine from './creature-line';
 
 type FeedModaleProps = {
@@ -31,6 +32,7 @@ export default function FeedModale({ enclosure, onClose }: FeedModaleProps) {
             >
               <img className='w-5' src={Close} alt='' />
             </button>
+            <CloseWindow />
           </header>
           <div>
             <div className='flex gap-3 pt-2'>

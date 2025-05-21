@@ -8,8 +8,6 @@ export default function useCreatures(creatureId: number) {
     [],
   );
 
-  // const creatureId = 3;
-
   useEffect(() => {
     async function fetchCreatures() {
       try {
