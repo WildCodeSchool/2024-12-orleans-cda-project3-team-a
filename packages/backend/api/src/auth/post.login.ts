@@ -4,6 +4,8 @@ import * as jose from 'jose';
 
 import { db } from '@app/backend-shared';
 
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+
 const postLoginRouter = express.Router();
 const FRONTEND_HOST = process.env.FRONTEND_HOST ?? '';
 const secret = new TextEncoder().encode(process.env.ACCESS_TOKEN_SECRET);
@@ -57,9 +59,10 @@ postLoginRouter.post('/login', async (req, res) => {
     .sign(secret);
   res.cookie('authToken', authToken, {
     httpOnly: true,
-    // sameSite: '',
-    // secure: '',
+    sameSite: 'strict',
+    secure: IS_PRODUCTION,
     signed: true,
+    maxAge: 60 * 60 * 24 * 7 * 1000,
   });
 
   const refreshToken = await new jose.SignJWT({
@@ -77,9 +80,10 @@ postLoginRouter.post('/login', async (req, res) => {
 
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
-    // sameSite: '',
-    // secure: '',
+    sameSite: 'strict',
+    secure: IS_PRODUCTION,
     signed: true,
+    maxAge: 60 * 60 * 24 * 7 * 1000,
   });
   res.json({
     message: 'User logged in!',

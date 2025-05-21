@@ -60,3 +60,7 @@ jobs:
           file: ./packages/backend/api/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_SERVER_IMAGE_NAME_STAGING }}:latest
+      - name: Invoke deployment hook
+              uses: distributhor/workflow-webhook@v3
+              with:
+                webhook_url: ${{ secrets.WEBHOOK_URL_STAGING }}
