@@ -2,11 +2,11 @@ import { useState } from 'react';
 
 import close from '../assets/images/icons-buttons/close.png';
 
-type CloseWindow = {
+type CloseWindowProps = {
   readonly onClose?: () => void;
 };
 
-export default function CloseWindow({ onClose }: CloseWindow) {
+export default function CloseWindow({ onClose }: CloseWindowProps) {
   const [isOpen, setIsOpen] = useState(true);
 
   const closeWindow = () => {
