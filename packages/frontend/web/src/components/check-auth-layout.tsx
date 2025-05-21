@@ -2,7 +2,6 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 import { useAuth } from '@/contexts/auth-context';
 import { GameInfoContextProvider } from '@/contexts/game-info-context';
-import { OpenWindowInMenuContextProvider } from '@/contexts/open-window-in-menu-context';
 
 export default function CheckAuthLayout() {
   const auth = useAuth();
@@ -22,9 +21,7 @@ export default function CheckAuthLayout() {
   //able to display pages in router if we are logged in
   return (
     <GameInfoContextProvider>
-      <OpenWindowInMenuContextProvider>
-        <Outlet />
-      </OpenWindowInMenuContextProvider>
+      <Outlet />
     </GameInfoContextProvider>
   );
 }

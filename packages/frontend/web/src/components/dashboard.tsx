@@ -9,7 +9,11 @@ import visitor from '../assets/images/icons-buttons/visitors.png';
 import BgMenu from './bg-menu';
 import CloseWindow from './close-window';
 
-export default function Dashboard() {
+type DashboardProps = {
+  readonly closeDashboard: () => void;
+};
+
+export default function Dashboard({ closeDashboard }: DashboardProps) {
   const { parkName, walletFormated, visitorsFormated } = useGameInfoContext();
   const { visitors } = useVisitors();
   const { unlockedZones } = useZones();
@@ -32,9 +36,11 @@ export default function Dashboard() {
   return (
     <div className='relative overflow-auto'>
       <BgMenu>
+        {/* Display the button to close the window */}
         <div className='absolute top-0 right-0 m-3'>
-          <CloseWindow />
+          <CloseWindow onClick={closeDashboard} />
         </div>
+        {/* Container for display content of dashboard */}
         <div className='h-full p-3 text-xs md:text-base'>
           <h1 className='font-aerokids text-outline-white mb-10 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>
             {parkName}

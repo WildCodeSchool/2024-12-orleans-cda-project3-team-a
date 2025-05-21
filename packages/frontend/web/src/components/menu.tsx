@@ -1,6 +1,5 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import { useOpenWindowInMenuContext } from '@/contexts/open-window-in-menu-context';
 
 import iconDashboard from '../assets/images/icons-buttons/dashboard.png';
 import iconMenu from '../assets/images/icons-buttons/menu.png';
@@ -8,11 +7,12 @@ import iconProfil from '../assets/images/icons-buttons/profile.png';
 import iconRanking from '../assets/images/icons-buttons/ranking.png';
 import iconRules from '../assets/images/icons-buttons/rules.png';
 import iconShop from '../assets/images/icons-buttons/shop.png';
+import Dashboard from './dashboard';
 import Logout from './logout';
 
 export default function Menu() {
-  const { setIsOpenDashboard, setIsMenuOpen, isMenuOpen } =
-    useOpenWindowInMenuContext();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpenDashboard, setIsOpenDashboard] = useState(false);
 
   const handleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -26,6 +26,10 @@ export default function Menu() {
     }
   };
 
+  const handleCloseDashboard = () => {
+    setIsOpenDashboard(false);
+  };
+
   return (
     <>
       {/* Display or not if isMenuOpen */}
@@ -36,6 +40,7 @@ export default function Menu() {
             : ''
         }`}
       >
+        {/* button menu */}
         <button
           type='button'
           className={`items-center justify-center rounded p-1 md:p-2 md:py-0 ${
@@ -52,9 +57,11 @@ export default function Menu() {
           />
         </button>
 
+        {/* Content of menu if is open */}
         <div
           className={` ${isMenuOpen ? 'flex h-screen flex-col justify-between md:h-auto md:flex-1 md:flex-row' : 'hidden'}`}
         >
+          {/* First part of the menu content : dahsboard, shop, ranking */}
           <div className='flex flex-col gap-7 md:flex-row'>
             <div onClick={handleDashboard} className='cursor-pointer'>
               <img src={iconDashboard} alt='' className='h-6 md:h-7' />
@@ -63,6 +70,7 @@ export default function Menu() {
             <img src={iconShop} alt='' className='h-6 md:h-7' />
             <img src={iconRanking} alt='' className='h-6 md:h-7' />
           </div>
+          {/* Second part of the menu content : profil, rules, log out */}
           <div className='flex flex-col gap-7 md:flex-row'>
             <img src={iconProfil} alt='' className='h-6 md:h-7' />
             <Link to='/rules'>
@@ -72,6 +80,18 @@ export default function Menu() {
             <Logout />
           </div>
         </div>
+      </div>
+
+      {/* Display Dashboard in pop-up if is open*/}
+
+      <div
+        className={
+          isOpenDashboard
+            ? 'absolute flex max-h-screen w-[98%] justify-center pb-6 text-center md:translate-y-1/10'
+            : 'hidden'
+        }
+      >
+        <Dashboard closeDashboard={handleCloseDashboard} />
       </div>
     </>
   );
