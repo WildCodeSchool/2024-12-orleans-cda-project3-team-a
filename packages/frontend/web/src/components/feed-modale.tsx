@@ -1,6 +1,5 @@
 import type { Enclosure } from '@app/api';
 
-import Close from '../assets/images/icons-buttons/close.png';
 import BgMenu from './bg-menu';
 import BuyCreature from './buy-creature';
 import CloseWindow from './close-window';
