@@ -1,20 +1,30 @@
-import { useState } from 'react';
+import type { Enclosure } from '@app/api';
 
 import BgMenu from './bg-menu';
+import BuyCreature from './buy-creature';
 import CreatureLine from './creature-line';
 
-export default function FeedModale() {
-  const [isOpen, setIsOpen] = useState(false);
+type FeedModaleProps = {
+  readonly enclosure: Enclosure;
+  readonly onClose?: () => void;
+};
 
-  const handleModale = () => {
-    setIsOpen(false);
-  };
-
+export default function FeedModale({ enclosure, onClose }: FeedModaleProps) {
   return (
-    <button type='button' onClick={handleModale}>
+    <div className='absolute z-3'>
       <BgMenu>
-        <CreatureLine />
+        <div className='relative'>
+          <button type='button' onClick={onClose} className=''>
+            {'✕'}
+          </button>
+          <h2 className=''>{enclosure.species}</h2>
+          <div className='flex gap-3'>
+            <BuyCreature creatureId={3} />
+            <BuyCreature creatureId={4} />
+          </div>
+          <CreatureLine />
+        </div>
       </BgMenu>
-    </button>
+    </div>
   );
 }

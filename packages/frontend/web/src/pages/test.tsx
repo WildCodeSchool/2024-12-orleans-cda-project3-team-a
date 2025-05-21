@@ -13,6 +13,11 @@ import ReturnHome from '@/components/return-home';
 import useFetchBarriers from '@/hooks/use-fetch-barriers';
 
 export default function Test() {
+  const { barriers, isLoading, refetch } = useFetchBarriers();
+  const [email, setEmail] = useState('');
+
+  const creatureId = 5;
+
   // const { barriers, isLoading, refetch } = useFetchBarriers();
   // const [email, setEmail] = useState('');
   const [isOpen, setIsOpen] = useState(false);
