@@ -54,7 +54,7 @@ export default function CreatureLine() {
                 />
               </div>
 
-              <div className='h-7 w-51 rounded border px-2 focus:border-2 focus:outline-none md:w-40 md:rounded-md'>
+              <div className='h-7 w-51 rounded border bg-white px-2 focus:border-2 focus:outline-none md:w-40 md:rounded-md'>
                 {creatureData.name}
               </div>
 

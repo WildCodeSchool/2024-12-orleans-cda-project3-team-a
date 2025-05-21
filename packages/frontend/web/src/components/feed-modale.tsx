@@ -1,5 +1,6 @@
 import type { Enclosure } from '@app/api';
 
+import Close from '../assets/images/icons-buttons/close.png';
 import BgMenu from './bg-menu';
 import BuyCreature from './buy-creature';
 import CreatureLine from './creature-line';
@@ -11,20 +12,36 @@ type FeedModaleProps = {
 
 export default function FeedModale({ enclosure, onClose }: FeedModaleProps) {
   return (
-    <div className='absolute z-3'>
-      <BgMenu>
-        <div className='relative'>
-          <button type='button' onClick={onClose} className=''>
-            {'✕'}
-          </button>
-          <h2 className=''>{enclosure.species}</h2>
-          <div className='flex gap-3'>
-            <BuyCreature creatureId={3} />
-            <BuyCreature creatureId={4} />
+    <div>
+      <div className='bg-primary-gray absolute top-1 left-2 flex h-10 w-20 items-center justify-center gap-3 rounded-lg p-1 shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'>
+        <p>{enclosure.quantityCreature}</p>
+        <img
+          className='w-7'
+          src={`/images/creatures/${enclosure.src_image}`}
+          alt=''
+        />
+      </div>
+      <div className='fixed top-6 left-0 z-50 flex h-screen w-screen items-center justify-center'>
+        <BgMenu>
+          <header className='flex flex-row-reverse'>
+            <button
+              type='button'
+              onClick={onClose}
+              className='bg-secondary-gray flex h-10 w-10 cursor-pointer items-center justify-center rounded shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none md:h-9 md:w-9 md:rounded-md'
+            >
+              <img className='w-5' src={Close} alt='' />
+            </button>
+          </header>
+          <div>
+            <div className='flex gap-3 p-5'>
+              <BuyCreature creatureId={3} />
+              <BuyCreature creatureId={4} />
+              <BuyCreature creatureId={1} />
+            </div>
+            <CreatureLine />
           </div>
-          <CreatureLine />
-        </div>
-      </BgMenu>
+        </BgMenu>
+      </div>
     </div>
   );
 }
