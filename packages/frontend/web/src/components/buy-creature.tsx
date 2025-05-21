@@ -26,7 +26,6 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
   const hasEnoughMoons = wallet > creaturesEnclosId.price;
   const buyCreature = async () => {
     if (!hasEnoughMoons) return;
-    console.log(creaturesEnclosId);
     try {
       const response = await fetch(
         `/api/game/buy-creature?creatureId=${creatureId}`,

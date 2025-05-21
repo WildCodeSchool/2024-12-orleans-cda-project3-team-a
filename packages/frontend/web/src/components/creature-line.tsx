@@ -1,7 +1,4 @@
-import type { Enclosure } from '@app/api';
-
 import useCreatures from '@/hooks/use-creatures';
-import useEnclosures from '@/hooks/use-enclos';
 import { formatRemainingTime } from '@/utils/format-remaining-time';
 
 import Female from '../assets/images/icons-buttons/female.png';
