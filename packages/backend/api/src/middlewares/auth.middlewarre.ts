@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import * as jose from 'jose';
 
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 const FRONTEND_HOST = process.env.FRONTEND_HOST ?? '';
 const ACCESS_TOKEN_SRECRET = process.env.ACCESS_TOKEN_SECRET;
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
