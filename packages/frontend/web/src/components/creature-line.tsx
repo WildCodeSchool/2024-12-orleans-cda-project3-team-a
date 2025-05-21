@@ -1,9 +1,16 @@
+import type { Enclosure } from '@app/api';
+
 import useCreatures from '@/hooks/use-creatures';
+import useEnclosures from '@/hooks/use-enclos';
 import { formatRemainingTime } from '@/utils/format-remaining-time';
 
 import Female from '../assets/images/icons-buttons/female.png';
 import Male from '../assets/images/icons-buttons/male.png';
 import ButtonBuy from './button-buy';
+
+type CreatureId = {
+  readonly creatureId: number;
+};
 
 function getPotionImage(zoneId: number) {
   switch (zoneId) {
@@ -20,8 +27,8 @@ function getPotionImage(zoneId: number) {
   }
 }
 
-export default function CreatureLine() {
-  const { creatures } = useCreatures();
+export default function CreatureLine({ creatureId }: CreatureId) {
+  const { creatures } = useCreatures(creatureId);
 
   if (creatures.length === 0) {
     return (

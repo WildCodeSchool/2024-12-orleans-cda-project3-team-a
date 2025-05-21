@@ -4,8 +4,6 @@ import * as jose from 'jose';
 
 import { db } from '@app/backend-shared';
 
-const IS_PRODUCTION = process.env.NODE_ENV === 'production';
-
 const postLoginRouter = express.Router();
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';

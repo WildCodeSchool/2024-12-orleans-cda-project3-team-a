@@ -34,11 +34,11 @@ export default function FeedModale({ enclosure, onClose }: FeedModaleProps) {
           </header>
           <div>
             <div className='flex gap-3 p-5'>
-              <BuyCreature creatureId={3} />
-              <BuyCreature creatureId={4} />
-              <BuyCreature creatureId={1} />
+              <BuyCreature creatureId={enclosure.id} />
+              <BuyCreature creatureId={enclosure.id} />
+              <BuyCreature creatureId={enclosure.id} />
             </div>
-            <CreatureLine />
+            <CreatureLine creatureId={enclosure.id} />
           </div>
         </BgMenu>
       </div>
