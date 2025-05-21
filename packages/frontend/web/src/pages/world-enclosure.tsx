@@ -6,10 +6,12 @@ import EnclosureComponent from '@/components/enclosure';
 import InfoNbVisitorsMoons from '@/components/nb-visitors-moons';
 import ReturnHome from '@/components/return-home';
 import { useGameInfoContext } from '@/contexts/game-info-context';
+import useCreatures from '@/hooks/use-creatures';
 
 export default function WorldEnclosure() {
   const { creaturesEnclos, decorations } = useGameInfoContext();
   const { zone_id: zoneId } = useParams();
+  const { activeCreatures } = useCreatures();
 
   const creatureWorld = creaturesEnclos.filter(
     (creature: Enclosure) => creature.zone_id === Number(zoneId),
@@ -23,12 +25,18 @@ export default function WorldEnclosure() {
           (decoration) => decoration.creature_id === enclosure.id,
         );
 
+        const totalActive = Number(
+          activeCreatures[0]?.total_active_creatures ?? 0,
+        );
+        const isHungry = totalActive > 0;
+
         return (
           <EnclosureComponent
             key={enclosure.id}
             enclosures={enclosure}
             decorations={decorationsList}
             totalCreaturesInZone={total}
+            isHungry={isHungry}
           />
         );
       })}

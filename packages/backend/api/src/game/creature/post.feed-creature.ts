@@ -1,4 +1,3 @@
-//Request to add the barrier in his park and deduct money in his wallet
 import { type Request, Router } from 'express';
 import { sql } from 'kysely';
 

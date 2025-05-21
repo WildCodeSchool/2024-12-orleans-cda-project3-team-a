@@ -10,19 +10,19 @@ type EnclosureProps = {
   readonly decorations: Decorations;
   readonly totalCreaturesInZone: number;
   readonly enclosures: Enclosure;
+  readonly isHungry: boolean;
 };
 
 export default function Enclosure({
   decorations,
   totalCreaturesInZone,
   enclosures,
+  isHungry,
 }: EnclosureProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isHungry, setIsHungry] = useState(false);
   const isLocked = enclosures.quantityCreature === 0;
-  // const { creature } = useCreature();
 
-  const getBackgound = (background: string) => {
+  const getBackground = (background: string) => {
     switch (background) {
       case 'green':
         return 'bg-fairy-green';
@@ -92,7 +92,7 @@ export default function Enclosure({
 
   return (
     <div
-      className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackgound(enclosures.background)} `}
+      className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackground(enclosures.background)} `}
     >
       {decorations.map((decoration) => (
         <img
