@@ -18,7 +18,7 @@ export default function Menu() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleDashboard = () => {
+  const handleOpenDashboard = () => {
     setIsOpenDashboard(true);
     //close menu only in mobile
     if (window.innerWidth < 768) {
@@ -63,7 +63,7 @@ export default function Menu() {
         >
           {/* First part of the menu content : dahsboard, shop, ranking */}
           <div className='flex flex-col gap-7 md:flex-row'>
-            <div onClick={handleDashboard} className='cursor-pointer'>
+            <div onClick={handleOpenDashboard} className='cursor-pointer'>
               <img src={iconDashboard} alt='' className='h-6 md:h-7' />
             </div>
 
