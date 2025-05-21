@@ -16,6 +16,7 @@ const config = {
     format: 'es',
     sourcemap: !isProduction,
   },
+  external: ['argon2'],
   plugins: [
     // translate typescript
     typescript({
