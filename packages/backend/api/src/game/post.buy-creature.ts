@@ -72,6 +72,7 @@ postBuyCreature.post('/buy-creature', async (req: Request, res) => {
     return;
   }
 
+  //insert into park_creature the new creature
   await db
     .insertInto('park_creatures')
     .values({
@@ -81,15 +82,33 @@ postBuyCreature.post('/buy-creature', async (req: Request, res) => {
       is_parent: 0,
       is_active: 1,
       feed_date: sql`NOW() + INTERVAL ${creature.feed_timer} MINUTE`,
-      adult_at: sql`NOW() + INTERVAL 2 DAY`,
+      adult_at: sql`NOW()`,
       park_id: parkId,
       creature_id: parseInt(creatureId),
     })
     .executeTakeFirst();
 
+  //insert into park_visitor the new visitor
+  await db
+    .insertInto('park_visitors')
+    .values({
+      entry_time: sql`NOW()`,
+      exit_time: sql`NOW() + INTERVAL 2 DAY`,
+      park_id: parkId,
+      visitor_id: zoneId,
+    })
+    .executeTakeFirst();
+
+  // const visitor_add = await db
+  // .selectFrom('park_visitors')
+  // .selectAll()
+  // .orderBy('id desc')
+  // .executeTakeFirst();
+
   res.json({
     ok: true,
-    message: 'creature add',
+    message: 'creature add and visitor add',
+    // , visitor_add
   });
 });
 export default postBuyCreature;
