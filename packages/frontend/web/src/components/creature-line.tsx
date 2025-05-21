@@ -21,12 +21,6 @@ function getPotionImage(zoneId: number) {
   }
 }
 
-// function isActive(date: Date): boolean {
-//   const now = new Date();
-//   const diff = date.getTime() - now.getTime();
-//   return diff > 0;
-// }
-
 export default function CreatureLine() {
   const { creatures, refetchCreature } = useCreatures();
   const { wallet } = useGameInfoContext();
