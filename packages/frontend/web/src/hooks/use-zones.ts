@@ -5,7 +5,6 @@ import type { UnlockedZones } from '@app/api';
 export default function useZones() {
   const [unlockedZones, setUnlockedZones] = useState<UnlockedZones>([]);
   const [isLoadingZones, setIsLoadingZones] = useState(true);
-  const [countZones, setCountZones] = useState(0);
 
   const fetchZones = useCallback(async () => {
     try {
@@ -20,7 +19,6 @@ export default function useZones() {
       }
 
       setUnlockedZones(data.unlockedZonesResult);
-      setCountZones(data.unlockedZonesCount.countZones);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -37,7 +35,6 @@ export default function useZones() {
   return {
     unlockedZones,
     isLoadingZones,
-    countZones,
     refetchZones: fetchZones,
   };
 }

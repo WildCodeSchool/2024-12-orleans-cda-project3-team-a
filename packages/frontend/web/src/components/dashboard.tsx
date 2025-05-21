@@ -12,8 +12,22 @@ import CloseWindow from './close-window';
 export default function Dashboard() {
   const { parkName, walletFormated, visitorsFormated } = useGameInfoContext();
   const { visitors } = useVisitors();
-  const { countZones, unlockedZones } = useZones();
-  const { creaturesEnclos, countCreaturesIdUnlocked } = useEnclosures();
+  const { unlockedZones } = useZones();
+  const { creaturesEnclos } = useEnclosures();
+
+  let countCreaturesIdUnlocked = 0;
+  for (const element of creaturesEnclos) {
+    if (Number(element.quantityCreature) >= 1) {
+      countCreaturesIdUnlocked = countCreaturesIdUnlocked + 1;
+    }
+  }
+
+  let countZoneIdUnlocked = 0;
+  for (const element of unlockedZones) {
+    if (element.park_zone_id !== null) {
+      countZoneIdUnlocked = countZoneIdUnlocked + 1;
+    }
+  }
 
   return (
     <div className='relative overflow-auto'>
@@ -44,11 +58,11 @@ export default function Dashboard() {
                 </li>
                 <li className='flex items-center justify-center gap-2'>
                   <img src={padlock} alt='unlocked' className='h-6 md:h-7' />
-                  {`${countZones}/${unlockedZones.length} world unlocked`}
+                  {`${countZoneIdUnlocked}/${unlockedZones.length} world unlocked`}
                 </li>
                 <li className='flex items-center justify-center gap-1'>
                   <img src={padlock} alt='unlocked' className='h-6 md:h-7' />
-                  {`${countCreaturesIdUnlocked.length}/${creaturesEnclos.length} creatures unlocked`}
+                  {`${countCreaturesIdUnlocked}/${creaturesEnclos.length} creatures unlocked`}
                 </li>
               </ul>
             </div>

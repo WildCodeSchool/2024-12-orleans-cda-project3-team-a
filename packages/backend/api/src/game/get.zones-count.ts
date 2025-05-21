@@ -45,16 +45,9 @@ getZonesCount.get('/zones-count', async (req: Request, res) => {
 
   const unlockedZonesResult = await getZones(parkId);
 
-  const unlockedZonesCount = await db
-    .selectFrom('park_zones')
-    .select([db.fn.count('park_zones.zone_id').as('countZones')])
-    .where('park_zones.park_id', '=', parkId)
-    .executeTakeFirst();
-
   res.json({
     parkId: parkId,
     unlockedZonesResult,
-    unlockedZonesCount,
   });
 });
 
