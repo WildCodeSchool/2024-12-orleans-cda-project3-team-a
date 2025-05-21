@@ -5,20 +5,21 @@ import type { Enclosure } from '@app/api';
 
 import alert from '../assets/images/icons-buttons/alert.png';
 import ButtonBuy from './button-buy';
-import FeedModale from './feed-modale';
 
 type EnclosureProps = {
   readonly decorations: Decorations;
   readonly totalCreaturesInZone: number;
   readonly enclosures: Enclosure;
+  readonly onClick?: () => void;
 };
 
 export default function Enclosure({
   decorations,
   totalCreaturesInZone,
   enclosures,
+  onClick,
 }: EnclosureProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
   const [isHungry, setIsHungry] = useState(false);
   const isLocked = enclosures.quantityCreature === 0;
 
@@ -85,20 +86,11 @@ export default function Enclosure({
       ? decoPositionSix
       : () => '';
 
-  //a utiliser quand la modale sera prete
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
   return (
     <div
-      onClick={handleOpen}
+      onClick={onClick}
       className={`relative flex h-[50vh] cursor-pointer ${sizeEnclos} flex-col justify-center p-4 ${getBackgound(enclosures.background)} `}
     >
-      {isOpen ? <FeedModale onClick={handleClose} /> : null}
       {decorations.map((decoration) => (
         <img
           key={decoration.creature_id}
