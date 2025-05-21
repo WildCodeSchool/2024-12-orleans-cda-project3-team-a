@@ -32,7 +32,7 @@ export default function WorldEnclosure() {
 
   return (
     <div className='flex min-w-[1200px] flex-wrap md:w-full'>
-      <header className='fixed flex w-[94%] justify-end gap-3 p-2 sm:z-2 md:w-[98%]'>
+      <header className='fixed z-2 flex w-[94%] justify-end gap-3 p-2 md:w-[98%]'>
         <InfoNbVisitorsMoons />
         <ReturnHome />
       </header>

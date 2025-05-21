@@ -13,7 +13,7 @@ type FeedModaleProps = {
 export default function FeedModale({ enclosure, onClose }: FeedModaleProps) {
   return (
     <div>
-      <div className='bg-primary-gray absolute top-1 left-2 flex items-center justify-center gap-3 rounded-lg p-1 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:h-10 md:w-20'>
+      <div className='bg-primary-gray absolute top-1.5 left-2 flex items-center justify-center gap-3 rounded-lg p-1 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:h-10 md:w-20'>
         <p>{enclosure.quantityCreature}</p>
         <img
           className='w-7'
