@@ -40,7 +40,7 @@ export type ActiveCreatureCount = Awaited<
   ReturnType<typeof getActiveCreatureCount>
 >;
 
-getCreaturesRoute.get('/creatures', async (req: Request, res) => {
+getCreaturesRoute.get('/', async (req: Request, res) => {
   const parkId = req.parkId;
   const creatureId = req.query.creature_id;
 

@@ -20,6 +20,7 @@ export default function Enclosure({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isHungry, setIsHungry] = useState(false);
   const isLocked = enclosures.quantityCreature === 0;
+  // const { creature } = useCreature();
 
   const getBackgound = (background: string) => {
     switch (background) {
@@ -93,6 +94,7 @@ export default function Enclosure({
     <div
       className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackgound(enclosures.background)} `}
     >
+      
       {decorations.map((decoration) => (
         <img
           key={decoration.creature_id}

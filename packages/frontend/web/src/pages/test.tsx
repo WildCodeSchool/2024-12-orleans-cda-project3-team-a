@@ -14,6 +14,8 @@ export default function Test() {
   const { barriers, isLoading, refetch } = useFetchBarriers();
   const [email, setEmail] = useState('');
 
+  
+
   return (
     <div className='grid min-w-[1600px] grid-cols-2'>
       <ReturnHome />

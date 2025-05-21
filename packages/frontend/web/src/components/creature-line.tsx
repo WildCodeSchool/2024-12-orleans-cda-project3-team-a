@@ -1,6 +1,5 @@
 import { useGameInfoContext } from '@/contexts/game-info-context';
 import useCreatures from '@/hooks/use-creatures';
-// import { useNumberFormatter } from '@/hooks/use-number-formatter';
 import { formatRemainingTime } from '@/utils/format-remaining-time';
 
 import Female from '../assets/images/icons-buttons/female.png';
@@ -22,33 +21,33 @@ function getPotionImage(zoneId: number) {
   }
 }
 
-type FeedProps = {
-  readonly potionPrice: number;
-  readonly refetch: () => Promise<void>;
-};
+// function isActive(date: Date): boolean {
+//   const now = new Date();
+//   const diff = date.getTime() - now.getTime();
+//   return diff > 0;
+// }
 
-export default function CreatureLine({ potionPrice, refetch }: FeedProps) {
-  const { creatures } = useCreatures();
+export default function CreatureLine() {
+  const { creatures, refetchCreature } = useCreatures();
   const { wallet } = useGameInfoContext();
-  const hasEnoughMoons = wallet > potionPrice;
-  // const priceFormatted = useNumberFormatter(potionPrice);
+  const hasEnoughMoons = wallet > 10;
 
   if (creatures.length === 0) {
     return <p>{`You don't have any species yet. Buy your first species..!`}</p>;
   }
 
-  const feedCreature = async (creatureId: number, zoneId: number) => {
+  const feedCreature = async (parkCreatureId: number, zoneId: number) => {
     if (!hasEnoughMoons) return;
 
     try {
-      const response = await fetch('/api/game/feed-creature', {
+      const response = await fetch(`/api/game/creature`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
         body: JSON.stringify({
-          creatureId,
+          parkCreatureId,
           zoneId,
         }),
       });
@@ -56,7 +55,7 @@ export default function CreatureLine({ potionPrice, refetch }: FeedProps) {
       const result = await response.json();
 
       if (result.ok === true) {
-        await refetch();
+        await refetchCreature();
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -68,7 +67,9 @@ export default function CreatureLine({ potionPrice, refetch }: FeedProps) {
     <div className='flex flex-col gap-4'>
       {creatures.map((creatureData) => {
         const feedDate = new Date(creatureData.feed_date);
-        const timeRemainingTime = formatRemainingTime(feedDate);
+        const remainingTime = formatRemainingTime(feedDate);
+        const now = new Date();
+        const shouldEat = feedDate.getTime() < now.getTime();
 
         return (
           <div
@@ -79,7 +80,7 @@ export default function CreatureLine({ potionPrice, refetch }: FeedProps) {
               <img
                 src={`/images/creatures/${creatureData.src_image}`}
                 alt={creatureData.species}
-                className={`w-15 ${creatureData.is_active === 1 ? '' : 'animate-none grayscale'}`}
+                className={`w-15 ${!shouldEat ? '' : 'animate-none grayscale'}`}
               />
               <img
                 src={creatureData.gender === 'female' ? Female : Male}
@@ -93,16 +94,16 @@ export default function CreatureLine({ potionPrice, refetch }: FeedProps) {
             </div>
 
             <div className='h-7 w-51 rounded border bg-gray-300 px-2 md:w-40 md:rounded-md'>
-              {timeRemainingTime}
+              {remainingTime}
             </div>
 
             <ButtonBuy
               border='border border-black'
               bg='bg-white/75'
-              cursor={creatureData.is_active === 0 ? 'pointer' : 'not-allowed'}
-              grayscale={creatureData.is_active === 1} 
+              cursor={shouldEat ? 'pointer' : 'not-allowed'}
+              grayscale={!shouldEat}
               onClick={async () => {
-                if (creatureData.is_active === 0) {
+                if (shouldEat) {
                   await feedCreature(creatureData.id, creatureData.zone_id);
                 }
               }}
