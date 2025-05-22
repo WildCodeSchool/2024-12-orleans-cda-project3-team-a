@@ -16,9 +16,7 @@ export default function ShopCreature({ creatureId }: ShopCreatureProps) {
   const { creaturesEnclos } = useEnclosures();
   const { wallet } = useGameInfoContext();
 
-  const creature = creaturesEnclos.find(
-    (creature) => creature.id === creatureId,
-  );
+  const creature = creaturesEnclos.find((creature) => creature.id === zone_id);
 
   if (!creature) return null;
 

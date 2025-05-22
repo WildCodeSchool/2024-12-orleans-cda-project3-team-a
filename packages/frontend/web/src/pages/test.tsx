@@ -9,6 +9,7 @@ import Loader from '@/components/loader';
 import Logout from '@/components/logout';
 import NbVisitorsMoons from '@/components/nb-visitors-moons';
 import ReturnHome from '@/components/return-home';
+import ShopCreature from '@/components/shop-creatures';
 import useFetchBarriers from '@/hooks/use-fetch-barriers';
 
 export default function Test() {
