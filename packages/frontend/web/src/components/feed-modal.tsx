@@ -32,8 +32,6 @@ export default function FeedModal({ enclosure, onClick }: FeedModalProps) {
           <div>
             <div className='m-3 flex w-full flex-wrap items-center justify-center gap-3 pt-2'>
               <BuyCreature creatureId={enclosure.id} />
-              <BuyCreature creatureId={enclosure.id} />
-              <BuyCreature creatureId={enclosure.id} />
             </div>
             <CreatureLine creatureId={enclosure.id} />
           </div>
