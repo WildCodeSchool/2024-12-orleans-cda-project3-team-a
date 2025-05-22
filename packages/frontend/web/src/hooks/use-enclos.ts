@@ -12,8 +12,12 @@ export default function useEnclosures() {
           credentials: 'include',
         });
         const data = await response.json();
+        if (data.ok === false) {
+          throw new Error('No park');
+        }
         setCreaturesEnclos(data.enclosure);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('fetch failed', error);
       }
     }
