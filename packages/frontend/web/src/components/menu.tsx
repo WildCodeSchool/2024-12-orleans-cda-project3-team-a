@@ -83,16 +83,11 @@ export default function Menu() {
       </div>
 
       {/* Display Dashboard in pop-up if is open*/}
-
-      <div
-        className={
-          isOpenDashboard
-            ? 'absolute flex max-h-screen w-[98%] justify-center pb-6 text-center md:translate-y-1/10'
-            : 'hidden'
-        }
-      >
-        <Dashboard closeDashboard={handleCloseDashboard} />
-      </div>
+      {isOpenDashboard ? (
+        <div className='absolute flex max-h-screen w-[98%] justify-center pb-6 text-center md:translate-y-1/10'>
+          <Dashboard closeDashboard={handleCloseDashboard} />
+        </div>
+      ) : null}
     </>
   );
 }

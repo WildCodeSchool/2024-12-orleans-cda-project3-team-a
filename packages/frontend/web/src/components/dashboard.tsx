@@ -19,19 +19,13 @@ export default function Dashboard({ closeDashboard }: DashboardProps) {
   const { unlockedZones } = useZones();
   const { creaturesEnclos } = useEnclosures();
 
-  let countCreaturesIdUnlocked = 0;
-  for (const element of creaturesEnclos) {
-    if (Number(element.quantityCreature) >= 1) {
-      countCreaturesIdUnlocked = countCreaturesIdUnlocked + 1;
-    }
-  }
+  const countCreaturesIdUnlocked = creaturesEnclos.reduce((count, element) => {
+    return count + (Number(element.quantityCreature) >= 1 ? 1 : 0);
+  }, 0);
 
-  let countZoneIdUnlocked = 0;
-  for (const element of unlockedZones) {
-    if (element.park_zone_id !== null) {
-      countZoneIdUnlocked = countZoneIdUnlocked + 1;
-    }
-  }
+  const countZoneIdUnlocked = unlockedZones.reduce((count, element) => {
+    return count + (element.park_zone_id !== null ? 1 : 0);
+  }, 0);
 
   return (
     <div className='relative overflow-auto'>
