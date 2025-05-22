@@ -50,9 +50,9 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
   };
 
   return (
-    <div className='w-120 rounded-lg border-1'>
-      <h1 className='p-2'>{'Buy a new Centaure'}</h1>
-      <div className='bottom-5 flex items-center gap-5 p-2'>
+    <div className='rounded-lg border-1'>
+      <h1 className='pt-2'>{`Buy a new ${creaturesEnclosId.species}`}</h1>
+      <div className='bottom-5 flex items-center gap-3 p-2 md:gap-5'>
         <Input
           bgColor='bg-white'
           borderColor='border-gray'
@@ -64,8 +64,8 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
           }}
         />
         <div className='flex items-center gap-1'>
-          <h1 className='text-xl'>{creaturesEnclosId.price}</h1>
-          <img className='h-5 w-5' src={Moon} alt='' />
+          <h1 className='text-xs md:text-base'>{creaturesEnclosId.price}</h1>
+          <img className='h-6 md:h-7' src={Moon} alt='' />
           <ButtonBuy
             onClick={buyCreature}
             bg='bg-white/75'
