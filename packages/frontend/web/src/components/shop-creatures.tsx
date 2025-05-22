@@ -1,57 +1,44 @@
 import { useState } from 'react';
 
-import type { Enclosure } from '@app/api';
-
 import { useGameInfoContext } from '@/contexts/game-info-context';
 import useEnclosures from '@/hooks/use-enclos';
 
 import BgMenu from './bg-menu';
+import Creature from './creatures';
 
-type ShopCreatureProps = {
-  readonly creatureId: number;
-};
-
-export default function ShopCreature({ creatureId }: ShopCreatureProps) {
-  const [name, setName] = useState('');
+export default function ShopCreature() {
   const { creaturesEnclos } = useEnclosures();
-  const { wallet } = useGameInfoContext();
+  const { unlockedZones } = useGameInfoContext();
 
-  const creature = creaturesEnclos.find((creature) => creature.id === zone_id);
+  const [selectedZoneId, setSelectedZoneId] = useState<number>();
 
-  if (!creature) return null;
-
-  const hasEnoughMoons = wallet > creature.price;
-
-  const buyCreature = async () => {
-    if (!hasEnoughMoons) return;
-
-    try {
-      const response = await fetch(
-        `/api/game/buy-creature?creatureId=${creatureId}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name,
-            creatureId,
-          }),
-          credentials: 'include',
-        },
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const creaturesInZone = creaturesEnclos.filter(
+    (creature) => creature.zone_id === selectedZoneId,
+  );
 
   return (
     <BgMenu>
+      <div className='mb-4 flex justify-center gap-4'>
+        {unlockedZones.map((zone) => (
+          <button
+            key={zone.zone_id}
+            type='button'
+            onClick={() => {
+              setSelectedZoneId(zone.zone_id);
+            }}
+          >
+            <img
+              src={`/images/logo/${zone.src_image}`}
+              alt=''
+              className='h-25 border-2 p-2'
+            />
+          </button>
+        ))}
+      </div>
       <div>
-        <div key={creature.id}>
-          <p>{creature.species}</p>
-          <p>{creature.price}</p>
-        </div>
+        {creaturesInZone.map((creature) => (
+          <Creature key={creature.id} creature={creature} />
+        ))}
       </div>
     </BgMenu>
   );

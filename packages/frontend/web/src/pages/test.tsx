@@ -17,6 +17,7 @@ export default function Test() {
   return (
     <div className='grid min-w-[1600px] grid-cols-2'>
       <div>
+        <ShopCreature creatureId={5} />
         <ReturnHome />
         <Input
           bgColor='bg-primary-blue'
