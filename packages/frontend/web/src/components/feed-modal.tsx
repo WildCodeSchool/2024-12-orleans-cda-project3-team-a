@@ -10,7 +10,7 @@ type FeedModalProps = {
   readonly onClick: () => void;
 };
 
-export default function FeedModale({ enclosure, onClick }: FeedModalProps) {
+export default function FeedModal({ enclosure, onClick }: FeedModalProps) {
   return (
     <div>
       <div className='bg-primary-gray absolute top-1.5 left-2 flex items-center justify-center gap-3 rounded-lg p-1 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:h-10 md:w-20'>
