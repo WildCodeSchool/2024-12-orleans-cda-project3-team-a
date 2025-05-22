@@ -87,13 +87,13 @@ export default function CreatureLine({ creatureId }: CreatureId) {
               />
             </div>
 
-            <div className='h-7 w-51 rounded border bg-white px-2 md:w-40 md:rounded-md'>
-              {creatureData.name}
-            </div>
+              <div className='h-5 w-51 rounded border bg-white px-2 focus:border-2 focus:outline-none md:h-7 md:w-40 md:rounded-md'>
+                {creatureData.name}
+              </div>
 
-            <div className='h-7 w-51 rounded border bg-gray-300 px-2 md:w-40 md:rounded-md'>
-              {remainingTime}
-            </div>
+              <div className='h-5 w-51 rounded border bg-gray-300 px-2 focus:border-2 focus:outline-none md:h-7 md:w-40 md:rounded-md'>
+                {remainingTime}
+              </div>
 
             <ButtonBuy
               border='border border-black'
