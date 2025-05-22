@@ -19,7 +19,6 @@ export default function Test() {
     <div className='grid min-w-[1600px] grid-cols-2'>
       <div>
         <ReturnHome />
-        <CloseWindow />
         <Input
           bgColor='bg-primary-blue'
           borderColor='border-secondary-blue'

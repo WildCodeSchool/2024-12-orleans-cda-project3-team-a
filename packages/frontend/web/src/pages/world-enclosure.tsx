@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import type { Enclosure } from '@app/api';
 
 import EnclosureComponent from '@/components/enclosure';
-import FeedModale from '@/components/feed-modale';
+import FeedModale from '@/components/feed-modal';
 import InfoNbVisitorsMoons from '@/components/nb-visitors-moons';
 import ReturnHome from '@/components/return-home';
 import { useGameInfoContext } from '@/contexts/game-info-context';
@@ -53,9 +53,9 @@ export default function WorldEnclosure() {
           />
         );
       })}
-      {selectedEnclosure !== null && (
+      {selectedEnclosure ? (
         <FeedModale enclosure={selectedEnclosure} onClick={handleClose} />
-      )}
+      ) : null}
     </div>
   );
 }
