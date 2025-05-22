@@ -6,6 +6,10 @@ import Female from '../assets/images/icons-buttons/female.png';
 import Male from '../assets/images/icons-buttons/male.png';
 import ButtonBuy from './button-buy';
 
+type CreatureId = {
+  readonly creatureId: number;
+};
+
 function getPotionImage(zoneId: number) {
   switch (zoneId) {
     case 1:
@@ -21,8 +25,8 @@ function getPotionImage(zoneId: number) {
   }
 }
 
-export default function CreatureLine() {
-  const { creatures, refetchCreature } = useCreatures();
+export default function CreatureLine({ creatureId }: CreatureId) {
+  const { creatures, refetchCreature } = useCreatures(creatureId);
   const { wallet } = useGameInfoContext();
   const hasEnoughMoons = wallet > 10;
 

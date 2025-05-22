@@ -3,6 +3,8 @@ import { useState } from 'react';
 import type { Decorations } from '@app/api';
 import type { Enclosure } from '@app/api';
 
+import useCreatures from '@/hooks/use-creatures';
+
 import alert from '../assets/images/icons-buttons/alert.png';
 import ButtonBuy from './button-buy';
 
@@ -10,17 +12,24 @@ type EnclosureProps = {
   readonly decorations: Decorations;
   readonly totalCreaturesInZone: number;
   readonly enclosures: Enclosure;
-  readonly isHungry: boolean;
+  // readonly isHungry: boolean;
 };
 
 export default function Enclosure({
   decorations,
   totalCreaturesInZone,
   enclosures,
-  isHungry,
+  // isHungry,
 }: EnclosureProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isLocked = enclosures.quantityCreature === 0;
+  const { inactiveCreatures } = useCreatures(enclosures.id);
+  // console.log(activeCreatures);
+
+  const totalInactive = Number(
+    inactiveCreatures[0]?.total_inactive_creatures ?? 0,
+  );
+  const isHungry = totalInactive > 0;
 
   const getBackground = (background: string) => {
     switch (background) {

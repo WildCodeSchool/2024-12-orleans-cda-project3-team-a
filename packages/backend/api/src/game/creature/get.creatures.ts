@@ -23,21 +23,23 @@ function getCreatures(parkId: number, creatureId: number) {
     .execute();
 }
 
-function getActiveCreatureCount(parkId: number, creatureId: number) {
+const dateNow = new Date();
+
+function getInactiveCreatureCount(parkId: number, creatureId: number) {
   return db
     .selectFrom('park_creatures')
     .innerJoin('creatures', 'park_creatures.creature_id', 'creatures.id')
-    .select(({ fn }) => [fn.countAll().as('total_active_creatures')])
+    .select(({ fn }) => [fn.countAll().as('total_inactive_creatures')])
     .where('park_creatures.park_id', '=', parkId)
     .where('park_creatures.creature_id', '=', creatureId)
-    .where('park_creatures.is_active', '=', 0)
+    .where('park_creatures.feed_date', '<', dateNow)
     .execute();
 }
 
 export type Creatures = Awaited<ReturnType<typeof getCreatures>>;
 
 export type ActiveCreatureCount = Awaited<
-  ReturnType<typeof getActiveCreatureCount>
+  ReturnType<typeof getInactiveCreatureCount>
 >;
 
 getCreaturesRoute.get('/', async (req: Request, res) => {
@@ -61,7 +63,7 @@ getCreaturesRoute.get('/', async (req: Request, res) => {
 
   const [creatures, activeCreatures] = await Promise.all([
     getCreatures(parkId, parseInt(creatureId)),
-    getActiveCreatureCount(parkId, parseInt(creatureId)),
+    getInactiveCreatureCount(parkId, parseInt(creatureId)),
   ]);
 
   res.json({

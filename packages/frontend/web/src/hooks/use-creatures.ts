@@ -2,13 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 
 import type { ActiveCreatureCount, Creatures } from '@app/api';
 
-export default function useCreatures() {
+export default function useCreatures(creatureId: number) {
   const [creatures, setCreatures] = useState<Creatures>([]);
-  const [activeCreatures, setActiveCreatures] = useState<ActiveCreatureCount>(
-    [],
-  );
-
-  const creatureId = 6;
+  const [inactiveCreatures, setInactiveCreatures] =
+    useState<ActiveCreatureCount>([]);
 
   const fetchCreatures = useCallback(async () => {
     try {
@@ -20,12 +17,12 @@ export default function useCreatures() {
       );
       const data = await response.json();
       setCreatures(data.creatures);
-      setActiveCreatures(data.activeCreatures);
+      setInactiveCreatures(data.activeCreatures);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('fetch creature failed', error);
     }
-  }, []);
+  }, [creatureId]);
 
   useEffect(() => {
     void fetchCreatures();
@@ -33,7 +30,7 @@ export default function useCreatures() {
 
   return {
     creatures,
-    activeCreatures,
+    inactiveCreatures,
     refetchCreature: fetchCreatures,
   };
 }
