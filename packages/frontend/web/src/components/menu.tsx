@@ -7,55 +7,87 @@ import iconProfil from '../assets/images/icons-buttons/profile.png';
 import iconRanking from '../assets/images/icons-buttons/ranking.png';
 import iconRules from '../assets/images/icons-buttons/rules.png';
 import iconShop from '../assets/images/icons-buttons/shop.png';
+import Dashboard from './dashboard';
 import Logout from './logout';
 
 export default function Menu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpenDashboard, setIsOpenDashboard] = useState(false);
+
   const handleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const handleOpenDashboard = () => {
+    setIsOpenDashboard(true);
+    //close menu only in mobile
+    if (window.innerWidth < 768) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  const handleCloseDashboard = () => {
+    setIsOpenDashboard(false);
+  };
+
   return (
-    //Ouvrir ou fermer menu selon la valeur isMenuOpen
-    <div
-      className={`flex w-8 flex-col items-center gap-5 rounded pb-2 md:h-9 md:flex-1 md:flex-row md:rounded-lg md:pr-2 md:pb-0 ${
-        isMenuOpen
-          ? 'bg-primary-gray h-[95vh] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none'
-          : ''
-      }`}
-    >
-      <button
-        type='button'
-        className={`items-center justify-center rounded p-1 md:p-2 md:py-0 ${
-          !isMenuOpen
-            ? 'bg-primary-gray h-8 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none md:h-9'
+    <>
+      {/* Display or not if isMenuOpen */}
+      <div
+        className={`flex w-8 flex-col items-center gap-5 rounded pb-2 md:h-9 md:flex-1 md:flex-row md:rounded-lg md:pr-2 md:pb-0 ${
+          isMenuOpen
+            ? 'bg-primary-gray h-[95vh] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none'
             : ''
         }`}
       >
-        <img
-          src={iconMenu}
-          alt='Menu'
-          onClick={handleMenu}
-          className='cursor-pointer md:h-7 md:w-7'
-        />
-      </button>
+        {/* button menu */}
+        <button
+          type='button'
+          className={`items-center justify-center rounded p-1 md:p-2 md:py-0 ${
+            !isMenuOpen
+              ? 'bg-primary-gray h-8 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none md:h-9'
+              : ''
+          }`}
+        >
+          <img
+            src={iconMenu}
+            alt='Menu'
+            onClick={handleMenu}
+            className='cursor-pointer md:h-7 md:w-7'
+          />
+        </button>
 
-      <div
-        className={` ${isMenuOpen ? 'flex h-screen flex-col justify-between md:h-auto md:flex-1 md:flex-row' : 'hidden'}`}
-      >
-        <div className='flex flex-col gap-7 md:flex-row'>
-          <img src={iconDashboard} alt='' className='h-6 md:h-7' />
-          <img src={iconShop} alt='' className='h-6 md:h-7' />
-          <img src={iconRanking} alt='' className='h-6 md:h-7' />
-        </div>
-        <div className='flex flex-col gap-7 md:flex-row'>
-          <img src={iconProfil} alt='' className='h-6 md:h-7' />
-          <Link to='/rules'>
-            <img src={iconRules} alt='' className='h-6 md:h-7' />
-          </Link>
+        {/* Content of menu if is open */}
+        <div
+          className={` ${isMenuOpen ? 'flex h-screen flex-col justify-between md:h-auto md:flex-1 md:flex-row' : 'hidden'}`}
+        >
+          {/* First part of the menu content : dahsboard, shop, ranking */}
+          <div className='flex flex-col gap-7 md:flex-row'>
+            <div onClick={handleOpenDashboard} className='cursor-pointer'>
+              <img src={iconDashboard} alt='' className='h-6 md:h-7' />
+            </div>
 
-          <Logout />
+            <img src={iconShop} alt='' className='h-6 md:h-7' />
+            <img src={iconRanking} alt='' className='h-6 md:h-7' />
+          </div>
+          {/* Second part of the menu content : profil, rules, log out */}
+          <div className='flex flex-col gap-7 md:flex-row'>
+            <img src={iconProfil} alt='' className='h-6 md:h-7' />
+            <Link to='/rules'>
+              <img src={iconRules} alt='' className='h-6 md:h-7' />
+            </Link>
+
+            <Logout />
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Display Dashboard in pop-up if is open*/}
+      {isOpenDashboard ? (
+        <div className='absolute flex max-h-screen w-[98%] justify-center pb-6 text-center md:translate-y-1/10'>
+          <Dashboard closeDashboard={handleCloseDashboard} />
+        </div>
+      ) : null}
+    </>
   );
 }
