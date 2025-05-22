@@ -18,6 +18,7 @@ type GameInfoContextState = {
   fetchAll: () => Promise<void>;
   creaturesEnclos: Enclosure[];
   decorations: Decorations;
+  parkName: string;
 };
 
 // Define the type for provider
@@ -34,6 +35,7 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   fetchAll: () => Promise.resolve(),
   creaturesEnclos: [],
   decorations: [],
+  parkName: '',
 });
 
 // create the provider
@@ -47,6 +49,7 @@ export function GameInfoContextProvider({
     wallet,
     isLoadingPark,
     refetchPark,
+    parkName,
   } = usePark();
 
   // get unlocked zones with useZones
@@ -72,6 +75,7 @@ export function GameInfoContextProvider({
       fetchAll,
       creaturesEnclos,
       decorations,
+      parkName,
     }),
     [
       walletFormated,
@@ -83,6 +87,7 @@ export function GameInfoContextProvider({
       isLoadingPark,
       isLoadingZones,
       fetchAll,
+      parkName,
     ],
   );
 

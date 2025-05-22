@@ -1,30 +1,41 @@
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import type { Enclosure } from '@app/api';
 
 import EnclosureComponent from '@/components/enclosure';
+import FeedModal from '@/components/feed-modal';
 import InfoNbVisitorsMoons from '@/components/nb-visitors-moons';
 import ReturnHome from '@/components/return-home';
 import { useGameInfoContext } from '@/contexts/game-info-context';
 
-// import useCreatures from '@/hooks/use-creatures';
-
-// type WorldEnclosureProps = {
-//   readonly creatureId: number;
-// };
-
 export default function WorldEnclosure() {
   const { creaturesEnclos, decorations } = useGameInfoContext();
   const { zone_id: zoneId } = useParams();
-  // const { activeCreatures } = useCreatures();
+
+  const [selectedEnclosure, setSelectedEnclosure] = useState<Enclosure | null>(
+    null,
+  );
 
   const creatureWorld = creaturesEnclos.filter(
     (creature: Enclosure) => creature.zone_id === Number(zoneId),
   );
   const total = creatureWorld.length;
 
+  const handleEnclosureClick = (enclosure: Enclosure) => {
+    setSelectedEnclosure(enclosure);
+  };
+
+  const handleClose = () => {
+    setSelectedEnclosure(null);
+  };
+
   return (
     <div className='flex min-w-[1200px] flex-wrap md:w-full'>
+      <header className='fixed z-2 flex w-[94%] justify-end gap-3 p-2 md:w-[98%]'>
+        <InfoNbVisitorsMoons />
+        <ReturnHome />
+      </header>
       {creatureWorld.map((enclosure: Enclosure) => {
         const decorationsList = decorations.filter(
           (decoration) => decoration.creature_id === enclosure.id,
@@ -36,14 +47,15 @@ export default function WorldEnclosure() {
             enclosures={enclosure}
             decorations={decorationsList}
             totalCreaturesInZone={total}
-            // isHungry={isHungry}
+            onClick={() => {
+              handleEnclosureClick(enclosure);
+            }}
           />
         );
       })}
-      <header className='fixed flex w-[94%] justify-end gap-3 p-2 sm:z-2 md:w-[98%]'>
-        <InfoNbVisitorsMoons />
-        <ReturnHome />
-      </header>
+      {selectedEnclosure ? (
+        <FeedModal enclosure={selectedEnclosure} onClick={handleClose} />
+      ) : null}
     </div>
   );
 }

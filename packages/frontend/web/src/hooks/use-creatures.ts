@@ -4,6 +4,7 @@ import type { ActiveCreatureCount, Creatures } from '@app/api';
 
 export default function useCreatures(creatureId: number) {
   const [creatures, setCreatures] = useState<Creatures>([]);
+
   const [inactiveCreatures, setInactiveCreatures] =
     useState<ActiveCreatureCount>([]);
 
@@ -26,7 +27,7 @@ export default function useCreatures(creatureId: number) {
 
   useEffect(() => {
     void fetchCreatures();
-  }, [fetchCreatures]);
+  }, [creatureId, fetchCreatures]);
 
   return {
     creatures,

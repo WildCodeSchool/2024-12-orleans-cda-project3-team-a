@@ -62,7 +62,7 @@ export default function CreatureLine({ creatureId }: CreatureId) {
   };
 
   return (
-    <div className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-4 pt-3 md:grid md:grid-cols-2'>
       {creatures.map((creatureData) => {
         const feedDate = new Date(creatureData.feed_date);
         const remainingTime = formatRemainingTime(feedDate);
@@ -83,11 +83,11 @@ export default function CreatureLine({ creatureId }: CreatureId) {
               <img
                 src={creatureData.gender === 'female' ? Female : Male}
                 alt={creatureData.gender}
-                className='absolute right-0 bottom-1 w-5'
+                className='absolute right-0 bottom-1 w-2 md:w-5'
               />
             </div>
 
-            <div className='h-7 w-51 rounded border px-2 md:w-40 md:rounded-md'>
+            <div className='h-7 w-51 rounded border bg-white px-2 md:w-40 md:rounded-md'>
               {creatureData.name}
             </div>
 
@@ -109,7 +109,7 @@ export default function CreatureLine({ creatureId }: CreatureId) {
               <img
                 src={`/images/decorations/${getPotionImage(creatureData.zone_id)}`}
                 alt='potion'
-                className='w-7 p-0.5'
+                className='w-15 p-0.5 md:w-7'
               />
             </ButtonBuy>
           </div>

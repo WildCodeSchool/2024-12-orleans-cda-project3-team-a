@@ -12,19 +12,17 @@ type EnclosureProps = {
   readonly decorations: Decorations;
   readonly totalCreaturesInZone: number;
   readonly enclosures: Enclosure;
-  // readonly isHungry: boolean;
+  readonly onClick?: () => void;
 };
 
 export default function Enclosure({
   decorations,
   totalCreaturesInZone,
   enclosures,
-  // isHungry,
+  onClick,
 }: EnclosureProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const isLocked = enclosures.quantityCreature === 0;
   const { inactiveCreatures } = useCreatures(enclosures.id);
-  // console.log(activeCreatures);
 
   const totalInactive = Number(
     inactiveCreatures[0]?.total_inactive_creatures ?? 0,
@@ -94,14 +92,10 @@ export default function Enclosure({
       ? decoPositionSix
       : () => '';
 
-  //a utiliser quand la modale sera prete
-  const handleModale = () => {
-    setIsModalOpen(!isModalOpen);
-  };
-
   return (
     <div
       className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackground(enclosures.background)} `}
+      onClick={onClick}
     >
       {decorations.map((decoration) => (
         <img
@@ -111,10 +105,7 @@ export default function Enclosure({
           alt=''
         />
       ))}
-      <div
-        onClick={handleModale}
-        className='relative flex flex-col items-center justify-center gap-2'
-      >
+      <div className='relative flex flex-col items-center justify-center gap-2'>
         <img
           className={`absolute top-1 w-10 ${isFour ? 'left-115' : 'left-80'} `}
           src={isLocked ? '' : isHungry ? alert : ''}
