@@ -14,10 +14,13 @@ export default function Home() {
       className='h-screen bg-cover bg-center p-3'
       style={{ backgroundImage: `url(${ParkMap})` }}
     >
+      {/* Display the header menu and nb visitors and moons */}
       <header className='fixed flex w-[94%] justify-between gap-3 sm:z-2 md:w-[98%]'>
         <Menu />
         <NbVisitorsMoons />
       </header>
+
+      {/* Display of 4 worlds */}
       <div className='mt-8 flex h-[95%] flex-col justify-around sm:grid sm:grid-cols-2 sm:gap-8'>
         {unlockedZones.map((zone) => (
           <div key={zone.zone_id} className='flex items-center justify-center'>
