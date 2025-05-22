@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import type { Decorations } from '@app/api';
 import type { Enclosure } from '@app/api';
 
