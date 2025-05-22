@@ -49,8 +49,8 @@ postFeedCreature.post('/', async (req: Request, res) => {
   // get potion price
   const potionPrice = await db
     .selectFrom('potions')
-    .where('zone_id', '=', zoneId)
     .select('price')
+    .where('zone_id', '=', zoneId)
     .executeTakeFirst();
 
   if (!potionPrice) {
@@ -80,11 +80,11 @@ postFeedCreature.post('/', async (req: Request, res) => {
     return;
   }
 
-  //update feed_date et is_active
+  //update feed_date
   await db
     .updateTable('park_creatures')
     .set({
-      feed_date: sql`NOW() + INTERVAL ${sql.lit(creature.feed_timer)} MINUTE`,
+      feed_date: sql`NOW() + INTERVAL ${creature.feed_timer} MINUTE`,
     })
     .where('id', '=', parkCreatureId)
     .executeTakeFirst();

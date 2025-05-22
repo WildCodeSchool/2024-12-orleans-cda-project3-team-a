@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import type { ActiveCreatureCount, Creatures } from '@app/api';
+import type { InactiveCreatureCount, Creatures } from '@app/api';
 
 export default function useCreatures(creatureId: number) {
   const [creatures, setCreatures] = useState<Creatures>([]);
-
   const [inactiveCreatures, setInactiveCreatures] =
-    useState<ActiveCreatureCount>([]);
-
+  useState<InactiveCreatureCount>([]);
+  const [potionPrice, setPotionPrice] = useState<InactiveCreatureCount>([]);
+  
   const fetchCreatures = useCallback(async () => {
     try {
       const response = await fetch(
@@ -18,7 +18,8 @@ export default function useCreatures(creatureId: number) {
       );
       const data = await response.json();
       setCreatures(data.creatures);
-      setInactiveCreatures(data.activeCreatures);
+      setInactiveCreatures(data.inactiveCreatures);
+      setPotionPrice(data.potionPrice);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('fetch creature failed', error);
@@ -32,6 +33,7 @@ export default function useCreatures(creatureId: number) {
   return {
     creatures,
     inactiveCreatures,
+    potionPrice,
     refetchCreature: fetchCreatures,
   };
 }

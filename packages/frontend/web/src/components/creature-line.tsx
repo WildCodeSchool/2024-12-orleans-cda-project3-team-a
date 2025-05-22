@@ -26,9 +26,9 @@ function getPotionImage(zoneId: number) {
 }
 
 export default function CreatureLine({ creatureId }: CreatureId) {
-  const { creatures, refetchCreature } = useCreatures(creatureId);
+  const { creatures, potionPrice, refetchCreature } = useCreatures(creatureId);
   const { wallet } = useGameInfoContext();
-  const hasEnoughMoons = wallet > 10;
+  const hasEnoughMoons = wallet > Number(potionPrice);
 
   if (creatures.length === 0) {
     return <p>{`You don't have any species yet. Buy your first species..!`}</p>;

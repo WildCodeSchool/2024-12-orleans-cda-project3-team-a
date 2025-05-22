@@ -38,13 +38,14 @@ function getInactiveCreatureCount(parkId: number, creatureId: number) {
 
 export type Creatures = Awaited<ReturnType<typeof getCreatures>>;
 
-export type ActiveCreatureCount = Awaited<
+export type InactiveCreatureCount = Awaited<
   ReturnType<typeof getInactiveCreatureCount>
 >;
 
 getCreaturesRoute.get('/', async (req: Request, res) => {
   const parkId = req.parkId;
   const creatureId = req.query.creature_id;
+  // const zoneId = req.query.zone_id;
 
   if (parkId === undefined) {
     res.json({
@@ -61,15 +62,23 @@ getCreaturesRoute.get('/', async (req: Request, res) => {
     return;
   }
 
-  const [creatures, activeCreatures] = await Promise.all([
+  const [creatures, inactiveCreatures] = await Promise.all([
     getCreatures(parkId, parseInt(creatureId)),
     getInactiveCreatureCount(parkId, parseInt(creatureId)),
   ]);
 
+  const potionPrice = await db
+    .selectFrom('potions')
+    .leftJoin('creatures', 'potions.zone_id', 'creatures.zone_id')
+    .select('potions.price')
+    .where('creatures.id', '=', Number(creatureId))
+    .executeTakeFirst();
+
   res.json({
     parkId,
     creatures,
-    activeCreatures,
+    inactiveCreatures,
+    potionPrice,
   });
 });
 
