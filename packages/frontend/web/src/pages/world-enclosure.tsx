@@ -54,7 +54,7 @@ export default function WorldEnclosure() {
         );
       })}
       {selectedEnclosure !== null && (
-        <FeedModale enclosure={selectedEnclosure} onClose={handleClose} />
+        <FeedModale enclosure={selectedEnclosure} onClick={handleClose} />
       )}
     </div>
   );

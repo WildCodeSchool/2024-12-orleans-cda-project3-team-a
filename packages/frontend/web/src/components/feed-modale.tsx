@@ -7,10 +7,10 @@ import CreatureLine from './creature-line';
 
 type FeedModaleProps = {
   readonly enclosure: Enclosure;
-  readonly onClose?: () => void;
+  readonly onClick: () => void;
 };
 
-export default function FeedModale({ enclosure, onClose }: FeedModaleProps) {
+export default function FeedModale({ enclosure, onClick }: FeedModaleProps) {
   return (
     <div>
       <div className='bg-primary-gray absolute top-1.5 left-2 flex items-center justify-center gap-3 rounded-lg p-1 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:h-10 md:w-20'>
@@ -24,7 +24,7 @@ export default function FeedModale({ enclosure, onClose }: FeedModaleProps) {
       <div className='fixed top-6 left-0 z-2 flex h-screen w-screen items-center justify-center'>
         <BgMenu>
           <div className='flex flex-row-reverse'>
-            <CloseWindow onClose={onClose} />
+            <CloseWindow onClick={onClick} />
           </div>
 
           <div>
