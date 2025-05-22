@@ -20,6 +20,7 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
   const { wallet } = useGameInfoContext();
   const { creaturesEnclos } = useEnclosures();
   const { zone_id: zoneId } = useParams();
+  const { fetchAll } = useGameInfoContext();
 
   const creaturesEnclosId = creaturesEnclos.find(
     (creature: Enclosure) => creature.id === creatureId,
@@ -52,7 +53,10 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
       );
 
       // on refetch plus tard
-      // const result = await response.json();
+      const result = await response.json();
+      if (result.ok === true) {
+        await fetchAll();
+      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
