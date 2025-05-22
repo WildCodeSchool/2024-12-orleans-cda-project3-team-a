@@ -1,9 +1,9 @@
 import express from 'express';
 
-import getVisitors from './get.visitors';
+import getVisitorsRoute from './get.visitors';
 
 const visitorRouter = express.Router();
 
-visitorRouter.use(getVisitors);
+visitorRouter.use(getVisitorsRoute);
 
 export default visitorRouter;

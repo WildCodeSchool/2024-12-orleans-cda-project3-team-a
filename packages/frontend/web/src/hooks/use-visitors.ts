@@ -1,15 +1,9 @@
 import { useEffect, useState } from 'react';
 
+import type { Visitors } from '@app/api/src/game/visitor/get.visitors';
+
 export default function useVisitors() {
-  const [visitors, setVisitors] = useState<
-    Array<{
-      visitor_id: number;
-      visitor_count: number;
-      src_image: string | null;
-      spending: number;
-      spending_time: number;
-    }>
-  >([]);
+  const [visitors, setVisitors] = useState<Visitors>([]);
 
   useEffect(() => {
     async function fetchVisitors() {
@@ -19,13 +13,7 @@ export default function useVisitors() {
         });
         const data = (await resp.json()) as {
           ok: boolean;
-          visitorsCountById: Array<{
-            visitor_id: number;
-            visitor_count: number;
-            src_image: string | null;
-            spending: number;
-            spending_time: number;
-          }>;
+          visitorsCountById: Visitors;
         };
 
         if (!data.ok) {

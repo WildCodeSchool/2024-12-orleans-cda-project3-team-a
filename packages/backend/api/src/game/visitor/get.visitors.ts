@@ -2,21 +2,10 @@ import { type Request, Router } from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getVisitors = Router();
+const getVisitorsRoute = Router();
 
-getVisitors.get('/', async (req: Request, res) => {
-  const parkId = req.parkId;
-
-  if (parkId === undefined) {
-    res.json({
-      ok: false,
-      message: 'no park id in get visitors',
-    });
-    return;
-  }
-
-  // to have the number of each visitor (id 1,2 ,3, 4)
-  const visitorsCountById = await db
+function getVisitors(parkId: number) {
+  return db
     .selectFrom('visitors')
     .leftJoin('park_visitors', (join) =>
       join
@@ -37,6 +26,23 @@ getVisitors.get('/', async (req: Request, res) => {
       'visitors.spending_time',
     ])
     .execute();
+}
+
+export type Visitors = Awaited<ReturnType<typeof getVisitors>>;
+
+getVisitorsRoute.get('/', async (req: Request, res) => {
+  const parkId = req.parkId;
+
+  if (parkId === undefined) {
+    res.json({
+      ok: false,
+      message: 'no park id in get visitors',
+    });
+    return;
+  }
+
+  // to have the number of each visitor (id 1,2 ,3, 4)
+  const visitorsCountById = await getVisitors(parkId);
 
   if (visitorsCountById.length === 0) {
     res.json({
@@ -52,4 +58,4 @@ getVisitors.get('/', async (req: Request, res) => {
   });
 });
 
-export default getVisitors;
+export default getVisitorsRoute;
