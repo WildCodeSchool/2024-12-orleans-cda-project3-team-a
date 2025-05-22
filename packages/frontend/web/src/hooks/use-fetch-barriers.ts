@@ -1,18 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import type { Barrier } from '@app/api';
+import { useParams } from 'react-router-dom';
 
 export default function useFetchBarriers() {
   const [barriers, setBarriers] = useState<Barrier[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   //A changer plus tard zoneId !!
-  const zoneId = 2;
+  const { zone_id: zoneId } = useParams();  
 
   const fetchBarriers = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/game/barriers?zoneId=${zoneId}`, {
+      const response = await fetch(`/api/game/barriers?zoneId=${Number(zoneId)}`, {
         credentials: 'include',
       });
       const data = await response.json();
@@ -23,7 +24,7 @@ export default function useFetchBarriers() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [zoneId]);
 
   useEffect(() => {
     void fetchBarriers();
