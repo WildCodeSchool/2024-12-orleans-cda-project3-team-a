@@ -67,7 +67,7 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
   const positionClass = getPositionClass(barrier.position);
 
   return (
-    <div className={`${positionClass} absolute transform`}>
+    <div className={`${positionClass} absolute z-2 transform`}>
       {/*Check if we have already bought the direction */}
       {barrier.parkBarrierId !== null ? (
         // display the right direction

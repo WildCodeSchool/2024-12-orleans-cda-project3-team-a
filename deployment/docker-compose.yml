@@ -32,3 +32,5 @@ services:
       - 80:80
     volumes:
       - ./nginx.dev.conf:/etc/nginx/nginx.conf
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'

@@ -3,11 +3,14 @@ import { useParams } from 'react-router-dom';
 
 import type { Enclosure } from '@app/api';
 
+import Barrier from '@/components/barrier';
 import EnclosureComponent from '@/components/enclosure';
 import FeedModal from '@/components/feed-modal';
+import Loader from '@/components/loader';
 import InfoNbVisitorsMoons from '@/components/nb-visitors-moons';
 import ReturnHome from '@/components/return-home';
 import { useGameInfoContext } from '@/contexts/game-info-context';
+import useFetchBarriers from '@/hooks/use-fetch-barriers';
 
 export default function WorldEnclosure() {
   const { creaturesEnclos, decorations } = useGameInfoContext();
@@ -16,6 +19,7 @@ export default function WorldEnclosure() {
   const [selectedEnclosure, setSelectedEnclosure] = useState<Enclosure | null>(
     null,
   );
+  const { barriers, isLoading, refetch } = useFetchBarriers();
 
   const creatureWorld = creaturesEnclos.filter(
     (creature: Enclosure) => creature.zone_id === Number(zoneId),
@@ -31,8 +35,8 @@ export default function WorldEnclosure() {
   };
 
   return (
-    <div className='flex min-w-[1200px] flex-wrap md:w-full'>
-      <header className='fixed z-2 flex w-[94%] justify-end gap-3 p-2 md:w-[98%]'>
+    <div className='relative flex min-w-[1200px] flex-wrap md:w-full'>
+      <header className='fixed -right-2 z-3 flex w-48 gap-3 p-2 md:right-0'>
         <InfoNbVisitorsMoons />
         <ReturnHome />
       </header>
@@ -58,6 +62,22 @@ export default function WorldEnclosure() {
           <FeedModal enclosure={selectedEnclosure} onClick={handleClose} />
         </div>
       ) : null}
+
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          {barriers.map((barrier) => {
+            return (
+              <Barrier
+                key={`${barrier.barrierId}`}
+                barrier={barrier}
+                refetch={refetch}
+              />
+            );
+          })}
+        </>
+      )}
     </div>
   );
 }

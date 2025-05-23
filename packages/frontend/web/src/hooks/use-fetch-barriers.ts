@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import type { Barrier } from '@app/api';
 
@@ -7,7 +8,7 @@ export default function useFetchBarriers() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   //A changer plus tard zoneId !!
-  const zoneId = 2;
+  const { zone_id: zoneId } = useParams();
 
   const fetchBarriers = useCallback(async () => {
     setIsLoading(true);
@@ -23,7 +24,7 @@ export default function useFetchBarriers() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [zoneId]);
 
   useEffect(() => {
     void fetchBarriers();
