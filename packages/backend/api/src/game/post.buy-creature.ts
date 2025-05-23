@@ -9,6 +9,8 @@ postBuyCreature.post('/buy-creature', async (req: Request, res) => {
   const parkId = req.parkId;
   const creatureId = req.query.creatureId;
 
+  const gender = Math.random() < 0.5 ? 'male' : 'female';
+
   // const parkId=30;
 
   const name = req.body.name;
@@ -77,7 +79,7 @@ postBuyCreature.post('/buy-creature', async (req: Request, res) => {
     .insertInto('park_creatures')
     .values({
       name,
-      gender: 'male',
+      gender,
       is_adult: 1,
       is_parent: 0,
       is_active: 1,

@@ -2,13 +2,11 @@ import { useEffect, useState } from 'react';
 
 import type { ActiveCreatureCount, Creatures } from '@app/api';
 
-export default function useCreatures() {
+export default function useCreatures(creatureId: number) {
   const [creatures, setCreatures] = useState<Creatures>([]);
   const [activeCreatures, setActiveCreatures] = useState<ActiveCreatureCount>(
     [],
   );
-
-  const creatureId = 6;
 
   useEffect(() => {
     async function fetchCreatures() {
@@ -29,7 +27,7 @@ export default function useCreatures() {
     }
 
     void fetchCreatures();
-  }, []);
+  }, [creatureId]);
 
   return {
     creatures,

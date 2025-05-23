@@ -7,7 +7,6 @@ import { useGameInfoContext } from '@/contexts/game-info-context';
 import useEnclosures from '@/hooks/use-enclos';
 
 import Moon from '../assets/images/icons-buttons/moon.png';
-import Background from './bg-menu';
 import ButtonBuy from './button-buy';
 import Input from './input';
 
@@ -34,7 +33,6 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
 
   const buyCreature = async () => {
     if (!hasEnoughMoons) return;
-
     try {
       const response = await fetch(
         `/api/game/buy-creature?creatureId=${creatureId}`,
@@ -64,39 +62,37 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
   };
 
   return (
-    <Background>
-      <div className='w-120 rounded-lg border-1'>
-        <h1 className='p-2'>{'Buy a new Centaure'}</h1>
-        <div className='bottom-5 flex items-center gap-5 p-2'>
-          <Input
-            bgColor='bg-white'
-            borderColor='border-gray'
-            type='text'
-            placeholder='Name'
-            value={name}
-            onChangeInput={(value) => {
-              setName(value);
-            }}
-          />
-          <div className='flex items-center gap-1'>
-            <h1 className='text-xl'>{creaturesEnclosId.price}</h1>
-            <img className='h-5 w-5' src={Moon} alt='' />
-            <ButtonBuy
-              onClick={buyCreature}
-              bg='bg-white/75'
-              border='border border-black'
-              cursor='pointer'
-            >
-              <p className='text-2xl'>{'+'}</p>
-              <img
-                className='w-7 p-0.5'
-                src={`/images/creatures/${creaturesEnclosId.src_image}`}
-                alt=''
-              />
-            </ButtonBuy>
-          </div>
+    <div className='rounded-lg border-1'>
+      <h1 className='pt-2'>{`Buy a new ${creaturesEnclosId.species}`}</h1>
+      <div className='bottom-5 flex items-center gap-3 p-2 md:gap-5'>
+        <Input
+          bgColor='bg-white'
+          borderColor='border-gray'
+          type='text'
+          placeholder='Name'
+          value={name}
+          onChangeInput={(value) => {
+            setName(value);
+          }}
+        />
+        <div className='flex items-center gap-1'>
+          <h1 className='text-xs md:text-base'>{creaturesEnclosId.price}</h1>
+          <img className='h-6 md:h-7' src={Moon} alt='' />
+          <ButtonBuy
+            onClick={buyCreature}
+            bg='bg-white/75'
+            border='border border-black'
+            cursor='pointer'
+          >
+            <p className='text-2xl'>{'+'}</p>
+            <img
+              className='w-7 p-0.5'
+              src={`/images/creatures/${creaturesEnclosId.src_image}`}
+              alt=''
+            />
+          </ButtonBuy>
         </div>
       </div>
-    </Background>
+    </div>
   );
 }
