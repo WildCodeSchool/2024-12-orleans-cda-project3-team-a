@@ -16,7 +16,6 @@ type ShopCreatureProps = {
 
 export default function Creature({ creature }: ShopCreatureProps) {
   const [name, setName] = useState('');
-  //   const { creaturesEnclos } = useEnclosures();
   const { wallet } = useGameInfoContext();
 
   const hasEnoughMoons = wallet > creature.price;
