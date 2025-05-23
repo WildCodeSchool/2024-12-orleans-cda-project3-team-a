@@ -4,8 +4,6 @@ import type { Enclosure } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
 
-// import useEnclosures from '@/hooks/use-enclos';
-
 import Moon from '../assets/images/icons-buttons/moon.png';
 import ButtonBuy from './button-buy';
 import Input from './input';
