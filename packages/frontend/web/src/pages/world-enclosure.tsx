@@ -37,7 +37,7 @@ export default function WorldEnclosure() {
         );
       })}
 
-      <header className='fixed flex w-8 right-20 gap-3 p-2 z-3 md:w-20'>
+      <header className='fixed -right-2 z-3 flex w-48 gap-3 p-2 md:right-0'>
         <InfoNbVisitorsMoons />
         <ReturnHome />
       </header>
