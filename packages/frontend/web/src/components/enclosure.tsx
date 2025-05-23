@@ -23,7 +23,7 @@ export default function Enclosure({
   const { inactiveCreatures } = useCreatures(enclosures.id);
 
   const totalInactive = Number(
-    inactiveCreatures[0]?.total_inactive_creatures ?? 0,
+    inactiveCreatures?.total_inactive_creatures ?? 0,
   );
   const isHungry = totalInactive > 0;
 

@@ -32,7 +32,7 @@ function getInactiveCreatureCount(parkId: number, creatureId: number) {
     .where('park_creatures.park_id', '=', parkId)
     .where('park_creatures.creature_id', '=', creatureId)
     .where('park_creatures.feed_date', '<', dateNow)
-    .execute();
+    .executeTakeFirst();
 }
 
 export type Creatures = Awaited<ReturnType<typeof getCreatures>>;

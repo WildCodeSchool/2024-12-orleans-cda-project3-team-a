@@ -5,7 +5,7 @@ import type { Creatures, InactiveCreatureCount } from '@app/api';
 export default function useCreatures(creatureId: number) {
   const [creatures, setCreatures] = useState<Creatures>([]);
   const [inactiveCreatures, setInactiveCreatures] =
-    useState<InactiveCreatureCount>([]);
+    useState<InactiveCreatureCount>();
   const [potionPrice, setPotionPrice] = useState(0);
 
   const fetchCreatures = useCallback(async () => {
