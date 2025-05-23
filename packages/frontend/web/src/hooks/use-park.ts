@@ -6,6 +6,7 @@ export default function usePark() {
   const [wallet, setWallet] = useState(0);
   const [visitorsCount, setVisitorsCount] = useState(0);
   const [isLoadingPark, setIsLoadingPark] = useState(true);
+  const [parkName, setParkName] = useState('');
 
   const fetchPark = useCallback(async () => {
     try {
@@ -21,6 +22,7 @@ export default function usePark() {
 
       setWallet(data.park.wallet);
       setVisitorsCount(data.visitorsCount);
+      setParkName(data.park.park_name);
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
@@ -43,6 +45,7 @@ export default function usePark() {
     walletFormated,
     visitorsFormated,
     isLoadingPark,
+    parkName,
     refetchPark: fetchPark,
   };
 }
