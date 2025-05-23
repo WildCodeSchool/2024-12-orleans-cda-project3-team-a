@@ -1,4 +1,3 @@
-import { log } from 'console';
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
