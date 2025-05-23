@@ -45,7 +45,6 @@ export type InactiveCreatureCount = Awaited<
 getCreaturesRoute.get('/', async (req: Request, res) => {
   const parkId = req.parkId;
   const creatureId = req.query.creature_id;
-  // const zoneId = req.query.zone_id;
 
   if (parkId === undefined) {
     res.json({
