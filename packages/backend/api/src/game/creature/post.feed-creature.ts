@@ -5,7 +5,7 @@ import { db } from '@app/backend-shared';
 
 const postFeedCreature = Router();
 
-postFeedCreature.post('/', async (req: Request, res) => {
+postFeedCreature.post('/feed', async (req: Request, res) => {
   const parkId = req.parkId;
   const { parkCreatureId, zoneId } = req.body;
 
@@ -37,7 +37,7 @@ postFeedCreature.post('/', async (req: Request, res) => {
     return;
   }
 
-  if (typeof creature.feed_timer === 'string' || creature.feed_timer === null) {
+  if (creature.feed_timer === null) {
     res.json({
       ok: false,
       message: 'format is not compatible',

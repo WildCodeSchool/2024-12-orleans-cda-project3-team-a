@@ -23,9 +23,8 @@ function getCreatures(parkId: number, creatureId: number) {
     .execute();
 }
 
-const dateNow = new Date();
-
 function getInactiveCreatureCount(parkId: number, creatureId: number) {
+  const dateNow = new Date();
   return db
     .selectFrom('park_creatures')
     .innerJoin('creatures', 'park_creatures.creature_id', 'creatures.id')

@@ -9,7 +9,7 @@ import getEnclosures from './get.enclosures';
 import getParkUser from './get.park-user';
 import getZonesCount from './get.zones-count';
 import parkRouter from './park';
-import postBuyCreature from './post.buy-creature';
+import postBuyCreature from './creature/post.buy-creature';
 import visitorRouter from './visitor';
 
 const gameRouter = express.Router();

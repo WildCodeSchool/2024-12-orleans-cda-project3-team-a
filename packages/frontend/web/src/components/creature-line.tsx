@@ -38,7 +38,7 @@ export default function CreatureLine({ creatureId }: CreatureId) {
     if (!hasEnoughMoons) return;
 
     try {
-      const response = await fetch(`/api/game/creature`, {
+      const response = await fetch(`/api/game/creature/feed`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
