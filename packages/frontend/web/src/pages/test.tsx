@@ -1,13 +1,12 @@
 import { useState } from 'react';
 
 import Barrier from '@/components/barrier';
-import CloseWindow from '@/components/close-window';
 import Input from '@/components/input';
 import Loader from '@/components/loader';
 import Logout from '@/components/logout';
+import ShopCreature from '@/components/modal-shop-creatures';
 import NbVisitorsMoons from '@/components/nb-visitors-moons';
 import ReturnHome from '@/components/return-home';
-import ShopCreature from '@/components/shop-creatures';
 import useFetchBarriers from '@/hooks/use-fetch-barriers';
 
 export default function Test() {
@@ -17,7 +16,7 @@ export default function Test() {
   return (
     <div className='grid min-w-[1600px] grid-cols-2'>
       <div>
-        <ShopCreature creatureId={5} />
+        <ShopCreature />
         <ReturnHome />
         <Input
           bgColor='bg-primary-blue'

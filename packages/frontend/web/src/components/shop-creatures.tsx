@@ -1,45 +1,78 @@
 import { useState } from 'react';
 
+import type { Enclosure } from '@app/api';
+
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import useEnclosures from '@/hooks/use-enclos';
 
-import BgMenu from './bg-menu';
-import Creature from './creatures';
+// import useEnclosures from '@/hooks/use-enclos';
 
-export default function ShopCreature() {
-  const { creaturesEnclos } = useEnclosures();
-  const { unlockedZones } = useGameInfoContext();
+import Moon from '../assets/images/icons-buttons/moon.png';
+import ButtonBuy from './button-buy';
+import Input from './input';
 
-  const [selectedZoneId, setSelectedZoneId] = useState<number>();
+type ShopCreatureProps = {
+  readonly creature: Enclosure;
+};
 
-  const creaturesInZone = creaturesEnclos.filter(
-    (creature) => creature.zone_id === selectedZoneId,
-  );
+export default function Creature({ creature }: ShopCreatureProps) {
+  const [name, setName] = useState('');
+  //   const { creaturesEnclos } = useEnclosures();
+  const { wallet } = useGameInfoContext();
+
+  const hasEnoughMoons = wallet > creature.price;
+
+  const buyCreature = async () => {
+    if (!hasEnoughMoons) return;
+
+    try {
+      const response = await fetch(
+        `/api/game/buy-creature?creatureId=${creature.id}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name,
+            creatureId: creature.id,
+          }),
+          credentials: 'include',
+        },
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
-    <BgMenu>
-      <div className='mb-4 flex justify-center gap-4'>
-        {unlockedZones.map((zone) => (
-          <button
-            key={zone.zone_id}
-            type='button'
-            onClick={() => {
-              setSelectedZoneId(zone.zone_id);
-            }}
-          >
-            <img
-              src={`/images/logo/${zone.src_image}`}
-              alt=''
-              className='h-25 border-2 p-2'
-            />
-          </button>
-        ))}
-      </div>
-      <div>
-        {creaturesInZone.map((creature) => (
-          <Creature key={creature.id} creature={creature} />
-        ))}
-      </div>
-    </BgMenu>
+    <div
+      key={creature.id}
+      className='flex items-center justify-center gap-1 md:gap-5'
+    >
+      <img
+        className='w-12 md:w-18'
+        src={`/images/creatures/${creature.src_image}`}
+        alt=''
+      />
+      <Input
+        bgColor='bg-white'
+        borderColor='border-gray'
+        type='text'
+        placeholder={creature.species}
+        value={name}
+        onChangeInput={(value) => {
+          setName(value);
+        }}
+      />
+      <ButtonBuy
+        onClick={buyCreature}
+        bg='bg-white/75'
+        border='border border-black'
+        cursor='pointer'
+      >
+        <p>{creature.price}</p>
+        <img className='w-5' src={Moon} alt='' />
+      </ButtonBuy>
+    </div>
   );
 }
