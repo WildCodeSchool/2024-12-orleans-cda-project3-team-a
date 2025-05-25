@@ -17,6 +17,7 @@ function getVisitors(parkId: number) {
       'visitors.src_image',
       'visitors.spending',
       'visitors.spending_time',
+      'visitors.category',
       ({ fn }) => fn.count('park_visitors.visitor_id').as('visitor_count'),
     ])
     .groupBy([
@@ -24,6 +25,7 @@ function getVisitors(parkId: number) {
       'visitors.src_image',
       'visitors.spending',
       'visitors.spending_time',
+      'visitors.category',
     ])
     .execute();
 }

@@ -5,7 +5,6 @@ import type { Enclosure } from '@app/api';
 
 import alert from '../assets/images/icons-buttons/alert.png';
 import ButtonBuy from './button-buy';
-import BuyCreature from './buy-creature';
 
 type EnclosureProps = {
   readonly decorations: Decorations;
@@ -113,7 +112,6 @@ export default function Enclosure({
         <h1 className={` ${isLocked ? 'absolute top-10' : 'hidden'} `}>
           {enclosures.species}
         </h1>
-        <BuyCreature creatureId={enclosures.id} />
         {!isLocked && (
           <ButtonBuy
             bg='bg-white/75'
