@@ -92,18 +92,14 @@ body {
 }
 .move-horizontal {
   animation: moveHorizontal 8s linear infinite;
-  /* display: inline-block; */
   will-change: transform;
 }
 
-/* image qui saute */
 .move-vertical {
   animation: moveVertical 0.6s ease-in-out infinite;
   will-change: transform;
 }
-
-
-
+/* End of animation visitor */
 
 
 .text-outline-purple {

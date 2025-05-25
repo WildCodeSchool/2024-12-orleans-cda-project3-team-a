@@ -1,13 +1,12 @@
 import useVisitors from '@/hooks/use-visitors';
 
 export type ZoneIdPropos = {
-  readonly zoneId: string | undefined | number;
+  readonly zoneId: string | undefined;
 };
 export default function Visitor({ zoneId }: ZoneIdPropos) {
   const { visitors } = useVisitors();
-  console.log(visitors);
 
-  //count the number of visitor in the zone selected and max = 4
+  //count the number of visitors in the zone selected and max = 4
   const countVisitorZone = Math.min(
     visitors.reduce((count, element) => {
       return (
@@ -20,6 +19,7 @@ export default function Visitor({ zoneId }: ZoneIdPropos) {
     4,
   );
 
+  //filter to have only visitor on the zone selected
   const visitorZone = visitors.find(
     (visitor) => Number(visitor.visitor_id) === Number(zoneId),
   );
