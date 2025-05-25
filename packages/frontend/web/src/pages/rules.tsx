@@ -3,10 +3,10 @@ import ReturnHome from '@/components/return-home';
 export default function Rules() {
   return (
     <div className='text-secondary-blue z-3 flex flex-col items-center justify-center p-2'>
-      <p className='mt-6 p-4 text-xl font-extrabold tracking-[0.6em] md:mt-14 md:text-2xl'>
+      <h1 className='mt-6 p-4 text-xl font-extrabold tracking-[0.6em] md:mt-14 md:text-2xl'>
         {'RULES'}
-      </p>
-      <div>
+      </h1>
+      <div className='text-xs md:text-base'>
         <p>
           {`🎉 Welcome to the adventure! 🎉 Ready to manage the most incredible fantasy creature park ?
  In this magical world, you can collect and care for legendary beings while attracting amazed visitors!`}
