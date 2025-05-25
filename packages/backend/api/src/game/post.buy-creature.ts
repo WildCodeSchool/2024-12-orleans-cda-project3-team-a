@@ -11,8 +11,6 @@ postBuyCreature.post('/buy-creature', async (req: Request, res) => {
 
   const gender = Math.random() < 0.5 ? 'male' : 'female';
 
-  // const parkId=30;
-
   const name = req.body.name;
   const zoneId = req.body.zoneId;
 
@@ -101,16 +99,9 @@ postBuyCreature.post('/buy-creature', async (req: Request, res) => {
     })
     .executeTakeFirst();
 
-  // const visitor_add = await db
-  // .selectFrom('park_visitors')
-  // .selectAll()
-  // .orderBy('id desc')
-  // .executeTakeFirst();
-
   res.json({
     ok: true,
     message: 'creature add and visitor add',
-    // , visitor_add
   });
 });
 export default postBuyCreature;

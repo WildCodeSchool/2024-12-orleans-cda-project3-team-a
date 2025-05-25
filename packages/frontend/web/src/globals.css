@@ -83,7 +83,8 @@ body {
 }
 
 @keyframes moveVertical {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -100,7 +101,6 @@ body {
   will-change: transform;
 }
 /* End of animation visitor */
-
 
 .text-outline-purple {
   -webkit-text-stroke-width: 4px;

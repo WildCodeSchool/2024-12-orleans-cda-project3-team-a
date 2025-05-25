@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import Barrier from '@/components/barrier';
-import CloseWindow from '@/components/close-window';
 import Input from '@/components/input';
 import Loader from '@/components/loader';
 import Logout from '@/components/logout';
@@ -12,8 +11,6 @@ import useFetchBarriers from '@/hooks/use-fetch-barriers';
 export default function Test() {
   const { barriers, isLoading, refetch } = useFetchBarriers();
   const [email, setEmail] = useState('');
-
-  const creatureId = 3;
 
   return (
     <div className='grid min-w-[1600px] grid-cols-2'>

@@ -117,7 +117,6 @@ export default function Enclosure({
             bg='bg-white/75'
             border='border border-black'
             cursor='pointer'
-            onClick={() => (window.location.href = '/test')}
           >
             {enclosures.quantityCreature}
           </ButtonBuy>
