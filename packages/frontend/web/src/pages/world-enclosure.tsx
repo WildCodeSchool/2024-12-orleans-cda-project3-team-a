@@ -1,10 +1,5 @@
 import { useState } from 'react';
-import {
-  Navigate,
-  useNavigate,
-  useNavigation,
-  useParams,
-} from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 import type { Enclosure } from '@app/api';
 
