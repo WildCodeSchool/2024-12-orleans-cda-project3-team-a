@@ -1,3 +1,4 @@
+import { useGameInfoContext } from '@/contexts/game-info-context';
 import useCreatures from '@/hooks/use-creatures';
 import { formatRemainingTime } from '@/utils/format-remaining-time';
 
@@ -25,62 +26,95 @@ function getPotionImage(zoneId: number) {
 }
 
 export default function CreatureLine({ creatureId }: CreatureId) {
-  const { creatures } = useCreatures(creatureId);
+  const { creatures, potionPrice, refetchCreature } = useCreatures(creatureId);
+  const { wallet } = useGameInfoContext();
+  const hasEnoughMoons = wallet > Number(potionPrice);
 
   if (creatures.length === 0) {
-    return (
-      <p>{`You don't have any species yet. Buy your first species..! `}</p>
-    );
+    return <p>{`You don't have any species yet. Buy your first species..!`}</p>;
   }
 
+  const feedCreature = async (parkCreatureId: number, zoneId: number) => {
+    if (!hasEnoughMoons) return;
+
+    try {
+      const response = await fetch(`/api/game/creature/feed`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          parkCreatureId,
+          zoneId,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.ok === true) {
+        await refetchCreature();
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  };
+
   return (
-    <div>
-      <div className='flex flex-col gap-4 pt-3 md:grid md:grid-cols-2'>
-        {creatures.map((creatureData) => {
-          const feedDate = new Date(creatureData.feed_date);
-          const timeRemainingText = formatRemainingTime(feedDate);
+    <div className='flex flex-col gap-4 pt-3 md:grid md:grid-cols-2'>
+      {creatures.map((creatureData) => {
+        const feedDate = new Date(creatureData.feed_date);
+        const remainingTime = formatRemainingTime(feedDate);
+        const now = new Date();
+        const shouldEat = feedDate.getTime() < now.getTime();
 
-          return (
-            <div
-              key={creatureData.id}
-              className='flex items-center justify-center gap-3'
-            >
-              <div className='relative flex w-17'>
-                <img
-                  src={`/images/creatures/${creatureData.src_image}`}
-                  alt={creatureData.species}
-                  className='w-15'
-                />
-                <img
-                  src={creatureData.gender === 'female' ? Female : Male}
-                  alt={creatureData.gender}
-                  className='absolute right-0 bottom-1 w-2 md:w-5'
-                />
-              </div>
-
-              <div className='h-5 w-51 rounded border bg-white px-2 focus:border-2 focus:outline-none md:h-7 md:w-40 md:rounded-md'>
-                {creatureData.name}
-              </div>
-
-              <div className='h-5 w-51 rounded border bg-gray-300 px-2 focus:border-2 focus:outline-none md:h-7 md:w-40 md:rounded-md'>
-                {timeRemainingText}
-              </div>
-
-              <ButtonBuy
-                border='border border-black'
-                bg='bg-white/75'
-                cursor='pointer'
-              >
-                <img
-                  src={`/images/decorations/${getPotionImage(creatureData.zone_id)}`}
-                  alt='potion'
-                  className='w-15 p-0.5 md:w-7'
-                />
-              </ButtonBuy>
+        return (
+          <div
+            key={creatureData.id}
+            className='flex items-center justify-center gap-3'
+          >
+            <div className='relative flex w-17'>
+              <img
+                src={`/images/creatures/${creatureData.src_image}`}
+                alt={creatureData.species}
+                className={`w-15 ${!shouldEat ? '' : 'animate-none grayscale'}`}
+              />
+              <img
+                src={creatureData.gender === 'female' ? Female : Male}
+                alt={creatureData.gender}
+                className='absolute right-0 bottom-1 w-2 md:w-5'
+              />
             </div>
-          );
-        })}
-      </div>
+
+            <div className='h-5 w-51 rounded border bg-white px-2 focus:border-2 focus:outline-none md:h-7 md:w-40 md:rounded-md'>
+              {creatureData.name}
+            </div>
+
+            <div className='h-5 w-51 rounded border bg-gray-300 px-2 focus:border-2 focus:outline-none md:h-7 md:w-40 md:rounded-md'>
+              {remainingTime}
+            </div>
+
+            <ButtonBuy
+              border='border border-black'
+              bg='bg-white/75'
+              cursor={shouldEat ? 'pointer' : 'not-allowed'}
+              grayscale={!shouldEat}
+              onClick={async () => {
+                if (shouldEat) {
+                  await feedCreature(creatureData.id, creatureData.zone_id);
+                }
+              }}
+            >
+              <img
+                src={`/images/decorations/${getPotionImage(creatureData.zone_id)}`}
+                alt='potion'
+                className='w-15 p-0.5 md:w-7'
+              />
+            </ButtonBuy>
+          </div>
+        );
+      })}
     </div>
   );
 }
