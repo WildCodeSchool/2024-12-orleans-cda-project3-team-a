@@ -50,7 +50,7 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
         },
       );
 
-      // on refetch plus tard
+      // refetch for the information wallet and visitor number
       const result = await response.json();
       if (result.ok === true) {
         await fetchAll();
