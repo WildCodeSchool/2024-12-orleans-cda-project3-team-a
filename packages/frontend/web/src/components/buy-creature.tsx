@@ -21,7 +21,6 @@ export default function BuyCreature({
 }: BuyCreatureProps) {
   const [name, setName] = useState('');
   const [isBought, setIsBought] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
   const { wallet, fetchAll } = useGameInfoContext();
   const { creaturesEnclos } = useEnclosures();
   const { zone_id: zoneId } = useParams();
