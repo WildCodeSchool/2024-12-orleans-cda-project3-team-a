@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import type { Enclosure } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
+import useCreatures from '@/hooks/use-creatures';
 import useEnclosures from '@/hooks/use-enclos';
 
 import Moon from '../assets/images/icons-buttons/moon.png';
@@ -12,9 +13,13 @@ import Input from './input';
 
 type BuyCreatureProps = {
   readonly creatureId: number;
+  readonly fetchCreatures: () => Promise<void>;
 };
 
-export default function BuyCreature({ creatureId }: BuyCreatureProps) {
+export default function BuyCreature({
+  creatureId,
+  fetchCreatures,
+}: BuyCreatureProps) {
   const [name, setName] = useState('');
   const { wallet, fetchAll } = useGameInfoContext();
   const { creaturesEnclos } = useEnclosures();
@@ -53,6 +58,8 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
 
       if (result.ok === true) {
         await fetchAll();
+        // await refetchCreature(); nv truc
+        await fetchCreatures();
       }
     } catch (error) {
       // eslint-disable-next-line no-console
