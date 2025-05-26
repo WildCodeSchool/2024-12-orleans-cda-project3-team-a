@@ -1,9 +1,9 @@
 import useVisitors from '@/hooks/use-visitors';
 
-export type ZoneIdPropos = {
+export type ZoneIdProps = {
   readonly zoneId: string | undefined;
 };
-export default function Visitor({ zoneId }: ZoneIdPropos) {
+export default function Visitor({ zoneId }: ZoneIdProps) {
   const { visitors } = useVisitors();
 
   //count the number of visitors in the zone selected and max = 4
