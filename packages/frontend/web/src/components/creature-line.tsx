@@ -8,7 +8,6 @@ import Male from '../assets/images/icons-buttons/male.png';
 import ButtonBuy from './button-buy';
 
 type CreatureLineProps = {
-  // readonly creatureId: number;
   readonly fetchCreatures: () => Promise<void>;
   readonly creatures: Creatures;
   readonly potionPrice: number;
@@ -30,7 +29,6 @@ function getPotionImage(zoneId: number) {
 }
 
 export default function CreatureLine({
-  // creatureId,
   fetchCreatures,
   creatures,
   potionPrice,
