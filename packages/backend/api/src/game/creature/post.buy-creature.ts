@@ -3,16 +3,15 @@ import { sql } from 'kysely';
 
 import { db } from '@app/backend-shared';
 
-import parkRouter from '../park';
-
 const postBuyCreature = Router();
 
 postBuyCreature.post('/buy', async (req: Request, res) => {
   const parkId = req.parkId;
-  const name = req.body.name;
+
   const creatureId = req.query.creatureId;
 
   const zoneId = req.body.zoneId;
+  const name = req.body.name;
 
   const gender = Math.random() < 0.5 ? 'male' : 'female';
 
@@ -26,6 +25,7 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
   if (name === undefined) {
     res.json({
       ok: false,
+      message: 'name is undefined to buy creature',
     });
     return;
   }
@@ -33,7 +33,8 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
   if (typeof creatureId !== 'string') {
     res.json({
       ok: false,
-      message: 'creatureId missing',
+      message: 'creatureId is not a string',
+      creatureId,
     });
     return;
   }
@@ -43,12 +44,15 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     .select(['id', 'price', 'feed_timer'])
     .where('id', '=', parseInt(creatureId))
     .where('zone_id', '=', zoneId)
+    .where('zone_id', '=', zoneId)
     .executeTakeFirst();
 
   if (!creature) {
     res.json({
       ok: false,
-      message: 'no creature find',
+      message: 'no creature find in the zone chosen',
+      creatureId,
+      zoneId,
     });
     return;
   }
@@ -70,6 +74,7 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     return;
   }
 
+  //insert into park_creature the new creature
   await db
     .insertInto('park_creatures')
     .values({
@@ -78,9 +83,20 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
       is_adult: 1,
       is_parent: 0,
       feed_date: sql`NOW() + INTERVAL ${creature.feed_timer} MINUTE`,
-      adult_at: sql`NOW() + INTERVAL 2 DAY`,
+      adult_at: sql`NOW()`,
       park_id: parkId,
       creature_id: parseInt(creatureId),
+    })
+    .executeTakeFirst();
+
+  //insert into park_visitor the new visitor
+  await db
+    .insertInto('park_visitors')
+    .values({
+      entry_time: sql`NOW()`,
+      exit_time: sql`NOW() + INTERVAL 2 DAY`,
+      park_id: parkId,
+      visitor_id: zoneId,
     })
     .executeTakeFirst();
 
@@ -134,7 +150,7 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
 
   res.json({
     ok: true,
-    message: 'creature add',
+    message: 'creature add and visitor add',
   });
 });
 export default postBuyCreature;

@@ -9,6 +9,7 @@ import FeedModal from '@/components/feed-modal';
 import Loader from '@/components/loader';
 import InfoNbVisitorsMoons from '@/components/nb-visitors-moons';
 import ReturnHome from '@/components/return-home';
+import Visitor from '@/components/visitor';
 import { useGameInfoContext } from '@/contexts/game-info-context';
 import useFetchBarriers from '@/hooks/use-fetch-barriers';
 
@@ -80,6 +81,10 @@ export default function WorldEnclosure() {
           })}
         </>
       )}
+
+      <div className='absolute top-1/2 -translate-y-1/2'>
+        <Visitor zoneId={zoneId} />
+      </div>
     </div>
   );
 }
