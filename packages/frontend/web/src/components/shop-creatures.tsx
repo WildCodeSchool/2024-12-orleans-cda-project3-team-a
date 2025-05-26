@@ -14,7 +14,7 @@ type ShopCreatureProps = {
 
 export default function Creature({ creature }: ShopCreatureProps) {
   const [name, setName] = useState('');
-  const { wallet } = useGameInfoContext();
+  const { wallet, fetchAll } = useGameInfoContext();
 
   const hasEnoughMoons = wallet > creature.price;
 
@@ -31,12 +31,15 @@ export default function Creature({ creature }: ShopCreatureProps) {
           },
           body: JSON.stringify({
             name,
-            creatureId: creature.id,
             zoneId: creature.zone_id,
           }),
           credentials: 'include',
         },
       );
+      const result = await response.json();
+      if (result.ok === true) {
+        await fetchAll();
+      }
     } catch (error) {
       console.error(error);
     }
