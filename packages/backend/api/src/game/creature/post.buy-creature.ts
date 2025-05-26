@@ -128,10 +128,15 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     .where('park_zones.zone_id', '=', Number(zoneId) + 1)
     .executeTakeFirst();
 
-  //if we have unlocked all creature in the zone, we add the next zone if is not already the case
-  if (Number(zoneId) === 4) {
-    return;
+  //count the number of zone possible
+  const maxZone = await db
+    .selectFrom('zones')
+    .select([db.fn.count('zones.id').as('countZone')])
+    .executeTakeFirst();
 
+  //if we have unlocked all creature in the zone, we add the next zone if is not already the case
+  //don't do this if we are in the last zone
+  if (Number(zoneId) !== Number(maxZone?.countZone)) {
     if (
       creaturesUnlockedByZone?.countCreaturesUnlockedByZone ===
       totalCreaturesByZone?.quantityCreature
@@ -150,7 +155,7 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
 
   res.json({
     ok: true,
-    message: 'creature add and visitor add',
+    message: 'creature add and visitor',
   });
 });
 export default postBuyCreature;
