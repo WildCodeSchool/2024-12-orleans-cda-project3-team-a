@@ -19,6 +19,7 @@ function getBarriers(parkId: number, zoneId: number) {
       'barriers.price',
       'barriers.position',
       'barriers.direction',
+      'barriers.link_world',
       'park_barriers.id as parkBarrierId',
     ])
     .execute();

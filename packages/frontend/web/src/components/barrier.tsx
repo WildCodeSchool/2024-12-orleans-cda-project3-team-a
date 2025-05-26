@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import type { Barrier } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
@@ -71,21 +73,23 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
       {/*Check if we have already bought the direction */}
       {barrier.parkBarrierId !== null ? (
         // display the right direction
-        <img
-          src={
-            barrier.direction === 'up'
-              ? directionUp
-              : barrier.direction === 'down'
-                ? directionDown
-                : barrier.direction === 'right'
-                  ? directionRight
-                  : barrier.direction === 'left'
-                    ? directionLeft
-                    : ''
-          }
-          alt='direction'
-          className='w-16'
-        />
+        <Link to={`/zone/${barrier.link_world}`}>
+          <img
+            src={
+              barrier.direction === 'up'
+                ? directionUp
+                : barrier.direction === 'down'
+                  ? directionDown
+                  : barrier.direction === 'right'
+                    ? directionRight
+                    : barrier.direction === 'left'
+                      ? directionLeft
+                      : ''
+            }
+            alt='direction'
+            className='w-16'
+          />
+        </Link>
       ) : (
         // display the barrier in construction
         <div className='relative flex items-center justify-center'>
