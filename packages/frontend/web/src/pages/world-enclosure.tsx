@@ -16,6 +16,8 @@ export default function WorldEnclosure() {
   const { creaturesEnclos, decorations } = useGameInfoContext();
   const { zone_id: zoneId } = useParams();
 
+  console.log(creaturesEnclos);
+
   const [selectedEnclosure, setSelectedEnclosure] = useState<Enclosure | null>(
     null,
   );

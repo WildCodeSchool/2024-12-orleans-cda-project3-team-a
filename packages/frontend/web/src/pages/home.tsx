@@ -8,6 +8,7 @@ import { useGameInfoContext } from '../contexts/game-info-context';
 
 export default function Home() {
   const { unlockedZones } = useGameInfoContext();
+  console.log(unlockedZones);
 
   return (
     <div
