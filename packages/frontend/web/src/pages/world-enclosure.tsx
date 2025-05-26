@@ -59,7 +59,7 @@ export default function WorldEnclosure() {
         );
       })}
       {selectedEnclosure ? (
-        <div className='absolute flex h-screen w-[98%] justify-center pb-6 text-center text-xs md:text-base'>
+        <div className='fixed flex h-screen w-[98%] justify-center pb-6 text-center text-xs md:text-base'>
           <FeedModal enclosure={selectedEnclosure} onClick={handleClose} />
         </div>
       ) : null}

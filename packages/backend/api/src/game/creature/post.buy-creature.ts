@@ -5,7 +5,7 @@ import { db } from '@app/backend-shared';
 
 const postBuyCreature = Router();
 
-postBuyCreature.post('/buy-creature', async (req: Request, res) => {
+postBuyCreature.post('/buy', async (req: Request, res) => {
   const parkId = req.parkId;
   const creatureId = req.query.creatureId;
 

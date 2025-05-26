@@ -7,6 +7,7 @@ type ButtonBuyProps = PropsWithChildren<{
   readonly border?: 'border border-black';
   readonly cursor: 'pointer' | 'not-allowed';
   readonly onClick?: () => void;
+  readonly grayscale?: boolean;
 }>;
 
 export default function ButtonBuy({
@@ -15,13 +16,16 @@ export default function ButtonBuy({
   border,
   cursor,
   onClick,
+  grayscale = false,
 }: ButtonBuyProps) {
   return (
     <button
       type='button'
       onClick={onClick}
-      className={`items-center justify-center rounded-md ${border} ${bg} px-2 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none`}
-      style={{ cursor: cursor }}
+      className={`items-center justify-center rounded-md ${border} ${bg} px-2 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] ${
+        grayscale ? 'grayscale' : 'active:shadow-none'
+      }`}
+      style={{ cursor }}
     >
       <div className='flex items-center justify-center gap-1'>{children}</div>
     </button>

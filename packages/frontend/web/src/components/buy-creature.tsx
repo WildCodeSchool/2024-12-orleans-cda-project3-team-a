@@ -35,7 +35,7 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
     if (!hasEnoughMoons) return;
     try {
       const response = await fetch(
-        `/api/game/buy-creature?creatureId=${creatureId}`,
+        `/api/game/creature/buy?creatureId=${creatureId}`,
         {
           method: 'POST',
           headers: {
