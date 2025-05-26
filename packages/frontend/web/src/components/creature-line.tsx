@@ -64,7 +64,7 @@ export default function CreatureLine({ creatureId }: CreatureId) {
         return (
           <div
             key={creatureData.id}
-            className='flex items-center justify-start gap-3'
+            className='flex items-center justify-center gap-3'
           >
             <div className='relative flex w-17'>
               <img
@@ -87,7 +87,6 @@ export default function CreatureLine({ creatureId }: CreatureId) {
               {remainingTime}
             </div>
 
-            {/* <div className={`${shouldEat ? '' : 'invisible'}`}> */}
             <ButtonBuy
               border='border border-black'
               bg='bg-white/75'
@@ -106,7 +105,6 @@ export default function CreatureLine({ creatureId }: CreatureId) {
               />
             </ButtonBuy>
           </div>
-          // </div>
         );
       })}
     </div>
