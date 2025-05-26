@@ -115,20 +115,21 @@ export default function Menu() {
           </div>
         </div>
       </div>
-
-      {/* Display Dashboard in pop-up if is open*/}
-      {openModal === 'dashboard' ? (
-        <div className='absolute flex max-h-screen w-[98%] translate-y-10 justify-center pb-6 text-center md:translate-y-2/10'>
+      <div
+        className={
+          openModal
+            ? 'absolute flex max-h-screen w-[98%] translate-y-10 justify-center pb-6 text-center md:translate-y-2/10'
+            : ''
+        }
+      >
+        {/* Display Dashboard in pop-up if is open*/}
+        {openModal === 'dashboard' ? (
           <Dashboard closeDashboard={handleClose} />
-        </div>
-      ) : null}
+        ) : null}
 
-      {/* Display Shop in pop-up if is open*/}
-      {openModal === 'shop' ? (
-        <div className='maw-h-screen absolute top-11 flex w-[98%] justify-center pb-6 text-center md:translate-y-2/10'>
-          <ShopCreature closeShop={handleClose} />
-        </div>
-      ) : null}
+        {/* Display Shop in pop-up if is open*/}
+        {openModal === 'shop' ? <ShopCreature closeShop={handleClose} /> : null}
+      </div>
     </>
   );
 }
