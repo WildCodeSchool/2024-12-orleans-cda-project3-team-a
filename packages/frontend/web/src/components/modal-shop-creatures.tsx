@@ -51,7 +51,7 @@ export default function ShopCreature({ closeShop }: ShopCreature) {
             </select>
           </div>
         ) : (
-          <div className='mb-10 flex justify-center gap-30'>
+          <div className='mb-10 flex justify-center gap-[5%]'>
             {zones.map((zone) => (
               <button
                 key={zone.zone_id}
@@ -60,12 +60,12 @@ export default function ShopCreature({ closeShop }: ShopCreature) {
                   setSelectedZoneId(zone.zone_id);
                 }}
                 disabled={zone.park_zone_id === null}
-                className='flex w-[15%] cursor-pointer justify-center rounded-md border bg-[linear-gradient(to_bottom,_#FFFFFF,_#D8D8D8)] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none'
+                className='flex h-20 w-[15%] cursor-pointer items-center justify-center rounded-md border bg-[linear-gradient(to_bottom,_#FFFFFF,_#D8D8D8)] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none'
               >
                 <img
                   src={`/images/logo/${zone.src_image}`}
                   alt=''
-                  className={`h-25 p-2 ${zone.park_zone_id === null ? 'cursor-not-allowed grayscale' : ''}`}
+                  className={`h-[90%] ${zone.park_zone_id === null ? 'cursor-not-allowed grayscale' : ''}`}
                 />
               </button>
             ))}

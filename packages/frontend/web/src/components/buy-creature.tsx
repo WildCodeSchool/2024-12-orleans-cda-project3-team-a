@@ -16,10 +16,9 @@ type BuyCreatureProps = {
 
 export default function BuyCreature({ creatureId }: BuyCreatureProps) {
   const [name, setName] = useState('');
-  const { wallet } = useGameInfoContext();
+  const { wallet, fetchAll } = useGameInfoContext();
   const { creaturesEnclos } = useEnclosures();
   const { zone_id: zoneId } = useParams();
-  const { fetchAll } = useGameInfoContext();
 
   const creaturesEnclosId = creaturesEnclos.find(
     (creature: Enclosure) => creature.id === creatureId,
@@ -43,7 +42,6 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
           },
           body: JSON.stringify({
             name,
-            creatureId,
             zoneId,
           }),
           credentials: 'include',
