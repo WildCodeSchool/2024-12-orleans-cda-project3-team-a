@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
 import Barrier from '@/components/barrier';
-import CloseWindow from '@/components/close-window';
 import Input from '@/components/input';
 import Loader from '@/components/loader';
 import Logout from '@/components/logout';
+import ShopCreature from '@/components/modal-shop-creatures';
 import NbVisitorsMoons from '@/components/nb-visitors-moons';
 import ReturnHome from '@/components/return-home';
 import useFetchBarriers from '@/hooks/use-fetch-barriers';
@@ -13,11 +13,10 @@ export default function Test() {
   const { barriers, isLoading, refetch } = useFetchBarriers();
   const [email, setEmail] = useState('');
 
-  const creatureId = 5;
-
   return (
     <div className='grid min-w-[1600px] grid-cols-2'>
       <div>
+        <ShopCreature />
         <ReturnHome />
         <Input
           bgColor='bg-primary-blue'
