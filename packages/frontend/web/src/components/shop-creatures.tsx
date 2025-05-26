@@ -23,7 +23,7 @@ export default function Creature({ creature }: ShopCreatureProps) {
 
     try {
       const response = await fetch(
-        `/api/game/buy-creature?creatureId=${creature.id}`,
+        `/api/game/creature/buy?creatureId=${creature.id}`,
         {
           method: 'POST',
           headers: {
@@ -32,6 +32,7 @@ export default function Creature({ creature }: ShopCreatureProps) {
           body: JSON.stringify({
             name,
             creatureId: creature.id,
+            zoneId: creature.zone_id,
           }),
           credentials: 'include',
         },
