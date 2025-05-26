@@ -1,13 +1,17 @@
+import type { Creatures } from '@app/api';
+
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import useCreatures from '@/hooks/use-creatures';
 import { formatRemainingTime } from '@/utils/format-remaining-time';
 
 import Female from '../assets/images/icons-buttons/female.png';
 import Male from '../assets/images/icons-buttons/male.png';
 import ButtonBuy from './button-buy';
 
-type CreatureId = {
-  readonly creatureId: number;
+type CreatureLineProps = {
+  // readonly creatureId: number;
+  readonly fetchCreatures: () => Promise<void>;
+  readonly creatures: Creatures;
+  readonly potionPrice: number;
 };
 
 function getPotionImage(zoneId: number) {
@@ -25,8 +29,12 @@ function getPotionImage(zoneId: number) {
   }
 }
 
-export default function CreatureLine({ creatureId }: CreatureId) {
-  const { creatures, potionPrice, refetchCreature } = useCreatures(creatureId);
+export default function CreatureLine({
+  // creatureId,
+  fetchCreatures,
+  creatures,
+  potionPrice,
+}: CreatureLineProps) {
   const { wallet, fetchAll } = useGameInfoContext();
   const hasEnoughMoons = wallet > Number(potionPrice);
 
@@ -53,7 +61,7 @@ export default function CreatureLine({ creatureId }: CreatureId) {
       const result = await response.json();
 
       if (result.ok === true) {
-        await refetchCreature();
+        await fetchCreatures();
         await fetchAll();
       }
     } catch (error) {

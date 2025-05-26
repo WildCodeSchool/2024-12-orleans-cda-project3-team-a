@@ -13,7 +13,9 @@ type FeedModalProps = {
 };
 
 export default function FeedModal({ enclosure, onClick }: FeedModalProps) {
-  const { refetchCreature } = useCreatures(enclosure.id);
+  const { refetchCreature, creatures, potionPrice } = useCreatures(
+    enclosure.id,
+  );
   return (
     <>
       {/* 'Display quantity creature in header' */}
@@ -39,7 +41,11 @@ export default function FeedModal({ enclosure, onClick }: FeedModalProps) {
                 fetchCreatures={refetchCreature}
               />
             </div>
-            <CreatureLine creatureId={enclosure.id} />
+            <CreatureLine
+              creatures={creatures}
+              potionPrice={potionPrice}
+              fetchCreatures={refetchCreature}
+            />
           </div>
         </BgMenu>
       </div>
