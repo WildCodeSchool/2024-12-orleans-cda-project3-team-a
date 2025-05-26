@@ -72,7 +72,6 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
       gender,
       is_adult: 1,
       is_parent: 0,
-      is_active: 1,
       feed_date: sql`NOW() + INTERVAL ${creature.feed_timer} MINUTE`,
       adult_at: sql`NOW() + INTERVAL 2 DAY`,
       park_id: parkId,
