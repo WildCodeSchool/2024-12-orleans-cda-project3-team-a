@@ -27,7 +27,7 @@ function getPotionImage(zoneId: number) {
 
 export default function CreatureLine({ creatureId }: CreatureId) {
   const { creatures, potionPrice, refetchCreature } = useCreatures(creatureId);
-  const { wallet } = useGameInfoContext();
+  const { wallet, fetchAll } = useGameInfoContext();
   const hasEnoughMoons = wallet > Number(potionPrice);
 
   if (creatures.length === 0) {
@@ -54,6 +54,7 @@ export default function CreatureLine({ creatureId }: CreatureId) {
 
       if (result.ok === true) {
         await refetchCreature();
+        await fetchAll();
       }
     } catch (error) {
       // eslint-disable-next-line no-console

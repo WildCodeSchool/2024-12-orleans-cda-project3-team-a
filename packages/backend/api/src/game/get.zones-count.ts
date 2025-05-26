@@ -15,7 +15,6 @@ function getZones(parkId: number) {
     .select([
       'zones.id as zone_id',
       'zones.name',
-      'zones.unlock_cost',
       'zones.src_image',
       'zones.link',
       'park_zones.id as park_zone_id',
