@@ -20,6 +20,8 @@ export default function BuyCreature({
   fetchCreatures,
 }: BuyCreatureProps) {
   const [name, setName] = useState('');
+  const [isBought, setIsBought] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
   const { wallet, fetchAll } = useGameInfoContext();
   const { creaturesEnclos } = useEnclosures();
   const { zone_id: zoneId } = useParams();
@@ -57,8 +59,13 @@ export default function BuyCreature({
 
       if (result.ok === true) {
         await fetchAll();
-        // await refetchCreature(); nv truc
         await fetchCreatures();
+        setName('');
+        setIsBought(true);
+        //display for 2 seconds a message to inform that is bought
+        setTimeout(() => {
+          setIsBought(false);
+        }, 2000);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -69,7 +76,7 @@ export default function BuyCreature({
   return (
     <div className='rounded-lg border-1'>
       <h1 className='pt-2'>{`Buy a new ${creaturesEnclosId.species}`}</h1>
-      <div className='bottom-5 flex items-center gap-3 p-2 md:gap-5'>
+      <div className='flex items-center gap-3 p-2 md:gap-5'>
         <Input
           bgColor='bg-white'
           borderColor='border-gray'
@@ -98,6 +105,11 @@ export default function BuyCreature({
           </ButtonBuy>
         </div>
       </div>
+      {isBought ? (
+        <p className='text-xxs text-green-600 italic md:text-xs'>
+          {'Creature bought!'}
+        </p>
+      ) : null}
     </div>
   );
 }
