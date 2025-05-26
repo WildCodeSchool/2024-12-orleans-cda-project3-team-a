@@ -1,7 +1,7 @@
-import { useState } from 'react';
-
 import type { Decorations } from '@app/api';
 import type { Enclosure } from '@app/api';
+
+import useCreatures from '@/hooks/use-creatures';
 
 import alert from '../assets/images/icons-buttons/alert.png';
 import ButtonBuy from './button-buy';
@@ -19,10 +19,15 @@ export default function Enclosure({
   enclosures,
   onClick,
 }: EnclosureProps) {
-  const [isHungry, setIsHungry] = useState(false);
   const isLocked = enclosures.quantityCreature === 0;
+  const { inactiveCreatures } = useCreatures(enclosures.id);
 
-  const getBackgound = (background: string) => {
+  const totalInactive = Number(
+    inactiveCreatures?.total_inactive_creatures ?? 0,
+  );
+  const isHungry = totalInactive > 0;
+
+  const getBackground = (background: string) => {
     switch (background) {
       case 'green':
         return 'bg-fairy-green';
@@ -87,8 +92,8 @@ export default function Enclosure({
 
   return (
     <div
+      className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackground(enclosures.background)} `}
       onClick={onClick}
-      className={`relative flex h-[50vh] cursor-pointer ${sizeEnclos} flex-col justify-center p-4 ${getBackgound(enclosures.background)} `}
     >
       {decorations.map((decoration) => (
         <img
