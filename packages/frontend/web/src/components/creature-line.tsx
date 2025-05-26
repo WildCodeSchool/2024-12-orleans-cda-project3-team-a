@@ -9,7 +9,6 @@ import ButtonBuy from './button-buy';
 type CreatureId = {
   readonly creatureId: number;
 };
-
 function getPotionImage(zoneId: number) {
   switch (zoneId) {
     case 1:
@@ -24,19 +23,15 @@ function getPotionImage(zoneId: number) {
       return 'winged-potion.png';
   }
 }
-
 export default function CreatureLine({ creatureId }: CreatureId) {
   const { creatures, potionPrice, refetchCreature } = useCreatures(creatureId);
   const { wallet, fetchAll } = useGameInfoContext();
   const hasEnoughMoons = wallet > Number(potionPrice);
-
   if (creatures.length === 0) {
     return <p>{`You don't have any species yet. Buy your first species..!`}</p>;
   }
-
   const feedCreature = async (parkCreatureId: number, zoneId: number) => {
     if (!hasEnoughMoons) return;
-
     try {
       const response = await fetch(`/api/game/creature/feed`, {
         method: 'POST',
@@ -49,9 +44,7 @@ export default function CreatureLine({ creatureId }: CreatureId) {
           zoneId,
         }),
       });
-
       const result = await response.json();
-
       if (result.ok === true) {
         await refetchCreature();
         await fetchAll();
@@ -61,7 +54,6 @@ export default function CreatureLine({ creatureId }: CreatureId) {
       console.error(error);
     }
   };
-
   return (
     <div className='flex flex-col gap-4 pt-3 md:grid md:grid-cols-2'>
       {creatures.map((creatureData) => {
@@ -69,11 +61,10 @@ export default function CreatureLine({ creatureId }: CreatureId) {
         const remainingTime = formatRemainingTime(feedDate);
         const now = new Date();
         const shouldEat = feedDate.getTime() < now.getTime();
-
         return (
           <div
             key={creatureData.id}
-            className='flex items-center justify-center gap-3'
+            className='flex items-center justify-start gap-3'
           >
             <div className='relative flex w-17'>
               <img
@@ -87,20 +78,21 @@ export default function CreatureLine({ creatureId }: CreatureId) {
                 className='absolute right-0 bottom-1 w-2 md:w-5'
               />
             </div>
-
-            <div className='h-5 w-51 rounded border bg-white px-2 focus:border-2 focus:outline-none md:h-7 md:w-40 md:rounded-md'>
+            <div className='h-5 w-51 rounded border bg-white px-2 md:h-7 md:w-40 md:rounded-md'>
               {creatureData.name}
             </div>
-
-            <div className='h-5 w-51 rounded border bg-gray-300 px-2 focus:border-2 focus:outline-none md:h-7 md:w-40 md:rounded-md'>
+            <div
+              className={`${shouldEat ? 'border-red-300 bg-red-100' : 'border-green-300 bg-green-100'} h-5 w-51 rounded border px-2 md:h-7 md:w-40 md:rounded-md`}
+            >
               {remainingTime}
             </div>
 
+            {/* <div className={`${shouldEat ? '' : 'invisible'}`}> */}
             <ButtonBuy
               border='border border-black'
               bg='bg-white/75'
               cursor={shouldEat ? 'pointer' : 'not-allowed'}
-              grayscale={!shouldEat}
+              invisible={!shouldEat}
               onClick={async () => {
                 if (shouldEat) {
                   await feedCreature(creatureData.id, creatureData.zone_id);
@@ -114,6 +106,7 @@ export default function CreatureLine({ creatureId }: CreatureId) {
               />
             </ButtonBuy>
           </div>
+          // </div>
         );
       })}
     </div>
