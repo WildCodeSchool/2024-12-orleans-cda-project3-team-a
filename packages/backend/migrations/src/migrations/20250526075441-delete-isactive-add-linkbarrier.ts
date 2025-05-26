@@ -14,12 +14,22 @@ export async function up(db: Kysely<DB>): Promise<void> {
       ALTER TABLE barriers
       ADD COLUMN link_world VARCHAR(50);
     `.execute(trx);
+
+    await sql`
+      ALTER TABLE zones
+      DROP COLUMN unlock_cost;
+    `.execute(trx);
   });
 }
 
 export async function down(db: Kysely<DB>): Promise<void> {
   // Migration code that reverts the database to the previous state.
   await db.transaction().execute(async (trx) => {
+    await sql`
+      ALTER TABLE zones
+      ADD COLUMN unlock_cost INT;
+    `.execute(trx);
+
     await sql`
       ALTER TABLE barriers
       DROP COLUMN link_world;

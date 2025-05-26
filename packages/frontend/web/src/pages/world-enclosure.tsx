@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import {
+  Navigate,
+  useNavigate,
+  useNavigation,
+  useParams,
+} from 'react-router-dom';
 
 import type { Enclosure } from '@app/api';
 
@@ -14,15 +19,20 @@ import { useGameInfoContext } from '@/contexts/game-info-context';
 import useFetchBarriers from '@/hooks/use-fetch-barriers';
 
 export default function WorldEnclosure() {
-  const { creaturesEnclos, decorations } = useGameInfoContext();
+  const { creaturesEnclos, decorations, unlockedZones } = useGameInfoContext();
   const { zone_id: zoneId } = useParams();
-
-  console.log(creaturesEnclos);
-
   const [selectedEnclosure, setSelectedEnclosure] = useState<Enclosure | null>(
     null,
   );
   const { barriers, isLoading, refetch } = useFetchBarriers();
+  const isUnlocked = unlockedZones.find(
+    (unlockedZone) => unlockedZone.zone_id === Number(zoneId),
+  );
+
+  //check if this zone is unlocked
+  if (isUnlocked?.park_zone_id === null) {
+    return <Navigate to='/home' />;
+  }
 
   const creatureWorld = creaturesEnclos.filter(
     (creature: Enclosure) => creature.zone_id === Number(zoneId),
