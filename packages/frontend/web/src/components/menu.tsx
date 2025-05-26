@@ -9,25 +9,27 @@ import iconRules from '../assets/images/icons-buttons/rules.png';
 import iconShop from '../assets/images/icons-buttons/shop.png';
 import Dashboard from './dashboard';
 import Logout from './logout';
+import ShopCreature from './modal-shop-creatures';
+
+type ModalName = 'dashboard' | 'shop' | 'ranking' | 'profil' | null;
 
 export default function Menu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isOpenDashboard, setIsOpenDashboard] = useState(false);
+  const [openModal, setOpenModal] = useState<ModalName>(null);
 
   const handleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleOpenDashboard = () => {
-    setIsOpenDashboard(true);
-    //close menu only in mobile
+  const handleClick = (modal: ModalName) => {
+    setOpenModal(modal);
     if (window.innerWidth < 768) {
       setIsMenuOpen(false);
     }
   };
 
-  const handleCloseDashboard = () => {
-    setIsOpenDashboard(false);
+  const handleClose = () => {
+    setOpenModal(null);
   };
 
   return (
@@ -63,16 +65,48 @@ export default function Menu() {
         >
           {/* First part of the menu content : dahsboard, shop, ranking */}
           <div className='flex flex-col gap-7 md:flex-row'>
-            <div onClick={handleOpenDashboard} className='cursor-pointer'>
+            <div
+              onClick={() => {
+                handleClick('dashboard');
+              }}
+              className='cursor-pointer'
+            >
               <img src={iconDashboard} alt='' className='h-6 md:h-7' />
             </div>
-
-            <img src={iconShop} alt='' className='h-6 md:h-7' />
-            <img src={iconRanking} alt='' className='h-6 md:h-7' />
+            <div
+              onClick={() => {
+                handleClick('shop');
+              }}
+            >
+              <img
+                src={iconShop}
+                alt=''
+                className='h-6 cursor-pointer md:h-7'
+              />
+            </div>
+            <div>
+              <img
+                onClick={() => {
+                  handleClick('ranking');
+                }}
+                src={iconRanking}
+                alt=''
+                className='h-6 cursor-pointer md:h-7'
+              />
+            </div>
           </div>
           {/* Second part of the menu content : profil, rules, log out */}
           <div className='flex flex-col gap-7 md:flex-row'>
-            <img src={iconProfil} alt='' className='h-6 md:h-7' />
+            <div>
+              <img
+                onClick={() => {
+                  handleClick('profil');
+                }}
+                src={iconProfil}
+                alt=''
+                className='h-6 cursor-pointer md:h-7'
+              />
+            </div>
             <Link to='/rules'>
               <img src={iconRules} alt='' className='h-6 md:h-7' />
             </Link>
@@ -81,13 +115,21 @@ export default function Menu() {
           </div>
         </div>
       </div>
+      <div
+        className={
+          openModal
+            ? 'absolute flex max-h-screen w-[98%] translate-y-10 justify-center pb-6 text-center md:translate-y-2/10'
+            : ''
+        }
+      >
+        {/* Display Dashboard in pop-up if is open*/}
+        {openModal === 'dashboard' ? (
+          <Dashboard closeDashboard={handleClose} />
+        ) : null}
 
-      {/* Display Dashboard in pop-up if is open*/}
-      {isOpenDashboard ? (
-        <div className='absolute flex max-h-screen w-[98%] translate-y-10 justify-center pb-6 text-center md:translate-y-2/10'>
-          <Dashboard closeDashboard={handleCloseDashboard} />
-        </div>
-      ) : null}
+        {/* Display Shop in pop-up if is open*/}
+        {openModal === 'shop' ? <ShopCreature closeShop={handleClose} /> : null}
+      </div>
     </>
   );
 }
