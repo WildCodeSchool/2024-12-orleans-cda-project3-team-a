@@ -39,7 +39,7 @@ export default function FeedModal({
         />
       </div>
       {/* Display content of Feed Modal */}
-      <div className='absolute top-15 max-h-[90%] overflow-auto'>
+      <div className='absolute top-15 left-[5%] max-h-[90%] w-[90%] overflow-auto'>
         <BgMenu>
           <div className='absolute top-0 right-0 m-3'>
             <CloseWindow onClick={onClick} />

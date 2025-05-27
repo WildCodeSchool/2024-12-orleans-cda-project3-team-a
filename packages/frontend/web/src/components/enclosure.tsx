@@ -8,6 +8,7 @@ import useCreatures from '@/hooks/use-creatures';
 import alert from '../assets/images/icons-buttons/alert.png';
 import ButtonBuy from './button-buy';
 import FeedModal from './feed-modal';
+import Portal from './portal';
 
 type EnclosureProps = {
   readonly decorations: Decorations;
@@ -107,12 +108,13 @@ export default function Enclosure({
     : isSix
       ? decoPositionSix
       : () => '';
-
   return (
     <div
       className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackground(enclosures.background)} `}
       onClick={() => {
-        handleEnclosureClick(enclosures);
+        if (!selectedEnclosure) {
+          handleEnclosureClick(enclosures);
+        }
       }}
     >
       {decorations.map((decoration) => (
@@ -149,18 +151,25 @@ export default function Enclosure({
       </div>
       {selectedEnclosure ? (
         <div
-          className='fixed z-3 flex h-screen w-[98%] justify-center pb-6 text-center text-xs md:text-base'
-          onClick={(event) => {
-            event.stopPropagation();
-          }}
+          className='flex flex-wrap items-center justify-center'
+          onClick={handleClose}
         >
-          <FeedModal
-            enclosure={selectedEnclosure}
-            onClick={handleClose}
-            potionPrice={potionPrice}
-            fetchCreatures={refetchCreature}
-            creatures={creatures}
-          />
+          <div
+            className='absolute z-5'
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            <Portal>
+              <FeedModal
+                enclosure={selectedEnclosure}
+                onClick={handleClose}
+                potionPrice={potionPrice}
+                fetchCreatures={refetchCreature}
+                creatures={creatures}
+              />
+            </Portal>
+          </div>
         </div>
       ) : null}
     </div>
