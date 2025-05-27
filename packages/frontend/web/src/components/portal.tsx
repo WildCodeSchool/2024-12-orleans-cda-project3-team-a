@@ -6,14 +6,5 @@ type PortalProps = {
 };
 
 export default function Portal({ children }: PortalProps) {
-  return createPortal(
-    <div
-      onClick={(event) => {
-        event.stopPropagation();
-      }}
-    >
-      {children}
-    </div>,
-    document.body,
-  );
+  return createPortal(children, document.body);
 }

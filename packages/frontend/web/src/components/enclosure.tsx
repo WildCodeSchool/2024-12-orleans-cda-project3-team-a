@@ -143,11 +143,12 @@ export default function Enclosure({
         )}
       </div>
       {isModalOpen ? (
-        <div
-          className='flex flex-wrap items-center justify-center'
-          onClick={handleClose}
-        >
-          <Portal>
+        <Portal>
+          <div
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
             <FeedModal
               enclosure={enclosures}
               onClick={handleClose}
@@ -155,8 +156,8 @@ export default function Enclosure({
               fetchCreatures={refetchCreature}
               creatures={creatures}
             />
-          </Portal>
-        </div>
+          </div>
+        </Portal>
       ) : null}
     </div>
   );
