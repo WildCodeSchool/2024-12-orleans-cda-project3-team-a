@@ -4,6 +4,7 @@ type InputProps = {
   readonly type: 'email' | 'password' | 'text';
   readonly placeholder: string;
   readonly onChangeInput: (value: string) => void;
+  readonly onBlur?: (value: string) => void;
   readonly value: string;
 };
 
@@ -14,6 +15,7 @@ export default function Input({
   placeholder,
   onChangeInput,
   value,
+  onBlur,
 }: InputProps) {
   return (
     <input
@@ -23,6 +25,11 @@ export default function Input({
       value={value}
       onChange={(event) => {
         onChangeInput(event.target.value);
+      }}
+      onBlur={(event) => {
+        if (onBlur) {
+          onBlur(event.target.value);
+        }
       }}
     />
   );
