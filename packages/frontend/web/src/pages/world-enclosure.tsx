@@ -8,6 +8,7 @@ import EnclosureComponent from '@/components/enclosure';
 import FeedModal from '@/components/feed-modal';
 import Loader from '@/components/loader';
 import InfoNbVisitorsMoons from '@/components/nb-visitors-moons';
+import Rank from '@/components/rank';
 import ReturnHome from '@/components/return-home';
 import Visitor from '@/components/visitor';
 import { useGameInfoContext } from '@/contexts/game-info-context';
@@ -45,6 +46,7 @@ export default function WorldEnclosure() {
   return (
     <div className='relative flex min-w-[1200px] flex-wrap md:w-full'>
       <header className='fixed -right-2 z-3 flex w-48 gap-3 p-2 md:right-0'>
+        <Rank />
         <InfoNbVisitorsMoons />
         <ReturnHome />
       </header>

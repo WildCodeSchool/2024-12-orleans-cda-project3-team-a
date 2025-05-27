@@ -8,17 +8,21 @@ const getRankRoute = express.Router();
 function getRank() {
   return db
     .selectFrom('parks as p')
+    .leftJoin('users as u', 'u.id', 'p.user_id')
     .leftJoin('park_creatures as pc', 'p.id', 'pc.park_id')
+    .leftJoin('park_visitors as pv', 'p.id', 'pv.park_id')
     .select([
       'p.id',
       'p.park_name',
       'p.wallet',
+      'u.username',
+      sql<number>`COUNT(DISTINCT pv.visitor_id)`.as('nb_visiteurs'),
       sql<number>`SUM(CASE WHEN pc.feed_date IS NOT NULL THEN 1 ELSE 0 END)`.as(
         'nb_creatures_nourries',
       ),
       sql<number>`COUNT(pc.creature_id)`.as('nb_creatures_total'),
     ])
-    .groupBy(['p.id', 'p.park_name', 'p.wallet'])
+    .groupBy(['p.id', 'p.park_name', 'p.wallet', 'u.username'])
     .orderBy('nb_creatures_nourries', 'desc')
     .orderBy('p.wallet', 'desc')
     .orderBy('nb_creatures_total', 'desc')

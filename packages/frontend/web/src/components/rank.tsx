@@ -1,27 +1,24 @@
-import type { Rank } from '@app/api';
+import type { Rank as RankType } from '@app/api';
 
 import useRank from '../hooks/use-rank';
 
 export default function Rank() {
-  const ranks = useRank() as Rank[] | null;
+  const rank = useRank();
+
+  if (!rank) {
+    return;
+  }
 
   return (
-    <div>
-      {ranks ? (
-        <ul>
-          {ranks.map((park) => (
-            <li key={park.id}>
-              {park.park_name}
-              {' - Nourries: '}
-              {park.nb_creatures_nourries}
-              {' - Wallet: '}
-              {park.wallet}
-            </li>
-          ))}
+    <ul>
+      {rank.map((park: RankType) => (
+        <ul key={park.id}>
+          <li>{park.username}</li>
+          <li>{park.park_name}</li>
+          <li>{park.nb_creatures_nourries}</li>
+          <li>{park.wallet}</li>
         </ul>
-      ) : (
-        <p>{'Chargement...'}</p>
-      )}
-    </div>
+      ))}
+    </ul>
   );
 }

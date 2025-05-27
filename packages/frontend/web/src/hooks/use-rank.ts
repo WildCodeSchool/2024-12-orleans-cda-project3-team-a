@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 
+import type { Rank } from '@app/api';
+
 export default function useRank() {
-  const [rank, setRank] = useState(null);
+  const [rank, setRank] = useState<Rank[] | null>(null);
 
   useEffect(() => {
     async function fetchRank() {
