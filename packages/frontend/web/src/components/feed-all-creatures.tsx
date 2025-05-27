@@ -132,9 +132,7 @@ export default function FeedAllCreatures({
         </ButtonBuy>
       </div>
       {isFeeding ? (
-        <p className='text-xs text-green-600 italic md:text-xs'>
-          {'Creatures feeding!'}
-        </p>
+        <p className='text-xs text-green-600 italic'>{'Creatures feeding!'}</p>
       ) : null}
     </div>
   );
