@@ -1,17 +1,14 @@
-// import { useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 
 import type { Enclosure } from '@app/api';
 
 import Barrier from '@/components/barrier';
 import EnclosureComponent from '@/components/enclosure';
-// import FeedModal from '@/components/feed-modal';
 import Loader from '@/components/loader';
 import InfoNbVisitorsMoons from '@/components/nb-visitors-moons';
 import ReturnHome from '@/components/return-home';
 import Visitor from '@/components/visitor';
 import { useGameInfoContext } from '@/contexts/game-info-context';
-// import useCreatures from '@/hooks/use-creatures';
 import useFetchBarriers from '@/hooks/use-fetch-barriers';
 
 export default function WorldEnclosure() {
@@ -32,14 +29,6 @@ export default function WorldEnclosure() {
     (creature: Enclosure) => creature.zone_id === Number(zoneId),
   );
   const total = creatureWorld.length;
-
-  // const handleEnclosureClick = (enclosure: Enclosure) => {
-  //   setSelectedEnclosure(enclosure);
-  // };
-
-  // const handleClose = () => {
-  //   setSelectedEnclosure(null);
-  // };
 
   return (
     <div className='relative flex min-w-[1200px] flex-wrap md:w-full'>

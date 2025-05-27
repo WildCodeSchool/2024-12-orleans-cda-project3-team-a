@@ -15,9 +15,6 @@ type EnclosureProps = {
   readonly totalCreaturesInZone: number;
   readonly enclosures: Enclosure;
   readonly onClick?: () => void;
-  //   readonly fetchCreatures: () => Promise<void>;
-  //   readonly inactiveCreatures: {total_inactive_creatures: string | number | bigint;
-  // } | undefined
 };
 
 export default function Enclosure({
