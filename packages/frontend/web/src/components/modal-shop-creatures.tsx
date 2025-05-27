@@ -5,13 +5,13 @@ import useEnclosures from '@/hooks/use-enclos';
 
 import BgMenu from './bg-menu';
 import CloseWindow from './close-window';
-import Creature from './shop-creatures';
+import LineCreature from './line-shop-creature';
 
-type ShopCreature = {
+type ModalShopCreatures = {
   readonly closeShop: () => void;
 };
 
-export default function ShopCreature({ closeShop }: ShopCreature) {
+export default function ModalShopCreatures({ closeShop }: ModalShopCreatures) {
   const { creaturesEnclos } = useEnclosures();
   const { unlockedZones: zones } = useGameInfoContext();
 
@@ -73,7 +73,7 @@ export default function ShopCreature({ closeShop }: ShopCreature) {
         )}
         <div className='relative top-3 mb-6 flex flex-col gap-10 md:top-5 md:grid md:grid-cols-2'>
           {creaturesInZone.map((creature) => (
-            <Creature key={creature.id} creature={creature} />
+            <LineCreature key={creature.id} creature={creature} />
           ))}
         </div>
       </BgMenu>
