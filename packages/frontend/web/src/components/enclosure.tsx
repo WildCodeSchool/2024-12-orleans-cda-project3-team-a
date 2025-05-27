@@ -24,14 +24,14 @@ export default function Enclosure({
   const isLocked = enclosures.quantityCreature === 0;
   const { inactiveCreatures, refetchCreature, creatures, potionPrice } =
     useCreatures(enclosures.id);
-  const [isModalOpen, setIsModalOpen] = useState<Enclosure | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleEnclosureClick = (enclosure: Enclosure) => {
-    setIsModalOpen(enclosure);
+  const handleEnclosureClick = () => {
+    setIsModalOpen(true);
   };
 
   const handleClose = () => {
-    setIsModalOpen(null);
+    setIsModalOpen(false);
   };
 
   const totalInactive = Number(
@@ -106,7 +106,7 @@ export default function Enclosure({
       className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackground(enclosures.background)} `}
       onClick={() => {
         if (!isModalOpen) {
-          handleEnclosureClick(enclosures);
+          handleEnclosureClick();
         }
       }}
     >
@@ -149,7 +149,7 @@ export default function Enclosure({
         >
           <Portal>
             <FeedModal
-              enclosure={isModalOpen}
+              enclosure={enclosures}
               onClick={handleClose}
               potionPrice={potionPrice}
               fetchCreatures={refetchCreature}
