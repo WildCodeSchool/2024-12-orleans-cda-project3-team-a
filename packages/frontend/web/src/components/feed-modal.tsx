@@ -4,6 +4,7 @@ import BgMenu from './bg-menu';
 import BuyCreature from './buy-creature';
 import CloseWindow from './close-window';
 import CreatureLine from './creature-line';
+import Feed from './feed-creatures';
 
 type FeedModalProps = {
   readonly enclosure: Enclosure;
@@ -32,6 +33,7 @@ export default function FeedModal({ enclosure, onClick }: FeedModalProps) {
           <div>
             <div className='m-3 flex w-full flex-wrap items-center justify-center gap-3 pt-2'>
               <BuyCreature creatureId={enclosure.id} />
+              <Feed creatureId={enclosure.id} />
             </div>
             <CreatureLine creatureId={enclosure.id} />
           </div>

@@ -64,7 +64,7 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
   return (
     <div className='rounded-lg border-1'>
       <h1 className='pt-2'>{`Buy a new ${creaturesEnclosId.species}`}</h1>
-      <div className='bottom-5 flex items-center gap-3 p-2 md:gap-5'>
+      <div className='flex items-center gap-3 p-2 md:gap-5'>
         <Input
           bgColor='bg-white'
           borderColor='border-gray'
