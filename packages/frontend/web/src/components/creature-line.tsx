@@ -42,6 +42,7 @@ export default function CreatureLine({
 
   const feedCreature = async (parkCreatureId: number, zoneId: number) => {
     if (!hasEnoughMoons) return;
+
     try {
       const response = await fetch(`/api/game/creature/feed`, {
         method: 'POST',
@@ -54,6 +55,7 @@ export default function CreatureLine({
           zoneId,
         }),
       });
+
       const result = await response.json();
       if (result.ok === true) {
         await fetchCreatures();
