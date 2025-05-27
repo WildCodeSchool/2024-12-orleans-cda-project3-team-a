@@ -1,8 +1,6 @@
 import type { Enclosure } from '@app/api';
 import type { Creatures } from '@app/api';
 
-// import useCreatures from '@/hooks/use-creatures';
-
 import BgMenu from './bg-menu';
 import BuyCreature from './buy-creature';
 import CloseWindow from './close-window';
@@ -24,9 +22,6 @@ export default function FeedModal({
   fetchCreatures,
   creatures,
 }: FeedModalProps) {
-  // const { refetchCreature, creatures, potionPrice } = useCreatures(
-  //   enclosure.id,
-  // );
   return (
     <>
       {/* 'Display quantity creature in header' */}
