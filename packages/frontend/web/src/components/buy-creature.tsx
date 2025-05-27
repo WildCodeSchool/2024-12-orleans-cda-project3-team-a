@@ -12,14 +12,18 @@ import Input from './input';
 
 type BuyCreatureProps = {
   readonly creatureId: number;
+  readonly fetchCreatures: () => Promise<void>;
 };
 
-export default function BuyCreature({ creatureId }: BuyCreatureProps) {
+export default function BuyCreature({
+  creatureId,
+  fetchCreatures,
+}: BuyCreatureProps) {
   const [name, setName] = useState('');
-  const { wallet } = useGameInfoContext();
+  const [isBought, setIsBought] = useState(false);
+  const { wallet, fetchAll } = useGameInfoContext();
   const { creaturesEnclos } = useEnclosures();
   const { zone_id: zoneId } = useParams();
-  const { fetchAll } = useGameInfoContext();
 
   const creaturesEnclosId = creaturesEnclos.find(
     (creature: Enclosure) => creature.id === creatureId,
@@ -43,7 +47,6 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
           },
           body: JSON.stringify({
             name,
-            creatureId,
             zoneId,
           }),
           credentials: 'include',
@@ -52,8 +55,16 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
 
       // refetch for the information wallet and visitor number
       const result = await response.json();
+
       if (result.ok === true) {
         await fetchAll();
+        await fetchCreatures();
+        setName('');
+        setIsBought(true);
+        //display for 2 seconds a message to inform that is bought
+        setTimeout(() => {
+          setIsBought(false);
+        }, 2000);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -93,6 +104,11 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
           </ButtonBuy>
         </div>
       </div>
+      {isBought ? (
+        <p className='text-xxs text-green-600 italic md:text-xs'>
+          {'Creature bought!'}
+        </p>
+      ) : null}
     </div>
   );
 }

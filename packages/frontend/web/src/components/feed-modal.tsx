@@ -1,5 +1,7 @@
 import type { Enclosure } from '@app/api';
 
+import useCreatures from '@/hooks/use-creatures';
+
 import BgMenu from './bg-menu';
 import BuyCreature from './buy-creature';
 import CloseWindow from './close-window';
@@ -12,6 +14,9 @@ type FeedModalProps = {
 };
 
 export default function FeedModal({ enclosure, onClick }: FeedModalProps) {
+  const { refetchCreature, creatures, potionPrice } = useCreatures(
+    enclosure.id,
+  );
   return (
     <>
       {/* 'Display quantity creature in header' */}
@@ -32,10 +37,16 @@ export default function FeedModal({ enclosure, onClick }: FeedModalProps) {
 
           <div>
             <div className='m-3 flex w-full flex-wrap items-center justify-center gap-3 pt-2'>
-              <BuyCreature creatureId={enclosure.id} />
-              <Feed creatureId={enclosure.id} />
+              <BuyCreature
+                creatureId={enclosure.id}
+                fetchCreatures={refetchCreature}
+              />
             </div>
-            <CreatureLine creatureId={enclosure.id} />
+            <CreatureLine
+              creatures={creatures}
+              potionPrice={potionPrice}
+              fetchCreatures={refetchCreature}
+            />
           </div>
         </BgMenu>
       </div>
