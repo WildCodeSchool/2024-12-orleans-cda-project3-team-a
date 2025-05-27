@@ -8,7 +8,6 @@ type PortalProps = {
 export default function Portal({ children }: PortalProps) {
   return createPortal(
     <div
-      className='absolute z-5'
       onClick={(event) => {
         event.stopPropagation();
       }}
