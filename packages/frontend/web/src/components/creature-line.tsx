@@ -57,7 +57,6 @@ export default function CreatureLine({
       });
 
       const result = await response.json();
-
       if (result.ok === true) {
         await fetchCreatures();
         await fetchAll();
@@ -79,7 +78,7 @@ export default function CreatureLine({
         return (
           <div
             key={creatureData.id}
-            className='flex items-center justify-center gap-3'
+            className='flex items-center justify-center gap-2 md:gap-3'
           >
             <div className='relative flex w-17'>
               <img
@@ -94,11 +93,13 @@ export default function CreatureLine({
               />
             </div>
 
-            <div className='h-5 w-51 rounded border bg-white px-2 focus:border-2 focus:outline-none md:h-7 md:w-40 md:rounded-md'>
+            <div className='h-5 w-51 rounded border bg-white px-2 md:h-7 md:w-40 md:rounded-md'>
               {creatureData.name}
             </div>
 
-            <div className='h-5 w-51 rounded border bg-gray-300 px-2 focus:border-2 focus:outline-none md:h-7 md:w-40 md:rounded-md'>
+            <div
+              className={`${shouldEat ? 'border-red-300 bg-red-100' : 'border-green-300 bg-green-100'} h-5 w-51 rounded border px-2 md:h-7 md:w-40 md:rounded-md`}
+            >
               {remainingTime}
             </div>
 
@@ -106,7 +107,7 @@ export default function CreatureLine({
               border='border border-black'
               bg='bg-white/75'
               cursor={shouldEat ? 'pointer' : 'not-allowed'}
-              grayscale={!shouldEat}
+              isInvisible={!shouldEat}
               onClick={async () => {
                 if (shouldEat) {
                   await feedCreature(creatureData.id, creatureData.zone_id);
@@ -116,7 +117,7 @@ export default function CreatureLine({
               <img
                 src={`/images/decorations/${getPotionImage(creatureData.zone_id)}`}
                 alt='potion'
-                className='w-15 p-0.5 md:w-7'
+                className='h-4 w-8 px-0 md:h-6 md:px-0.5'
               />
             </ButtonBuy>
           </div>
