@@ -7,6 +7,7 @@ import creatureRouter from './creature';
 import getDecorations from './get.decorations';
 import getEnclosures from './get.enclosures';
 import getParkUser from './get.park-user';
+import getRankRoute from './get.rank';
 import getZonesCount from './get.zones-count';
 import parkRouter from './park';
 import visitorRouter from './visitor';
@@ -22,5 +23,5 @@ gameRouter.use(getEnclosures);
 gameRouter.use(getDecorations);
 gameRouter.use('/creature', creatureRouter);
 gameRouter.use('/visitors', visitorRouter);
-
+gameRouter.use(getRankRoute);
 export default gameRouter;

@@ -9,6 +9,8 @@ import NbVisitorsMoons from '@/components/nb-visitors-moons';
 import ReturnHome from '@/components/return-home';
 import useFetchBarriers from '@/hooks/use-fetch-barriers';
 
+import Rank from '../components/rank';
+
 export default function Test() {
   const { barriers, isLoading, refetch } = useFetchBarriers();
   const [email, setEmail] = useState('');
@@ -16,7 +18,7 @@ export default function Test() {
   return (
     <div className='grid min-w-[1600px] grid-cols-2'>
       <div>
-        <ShopCreature />
+        <Rank />
         <ReturnHome />
         <Input
           bgColor='bg-primary-blue'
