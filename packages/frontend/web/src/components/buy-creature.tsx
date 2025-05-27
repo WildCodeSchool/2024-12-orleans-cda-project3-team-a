@@ -95,9 +95,9 @@ export default function BuyCreature({
             border='border border-black'
             cursor='pointer'
           >
-            <p className='text-2xl'>{'+'}</p>
+            <p className='text-xl md:text-2xl'>{'+'}</p>
             <img
-              className='w-7 p-0.5'
+              className='w-5 p-0.5 md:w-7'
               src={`/images/creatures/${creaturesEnclosId.src_image}`}
               alt=''
             />

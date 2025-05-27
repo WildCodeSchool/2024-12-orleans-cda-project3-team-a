@@ -46,7 +46,7 @@ export default function FeedModal({
           </div>
 
           <div>
-            <div className='m-3 flex w-full flex-wrap items-center justify-center gap-3 pt-2'>
+            <div className='m-0 flex w-full flex-wrap items-center justify-center gap-2 pt-2 md:m-3 md:gap-3'>
               <BuyCreature
                 creatureId={enclosure.id}
                 fetchCreatures={fetchCreatures}
