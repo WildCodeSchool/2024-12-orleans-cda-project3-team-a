@@ -105,9 +105,7 @@ export default function BuyCreature({
         </div>
       </div>
       {isBought ? (
-        <p className='text-xs text-green-600 italic md:text-xs'>
-          {'Creature bought!'}
-        </p>
+        <p className='text-xs text-green-600 italic'>{'Creature bought!'}</p>
       ) : null}
     </div>
   );
