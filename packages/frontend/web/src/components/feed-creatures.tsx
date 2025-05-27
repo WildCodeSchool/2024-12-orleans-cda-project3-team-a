@@ -94,7 +94,9 @@ export default function FeedCreatures({
 
   return (
     <div className='w-full rounded-lg border-1 p-0.5 md:w-[30%]'>
-      <h1 className='pt-2 text-center'>{'Making everyone magical'}</h1>
+      <h1 className='pt-2 text-center text-xl md:text-2xl'>
+        {'Making everyone magical'}
+      </h1>
       <div className='flex items-center justify-center gap-3 p-2 md:gap-2'>
         <p>{creaturesEnclosId.quantityCreature}</p>
         <img
