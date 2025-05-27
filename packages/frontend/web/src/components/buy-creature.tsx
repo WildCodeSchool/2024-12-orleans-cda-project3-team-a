@@ -74,7 +74,7 @@ export default function BuyCreature({
 
   return (
     <div className='rounded-lg border-1'>
-      <h1 className='pt-2 text-center text-xl md:text-2xl'>{`Buy a new ${creaturesEnclosId.species}`}</h1>
+      <h1 className='pt-2 text-center text-lg md:text-xl'>{`Buy a new ${creaturesEnclosId.species}`}</h1>
       <div className='flex items-center gap-1 p-2 md:gap-5'>
         <Input
           bgColor='bg-white'
@@ -105,7 +105,7 @@ export default function BuyCreature({
         </div>
       </div>
       {isBought ? (
-        <p className='text-xxs text-green-600 italic md:text-xs'>
+        <p className='text-xs text-green-600 italic md:text-xs'>
           {'Creature bought!'}
         </p>
       ) : null}

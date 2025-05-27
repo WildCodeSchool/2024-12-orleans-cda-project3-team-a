@@ -31,7 +31,7 @@ function getPotionImage(zoneId: number) {
   }
 }
 
-export default function FeedCreatures({
+export default function FeedAllCreatures({
   creatureId,
   creatures,
   potionPrice,
@@ -42,6 +42,7 @@ export default function FeedCreatures({
   const { fetchAll, wallet } = useGameInfoContext();
 
   const hasEnoughMoons = wallet > Number(potionPrice);
+
   const creaturesEnclosId = creaturesEnclos.find(
     (creature: Enclosure) => creature.id === creatureId,
   );
@@ -61,6 +62,10 @@ export default function FeedCreatures({
 
   const feedCreatures = async (zoneId: number, parkCreatureId: number) => {
     if (hungryCreatures.length === 0) return;
+
+    if (!hasEnoughMoons) {
+      return;
+    }
 
     try {
       const response = await fetch(`/api/game/creature/feed`, {
@@ -94,7 +99,7 @@ export default function FeedCreatures({
 
   return (
     <div className='w-full rounded-lg border-1 p-0.5 md:w-[30%]'>
-      <h1 className='pt-2 text-center text-xl md:text-2xl'>
+      <h1 className='pt-2 text-center text-lg md:text-xl'>
         {'Making everyone magical'}
       </h1>
       <div className='flex items-center justify-center gap-3 p-2 md:gap-2'>
@@ -104,16 +109,13 @@ export default function FeedCreatures({
           src={`/images/creatures/${creaturesEnclosId.src_image}`}
           alt='creature'
         />
-        <p>
-          <strong>{'*'}</strong>
-          {totalPrice}
-        </p>
+        <p>{totalPrice}</p>
         <img className='h-6 md:h-7' src={Moons} alt='moon' />
         <ButtonBuy
           bg='bg-white/75'
           border='border border-black'
           cursor={hungryCreatures.length > 0 ? 'pointer' : 'not-allowed'}
-          grayscale={hungryCreatures.length === 0}
+          isGrayscale={hungryCreatures.length === 0}
           onClick={async () => {
             if (hungryCreatures.length === 0) return;
 
@@ -130,7 +132,7 @@ export default function FeedCreatures({
         </ButtonBuy>
       </div>
       {isFeeding ? (
-        <p className='text-xxs text-green-600 italic md:text-xs'>
+        <p className='text-xs text-green-600 italic md:text-xs'>
           {'Creatures feeding!'}
         </p>
       ) : null}

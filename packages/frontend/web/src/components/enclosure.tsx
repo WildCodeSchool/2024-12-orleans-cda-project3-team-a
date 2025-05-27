@@ -14,14 +14,12 @@ type EnclosureProps = {
   readonly decorations: Decorations;
   readonly totalCreaturesInZone: number;
   readonly enclosures: Enclosure;
-  readonly onClick?: () => void;
 };
 
 export default function Enclosure({
   decorations,
   totalCreaturesInZone,
   enclosures,
-  onClick,
 }: EnclosureProps) {
   const isLocked = enclosures.quantityCreature === 0;
   const { inactiveCreatures, refetchCreature, creatures, potionPrice } =

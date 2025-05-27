@@ -5,7 +5,7 @@ import BgMenu from './bg-menu';
 import BuyCreature from './buy-creature';
 import CloseWindow from './close-window';
 import CreatureLine from './creature-line';
-import FeedCreatures from './feed-creatures';
+import FeedCreatures from './feed-all-creatures';
 
 type FeedModalProps = {
   readonly enclosure: Enclosure;
@@ -34,32 +34,37 @@ export default function FeedModal({
         />
       </div>
       {/* Display content of Feed Modal */}
-      <div className='absolute top-15 left-[5%] max-h-[90%] w-[90%] overflow-auto'>
-        <BgMenu>
-          <div className='absolute top-0 right-0 m-3'>
-            <CloseWindow onClick={onClick} />
-          </div>
+      {
+        //transparent bg to disable the click of several modals
+      }
+      <div className='fixed top-0 left-0 z-40 h-full w-full bg-transparent'>
+        <div className='absolute top-15 left-[5%] max-h-[90%] w-[90%] overflow-auto'>
+          <BgMenu>
+            <div className='absolute top-0 right-0 m-3'>
+              <CloseWindow onClick={onClick} />
+            </div>
 
-          <div>
-            <div className='m-0 flex w-full flex-wrap items-center justify-center gap-2 pt-2 md:m-3 md:gap-3'>
-              <BuyCreature
-                creatureId={enclosure.id}
-                fetchCreatures={fetchCreatures}
-              />
-              <FeedCreatures
+            <div>
+              <div className='m-0 flex w-full flex-wrap items-center justify-center gap-2 pt-2 md:m-3 md:gap-3'>
+                <BuyCreature
+                  creatureId={enclosure.id}
+                  fetchCreatures={fetchCreatures}
+                />
+                <FeedCreatures
+                  creatures={creatures}
+                  fetchCreatures={fetchCreatures}
+                  potionPrice={potionPrice}
+                  creatureId={enclosure.id}
+                />
+              </div>
+              <CreatureLine
                 creatures={creatures}
-                fetchCreatures={fetchCreatures}
                 potionPrice={potionPrice}
-                creatureId={enclosure.id}
+                fetchCreatures={fetchCreatures}
               />
             </div>
-            <CreatureLine
-              creatures={creatures}
-              potionPrice={potionPrice}
-              fetchCreatures={fetchCreatures}
-            />
-          </div>
-        </BgMenu>
+          </BgMenu>
+        </div>
       </div>
     </>
   );
