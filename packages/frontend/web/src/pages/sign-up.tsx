@@ -83,7 +83,6 @@ export default function SignUp() {
       onSubmit={async (event) => {
         event.preventDefault();
         if (isFormValid()) {
-          // if(mess)
           await signUp();
         }
       }}
@@ -114,19 +113,19 @@ export default function SignUp() {
           placeholder='Pseudo'
           value={username}
           onChangeInput={(value) => {
-            setUsername(value); // Laisse l'utilisateur écrire librement
-            // Si le champ est vide, on considère qu'il n'y a pas d'erreur
+            setUsername(value);
+            // if field empty -> no error
             if (value.trim() === '') {
-              setIsConformPseudo(true); // ou false selon ton cas d'usage
-              setIsTouchedPseudo(false); // réinitialise l'état "touché"
+              setIsConformPseudo(true);
+              setIsTouchedPseudo(false);
             } else {
               setIsConformPseudo(isPseudoValid(value));
-              setIsTouchedPseudo(true); // considère que le champ a été touché dès la saisie
+              setIsTouchedPseudo(true);
             }
           }}
           onBlur={() => {
-            setIsTouchedPseudo(true); // L'utilisateur a quitté le champ
-            setIsConformPseudo(isPseudoValid(username)); // Valide à la sortie
+            setIsTouchedPseudo(true); // we are not in the field
+            setIsConformPseudo(isPseudoValid(username));
           }}
         />
         {!isConformPseudo && isTouchedPseudo ? (
@@ -147,13 +146,12 @@ export default function SignUp() {
           onChangeInput={(value) => {
             setPassword(value);
 
-            // Validation en temps réel
             if (value.trim() === '') {
-              setIsConformPassword1(true); // pas d'erreur si vide
-              setIsTouchedPassword1(false); // reset touched si vide
+              setIsConformPassword1(true);
+              setIsTouchedPassword1(false);
             } else {
               setIsConformPassword1(isPassWordValid1(value));
-              setIsTouchedPassword1(true); // considère que le champ a été touché dès la saisie
+              setIsTouchedPassword1(true);
             }
           }}
           onBlur={() => {
@@ -180,11 +178,11 @@ export default function SignUp() {
             setConfirmPassword(value);
 
             if (value.trim() === '') {
-              setIsConformPassword2(true); // pas d'erreur si vide
-              setIsTouchedPassword2(false); // reset touched si vide
+              setIsConformPassword2(true);
+              setIsTouchedPassword2(false);
             } else {
               setIsConformPassword2(isPassWordValid2(value, password));
-              setIsTouchedPassword2(true); // considère que le champ a été touché dès la saisie
+              setIsTouchedPassword2(true);
             }
           }}
           onBlur={() => {
