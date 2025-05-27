@@ -1,6 +1,9 @@
-import type { Enclosure } from '@app/api';
+import { useState } from 'react';
 
-import useCreatures from '@/hooks/use-creatures';
+import type { Enclosure } from '@app/api';
+import type { Creatures } from '@app/api';
+
+import { useGameInfoContext } from '@/contexts/game-info-context';
 import useEnclosures from '@/hooks/use-enclos';
 
 import Moons from '../assets/images/icons-buttons/moon.png';
@@ -8,6 +11,9 @@ import ButtonBuy from './button-buy';
 
 type CreatureId = {
   readonly creatureId: number;
+  readonly fetchCreatures: () => Promise<void>;
+  readonly creatures: Creatures;
+  readonly potionPrice: number;
 };
 
 function getPotionImage(zoneId: number) {
@@ -25,10 +31,17 @@ function getPotionImage(zoneId: number) {
   }
 }
 
-export default function FeedCreatures({ creatureId }: CreatureId) {
+export default function FeedCreatures({
+  creatureId,
+  creatures,
+  potionPrice,
+  fetchCreatures,
+}: CreatureId) {
   const { creaturesEnclos } = useEnclosures();
-  const { creatures, potionPrice, refetchCreature } = useCreatures(creatureId);
+  const [isFeeding, setIsFeeding] = useState(false);
+  const { fetchAll, wallet } = useGameInfoContext();
 
+  const hasEnoughMoons = wallet > Number(potionPrice);
   const creaturesEnclosId = creaturesEnclos.find(
     (creature: Enclosure) => creature.id === creatureId,
   );
@@ -62,21 +75,27 @@ export default function FeedCreatures({ creatureId }: CreatureId) {
         }),
       });
 
-      console.log('Feeding with:', { parkCreatureId, zoneId });
       const result = await response.json();
 
       if (result.ok === true) {
-        await refetchCreature();
+        await fetchCreatures();
+        await fetchAll();
+        setIsFeeding(true);
+        //display for 2 seconds a message to inform that is bought
+        setTimeout(() => {
+          setIsFeeding(false);
+        }, 2000);
       }
     } catch (error) {
-      console.error('Error feeding creatures:', error);
+      // eslint-disable-next-line no-console
+      console.error(error);
     }
   };
 
   return (
-    <div className='rounded-lg border-1'>
+    <div className='w-full rounded-lg border-1 p-0.5 md:w-[30%]'>
       <h1 className='pt-2'>{'Making everyone magical'}</h1>
-      <div className='flex items-center gap-3 p-2 md:gap-2'>
+      <div className='flex items-center justify-center gap-3 p-2 md:gap-2'>
         <p>{creaturesEnclosId.quantityCreature}</p>
         <img
           className='w-8'
@@ -84,10 +103,10 @@ export default function FeedCreatures({ creatureId }: CreatureId) {
           alt='creature'
         />
         <p>
-          {'*'}
+          <strong>{'*'}</strong>
           {totalPrice}
         </p>
-        <img className='h-7' src={Moons} alt='moon' />
+        <img className='h-6 md:h-7' src={Moons} alt='moon' />
         <ButtonBuy
           bg='bg-white/75'
           border='border border-black'
@@ -102,12 +121,17 @@ export default function FeedCreatures({ creatureId }: CreatureId) {
           }}
         >
           <img
-            className='h-12 w-12 p-2'
+            className='w-5 p-0.5 md:w-7'
             src={`/images/decorations/${potionImage}`}
             alt='potion'
           />
         </ButtonBuy>
       </div>
+      {isFeeding ? (
+        <p className='text-xxs text-green-600 italic md:text-xs'>
+          {'Creatures feeding!'}
+        </p>
+      ) : null}
     </div>
   );
 }

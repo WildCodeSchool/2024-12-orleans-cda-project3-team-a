@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import type { Decorations } from '@app/api';
 import type { Enclosure } from '@app/api';
 
@@ -5,12 +7,16 @@ import useCreatures from '@/hooks/use-creatures';
 
 import alert from '../assets/images/icons-buttons/alert.png';
 import ButtonBuy from './button-buy';
+import FeedModal from './feed-modal';
 
 type EnclosureProps = {
   readonly decorations: Decorations;
   readonly totalCreaturesInZone: number;
   readonly enclosures: Enclosure;
   readonly onClick?: () => void;
+  //   readonly fetchCreatures: () => Promise<void>;
+  //   readonly inactiveCreatures: {total_inactive_creatures: string | number | bigint;
+  // } | undefined
 };
 
 export default function Enclosure({
@@ -20,7 +26,19 @@ export default function Enclosure({
   onClick,
 }: EnclosureProps) {
   const isLocked = enclosures.quantityCreature === 0;
-  const { inactiveCreatures } = useCreatures(enclosures.id);
+  const { inactiveCreatures, refetchCreature, creatures, potionPrice } =
+    useCreatures(enclosures.id);
+  const [selectedEnclosure, setSelectedEnclosure] = useState<Enclosure | null>(
+    null,
+  );
+
+  const handleEnclosureClick = (enclosure: Enclosure) => {
+    setSelectedEnclosure(enclosure);
+  };
+
+  const handleClose = () => {
+    setSelectedEnclosure(null);
+  };
 
   const totalInactive = Number(
     inactiveCreatures?.total_inactive_creatures ?? 0,
@@ -93,7 +111,9 @@ export default function Enclosure({
   return (
     <div
       className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackground(enclosures.background)} `}
-      onClick={onClick}
+      onClick={() => {
+        handleEnclosureClick(enclosures);
+      }}
     >
       {decorations.map((decoration) => (
         <img
@@ -127,6 +147,22 @@ export default function Enclosure({
           </ButtonBuy>
         )}
       </div>
+      {selectedEnclosure ? (
+        <div
+          className='fixed z-3 flex h-screen w-[98%] justify-center pb-6 text-center text-xs md:text-base'
+          onClick={(event) => {
+            event.stopPropagation();
+          }}
+        >
+          <FeedModal
+            enclosure={selectedEnclosure}
+            onClick={handleClose}
+            potionPrice={potionPrice}
+            fetchCreatures={refetchCreature}
+            creatures={creatures}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -29,7 +29,6 @@ export default function useCreatures(creatureId: number) {
   useEffect(() => {
     void fetchCreatures();
   }, [creatureId, fetchCreatures]);
-  console.log('creatures:', creatures);
 
   return {
     creatures,

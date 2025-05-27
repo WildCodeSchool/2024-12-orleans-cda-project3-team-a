@@ -1,22 +1,32 @@
 import type { Enclosure } from '@app/api';
+import type { Creatures } from '@app/api';
 
-import useCreatures from '@/hooks/use-creatures';
+// import useCreatures from '@/hooks/use-creatures';
 
 import BgMenu from './bg-menu';
 import BuyCreature from './buy-creature';
 import CloseWindow from './close-window';
 import CreatureLine from './creature-line';
-import Feed from './feed-creatures';
+import FeedCreatures from './feed-creatures';
 
 type FeedModalProps = {
   readonly enclosure: Enclosure;
   readonly onClick: () => void;
+  readonly potionPrice: number;
+  readonly fetchCreatures: () => Promise<void>;
+  readonly creatures: Creatures;
 };
 
-export default function FeedModal({ enclosure, onClick }: FeedModalProps) {
-  const { refetchCreature, creatures, potionPrice } = useCreatures(
-    enclosure.id,
-  );
+export default function FeedModal({
+  enclosure,
+  onClick,
+  potionPrice,
+  fetchCreatures,
+  creatures,
+}: FeedModalProps) {
+  // const { refetchCreature, creatures, potionPrice } = useCreatures(
+  //   enclosure.id,
+  // );
   return (
     <>
       {/* 'Display quantity creature in header' */}
@@ -29,7 +39,7 @@ export default function FeedModal({ enclosure, onClick }: FeedModalProps) {
         />
       </div>
       {/* Display content of Feed Modal */}
-      <div className='relative top-15 max-h-[90%] overflow-auto'>
+      <div className='absolute top-15 max-h-[90%] overflow-auto'>
         <BgMenu>
           <div className='absolute top-0 right-0 m-3'>
             <CloseWindow onClick={onClick} />
@@ -39,13 +49,19 @@ export default function FeedModal({ enclosure, onClick }: FeedModalProps) {
             <div className='m-3 flex w-full flex-wrap items-center justify-center gap-3 pt-2'>
               <BuyCreature
                 creatureId={enclosure.id}
-                fetchCreatures={refetchCreature}
+                fetchCreatures={fetchCreatures}
+              />
+              <FeedCreatures
+                creatures={creatures}
+                fetchCreatures={fetchCreatures}
+                potionPrice={potionPrice}
+                creatureId={enclosure.id}
               />
             </div>
             <CreatureLine
               creatures={creatures}
               potionPrice={potionPrice}
-              fetchCreatures={refetchCreature}
+              fetchCreatures={fetchCreatures}
             />
           </div>
         </BgMenu>
