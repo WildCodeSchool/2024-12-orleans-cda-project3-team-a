@@ -34,9 +34,7 @@ export default function FeedModal({
         />
       </div>
       {/* Display content of Feed Modal */}
-      {
-        //transparent bg to disable the click of several modals
-      }
+      {/* transparent bg to disable the click of several modals */}
       <div className='fixed top-0 left-0 z-5 h-full w-full bg-transparent'>
         <div className='absolute top-15 left-[5%] max-h-[90%] w-[90%] overflow-auto'>
           <BgMenu>

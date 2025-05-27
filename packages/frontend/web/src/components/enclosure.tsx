@@ -24,16 +24,14 @@ export default function Enclosure({
   const isLocked = enclosures.quantityCreature === 0;
   const { inactiveCreatures, refetchCreature, creatures, potionPrice } =
     useCreatures(enclosures.id);
-  const [selectedEnclosure, setSelectedEnclosure] = useState<Enclosure | null>(
-    null,
-  );
+  const [isModalOpen, setIsModalOpen] = useState<Enclosure | null>(null);
 
   const handleEnclosureClick = (enclosure: Enclosure) => {
-    setSelectedEnclosure(enclosure);
+    setIsModalOpen(enclosure);
   };
 
   const handleClose = () => {
-    setSelectedEnclosure(null);
+    setIsModalOpen(null);
   };
 
   const totalInactive = Number(
@@ -107,7 +105,7 @@ export default function Enclosure({
     <div
       className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackground(enclosures.background)} `}
       onClick={() => {
-        if (!selectedEnclosure) {
+        if (!isModalOpen) {
           handleEnclosureClick(enclosures);
         }
       }}
@@ -144,29 +142,23 @@ export default function Enclosure({
           </ButtonBuy>
         )}
       </div>
-      {selectedEnclosure ? (
+      {isModalOpen ? (
         <div
           className='flex flex-wrap items-center justify-center'
           onClick={handleClose}
         >
-          <div
-            className='absolute z-5'
-            onClick={(event) => {
-              event.stopPropagation();
-            }}
-          >
-            <Portal>
-              <FeedModal
-                enclosure={selectedEnclosure}
-                onClick={handleClose}
-                potionPrice={potionPrice}
-                fetchCreatures={refetchCreature}
-                creatures={creatures}
-              />
-            </Portal>
-          </div>
+          <Portal>
+            <FeedModal
+              enclosure={isModalOpen}
+              onClick={handleClose}
+              potionPrice={potionPrice}
+              fetchCreatures={refetchCreature}
+              creatures={creatures}
+            />
+          </Portal>
         </div>
-      ) : null}
+      ) : // </div>
+      null}
     </div>
   );
 }
