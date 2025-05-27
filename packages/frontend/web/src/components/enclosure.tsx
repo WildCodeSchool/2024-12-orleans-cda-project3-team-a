@@ -157,8 +157,7 @@ export default function Enclosure({
             />
           </Portal>
         </div>
-      ) : // </div>
-      null}
+      ) : null}
     </div>
   );
 }
