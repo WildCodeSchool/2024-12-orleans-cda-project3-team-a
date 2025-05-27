@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 
-import type { Visitors } from '@app/api/src/game/visitor/get.visitors';
+import type {
+  Visitors,
+  VisitorsPark,
+} from '@app/api/src/game/visitor/get.visitors';
 
 export default function useVisitors() {
   const [visitors, setVisitors] = useState<Visitors>([]);
+  const [visitorsPark, setVisitorsPark] = useState<VisitorsPark>([]);
 
   useEffect(() => {
     async function fetchVisitors() {
@@ -14,12 +18,16 @@ export default function useVisitors() {
         const data = (await resp.json()) as {
           ok: boolean;
           visitorsCountById: Visitors;
+          visitorsPark: VisitorsPark;
         };
 
         if (!data.ok) {
           throw new Error('No visitors');
         }
+
         setVisitors(data.visitorsCountById);
+        setVisitorsPark(data.visitorsPark);
+
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         // eslint-disable-next-line no-console
@@ -28,5 +36,5 @@ export default function useVisitors() {
     }
     void fetchVisitors();
   }, []);
-  return { visitors };
+  return { visitors, visitorsPark };
 }

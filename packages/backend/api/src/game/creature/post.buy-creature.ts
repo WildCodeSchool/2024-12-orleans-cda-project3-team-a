@@ -135,7 +135,7 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     .insertInto('park_visitors')
     .values({
       entry_time: sql`NOW()`,
-      exit_time: sql`NOW() + INTERVAL 2 DAY`,
+      exit_time: sql`NOW() + INTERVAL 4 HOUR`,
       park_id: parkId,
       visitor_id: zoneId,
     })

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 
 import type { Enclosure } from '@app/api';
 
@@ -88,7 +88,9 @@ export default function WorldEnclosure() {
       )}
 
       <div className='absolute top-1/2 -translate-y-1/2'>
-        <Visitor zoneId={zoneId} />
+        <Link to='/visitors'>
+          <Visitor zoneId={zoneId} />
+        </Link>
       </div>
     </div>
   );

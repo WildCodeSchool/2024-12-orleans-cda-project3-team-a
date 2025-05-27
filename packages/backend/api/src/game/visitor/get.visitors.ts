@@ -30,7 +30,16 @@ function getVisitors(parkId: number) {
     .execute();
 }
 
+function getVisitorsPark(parkId: number) {
+  return db
+    .selectFrom('park_visitors')
+    .selectAll()
+    .where('park_visitors.park_id', '=', parkId)
+    .execute();
+}
+
 export type Visitors = Awaited<ReturnType<typeof getVisitors>>;
+export type VisitorsPark = Awaited<ReturnType<typeof getVisitorsPark>>;
 
 getVisitorsRoute.get('/', async (req: Request, res) => {
   const parkId = req.parkId;
@@ -54,9 +63,19 @@ getVisitorsRoute.get('/', async (req: Request, res) => {
     return;
   }
 
+  const visitorsPark = await getVisitorsPark(parkId);
+  if (visitorsPark.length === 0) {
+    res.json({
+      ok: false,
+      message: 'no visitors found',
+    });
+    return;
+  }
+
   res.json({
     ok: true,
     visitorsCountById,
+    visitorsPark,
   });
 });
 

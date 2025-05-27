@@ -79,8 +79,8 @@ export interface Parks {
 }
 
 export interface ParkVisitors {
-  entry_time: Generated<Date | null>;
-  exit_time: Date | null;
+  entry_time: Date;
+  exit_time: Date;
   id: Generated<number>;
   park_id: number;
   visitor_id: number;
@@ -125,7 +125,6 @@ export interface Zones {
   name: string;
   src_image: string;
   src_sign: string;
-  unlock_cost: number | null;
 }
 
 export interface DB {
