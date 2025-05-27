@@ -55,14 +55,15 @@ export function GameInfoContextProvider({
   // get unlocked zones with useZones
   const { unlockedZones, isLoadingZones, refetchZones } = useZones();
 
+  //get Creatures and decorations
+  const { creaturesEnclos, refetchCreatures } = useEnclos();
+  const { decorations } = useDecorations();
+
   //function to refetch hook necessary for home page
   const fetchAll = useCallback(async () => {
-    await Promise.all([refetchPark(), refetchZones()]);
-  }, [refetchPark, refetchZones]);
+    await Promise.all([refetchPark(), refetchZones(), refetchCreatures()]);
+  }, [refetchPark, refetchZones, refetchCreatures]);
 
-  //get Creatures and decorations
-  const { creaturesEnclos } = useEnclos();
-  const { decorations } = useDecorations();
   // memorize value to avoid unnecessary changes
   const value = useMemo(
     () => ({
