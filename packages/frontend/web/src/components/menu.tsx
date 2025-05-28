@@ -10,6 +10,7 @@ import iconShop from '../assets/images/icons-buttons/shop.png';
 import Dashboard from './dashboard';
 import Logout from './logout';
 import ShopCreature from './modal-shop-creatures';
+import Rank from './rank';
 
 type ModalName = 'dashboard' | 'shop' | 'ranking' | 'profil' | null;
 
@@ -129,6 +130,9 @@ export default function Menu() {
 
         {/* Display Shop in pop-up if is open*/}
         {openModal === 'shop' ? <ShopCreature closeShop={handleClose} /> : null}
+
+        {/* Display Rank in pop-up if is open*/}
+        {openModal === 'ranking' ? <Rank closeRank={handleClose} /> : null}
       </div>
     </>
   );
