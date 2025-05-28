@@ -1,36 +1,89 @@
-import { useState } from 'react';
-
+import ReturnHome from '@/components/return-home';
 import useVisitors from '@/hooks/use-visitors';
 
 export default function PageVisitors() {
-  const { visitorsPark } = useVisitors();
-  //   const [isExit, setIsExit]=useState(false);
-  // console.log(visitors);
+  const { visitorsPark, visitors } = useVisitors();
 
-  //   console.log(visitorsPark);
   const isExit = (exit_time: Date): boolean => exit_time.getTime() < Date.now();
 
   return (
-    <div className='h-screen overflow-auto'>
-      {visitorsPark.map((visitorPark) => {
-        return (
-          <div
-            key={visitorPark.id}
-            className='m-5 flex flex-row justify-between gap-3 border-1 border-amber-200'
-          >
-            <h1>{visitorPark.id}</h1>
-            <p>{visitorPark.entry_time.toLocaleString()} </p>
-            <p>{visitorPark.exit_time.toLocaleString()} </p>
-            {/* <p>{new Date().toLocaleDateString().gettime} </p> */}
-            <p>{visitorPark.visitor_id} </p>
-            {isExit(new Date(visitorPark.exit_time)) ? (
-              <p>{'plus là'}</p>
-            ) : (
-              <p>{'encore la '}</p>
-            )}
-          </div>
-        );
-      })}
+    <div className='flex h-screen flex-col'>
+      <h1 className='font-aerokids text-outline-white mt-4 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-center text-4xl text-transparent md:text-6xl'>
+        {'Discover your visitors!'}
+      </h1>
+      <div className='absolute top-0 right-0 m-4'>
+        <ReturnHome />
+      </div>
+      <div className='text-secondary-blue overflow-auto text-xs md:text-base'>
+        <div className='border-secondary-blue bg-primary-blue m-5 grid grid-cols-5 items-center gap-3 border-1 text-center font-bold'>
+          <h2>{'N°'}</h2>
+          <h2>{'Entry Time'}</h2>
+          <h2>{'Exit Time'}</h2>
+          <h2>{'Type of visitor'}</h2>
+          <h2>{'State'}</h2>
+        </div>
+        {visitorsPark.map((visitorPark, index) => {
+          return (
+            <div
+              key={visitorPark.id}
+              className='border-secondary-blue bg-primary-blue m-5 grid grid-cols-5 items-center gap-3 border-1 text-center'
+            >
+              <h3>{index + 1}</h3>
+              <p>
+                {new Date(visitorPark.entry_time).toLocaleString('fr-FR', {
+                  weekday: 'short',
+                  day: 'numeric',
+                  month: 'short',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  hour12: false,
+                })}
+              </p>
+
+              {/* Display the exit time or "not here" if entry time > exit time */}
+              {new Date(visitorPark.entry_time) >
+              new Date(visitorPark.exit_time) ? (
+                <p className='text-white italic'>{'not here'}</p>
+              ) : (
+                <p>
+                  {new Date(visitorPark.exit_time).toLocaleString('fr-FR', {
+                    weekday: 'short',
+                    day: 'numeric',
+                    month: 'short',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                  })}
+                </p>
+              )}
+
+              {new Date(visitorPark.entry_time) >
+              new Date(visitorPark.exit_time) ? (
+                <p className='text-white italic'>{'---'}</p>
+              ) : (
+                <div className='flex justify-center'>
+                  <img
+                    src={`/images/creatures/${
+                      visitors.find(
+                        (visitor) =>
+                          visitor.visitor_id === visitorPark.visitor_id,
+                      )?.src_image
+                    }`}
+                    alt='visitor'
+                    className='h-5 md:h-7'
+                  />
+                </div>
+              )}
+
+              {isExit(new Date(visitorPark.exit_time)) ? (
+                <p className='text-red-500'>{'OUT'}</p>
+              ) : (
+                <p className='text-green-500'>{'IN'}</p>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

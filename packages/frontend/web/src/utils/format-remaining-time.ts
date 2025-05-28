@@ -15,8 +15,8 @@ export function formatRemainingTime(comingDate: Date) {
   if (hours > 0) remainingTime.push(`${hours} hour${hours > 1 ? 's' : ''}`);
   if (minutes > 0 && days === 0)
     remainingTime.push(`${minutes} min${minutes > 1 ? 's' : ''}`);
-  if (seconds > 0 && days === 0)
-    remainingTime.push(`${seconds} sec${seconds > 1 ? 's' : ''}`);
-
+  //display seconds only if we are under 1 minute
+  if (diff < 60000)
+    remainingTime.push(`${seconds} second${seconds !== 1 ? 's' : ''}`);
   return ` ${remainingTime.join(' ')}`;
 }
