@@ -28,7 +28,7 @@ export default function Dashboard({ closeDashboard }: DashboardProps) {
   }, 0);
 
   return (
-    <div className='relative overflow-auto'>
+    <div className='relative mb-10 overflow-auto'>
       <BgMenu>
         {/* Display the button to close the window */}
         <div className='absolute top-0 right-0 m-3'>

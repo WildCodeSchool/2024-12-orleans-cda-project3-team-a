@@ -1,14 +1,14 @@
-import express from 'express';
+import { type Request, Router } from 'express';
 import { sql } from 'kysely';
 
 import { db } from '@app/backend-shared';
 
-const getRankRoute = express.Router();
+const getRankRoute = Router();
 
-function getRank() {
-  return db
+async function getRank() {
+  const rank = await db
     .selectFrom('parks as p')
-    .leftJoin('users as u', 'u.id', 'p.user_id')
+    .leftJoin('users as u', 'p.user_id', 'u.id')
     .leftJoin('park_creatures as pc', 'p.id', 'pc.park_id')
     .leftJoin('park_visitors as pv', 'p.id', 'pv.park_id')
     .select([
@@ -16,31 +16,29 @@ function getRank() {
       'p.park_name',
       'p.wallet',
       'u.username',
-      sql<number>`COUNT(DISTINCT pv.visitor_id)`.as('nb_visiteurs'),
-      sql<number>`SUM(CASE WHEN pc.feed_date IS NOT NULL THEN 1 ELSE 0 END)`.as(
-        'nb_creatures_nourries',
-      ),
-      sql<number>`COUNT(pc.creature_id)`.as('nb_creatures_total'),
+      sql<number>`COUNT(DISTINCT pc.id)`.as('nb_creatures'),
+      sql<number>`COUNT(DISTINCT pv.id)`.as('nb_visiteurs'),
     ])
     .groupBy(['p.id', 'p.park_name', 'p.wallet', 'u.username'])
-    .orderBy('nb_creatures_nourries', 'desc')
+    .orderBy('nb_creatures', 'desc')
     .orderBy('p.wallet', 'desc')
-    .orderBy('nb_creatures_total', 'desc')
     .limit(10)
+
     .execute();
+
+  return rank;
 }
 
 export type Rank = Awaited<ReturnType<typeof getRank>>[number];
 
-getRankRoute.get('/rank', async (_req, res) => {
+getRankRoute.get('/rank', async (_req: Request, res) => {
   const rank = await getRank();
 
-  if (!rank) {
-    res.json({
+  if (!rank || rank.length === 0) {
+    return res.status(404).json({
       ok: false,
-      message: 'No parks found',
+      message: 'No rank',
     });
-    return;
   }
 
   res.json({
@@ -48,5 +46,4 @@ getRankRoute.get('/rank', async (_req, res) => {
     rank,
   });
 });
-
 export default getRankRoute;
