@@ -3,11 +3,9 @@ import { sql } from 'kysely';
 
 import { db } from '@app/backend-shared';
 
-const job = new CronJob(
+new CronJob(
   '*/5 * * * * *', // cronTime
   async function () {
-    console.log('job cron is started');
-
     //recovers info of all parks
     const parks = await db.selectFrom('parks').selectAll().execute();
 

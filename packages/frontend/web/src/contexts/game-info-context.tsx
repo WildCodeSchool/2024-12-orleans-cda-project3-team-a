@@ -21,7 +21,7 @@ type GameInfoContextState = {
   creaturesEnclos: Enclosure[];
   decorations: Decorations;
   parkName: string;
-  countVisitorActiveFormatted: string;
+  countVisitorActiveFormated: string;
 };
 
 // Define the type for provider
@@ -39,7 +39,7 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   creaturesEnclos: [],
   decorations: [],
   parkName: '',
-  countVisitorActiveFormatted: '',
+  countVisitorActiveFormated: '',
 });
 
 // create the provider
@@ -67,7 +67,7 @@ export function GameInfoContextProvider({
   const countVisitorActive = visitorsPark.filter(
     (visitorPark) => new Date(visitorPark.exit_time).getTime() > Date.now(),
   ).length;
-  const countVisitorActiveFormatted = useNumberFormatter(countVisitorActive);
+  const countVisitorActiveFormated = useNumberFormatter(countVisitorActive);
 
   //function to refetch hook necessary for home page
   const fetchAll = useCallback(async () => {
@@ -92,7 +92,7 @@ export function GameInfoContextProvider({
       creaturesEnclos,
       decorations,
       parkName,
-      countVisitorActiveFormatted,
+      countVisitorActiveFormated,
     }),
     [
       walletFormated,
@@ -105,7 +105,7 @@ export function GameInfoContextProvider({
       isLoadingZones,
       fetchAll,
       parkName,
-      countVisitorActiveFormatted,
+      countVisitorActiveFormated,
     ],
   );
 
