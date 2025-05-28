@@ -77,7 +77,7 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
             }}
           />
           {isBought ? (
-            <p className='text-xxs absolute left-1/2 m-0 -translate-x-1/2 text-green-600 italic md:text-xs'>
+            <p className='absolute left-1/2 m-0 -translate-x-1/2 text-xs text-green-600 italic'>
               {'Creature bought!'}
             </p>
           ) : null}
