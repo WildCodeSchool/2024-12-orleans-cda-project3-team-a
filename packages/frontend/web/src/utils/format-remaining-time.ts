@@ -8,12 +8,15 @@ export function formatRemainingTime(comingDate: Date) {
   const days = Math.floor(totalMins / 1440);
   const hours = Math.floor((totalMins % 1440) / 60);
   const minutes = totalMins % 60;
+  const seconds = Math.floor((diff / 1000) % 60);
 
   const remainingTime = [];
   if (days > 0) remainingTime.push(`${days} day${days > 1 ? 's' : ''}`);
   if (hours > 0) remainingTime.push(`${hours} hour${hours > 1 ? 's' : ''}`);
   if (minutes > 0 && days === 0)
     remainingTime.push(`${minutes} min${minutes > 1 ? 's' : ''}`);
+  if (seconds > 0 && days === 0)
+    remainingTime.push(`${seconds} sec${seconds > 1 ? 's' : ''}`);
 
   return ` ${remainingTime.join(' ')}`;
 }

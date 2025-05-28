@@ -1,12 +1,12 @@
-import { sql } from 'Kysely';
 import { CronJob } from 'cron';
+import { sql } from 'kysely';
 
 import { db } from '@app/backend-shared';
 
 const job = new CronJob(
   '*/5 * * * * *', // cronTime
   async function () {
-    console.log('You will see this message every second');
+    console.log('job cron is started');
 
     //recovers info of all parks
     const parks = await db.selectFrom('parks').selectAll().execute();
@@ -45,38 +45,66 @@ const job = new CronJob(
 
       //check if we have results
       if (!countCreatures || !countVisitors) {
-        return;
+        continue;
+      }
+
+      //if 0 creature active -> exit all visitor  + add 2h to entry_time and exit boucle for
+      if (countCreatures.active === 0) {
+        await db
+          .updateTable('park_visitors')
+          .set({
+            exit_time: sql`NOW()`,
+            entry_time: sql`NOW() + INTERVAL 2 HOUR`,
+          })
+          .where('exit_time', '>', new Date())
+          .where('park_id', '=', park.id)
+          .execute();
+        //exit the boucle
+        continue;
       }
 
       //count the nb of line we have to update
       const countUpdateLineVisitor =
         countCreatures.active - countVisitors.active;
 
-      //if is negative we exit all visitors
+      //if is negative we exit the correct number of visitor not yet exit
       if (countUpdateLineVisitor < 0) {
-        //update all exit time = NOW
-        await db
-          .updateTable('park_visitors')
-          .set({
-            exit_time: sql`NOW()`,
-          })
-          .where('exit_time', '<', new Date())
+        //recover a table to know which id to modify
+        const visitorsNeedToExit = await db
+          .selectFrom('park_visitors')
+          .select('id')
+          .where('exit_time', '>', new Date())
           .where('park_id', '=', park.id)
+          .limit(countUpdateLineVisitor * -1)
           .execute();
 
-        //if is positive we update the necessary line for visitor
+        //update id line necessary to exit
+        for (const visitorNeedToExit of visitorsNeedToExit) {
+          await db
+            .updateTable('park_visitors')
+            .set({
+              exit_time: sql`NOW()`,
+              entry_time: sql`NOW() + INTERVAL 2 HOUR`,
+            })
+            .where('park_id', '=', park.id)
+            .where('id', '=', visitorNeedToExit.id)
+            .execute();
+        }
+
+        //if is positive we let entry visitor were out
       } else if (countUpdateLineVisitor > 0) {
-        //recover inactive ids in park_visitors, but LIMIT = nb line what we have to update
-        const parksVisitorsToUpdate = await db
+        //recover a table to know which id to modify
+        const visitorsNeedToEntry = await db
           .selectFrom('park_visitors')
           .select('id')
           .where('exit_time', '<', new Date())
+          .where('entry_time', '<', new Date())
           .where('park_id', '=', park.id)
           .limit(countUpdateLineVisitor)
           .execute();
 
-        //update only the number line necessary
-        for (const parkVisitorToUpdate of parksVisitorsToUpdate) {
+        //update only the id line necessary to entry
+        for (const visitorNeedToEntry of visitorsNeedToEntry) {
           await db
             .updateTable('park_visitors')
             .set({
@@ -85,12 +113,11 @@ const job = new CronJob(
               visitor_id: Math.floor(Math.random() * 4) + 1,
             })
             .where('park_id', '=', park.id)
-            .where('id', '=', parkVisitorToUpdate.id)
-            .where('exit_time', '<', new Date())
+            .where('id', '=', visitorNeedToEntry.id)
             .execute();
         }
 
-        //update wallet nb visitor added * entryprice
+        //if count>0 update wallet : nb visitor added * entryprice
         await db
           .updateTable('parks')
           .set((eb) => ({

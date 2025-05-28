@@ -1,5 +1,4 @@
 // <-- Launch cron update visitor
-
 import cookieParser from 'cookie-parser';
 import express from 'express';
 
