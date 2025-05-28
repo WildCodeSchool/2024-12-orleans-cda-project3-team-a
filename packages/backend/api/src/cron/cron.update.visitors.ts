@@ -8,7 +8,6 @@ new CronJob(
   async function () {
     //recovers info of all parks
     const parks = await db.selectFrom('parks').selectAll().execute();
-    console.log('je mexecute');
 
     //Boucle for update all parks
     for (const park of parks) {
