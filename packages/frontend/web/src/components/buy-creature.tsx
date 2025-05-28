@@ -74,8 +74,8 @@ export default function BuyCreature({
 
   return (
     <div className='rounded-lg border-1'>
-      <h1 className='pt-2'>{`Buy a new ${creaturesEnclosId.species}`}</h1>
-      <div className='flex items-center gap-3 p-2 md:gap-5'>
+      <h1 className='pt-2 text-center text-lg md:text-xl'>{`Buy a new ${creaturesEnclosId.species}`}</h1>
+      <div className='flex items-center gap-1 p-2 md:gap-5'>
         <Input
           bgColor='bg-white'
           borderColor='border-gray'
@@ -95,9 +95,9 @@ export default function BuyCreature({
             border='border border-black'
             cursor='pointer'
           >
-            <p className='text-xl md:text-2xl'>{'+'}</p>
+            <p className='text-2xl'>{'+'}</p>
             <img
-              className='w-5 p-0.5 md:w-7'
+              className='w-7 p-0.5'
               src={`/images/creatures/${creaturesEnclosId.src_image}`}
               alt=''
             />
@@ -105,9 +105,7 @@ export default function BuyCreature({
         </div>
       </div>
       {isBought ? (
-        <p className='text-xxs text-green-600 italic md:text-xs'>
-          {'Creature bought!'}
-        </p>
+        <p className='text-xs text-green-600 italic'>{'Creature bought!'}</p>
       ) : null}
     </div>
   );

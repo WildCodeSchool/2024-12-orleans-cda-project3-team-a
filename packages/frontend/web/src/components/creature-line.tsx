@@ -78,7 +78,7 @@ export default function CreatureLine({
         return (
           <div
             key={creatureData.id}
-            className='flex items-center justify-center gap-2 md:gap-3'
+            className='flex items-center justify-center gap-2 text-xs md:gap-3 md:text-base'
           >
             <div className='relative flex w-17'>
               <img
@@ -93,12 +93,12 @@ export default function CreatureLine({
               />
             </div>
 
-            <div className='h-5 w-51 rounded border bg-white px-2 md:h-7 md:w-40 md:rounded-md'>
+            <div className='flex h-5 w-51 items-center rounded border bg-white px-2 md:h-7 md:w-40 md:rounded-md'>
               {creatureData.name}
             </div>
 
             <div
-              className={`${shouldEat ? 'border-red-300 bg-red-100' : 'border-green-300 bg-green-100'} h-5 w-51 rounded border px-2 md:h-7 md:w-40 md:rounded-md`}
+              className={`${shouldEat ? 'border-red-300 bg-red-100' : 'border-green-300 bg-green-100'} flex h-5 w-51 items-center rounded border px-2 md:h-7 md:w-40 md:rounded-md`}
             >
               {remainingTime}
             </div>
