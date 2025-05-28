@@ -31,7 +31,7 @@ export default function Dashboard({ closeDashboard }: DashboardProps) {
     <div className='relative mb-10 overflow-auto'>
       <BgMenu>
         {/* Display the button to close the window */}
-        <div className='absolute top-0 right-0 m-3'>
+        <div className='flex flex-row-reverse'>
           <CloseWindow onClick={closeDashboard} />
         </div>
         {/* Container for display content of dashboard */}

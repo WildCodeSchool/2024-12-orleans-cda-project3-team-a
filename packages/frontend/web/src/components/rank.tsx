@@ -55,7 +55,7 @@ export default function Rank({ closeRank }: ModalRank) {
 
                 <li>{park.username}</li>
                 <li>
-                  {park.nb_creatures} {'Créatures'}
+                  {park.nb_creatures_nourries} {'Créatures'}
                 </li>
                 <div className='hidden md:flex'>
                   <li>{park.wallet}</li>

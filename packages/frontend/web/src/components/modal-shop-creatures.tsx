@@ -26,7 +26,7 @@ export default function ModalShopCreatures({ closeShop }: ModalShopCreatures) {
   return (
     <div className='relative mb-10 w-full overflow-y-auto md:min-w-[90%]'>
       <BgMenu>
-        <div className='absolute top-0 right-0 m-3'>
+        <div className='flex flex-row-reverse'>
           <CloseWindow onClick={closeShop} />
         </div>
         {isScreen ? (
