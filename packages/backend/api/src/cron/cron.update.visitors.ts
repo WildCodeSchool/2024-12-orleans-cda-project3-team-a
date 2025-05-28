@@ -8,6 +8,7 @@ new CronJob(
   async function () {
     //recovers info of all parks
     const parks = await db.selectFrom('parks').selectAll().execute();
+    console.log('je mexecute');
 
     //Boucle for update all parks
     for (const park of parks) {
@@ -115,14 +116,14 @@ new CronJob(
             .execute();
         }
 
-        //if count>0 update wallet : nb visitor added * entryprice
+        //if count>0 update wallet : nb visitor added * entryprice /!\
         await db
           .updateTable('parks')
           .set((eb) => ({
             wallet: eb(
               'wallet',
               '+',
-              park.entry_price * countUpdateLineVisitor,
+              park.entry_price * visitorsNeedToEntry.length,
             ),
           }))
           .where('parks.id', '=', park.id)
