@@ -23,6 +23,9 @@ export default function PageVisitors() {
           <h2>{'State'}</h2>
         </div>
         {visitorsPark.map((visitorPark, index) => {
+          const entryTime = new Date(visitorPark.entry_time);
+          const exitTime = new Date(visitorPark.exit_time);
+
           return (
             <div
               key={visitorPark.id}
@@ -30,7 +33,7 @@ export default function PageVisitors() {
             >
               <h3>{index + 1}</h3>
               <p>
-                {new Date(visitorPark.entry_time).toLocaleString('fr-FR', {
+                {entryTime.toLocaleString('fr-FR', {
                   weekday: 'short',
                   day: 'numeric',
                   month: 'short',
@@ -41,12 +44,11 @@ export default function PageVisitors() {
               </p>
 
               {/* Display the exit time or "not here" if entry time > exit time */}
-              {new Date(visitorPark.entry_time) >
-              new Date(visitorPark.exit_time) ? (
+              {entryTime > exitTime ? (
                 <p className='text-white italic'>{'not here'}</p>
               ) : (
                 <p>
-                  {new Date(visitorPark.exit_time).toLocaleString('fr-FR', {
+                  {exitTime.toLocaleString('fr-FR', {
                     weekday: 'short',
                     day: 'numeric',
                     month: 'short',
@@ -57,8 +59,7 @@ export default function PageVisitors() {
                 </p>
               )}
 
-              {new Date(visitorPark.entry_time) >
-              new Date(visitorPark.exit_time) ? (
+              {entryTime > exitTime ? (
                 <p className='text-white italic'>{'---'}</p>
               ) : (
                 <div className='flex justify-center'>
@@ -75,7 +76,7 @@ export default function PageVisitors() {
                 </div>
               )}
 
-              {isExit(new Date(visitorPark.exit_time)) ? (
+              {isExit(exitTime) ? (
                 <p className='text-red-500'>{'OUT'}</p>
               ) : (
                 <p className='text-green-500'>{'IN'}</p>
