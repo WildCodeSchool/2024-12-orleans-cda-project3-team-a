@@ -23,14 +23,28 @@ export default function Rank({ closeRank }: ModalRank) {
   const getMedal = (index: number) => {
     switch (index) {
       case 0:
-        return <img className='h-5 w-5 md:h-7 md:w-7' src={GoldMedal} alt='' />;
+        return (
+          <img
+            className='h-5 w-5 md:h-7 md:w-7'
+            src={GoldMedal}
+            alt='GoldMedal'
+          />
+        );
       case 1:
         return (
-          <img className='h-5 w-5 md:h-7 md:w-7' src={SilverMedal} alt='' />
+          <img
+            className='h-5 w-5 md:h-7 md:w-7'
+            src={SilverMedal}
+            alt='SilverMedal'
+          />
         );
       case 2:
         return (
-          <img className='h-5 w-5 md:h-7 md:w-7' src={BronzeMedal} alt='' />
+          <img
+            className='h-5 w-5 md:h-7 md:w-7'
+            src={BronzeMedal}
+            alt='BronzeMedal'
+          />
         );
     }
   };
@@ -55,15 +69,15 @@ export default function Rank({ closeRank }: ModalRank) {
 
                 <li>{park.username}</li>
                 <li>
-                  {park.nb_creatures_nourries} {'Créatures'}
+                  {park.active_creatures} {'Créatures'}
                 </li>
                 <div className='hidden md:flex'>
                   <li>{park.wallet}</li>
-                  <img className='w-7' src={Moons} alt='' />
+                  <img className='w-7' src={Moons} alt='Money' />
                 </div>
                 <div className='hidden md:flex'>
-                  <li>{park.nb_visiteurs}</li>
-                  <img className='w-7' src={Visitor} alt='' />
+                  <li>{park.total_visitors}</li>
+                  <img className='w-7' src={Visitor} alt='Visitors' />
                 </div>
               </ul>
             ))}

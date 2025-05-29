@@ -8,9 +8,7 @@ export default function useRank() {
   useEffect(() => {
     async function fetchRank() {
       try {
-        const response = await fetch(`/api/game/rank`, {
-          credentials: 'include',
-        });
+        const response = await fetch(`/api/game/rank`, {});
         const data = await response.json();
         setRank(data.rank);
       } catch (error) {
