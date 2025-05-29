@@ -16,19 +16,22 @@ export default function PageVisitors() {
     const exit = new Date(visitor.exit_time);
     if (filterStateVisitor === 'IN') return !isExit(exit);
     if (filterStateVisitor === 'OUT') return isExit(exit);
-    return true; // ALL
+    return true; // return ALL
   });
 
   return (
     <div className='flex h-screen flex-col'>
+      {/* Title */}
       <h1 className='font-aerokids text-outline-white mt-4 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-center text-4xl text-transparent md:text-6xl'>
         {'Discover your visitors!'}
       </h1>
+
+      {/* Button to return home */}
       <div className='absolute top-0 right-0 m-4'>
         <ReturnHome />
       </div>
 
-      {/* Boutons de filtre */}
+      {/* Button for filter */}
       <div className='my-4 flex justify-center gap-2'>
         {filterChoices.map((choice) => (
           <button
@@ -52,6 +55,7 @@ export default function PageVisitors() {
         ))}
       </div>
 
+      {/* Table of visitors */}
       <div className='text-secondary-blue overflow-auto text-xs md:text-base'>
         <div className='border-secondary-blue bg-primary-blue m-5 grid grid-cols-5 items-center gap-3 border-1 text-center font-bold'>
           <h2>{'N°'}</h2>
@@ -82,7 +86,7 @@ export default function PageVisitors() {
                 })}
               </p>
 
-              {/* Display the exit time or "not here" if entry time > exit time */}
+              {/* Display the exit time or "not here" or "blocked" if entry time > exit time */}
               {entryTime.getTime() > Date.now() ? (
                 <p className='text-yellow-500 italic'>{'blocked'}</p>
               ) : isExit(exitTime) ? (
