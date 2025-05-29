@@ -4,8 +4,10 @@ import { sql } from 'kysely';
 import { db } from '@app/backend-shared';
 
 new CronJob(
-  '* * * * * *', // cronTime each minute
+  '* * * * *', // cronTime each minute
+
   async function () {
+    console.log('ca tourne');
     //recovers count visitor and creatures, acitve/inactive/total
     const parkCreaturesVisitors = await db
       .selectFrom('park_creatures')
