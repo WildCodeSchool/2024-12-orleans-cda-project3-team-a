@@ -4,50 +4,47 @@ import { sql } from 'kysely';
 import { db } from '@app/backend-shared';
 
 new CronJob(
-  '0 * * * * *', // cronTime
+  '* * * * * *', // cronTime each minute
   async function () {
-    //recovers info of all parks
-    const parks = await db.selectFrom('parks').selectAll().execute();
+    //recovers count visitor and creatures, acitve/inactive/total
+    const parkCreaturesVisitors = await db
+      .selectFrom('park_creatures')
+      .innerJoin(
+        'park_visitors',
+        'park_creatures.park_id',
+        'park_visitors.park_id',
+      )
+      .leftJoin('parks', 'park_creatures.park_id', 'parks.id')
+      .select([
+        'park_creatures.park_id',
+        'parks.entry_price',
+        sql<number>`COUNT(DISTINCT park_creatures.id)`.as('total_creatures'),
+        sql<number>`COUNT(DISTINCT CASE WHEN park_creatures.feed_date > NOW() THEN park_creatures.id END)`.as(
+          'active_creatures',
+        ),
+        sql<number>`COUNT(DISTINCT CASE WHEN park_creatures.feed_date < NOW() THEN park_creatures.id END)`.as(
+          'inactive_creatures',
+        ),
+        sql<number>`COUNT(DISTINCT park_visitors.id)`.as('total_visitors'),
+        sql<number>`COUNT(DISTINCT CASE WHEN park_visitors.exit_time > NOW() THEN park_visitors.id END)`.as(
+          'active_visitors',
+        ),
+        sql<number>`COUNT(DISTINCT CASE WHEN park_visitors.exit_time < NOW() THEN park_visitors.id END)`.as(
+          'inactive_visitors',
+        ),
+      ])
+      .groupBy('park_creatures.park_id')
+      .execute();
 
-    //Boucle for update all parks
-    for (const park of parks) {
-      //calcul nb creature active/inactive/total
-      const countCreatures = await db
-        .selectFrom('park_creatures')
-        .select(() => [
-          sql<number>`COUNT(id)`.as('total'),
-          sql<number>`COUNT(CASE WHEN feed_date > NOW() THEN 1 END)`.as(
-            'active',
-          ),
-          sql<number>`COUNT(CASE WHEN feed_date < NOW() THEN 1 END)`.as(
-            'inactive',
-          ),
-        ])
-        .where('park_id', '=', park.id)
-        .executeTakeFirst();
+    // if no result stop the function
+    if (parkCreaturesVisitors.length === 0) {
+      return;
+    }
 
-      //calcul nb visitor active/inactive/total
-      const countVisitors = await db
-        .selectFrom('park_visitors')
-        .select(() => [
-          sql<number>`COUNT(id)`.as('total'),
-          sql<number>`COUNT(CASE WHEN exit_time < NOW() THEN 1 END)`.as(
-            'inactive',
-          ),
-          sql<number>`COUNT(CASE WHEN exit_time > NOW() THEN 1 END)`.as(
-            'active',
-          ),
-        ])
-        .where('park_id', '=', park.id)
-        .executeTakeFirst();
-
-      //check if we have results
-      if (!countCreatures || !countVisitors) {
-        continue;
-      }
-
-      //if 0 creature active -> exit all visitor  + add 2h to entry_time and exit boucle for
-      if (countCreatures.active === 0) {
+    //Loop to update all parks
+    for (const park of parkCreaturesVisitors) {
+      //if 0 creature active -> exit all visitors which are not yet exit + add 2h to entry_time and next park
+      if (park.active_creatures === 0) {
         await db
           .updateTable('park_visitors')
           .set({
@@ -55,77 +52,57 @@ new CronJob(
             entry_time: sql`NOW() + INTERVAL 2 HOUR`,
           })
           .where('exit_time', '>', new Date())
-          .where('park_id', '=', park.id)
+          .where('park_id', '=', park.park_id)
           .execute();
-        //exit the boucle
+        //next park
         continue;
       }
 
       //count the nb of line we have to update
       const countUpdateLineVisitor =
-        countCreatures.active - countVisitors.active;
+        park.active_creatures - park.active_visitors;
 
       //if is negative we exit the correct number of visitor not yet exit
       if (countUpdateLineVisitor < 0) {
-        //recover a table to know which id to modify
-        const visitorsNeedToExit = await db
-          .selectFrom('park_visitors')
-          .select('id')
+        await db
+          .updateTable('park_visitors')
+          .set({
+            exit_time: sql`NOW()`,
+            entry_time: sql`NOW() + INTERVAL 2 HOUR`,
+          })
+          .where('park_id', '=', park.park_id)
           .where('exit_time', '>', new Date())
-          .where('park_id', '=', park.id)
           .limit(countUpdateLineVisitor * -1)
           .execute();
+      }
 
-        //update id line necessary to exit
-        for (const visitorNeedToExit of visitorsNeedToExit) {
-          await db
-            .updateTable('park_visitors')
-            .set({
-              exit_time: sql`NOW()`,
-              entry_time: sql`NOW() + INTERVAL 2 HOUR`,
-            })
-            .where('park_id', '=', park.id)
-            .where('id', '=', visitorNeedToExit.id)
-            .execute();
-        }
-
-        //if is positive we let entry visitor were out
-      } else if (countUpdateLineVisitor > 0) {
-        //recover a table to know which id to modify
-        const visitorsNeedToEntry = await db
-          .selectFrom('park_visitors')
-          .select('id')
+      //if is positive we let entry visitor were out and check if they CAN entry (entry_time < now)
+      else if (countUpdateLineVisitor > 0) {
+        //update the number of line necessary to entry
+        const updateVisitors = await db
+          .updateTable('park_visitors')
+          .set({
+            exit_time: sql`NOW() + INTERVAL 4 HOUR`,
+            entry_time: sql`NOW()`,
+            visitor_id: Math.floor(Math.random() * 4) + 1,
+          })
           .where('exit_time', '<', new Date())
           .where('entry_time', '<', new Date())
-          .where('park_id', '=', park.id)
+          .where('park_id', '=', park.park_id)
           .limit(countUpdateLineVisitor)
-          .execute();
+          .executeTakeFirst();
 
-        //update only the id line necessary to entry
-        for (const visitorNeedToEntry of visitorsNeedToEntry) {
-          await db
-            .updateTable('park_visitors')
-            .set({
-              exit_time: sql`NOW() + INTERVAL 4 HOUR`,
-              entry_time: sql`NOW()`,
-              visitor_id: Math.floor(Math.random() * 4) + 1,
-            })
-            .where('park_id', '=', park.id)
-            .where('id', '=', visitorNeedToEntry.id)
-            .execute();
-        }
-
-        //if count>0 update wallet : nb visitor added * entryprice /!\
+        //if cpuntUpdate>0 update wallet : nb visitor added * entryprice
         await db
           .updateTable('parks')
           .set((eb) => ({
             wallet: eb(
               'wallet',
               '+',
-              park.entry_price * visitorsNeedToEntry.length,
+              (park.entry_price ?? 0) * Number(updateVisitors.numUpdatedRows),
             ),
           }))
-          .where('parks.id', '=', park.id)
+          .where('parks.id', '=', park.park_id)
           .execute();
       }
     }

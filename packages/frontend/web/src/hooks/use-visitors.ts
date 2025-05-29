@@ -1,9 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import type {
-  Visitors,
-  VisitorsPark,
-} from '@app/api/src/game/visitor/get.visitors';
+import type { Visitors, VisitorsPark } from '@app/api';
 
 export default function useVisitors() {
   const [visitors, setVisitors] = useState<Visitors>([]);

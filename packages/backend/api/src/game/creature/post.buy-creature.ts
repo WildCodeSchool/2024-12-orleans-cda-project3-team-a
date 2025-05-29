@@ -1,5 +1,5 @@
-import { sql } from 'Kysely';
 import { type Request, Router } from 'express';
+import { sql } from 'kysely';
 
 import { db } from '@app/backend-shared';
 
