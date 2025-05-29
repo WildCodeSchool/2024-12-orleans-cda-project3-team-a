@@ -7,7 +7,6 @@ new CronJob(
   '* * * * *', // cronTime each minute
 
   async function () {
-    console.log('ca tourne');
     //recovers count visitor and creatures, acitve/inactive/total
     const parkCreaturesVisitors = await db
       .selectFrom('park_creatures')
