@@ -24,9 +24,9 @@ export default function ModalShopCreatures({ closeShop }: ModalShopCreatures) {
   const isScreen = window.innerWidth < 768;
 
   return (
-    <div className='relative w-full overflow-y-auto md:min-w-[90%]'>
+    <div className='relative mb-10 w-full overflow-y-auto md:min-w-[90%]'>
       <BgMenu>
-        <div className='absolute top-0 right-0 m-3'>
+        <div className='flex flex-row-reverse'>
           <CloseWindow onClick={closeShop} />
         </div>
         {isScreen ? (

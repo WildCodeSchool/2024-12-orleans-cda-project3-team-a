@@ -103,7 +103,7 @@ export default function FeedAllCreatures({
         {'Making everyone magical'}
       </h1>
       <div className='flex items-center justify-center gap-3 p-2 md:gap-2'>
-        <p>{creaturesEnclosId.quantityCreature}</p>
+        <p>{hungryCreatures.length}</p>
         <img
           className='w-8'
           src={`/images/creatures/${creaturesEnclosId.src_image}`}
@@ -114,10 +114,14 @@ export default function FeedAllCreatures({
         <ButtonBuy
           bg='bg-white/75'
           border='border border-black'
-          cursor={hungryCreatures.length > 0 ? 'pointer' : 'not-allowed'}
-          isGrayscale={hungryCreatures.length === 0}
+          cursor={
+            hungryCreatures.length > 0 && hasEnoughMoons
+              ? 'pointer'
+              : 'not-allowed'
+          }
+          isGrayscale={hungryCreatures.length === 0 || !hasEnoughMoons}
           onClick={async () => {
-            if (hungryCreatures.length === 0) return;
+            if (hungryCreatures.length === 0 || !hasEnoughMoons) return;
 
             for (const creature of hungryCreatures) {
               await feedCreatures(zoneId, creature.id);
