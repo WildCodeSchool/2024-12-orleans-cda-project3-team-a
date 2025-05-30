@@ -106,10 +106,11 @@ export default function CreatureLine({
             <ButtonBuy
               border='border border-black'
               bg='bg-white/75'
-              cursor={shouldEat ? 'pointer' : 'not-allowed'}
+              cursor={!shouldEat || !hasEnoughMoons ? 'not-allowed' : 'pointer'}
               isInvisible={!shouldEat}
+              isGrayscale={!shouldEat || !hasEnoughMoons}
               onClick={async () => {
-                if (shouldEat) {
+                if (shouldEat && hasEnoughMoons) {
                   await feedCreature(creatureData.id, creatureData.zone_id);
                 }
               }}
