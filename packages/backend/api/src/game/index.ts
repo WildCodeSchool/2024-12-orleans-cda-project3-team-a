@@ -4,9 +4,9 @@ import parkIdMiddleware from '@/middlewares/park-id.middleware';
 
 import barrierRouter from './barrier';
 import creatureRouter from './creature';
-import getAllCreature from './get.creatures-status';
 import getDecorations from './get.decorations';
 import getEnclosures from './get.enclosures';
+import getAllCreature from './get.has-creatures';
 import getLeaderboardRoute from './get.leaderboard';
 import getParkUser from './get.park-user';
 import getZonesCount from './get.zones-count';

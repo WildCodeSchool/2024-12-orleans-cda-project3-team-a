@@ -4,7 +4,7 @@ import { db } from '@app/backend-shared';
 
 const hasCreaturesRouter = Router();
 
-function hasCreaturesForPark(parkId: number) {
+function hasCreaturesPark(parkId: number) {
   return db
     .selectFrom('park_creatures')
     .select(['id'])
@@ -19,12 +19,12 @@ hasCreaturesRouter.get('/all-creatures', async (req: Request, res) => {
   if (parkId === undefined) {
     res.json({
       ok: false,
-      message: 'parkId missing',
+      message: 'parkId not found',
     });
     return;
   }
 
-  const creatures = await hasCreaturesForPark(parkId);
+  const creatures = await hasCreaturesPark(parkId);
   const hasCreatures = creatures.length > 0;
 
   res.json({
