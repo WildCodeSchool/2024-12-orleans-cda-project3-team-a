@@ -3,7 +3,7 @@ import { sql } from 'kysely';
 
 import { db } from '@app/backend-shared';
 
-const getRankRoute = Router();
+const getleaderboard = Router();
 
 async function getRank() {
   return db
@@ -50,7 +50,7 @@ async function getRank() {
 
 export type Rank = Awaited<ReturnType<typeof getRank>>[number];
 
-getRankRoute.get('/rank', async (_req: Request, res) => {
+getleaderboard.get('/leaderboard', async (_req: Request, res) => {
   const rank = await getRank();
 
   if (rank.length === 0) {
@@ -66,4 +66,4 @@ getRankRoute.get('/rank', async (_req: Request, res) => {
     rank,
   });
 });
-export default getRankRoute;
+export default getleaderboard;

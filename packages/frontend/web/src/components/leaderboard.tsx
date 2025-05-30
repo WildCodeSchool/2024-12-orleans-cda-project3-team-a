@@ -5,7 +5,7 @@ import GoldMedal from '../assets/images/icons-buttons/gold-medal.png';
 import Moons from '../assets/images/icons-buttons/moon.png';
 import SilverMedal from '../assets/images/icons-buttons/silver-medal.png';
 import Visitor from '../assets/images/icons-buttons/visitors.png';
-import useRank from '../hooks/use-rank';
+import useLeaderboard from '../hooks/use-leaderboard';
 import BgMenu from './bg-menu';
 import CloseWindow from './close-window';
 
@@ -14,7 +14,7 @@ type ModalRank = {
 };
 
 export default function Rank({ closeRank }: ModalRank) {
-  const rank = useRank();
+  const rank = useLeaderboard();
 
   if (!rank) {
     return;

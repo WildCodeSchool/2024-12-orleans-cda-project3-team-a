@@ -8,9 +8,9 @@ import iconRanking from '../assets/images/icons-buttons/ranking.png';
 import iconRules from '../assets/images/icons-buttons/rules.png';
 import iconShop from '../assets/images/icons-buttons/shop.png';
 import Dashboard from './dashboard';
+import Leaderboard from './leaderboard';
 import Logout from './logout';
 import ShopCreature from './modal-shop-creatures';
-import Rank from './rank';
 
 type ModalName = 'dashboard' | 'shop' | 'ranking' | 'profil' | null;
 
@@ -132,7 +132,9 @@ export default function Menu() {
         {openModal === 'shop' ? <ShopCreature closeShop={handleClose} /> : null}
 
         {/* Display Rank in pop-up if is open*/}
-        {openModal === 'ranking' ? <Rank closeRank={handleClose} /> : null}
+        {openModal === 'ranking' ? (
+          <Leaderboard closeRank={handleClose} />
+        ) : null}
       </div>
     </>
   );
