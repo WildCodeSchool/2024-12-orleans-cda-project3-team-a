@@ -8,10 +8,11 @@ import iconRanking from '../assets/images/icons-buttons/ranking.png';
 import iconRules from '../assets/images/icons-buttons/rules.png';
 import iconShop from '../assets/images/icons-buttons/shop.png';
 import Dashboard from './dashboard';
+import EditProfile from './edit-profile';
 import Logout from './logout';
 import ShopCreature from './modal-shop-creatures';
 
-type ModalName = 'dashboard' | 'shop' | 'ranking' | 'profil' | null;
+type ModalName = 'dashboard' | 'shop' | 'ranking' | 'profile' | null;
 
 export default function Menu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -100,7 +101,7 @@ export default function Menu() {
             <div>
               <img
                 onClick={() => {
-                  handleClick('profil');
+                  handleClick('profile');
                 }}
                 src={iconProfil}
                 alt=''
@@ -129,6 +130,11 @@ export default function Menu() {
 
         {/* Display Shop in pop-up if is open*/}
         {openModal === 'shop' ? <ShopCreature closeShop={handleClose} /> : null}
+
+        {/* Display Shop in pop-up if is open*/}
+        {openModal === 'profile' ? (
+          <EditProfile closeEditProfile={handleClose} />
+        ) : null}
       </div>
     </>
   );
