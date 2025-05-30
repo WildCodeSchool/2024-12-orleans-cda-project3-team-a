@@ -58,7 +58,7 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
     <div className='flex flex-col gap-0'>
       <div
         key={creature.id}
-        className='flex items-center justify-center gap-1 md:gap-5'
+        className='flex flex-wrap items-center justify-center gap-1 md:gap-5'
       >
         <img
           className='w-12 md:w-18'

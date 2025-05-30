@@ -103,7 +103,7 @@ export default function Enclosure({
       : () => '';
   return (
     <div
-      className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackground(enclosures.background)} `}
+      className={`relative flex h-[50vh] ${sizeEnclos} cursor-pointer flex-col justify-center p-4 ${getBackground(enclosures.background)} `}
       onClick={() => {
         if (!isModalOpen) {
           handleEnclosureClick();
@@ -120,7 +120,7 @@ export default function Enclosure({
       ))}
       <div className='relative flex flex-col items-center justify-center gap-2'>
         <img
-          className={`absolute top-1 w-10 ${isFour ? 'left-115' : 'left-80'} `}
+          className={`absolute top-1 w-10 ${isFour ? 'left-[60%]' : 'left-[65%]'} `}
           src={isLocked ? '' : isHungry ? alert : ''}
         />
         <img
