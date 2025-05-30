@@ -4,6 +4,7 @@ import parkIdMiddleware from '@/middlewares/park-id.middleware';
 
 import barrierRouter from './barrier';
 import creatureRouter from './creature';
+import getAllCreature from './get.creatures-status';
 import getDecorations from './get.decorations';
 import getEnclosures from './get.enclosures';
 import getLeaderboardRoute from './get.leaderboard';
@@ -24,4 +25,5 @@ gameRouter.use(getDecorations);
 gameRouter.use('/creature', creatureRouter);
 gameRouter.use('/visitors', visitorRouter);
 gameRouter.use(getLeaderboardRoute);
+gameRouter.use(getAllCreature);
 export default gameRouter;
