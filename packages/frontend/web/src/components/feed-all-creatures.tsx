@@ -103,7 +103,7 @@ export default function FeedAllCreatures({
         {'Making everyone magical'}
       </h1>
       <div className='flex items-center justify-center gap-3 p-2 md:gap-2'>
-        <p>{creaturesEnclosId.quantityCreature}</p>
+        <p>{hungryCreatures.length}</p>
         <img
           className='w-8'
           src={`/images/creatures/${creaturesEnclosId.src_image}`}

@@ -56,7 +56,7 @@ export default function Rank({ closeRank }: ModalRank) {
           <CloseWindow onClick={closeRank} />
         </div>
         <div>
-          <ul className=''>
+          <ul>
             {rank.map((park: Rank, index: number) => (
               <ul
                 className='m-2 grid w-full grid-cols-3 items-center gap-5 rounded bg-white/70 p-3 text-xs md:grid md:grid-cols-5 md:gap-20 md:rounded-md md:text-base'
@@ -64,7 +64,8 @@ export default function Rank({ closeRank }: ModalRank) {
               >
                 <li className='flex'>
                   {getMedal(index)}
-                  {index > 2 && `${index + 1}. `} {park.park_name}{' '}
+                  {index > 2 && `${index + 1}. `}
+                  {park.park_name}
                 </li>
 
                 <li>{park.username}</li>
