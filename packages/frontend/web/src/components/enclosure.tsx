@@ -120,7 +120,7 @@ export default function Enclosure({
       ))}
       <div className='relative flex flex-col items-center justify-center gap-2'>
         <img
-          className={`absolute top-1 w-10 ${isFour ? 'left-[60%]' : 'left-[65%]'} `}
+          className={`absolute top-1 w-10 ${isFour ? 'left-3/5' : 'left-13/20'} `}
           src={isLocked ? '' : isHungry ? alert : ''}
         />
         <img
