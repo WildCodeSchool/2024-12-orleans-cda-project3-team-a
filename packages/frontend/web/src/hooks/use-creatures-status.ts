@@ -17,7 +17,7 @@ export default function useCreaturesStatus(): CreaturesStatusProps {
 
     const data = await response.json();
 
-    if (typeof data.hasCreatures !== 'boolean') {
+    if (data.hasCreatures === false) {
       return;
     }
     setHasCreatures(data.hasCreatures);
