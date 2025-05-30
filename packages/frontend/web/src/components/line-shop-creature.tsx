@@ -88,8 +88,10 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
           border='border border-black'
           cursor='pointer'
         >
-          <p>{creature.price}</p>
-          <img className='w-5' src={Moon} alt='money' />
+          <div className='flex items-center justify-center gap-0.5 p-0.5'>
+            <p className=''>{creature.price}</p>
+            <img className='w-4' src={Moon} alt='money' />
+          </div>
         </ButtonBuy>
       </div>
     </div>
