@@ -131,7 +131,7 @@ export default function Menu() {
         {/* Display Shop in pop-up if is open*/}
         {openModal === 'shop' ? <ShopCreature closeShop={handleClose} /> : null}
 
-        {/* Display Shop in pop-up if is open*/}
+        {/* Display edit profile in pop-up if is open*/}
         {openModal === 'profile' ? (
           <EditProfile closeEditProfile={handleClose} />
         ) : null}

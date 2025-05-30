@@ -15,6 +15,12 @@ getParkUser.get('/park-user', async (req: Request, res) => {
     return;
   }
 
+  const userCredentials = await db
+    .selectFrom('users')
+    .select(['username', 'password_hash'])
+    .where('id', '=', userId)
+    .executeTakeFirst();
+
   const park = await db
     .selectFrom('parks')
     .selectAll()
@@ -40,6 +46,7 @@ getParkUser.get('/park-user', async (req: Request, res) => {
   res.json({
     park,
     visitorsCount,
+    userCredentials,
   });
 });
 

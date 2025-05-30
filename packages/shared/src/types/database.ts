@@ -17,6 +17,7 @@ export interface Avatars {
 export interface Barriers {
   direction: string | null;
   id: Generated<number>;
+  link_world: string | null;
   name: string;
   position: string | null;
   price: number;
@@ -55,7 +56,6 @@ export interface ParkCreatures {
   feed_date: Date;
   gender: "female" | "male";
   id: Generated<number>;
-  is_active: Generated<number | null>;
   is_adult: number;
   is_parent: number;
   name: string;
@@ -125,7 +125,6 @@ export interface Zones {
   name: string;
   src_image: string;
   src_sign: string;
-  unlock_cost: number | null;
 }
 
 export interface DB {
