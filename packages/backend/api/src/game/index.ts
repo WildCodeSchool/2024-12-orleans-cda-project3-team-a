@@ -6,6 +6,7 @@ import barrierRouter from './barrier';
 import creatureRouter from './creature';
 import getDecorations from './get.decorations';
 import getEnclosures from './get.enclosures';
+import getLeaderboardRoute from './get.leaderboard';
 import getParkUser from './get.park-user';
 import getZonesCount from './get.zones-count';
 import parkRouter from './park';
@@ -22,5 +23,5 @@ gameRouter.use(getEnclosures);
 gameRouter.use(getDecorations);
 gameRouter.use('/creature', creatureRouter);
 gameRouter.use('/visitors', visitorRouter);
-
+gameRouter.use(getLeaderboardRoute);
 export default gameRouter;

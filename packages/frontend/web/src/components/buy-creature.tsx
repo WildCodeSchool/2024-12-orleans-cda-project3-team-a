@@ -95,12 +95,14 @@ export default function BuyCreature({
             border='border border-black'
             cursor='pointer'
           >
-            <p className='text-2xl'>{'+'}</p>
-            <img
-              className='w-7 p-0.5'
-              src={`/images/creatures/${creaturesEnclosId.src_image}`}
-              alt=''
-            />
+            <div className='flex items-center justify-center gap-1'>
+              <p className='mb:text-2xl'>{'+'}</p>
+              <img
+                className='w-7 md:p-0.5'
+                src={`/images/creatures/${creaturesEnclosId.src_image}`}
+                alt=''
+              />
+            </div>
           </ButtonBuy>
         </div>
       </div>

@@ -9,6 +9,7 @@ import iconRules from '../assets/images/icons-buttons/rules.png';
 import iconShop from '../assets/images/icons-buttons/shop.png';
 import Dashboard from './dashboard';
 import EditProfile from './edit-profile';
+import Leaderboard from './leaderboard';
 import Logout from './logout';
 import ShopCreature from './modal-shop-creatures';
 
@@ -130,6 +131,11 @@ export default function Menu() {
 
         {/* Display Shop in pop-up if is open*/}
         {openModal === 'shop' ? <ShopCreature closeShop={handleClose} /> : null}
+
+        {/* Display Rank in pop-up if is open*/}
+        {openModal === 'ranking' ? (
+          <Leaderboard closeRank={handleClose} />
+        ) : null}
 
         {/* Display edit profile in pop-up if is open*/}
         {openModal === 'profile' ? (

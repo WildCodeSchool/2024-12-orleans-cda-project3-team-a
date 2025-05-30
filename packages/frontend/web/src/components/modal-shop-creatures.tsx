@@ -24,9 +24,9 @@ export default function ModalShopCreatures({ closeShop }: ModalShopCreatures) {
   const isScreen = window.innerWidth < 768;
 
   return (
-    <div className='relative w-full overflow-y-auto md:min-w-[90%]'>
+    <div className='relative mb-10 w-full overflow-y-auto md:min-w-[90%]'>
       <BgMenu>
-        <div className='absolute top-0 right-0 m-3'>
+        <div className='flex flex-row-reverse'>
           <CloseWindow onClick={closeShop} />
         </div>
         {isScreen ? (
@@ -71,7 +71,7 @@ export default function ModalShopCreatures({ closeShop }: ModalShopCreatures) {
             ))}
           </div>
         )}
-        <div className='relative top-3 mb-6 flex flex-col gap-10 md:top-5 md:grid md:grid-cols-2'>
+        <div className='relative top-3 mb-6 flex min-w-0 flex-col gap-10 md:top-5 md:grid md:grid-cols-2'>
           {creaturesInZone.map((creature) => (
             <LineCreature key={creature.id} creature={creature} />
           ))}
