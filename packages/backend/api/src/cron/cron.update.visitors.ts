@@ -7,7 +7,9 @@ new CronJob(
   '* * * * *', // cronTime each minute
 
   async function () {
-    //recovers count visitor and creatures, acitve/inactive/total
+    console.log('coucou2');
+
+    //recovers count visitor and creatures active
     const parkCreaturesVisitors = await db
       .selectFrom('park_creatures')
       .innerJoin(
@@ -18,21 +20,15 @@ new CronJob(
       .leftJoin('parks', 'park_creatures.park_id', 'parks.id')
       .select([
         'park_creatures.park_id',
-        'parks.entry_price',
-        // sql<number>`COUNT(DISTINCT park_creatures.id)`.as('total_creatures'),
         sql<number>`COUNT(DISTINCT CASE WHEN park_creatures.feed_date > NOW() THEN park_creatures.id END)`.as(
           'active_creatures',
         ),
-        // sql<number>`COUNT(DISTINCT CASE WHEN park_creatures.feed_date < NOW() THEN park_creatures.id END)`.as(
-        //   'inactive_creatures',
-        // ),
-        // sql<number>`COUNT(DISTINCT park_visitors.id)`.as('total_visitors'),
         sql<number>`COUNT(DISTINCT CASE WHEN park_visitors.exit_time > NOW() THEN park_visitors.id END)`.as(
           'active_visitors',
         ),
-        // sql<number>`COUNT(DISTINCT CASE WHEN park_visitors.exit_time < NOW() THEN park_visitors.id END)`.as(
-        //   'inactive_visitors',
-        // ),
+        sql<number>`COUNT(DISTINCT CASE WHEN park_visitors.exit_time <= NOW() THEN park_visitors.id END)`.as(
+          'inactive_visitors',
+        ),
       ])
       .groupBy('park_creatures.park_id')
       .execute();
@@ -42,74 +38,69 @@ new CronJob(
       return;
     }
 
-    //recovers id of all parks
-    // const parkIds = parkCreaturesVisitors.map((park) => park.park_id);
-
-    //-----------------
-    //recovers park id where active creature = 0
-    const parkIdsNoCreaturesActive = parkCreaturesVisitors
-      .filter((park) => park.active_creatures === 0)
+    //recovers park id where we have at least 1 visitor inactiv to let entry him, condition! we have at least 1 creature active
+    const parkIdsVisitorsInactive = parkCreaturesVisitors
+      .filter((park) => park.inactive_visitors > 0 && park.active_creatures > 0)
       .map((park) => park.park_id);
+    console.log('no visiteur active', parkIdsVisitorsInactive);
 
-    //if 0 creature active -> exit all visitors which are not yet exit + add 2h to entry_time
-    await db
-      .updateTable('park_visitors')
-      .set({
-        exit_time: sql`NOW()`,
-        entry_time: sql`NOW() + INTERVAL 2 HOUR`,
-      })
-      .where('exit_time', '>', new Date())
-      .where('entry_time', '>', new Date())
-      .where('park_id', 'in', parkIdsNoCreaturesActive)
-      .execute();
-
-    //-------------
-    //recovers id park where active creature < active visitor
-    const parkIdsNeedToExitVisitors = parkCreaturesVisitors
-      .filter((park) => park.active_creatures < park.active_visitors)
+    const parkIdsVisitorsActive = parkCreaturesVisitors
+      .filter((park) => park.active_visitors > 0)
       .map((park) => park.park_id);
+    console.log('visiteur actif', parkIdsVisitorsActive);
 
-    //we exit visitors which are in
-    await db
-      .updateTable('park_visitors')
-      .set({
-        exit_time: sql`NOW()`,
-        entry_time: sql`NOW() + INTERVAL 2 HOUR`,
-      })
-      .where('park_id', 'in', parkIdsNeedToExitVisitors)
-      .where('exit_time', '>', new Date())
-      // .limit()
-      .execute();
+    if (parkIdsVisitorsInactive.length > 0) {
+      await Promise.all([
+        //check if the visitor has finished his turn and add the entry price(1) and update the exit time and entry time(2)
+        //1- update wallet
+        db
+          .updateTable('parks')
+          .set({
+            //We recover the sum of entry price by visitor for those who are out
+            wallet: sql`
+      wallet + (
+        SELECT COALESCE(SUM(visitors.entry_price), 0)
+        FROM park_visitors
+        JOIN visitors ON visitors.id = park_visitors.visitor_id
+        WHERE park_visitors.park_id = parks.id
+          AND park_visitors.exit_time < NOW()
+      )
+    `,
+          })
+          //we add the entry price especially for parks with outgoing visitors, avoid to add + 0
+          .where('parks.id', 'in', parkIdsVisitorsInactive)
+          .execute(),
 
-    //---------
-    //recovers id park where active creature > active visitor
-    const parkIdsNeedToWelcomeVisitors = parkCreaturesVisitors
-      .filter((park) => park.active_creatures >= park.active_visitors)
-      .map((park) => park.park_id);
+        //2- update date in park_visitors
+        db
+          .updateTable('park_visitors')
+          .set({
+            entry_time: sql`NOW() `,
+            exit_time: sql`NOW() + INTERVAL 4 HOUR`,
+          })
+          .where('park_visitors.park_id', 'in', parkIdsVisitorsInactive)
+          .where('exit_time', '<', new Date())
+          .execute(),
+      ]);
+    }
 
-    //we let entry visitor were exit and check if they CAN entry (entry_time < now)
-    const updateVisitors = await db
-      .updateTable('park_visitors')
-      .set({
-        exit_time: sql`NOW() + INTERVAL 4 HOUR`,
-        entry_time: sql`NOW()`,
-        //faire en sql
-        visitor_id: sql<number>`FLOOR(RANDOM() * 4) + 1`,
-      })
-      .where('exit_time', '<', new Date())
-      .where('entry_time', '<', new Date())
-      .where('park_id', 'in', parkIdsNeedToWelcomeVisitors)
-      // .limit()
-      .executeTakeFirst();
-
-    //update wallet when we add visitor
+    //update wallet with visitors who spending money each money according to the number creature active
     await db
       .updateTable('parks')
       .set({
-        wallet: sql`wallet + entry_price * ${Number(updateVisitors.numUpdatedRows)}`,
+        //we sum the number of creature active and multiply by his id number to get a price that we earn each minute
+        wallet: sql`
+      wallet + (
+        SELECT COALESCE(SUM(
+          CASE WHEN feed_date > NOW() THEN 1 ELSE 0 END * creature_id
+        ), 0)
+        FROM park_creatures
+        WHERE park_creatures.park_id = parks.id
+      )
+    `,
       })
-      //si je ne reprends pas le num update, idem je dois me servir du limit
-      .where('parks.id', 'in', parkIdsNeedToWelcomeVisitors)
+      //we add the entry price especially for parks with outgoing visitors, avoid to add + 0
+      .where('parks.id', 'in', parkIdsVisitorsActive)
       .execute();
   },
   null, // onComplete

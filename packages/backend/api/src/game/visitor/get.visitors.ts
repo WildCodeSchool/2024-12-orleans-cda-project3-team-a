@@ -15,17 +15,15 @@ function getVisitors(parkId: number) {
     .select([
       'park_visitors.visitor_id',
       'visitors.src_image',
-      'visitors.spending',
-      'visitors.spending_time',
       'visitors.category',
+      'visitors.entry_price',
       ({ fn }) => fn.count('park_visitors.visitor_id').as('visitor_count'),
     ])
     .groupBy([
       'park_visitors.visitor_id',
       'visitors.src_image',
-      'visitors.spending',
-      'visitors.spending_time',
       'visitors.category',
+      'visitors.entry_price',
     ])
     .execute();
 }

@@ -87,13 +87,13 @@ export default function Dashboard({ closeDashboard }: DashboardProps) {
                         className='w-8 md:w-10'
                       />
                       <p className='flex items-center'>
-                        {visitor.spending}{' '}
+                        {visitor.entry_price}
                         <img
                           src={moon}
                           alt='money'
                           className='h-3 px-1 md:h-4'
                         />
-                        {'/'} {visitor.spending_time} {'min'}
+                        {'/ 4 hours'}
                       </p>
                     </li>
                   </ul>

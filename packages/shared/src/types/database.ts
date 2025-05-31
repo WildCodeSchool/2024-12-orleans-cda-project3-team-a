@@ -71,7 +71,6 @@ export interface ParkGifts {
 }
 
 export interface Parks {
-  entry_price: number;
   id: Generated<number>;
   park_name: string;
   user_id: number;
@@ -111,8 +110,8 @@ export interface Users {
 
 export interface Visitors {
   category: string;
+  entry_price: number;
   id: Generated<number>;
-  spending: number;
   spending_time: number;
   src_image: string | null;
   unlock_cost: number | null;

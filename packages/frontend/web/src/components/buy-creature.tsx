@@ -71,7 +71,6 @@ export default function BuyCreature({
       console.error(error);
     }
   };
-
   return (
     <div className='rounded-lg border-1'>
       <h1 className='pt-2 text-center text-lg md:text-xl'>{`Buy a new ${creaturesEnclosId.species}`}</h1>
