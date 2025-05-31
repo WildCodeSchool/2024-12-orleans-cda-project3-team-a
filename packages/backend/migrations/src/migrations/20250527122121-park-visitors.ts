@@ -13,6 +13,7 @@ export async function up(db: Kysely<DB>): Promise<void> {
 
     await sql`
       ALTER TABLE visitors
+      DROP COLUMN spending_time,
       RENAME COLUMN spending TO entry_price;
     `.execute(trx);
 
@@ -34,6 +35,11 @@ export async function down(db: Kysely<DB>): Promise<void> {
     await sql`
       ALTER TABLE visitors
       RENAME COLUMN entry_price TO spending;
+    `.execute(trx);
+
+    await sql`
+      ALTER TABLE visitors
+      ADD COLUMN spending_time INT NOT NULL;
     `.execute(trx);
 
     await sql`
