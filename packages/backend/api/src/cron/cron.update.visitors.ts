@@ -7,7 +7,7 @@ new CronJob(
   '* * * * *', // cronTime each minute
 
   async function () {
-    console.log('coucou2');
+    console.log('cron tourne');
 
     //recovers count visitor and creatures active
     const parkCreaturesVisitors = await db

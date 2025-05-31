@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import ReturnHome from '@/components/return-home';
 import useVisitors from '@/hooks/use-visitors';
 
@@ -7,19 +5,6 @@ import moon from '../assets/images/icons-buttons/moon.png';
 
 export default function PageVisitors() {
   const { visitorsPark, visitors } = useVisitors();
-  const filterChoices = ['ALL', 'IN', 'OUT'];
-  const [filterStateVisitor, setFilterStateVisitor] = useState<
-    'ALL' | 'IN' | 'OUT'
-  >('ALL');
-
-  const isExit = (exit_time: Date): boolean => exit_time.getTime() < Date.now();
-
-  const filteredVisitors = visitorsPark.filter((visitor) => {
-    const exit = new Date(visitor.exit_time);
-    if (filterStateVisitor === 'IN') return !isExit(exit);
-    if (filterStateVisitor === 'OUT') return isExit(exit);
-    return true; // return ALL
-  });
 
   return (
     <div className='flex h-screen flex-col'>
@@ -43,7 +28,7 @@ export default function PageVisitors() {
           <h2>{'Next entry'}</h2>
         </div>
 
-        {filteredVisitors.map((visitorPark, index) => {
+        {visitorsPark.map((visitorPark, index) => {
           const entryTime = new Date(visitorPark.entry_time);
           const exitTime = new Date(visitorPark.exit_time);
 
