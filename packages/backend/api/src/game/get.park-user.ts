@@ -17,8 +17,9 @@ getParkUser.get('/park-user', async (req: Request, res) => {
 
   const userCredentials = await db
     .selectFrom('users')
-    .select(['username', 'password_hash'])
-    .where('id', '=', userId)
+    .innerJoin('avatars', 'users.avatar_id', 'avatars.id')
+    .select(['users.username', 'users.password_hash', 'avatars.src_image'])
+    .where('users.id', '=', userId)
     .executeTakeFirst();
 
   const park = await db

@@ -7,6 +7,8 @@ import profileIcon from '../assets/images/icons-buttons/profile.png';
 import BgMenu from './bg-menu';
 import ButtonBlue from './button-blue';
 import CloseWindow from './close-window';
+import EditAvatar from './edit-avatar';
+import EditPassword from './edit-password';
 import Input from './input';
 
 type EditProfileProps = {
@@ -14,6 +16,10 @@ type EditProfileProps = {
 };
 
 export default function EditProfile({ closeEditProfile }: EditProfileProps) {
+  const [modalView, setModalView] = useState<'profile' | 'password' | 'avatar'>(
+    'profile',
+  );
+
   const { parkName, userName, fetchAll } = useGameInfoContext();
 
   const [newUserName, setNewUserName] = useState('');
@@ -28,6 +34,16 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
 
   const [isConformParkName, setIsConformParkName] = useState(false);
   const [isTouchedParkName, setIsTouchedParkName] = useState(false);
+
+  const toPassword = () => {
+    setModalView('password');
+  };
+  const toAvatar = () => {
+    setModalView('avatar');
+  };
+  const toProfile = () => {
+    setModalView('profile');
+  };
 
   const isFormatValid = (value: string) => {
     // At least 5 characters, no spaces
@@ -75,96 +91,124 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
         <div className='absolute top-0 right-0 m-3'>
           <CloseWindow onClick={closeEditProfile} />
         </div>
-        <form
-          onSubmit={async (event) => {
-            event.preventDefault();
-            if (isFormValid()) {
-              await editMyData();
-            }
-          }}
-          className='flex flex-col items-center justify-center'
-        >
-          <h1 className='mb-4 text-lg font-semibold'>{'EDIT MY PROFILE'}</h1>
 
-          <div className='flex flex-col gap-4 p-4 md:grid md:grid-cols-2 md:grid-rows-3'>
-            <div className='row-span-2 flex items-center justify-center md:order-1'>
-              <img
-                className='w-30 md:w-40'
-                src={profileIcon}
-                alt='profile picture'
-              />
+        {modalView === 'profile' && (
+          <form
+            onSubmit={async (event) => {
+              event.preventDefault();
+              if (isFormValid()) {
+                await editMyData();
+              }
+            }}
+            className='flex flex-col items-center justify-center'
+          >
+            {/* EDIT PROFILE */}
+            <h1 className='mb-4 text-lg font-semibold'>{'EDIT MY PROFILE'}</h1>
+
+            <div className='flex flex-col gap-4 p-4 md:grid md:grid-cols-2 md:grid-rows-3'>
+              <div className='row-span-2 flex items-center justify-center md:order-1'>
+                <img
+                  className='w-30 md:w-40'
+                  src={profileIcon}
+                  alt='profile picture'
+                />
+              </div>
+
+              <div className='flex items-center justify-center md:order-4'>
+                <button
+                  type='button'
+                  onClick={toAvatar}
+                  className='cursor-pointer text-sm font-semibold text-[#EF8300] underline md:text-base'
+                >
+                  {'Edit avatar'}
+                </button>
+              </div>
+
+              {/* Username */}
+              <div className='flex flex-col items-center justify-center md:order-2'>
+                <Input
+                  bgColor='bg-primary-blue'
+                  borderColor='border-secondary-blue'
+                  type='text'
+                  placeholder={`Username : ${userName}`}
+                  value={newUserName}
+                  onChangeInput={(value) => {
+                    setNewUserName(value);
+                    setIsConformUsername(isFormatValid(value));
+                  }}
+                  onBlur={() => {
+                    setIsTouchedUsername(true);
+                  }}
+                />
+                {!isConformUsername && isTouchedUsername ? (
+                  <p className='text-sm text-red-500 italic'>
+                    {'At least 5 char. without spaces'}
+                  </p>
+                ) : null}
+              </div>
+
+              {/* Park name */}
+              <div className='flex flex-col items-center justify-center md:order-3'>
+                <Input
+                  bgColor='bg-primary-blue'
+                  borderColor='border-secondary-blue'
+                  type='text'
+                  placeholder={`Park name : ${parkName}`}
+                  value={newParkName}
+                  onChangeInput={(value) => {
+                    setNewParkName(value);
+                    setIsConformParkName(isFormatValid(value));
+                  }}
+                  onBlur={() => {
+                    setIsTouchedParkName(true);
+                  }}
+                />
+                {!isConformParkName && isTouchedParkName ? (
+                  <p className='text-sm text-red-500 italic'>
+                    {'At least 5 char. without spaces'}
+                  </p>
+                ) : null}
+              </div>
+
+              <div className='flex items-center justify-center md:order-5'>
+                <button
+                  type='button'
+                  onClick={toPassword}
+                  className='cursor-pointer text-sm font-semibold underline md:text-base'
+                >
+                  {'Edit password'}
+                </button>
+              </div>
             </div>
 
-            <div className='flex items-center justify-center md:order-4'>
-              <a
-                href='/'
-                className='text-sm font-semibold text-[#EF8300] underline md:text-base'
-              >
-                {'Change avatar'}
-              </a>
-            </div>
+            <ButtonBlue bg='bg-primary-blue' type='submit'>
+              {'EDIT'}
+            </ButtonBlue>
+            <p className='text-sm text-red-500 italic'>
+              {messErrorModification}
+            </p>
+          </form>
+        )}
 
-            <div className='flex flex-col items-center justify-center md:order-2'>
-              <Input
-                bgColor='bg-primary-blue'
-                borderColor='border-secondary-blue'
-                type='text'
-                placeholder={userName}
-                value={newUserName}
-                onChangeInput={(value) => {
-                  setNewUserName(value);
-                  setIsConformUsername(isFormatValid(value));
-                }}
-                onBlur={() => {
-                  setIsTouchedUsername(true);
-                }}
-              />
-              {!isConformUsername && isTouchedUsername ? (
-                <p className='text-sm text-red-500 italic'>
-                  {'At least 5 char. without spaces'}
-                </p>
-              ) : null}
-            </div>
-
-            <div className='flex flex-col items-center justify-center md:order-3'>
-              <Input
-                bgColor='bg-primary-blue'
-                borderColor='border-secondary-blue'
-                type='text'
-                placeholder={parkName}
-                value={newParkName}
-                onChangeInput={(value) => {
-                  setNewParkName(value);
-                  setIsConformParkName(isFormatValid(value));
-                }}
-                onBlur={() => {
-                  setIsTouchedParkName(true);
-                }}
-              />
-              {!isConformParkName && isTouchedParkName ? (
-                <p className='text-sm text-red-500 italic'>
-                  {'At least 5 char. without spaces'}
-                </p>
-              ) : null}
-            </div>
-
-            <div className='flex items-center justify-center md:order-5'>
-              <a
-                href='/'
-                className='text-sm font-semibold underline md:text-base'
-              >
-                {'Change password'}
-              </a>
-            </div>
+        {/* show edit password view */}
+        {modalView === 'password' && (
+          <div className='flex flex-col items-center justify-center p-4'>
+            <EditPassword />
+            <ButtonBlue bg='bg-tertiary-blue' type='button' onClick={toProfile}>
+              {'BACK'}
+            </ButtonBlue>
           </div>
+        )}
 
-          <ButtonBlue bg='bg-primary-blue' type='submit'>
-            {'EDIT'}
-          </ButtonBlue>
-          <p className='text-sm text-red-500 italic'>
-            {messErrorModification}{' '}
-          </p>
-        </form>
+        {/* show edit avatar view */}
+        {modalView === 'avatar' && (
+          <div className='flex flex-col items-center justify-center p-4'>
+            <EditAvatar />
+            <ButtonBlue bg='bg-tertiary-blue' type='button' onClick={toProfile}>
+              {'BACK'}
+            </ButtonBlue>
+          </div>
+        )}
       </BgMenu>
     </div>
   );

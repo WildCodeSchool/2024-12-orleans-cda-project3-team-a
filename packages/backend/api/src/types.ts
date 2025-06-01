@@ -4,3 +4,4 @@ export type * from './game/get.enclosures';
 export type * from './game/get.decorations';
 export type * from './game/creature/get.creatures';
 export type * from './game/get.leaderboard';
+export type * from './game/get.avatars';

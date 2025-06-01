@@ -8,6 +8,7 @@ export default function usePark() {
   const [isLoadingPark, setIsLoadingPark] = useState(true);
   const [parkName, setParkName] = useState('');
   const [userName, setUserName] = useState('');
+  const [userAvatar, setUserAvatar] = useState('');
 
   const fetchPark = useCallback(async () => {
     try {
@@ -25,6 +26,7 @@ export default function usePark() {
       setVisitorsCount(data.visitorsCount);
       setParkName(data.park.park_name);
       setUserName(data.userCredentials.username);
+      setUserAvatar(data.userCredentials.avatar_id);
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
@@ -49,6 +51,7 @@ export default function usePark() {
     isLoadingPark,
     parkName,
     userName,
+    userAvatar,
     refetchPark: fetchPark,
   };
 }

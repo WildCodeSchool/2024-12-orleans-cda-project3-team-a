@@ -1,8 +1,9 @@
 import { createContext, useCallback, useContext, useMemo } from 'react';
 import type { PropsWithChildren } from 'react';
 
-import type { Decorations, Enclosure, UnlockedZones } from '@app/api';
+import type { Avatar, Decorations, Enclosure, UnlockedZones } from '@app/api';
 
+import useAvatars from '@/hooks/use-avatars';
 import useDecorations from '@/hooks/use-decorations';
 import useEnclos from '@/hooks/use-enclos';
 import usePark from '@/hooks/use-park';
@@ -20,6 +21,8 @@ type GameInfoContextState = {
   decorations: Decorations;
   parkName: string;
   userName: string;
+  userAvatar: string;
+  avatars: Avatar[];
 };
 
 // Define the type for provider
@@ -38,6 +41,8 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   decorations: [],
   parkName: '',
   userName: '',
+  userAvatar: '',
+  avatars: [],
 });
 
 // create the provider
@@ -53,6 +58,7 @@ export function GameInfoContextProvider({
     refetchPark,
     parkName,
     userName,
+    userAvatar,
   } = usePark();
 
   // get unlocked zones with useZones
@@ -61,6 +67,7 @@ export function GameInfoContextProvider({
   //get Creatures and decorations
   const { creaturesEnclos, refetchCreatures } = useEnclos();
   const { decorations } = useDecorations();
+  const { avatars } = useAvatars();
 
   //function to refetch hook necessary for home page
   const fetchAll = useCallback(async () => {
@@ -81,6 +88,8 @@ export function GameInfoContextProvider({
       decorations,
       parkName,
       userName,
+      userAvatar,
+      avatars,
     }),
     [
       walletFormated,
@@ -94,6 +103,8 @@ export function GameInfoContextProvider({
       fetchAll,
       parkName,
       userName,
+      userAvatar,
+      avatars,
     ],
   );
 
