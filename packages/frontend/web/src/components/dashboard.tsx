@@ -14,7 +14,7 @@ type DashboardProps = {
 };
 
 export default function Dashboard({ closeDashboard }: DashboardProps) {
-  const { parkName, walletFormated, visitorsFormated } = useGameInfoContext();
+  const { parkName, wallet, visitorsFormated } = useGameInfoContext();
   const { visitors } = useVisitors();
   const { unlockedZones } = useZones();
   const { creaturesEnclos } = useEnclosures();
@@ -28,10 +28,10 @@ export default function Dashboard({ closeDashboard }: DashboardProps) {
   }, 0);
 
   return (
-    <div className='relative overflow-auto'>
+    <div className='relative mb-10 overflow-auto'>
       <BgMenu>
         {/* Display the button to close the window */}
-        <div className='absolute top-0 right-0 m-3'>
+        <div className='flex flex-row-reverse'>
           <CloseWindow onClick={closeDashboard} />
         </div>
         {/* Container for display content of dashboard */}
@@ -49,7 +49,7 @@ export default function Dashboard({ closeDashboard }: DashboardProps) {
               </h2>
               <ul className='grid min-h-30 grid-cols-2 gap-2 rounded border-1 border-gray-500 bg-white/60 p-3 pt-5 md:rounded-md'>
                 <li className='flex items-center justify-center gap-2'>
-                  {walletFormated}
+                  {wallet.toLocaleString('fr-FR')}
                   <img src={moon} alt='money' className='h-6 md:h-7' />
                 </li>
                 <li className='flex items-center justify-center gap-2'>

@@ -1,27 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import type { Enclosure } from '@app/api';
 
 export default function useEnclosures() {
   const [creaturesEnclos, setCreaturesEnclos] = useState<Enclosure[]>([]);
 
-  useEffect(() => {
-    async function fetchCreatures() {
-      try {
-        const response = await fetch(`/api/game/enclos`, {
-          credentials: 'include',
-        });
-        const data = await response.json();
-        if (data.ok === false) {
-          throw new Error('No park');
-        }
-        setCreaturesEnclos(data.enclosure);
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('fetch failed', error);
+  const fetchCreatures = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/game/enclos`, {
+        credentials: 'include',
+      });
+      const data = await response.json();
+      if (data.ok === false) {
+        throw new Error('No park');
       }
+      setCreaturesEnclos(data.enclosure);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('fetch failed', error);
     }
-    void fetchCreatures();
   }, []);
-  return { creaturesEnclos };
+
+  useEffect(() => {
+    void fetchCreatures();
+  }, [fetchCreatures]);
+
+  return { creaturesEnclos, refetchCreatures: fetchCreatures };
 }

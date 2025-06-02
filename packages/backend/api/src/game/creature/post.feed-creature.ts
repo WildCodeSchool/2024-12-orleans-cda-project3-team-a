@@ -20,11 +20,7 @@ postFeedCreature.post('/feed', async (req: Request, res) => {
   const creature = await db
     .selectFrom('park_creatures')
     .innerJoin('creatures', 'creatures.id', 'park_creatures.creature_id')
-    .select([
-      'park_creatures.is_active',
-      'park_creatures.feed_date',
-      'creatures.feed_timer',
-    ])
+    .select(['park_creatures.feed_date', 'creatures.feed_timer'])
     .where('park_creatures.id', '=', parkCreatureId)
     .executeTakeFirst();
 

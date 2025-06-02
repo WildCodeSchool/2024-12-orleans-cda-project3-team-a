@@ -1,13 +1,16 @@
+import type { Creatures } from '@app/api';
+
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import useCreatures from '@/hooks/use-creatures';
 import { formatRemainingTime } from '@/utils/format-remaining-time';
 
 import Female from '../assets/images/icons-buttons/female.png';
 import Male from '../assets/images/icons-buttons/male.png';
 import ButtonBuy from './button-buy';
 
-type CreatureId = {
-  readonly creatureId: number;
+type CreatureLineProps = {
+  readonly fetchCreatures: () => Promise<void>;
+  readonly creatures: Creatures;
+  readonly potionPrice: number;
 };
 
 function getPotionImage(zoneId: number) {
@@ -25,9 +28,12 @@ function getPotionImage(zoneId: number) {
   }
 }
 
-export default function CreatureLine({ creatureId }: CreatureId) {
-  const { creatures, potionPrice, refetchCreature } = useCreatures(creatureId);
-  const { wallet } = useGameInfoContext();
+export default function CreatureLine({
+  fetchCreatures,
+  creatures,
+  potionPrice,
+}: CreatureLineProps) {
+  const { wallet, fetchAll } = useGameInfoContext();
   const hasEnoughMoons = wallet > Number(potionPrice);
 
   if (creatures.length === 0) {
@@ -51,9 +57,9 @@ export default function CreatureLine({ creatureId }: CreatureId) {
       });
 
       const result = await response.json();
-
       if (result.ok === true) {
-        await refetchCreature();
+        await fetchCreatures();
+        await fetchAll();
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -72,7 +78,7 @@ export default function CreatureLine({ creatureId }: CreatureId) {
         return (
           <div
             key={creatureData.id}
-            className='flex items-center justify-center gap-3'
+            className='flex items-center justify-center gap-2 text-xs md:gap-3 md:text-base'
           >
             <div className='relative flex w-17'>
               <img
@@ -87,21 +93,24 @@ export default function CreatureLine({ creatureId }: CreatureId) {
               />
             </div>
 
-            <div className='h-5 w-51 rounded border bg-white px-2 focus:border-2 focus:outline-none md:h-7 md:w-40 md:rounded-md'>
+            <div className='flex h-5 w-51 items-center rounded border bg-white px-2 md:h-7 md:w-40 md:rounded-md'>
               {creatureData.name}
             </div>
 
-            <div className='h-5 w-51 rounded border bg-gray-300 px-2 focus:border-2 focus:outline-none md:h-7 md:w-40 md:rounded-md'>
+            <div
+              className={`${shouldEat ? 'border-red-300 bg-red-100' : 'border-green-300 bg-green-100'} flex h-5 w-51 items-center rounded border px-2 md:h-7 md:w-40 md:rounded-md`}
+            >
               {remainingTime}
             </div>
 
             <ButtonBuy
               border='border border-black'
               bg='bg-white/75'
-              cursor={shouldEat ? 'pointer' : 'not-allowed'}
-              grayscale={!shouldEat}
+              cursor={!shouldEat || !hasEnoughMoons ? 'not-allowed' : 'pointer'}
+              isInvisible={!shouldEat}
+              isGrayscale={!shouldEat || !hasEnoughMoons}
               onClick={async () => {
-                if (shouldEat) {
+                if (shouldEat && hasEnoughMoons) {
                   await feedCreature(creatureData.id, creatureData.zone_id);
                 }
               }}
@@ -109,7 +118,7 @@ export default function CreatureLine({ creatureId }: CreatureId) {
               <img
                 src={`/images/decorations/${getPotionImage(creatureData.zone_id)}`}
                 alt='potion'
-                className='w-15 p-0.5 md:w-7'
+                className='h-4 w-8 px-0 md:h-6 md:px-0.5'
               />
             </ButtonBuy>
           </div>

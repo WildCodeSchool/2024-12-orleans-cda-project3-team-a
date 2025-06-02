@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import type { Decorations } from '@app/api';
 import type { Enclosure } from '@app/api';
 
@@ -5,22 +7,32 @@ import useCreatures from '@/hooks/use-creatures';
 
 import alert from '../assets/images/icons-buttons/alert.png';
 import ButtonBuy from './button-buy';
+import FeedModal from './feed-modal';
+import Portal from './portal';
 
 type EnclosureProps = {
   readonly decorations: Decorations;
   readonly totalCreaturesInZone: number;
   readonly enclosures: Enclosure;
-  readonly onClick?: () => void;
 };
 
 export default function Enclosure({
   decorations,
   totalCreaturesInZone,
   enclosures,
-  onClick,
 }: EnclosureProps) {
   const isLocked = enclosures.quantityCreature === 0;
-  const { inactiveCreatures } = useCreatures(enclosures.id);
+  const { inactiveCreatures, refetchCreature, creatures, potionPrice } =
+    useCreatures(enclosures.id);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleEnclosureClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
 
   const totalInactive = Number(
     inactiveCreatures?.total_inactive_creatures ?? 0,
@@ -89,11 +101,14 @@ export default function Enclosure({
     : isSix
       ? decoPositionSix
       : () => '';
-
   return (
     <div
-      className={`relative flex h-[50vh] ${sizeEnclos} flex-col justify-center p-4 ${getBackground(enclosures.background)} `}
-      onClick={onClick}
+      className={`relative flex h-[50vh] ${sizeEnclos} cursor-pointer flex-col justify-center p-4 ${getBackground(enclosures.background)} `}
+      onClick={() => {
+        if (!isModalOpen) {
+          handleEnclosureClick();
+        }
+      }}
     >
       {decorations.map((decoration) => (
         <img
@@ -105,7 +120,7 @@ export default function Enclosure({
       ))}
       <div className='relative flex flex-col items-center justify-center gap-2'>
         <img
-          className={`absolute top-1 w-10 ${isFour ? 'left-115' : 'left-80'} `}
+          className={`absolute top-1 w-10 ${isFour ? 'left-3/5' : 'left-13/20'} `}
           src={isLocked ? '' : isHungry ? alert : ''}
         />
         <img
@@ -127,6 +142,23 @@ export default function Enclosure({
           </ButtonBuy>
         )}
       </div>
+      {isModalOpen ? (
+        <Portal>
+          <div
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            <FeedModal
+              enclosure={enclosures}
+              onClick={handleClose}
+              potionPrice={potionPrice}
+              fetchCreatures={refetchCreature}
+              creatures={creatures}
+            />
+          </div>
+        </Portal>
+      ) : null}
     </div>
   );
 }

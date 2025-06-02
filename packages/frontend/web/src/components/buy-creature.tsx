@@ -12,14 +12,18 @@ import Input from './input';
 
 type BuyCreatureProps = {
   readonly creatureId: number;
+  readonly fetchCreatures: () => Promise<void>;
 };
 
-export default function BuyCreature({ creatureId }: BuyCreatureProps) {
+export default function BuyCreature({
+  creatureId,
+  fetchCreatures,
+}: BuyCreatureProps) {
   const [name, setName] = useState('');
-  const { wallet } = useGameInfoContext();
+  const [isBought, setIsBought] = useState(false);
+  const { wallet, fetchAll } = useGameInfoContext();
   const { creaturesEnclos } = useEnclosures();
   const { zone_id: zoneId } = useParams();
-  const { fetchAll } = useGameInfoContext();
 
   const creaturesEnclosId = creaturesEnclos.find(
     (creature: Enclosure) => creature.id === creatureId,
@@ -43,7 +47,6 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
           },
           body: JSON.stringify({
             name,
-            creatureId,
             zoneId,
           }),
           credentials: 'include',
@@ -52,8 +55,16 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
 
       // refetch for the information wallet and visitor number
       const result = await response.json();
+
       if (result.ok === true) {
         await fetchAll();
+        await fetchCreatures();
+        setName('');
+        setIsBought(true);
+        //display for 2 seconds a message to inform that is bought
+        setTimeout(() => {
+          setIsBought(false);
+        }, 2000);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -63,8 +74,8 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
 
   return (
     <div className='rounded-lg border-1'>
-      <h1 className='pt-2'>{`Buy a new ${creaturesEnclosId.species}`}</h1>
-      <div className='bottom-5 flex items-center gap-3 p-2 md:gap-5'>
+      <h1 className='pt-2 text-center text-lg md:text-xl'>{`Buy a new ${creaturesEnclosId.species}`}</h1>
+      <div className='flex items-center gap-1 p-2 md:gap-5'>
         <Input
           bgColor='bg-white'
           borderColor='border-gray'
@@ -84,15 +95,20 @@ export default function BuyCreature({ creatureId }: BuyCreatureProps) {
             border='border border-black'
             cursor='pointer'
           >
-            <p className='text-2xl'>{'+'}</p>
-            <img
-              className='w-7 p-0.5'
-              src={`/images/creatures/${creaturesEnclosId.src_image}`}
-              alt=''
-            />
+            <div className='flex items-center justify-center gap-1'>
+              <p className='mb:text-2xl'>{'+'}</p>
+              <img
+                className='w-7 md:p-0.5'
+                src={`/images/creatures/${creaturesEnclosId.src_image}`}
+                alt=''
+              />
+            </div>
           </ButtonBuy>
         </div>
       </div>
+      {isBought ? (
+        <p className='text-xs text-green-600 italic'>{'Creature bought!'}</p>
+      ) : null}
     </div>
   );
 }
