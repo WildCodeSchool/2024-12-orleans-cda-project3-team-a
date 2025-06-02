@@ -29,7 +29,7 @@ export default function ButtonBuy({
       } ${isGrayscale === true ? 'grayscale filter' : ''}`}
       style={{ cursor }}
     >
-      <div className='flex items-center justify-center gap-1'>{children}</div>
+      <div className='flex items-center justify-center gap-0.5'>{children}</div>
     </button>
   );
 }

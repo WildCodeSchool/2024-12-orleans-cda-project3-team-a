@@ -15,9 +15,11 @@ export default function Home() {
       style={{ backgroundImage: `url(${ParkMap})` }}
     >
       {/* Display the header menu and nb visitors and moons */}
-      <header className='fixed flex w-[94%] justify-between gap-3 sm:z-2 md:w-[98%]'>
+      <header className='fixed flex justify-between gap-3 sm:z-2 md:w-[88%]'>
+        <div className='fixed -right-[15%] z-3 flex w-48 gap-3 md:left-[90%]'>
+          <NbVisitorsMoons />
+        </div>
         <Menu />
-        <NbVisitorsMoons />
       </header>
 
       {/* Display of 4 worlds */}
@@ -29,7 +31,7 @@ export default function Home() {
               className='flex h-full w-full items-center justify-center'
             >
               <img
-                className={`w-[50%] ${zone.park_zone_id === null ? 'cursor-not-allowed grayscale' : ''}`}
+                className={`w-[50%] ${zone.park_zone_id === null ? 'relative z-0 cursor-not-allowed grayscale' : ''}`}
                 src={`/images/logo/${zone.src_image}`}
                 alt={zone.src_image}
               />
