@@ -31,7 +31,7 @@ export default function Home() {
               className='flex h-full w-full items-center justify-center'
             >
               <img
-                className={`w-[50%] ${zone.park_zone_id === null ? 'relative z-0 cursor-not-allowed grayscale' : ''}`}
+                className={`w-[50%] ${zone.park_zone_id === null ? 'cursor-not-allowed grayscale' : ''}`}
                 src={`/images/logo/${zone.src_image}`}
                 alt={zone.src_image}
               />
