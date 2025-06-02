@@ -83,7 +83,7 @@ export default function EditPassword() {
             bgColor='bg-primary-blue'
             borderColor='border-secondary-blue'
             type='password'
-            placeholder='Actual password'
+            placeholder='Current password'
             value={actualPassword}
             onChangeInput={(value) => {
               setActualPassword(value);
@@ -128,7 +128,7 @@ export default function EditPassword() {
         <ButtonBlue bg='bg-primary-blue' type='submit'>
           {'EDIT'}
         </ButtonBlue>
-        <p className='text-sm text-red-500 italic'>{messErrorModification}</p>
+        {/* <p className='text-sm text-red-500 italic'>{messErrorModification}</p> */}
       </form>
     </div>
   );

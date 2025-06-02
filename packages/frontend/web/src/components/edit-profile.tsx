@@ -20,10 +20,11 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
     'profile',
   );
 
-  const { parkName, userName, fetchAll } = useGameInfoContext();
+  const { parkName, userName, userAvatar, fetchAll } = useGameInfoContext();
 
   const [newUserName, setNewUserName] = useState('');
   const [newParkName, setNewParkName] = useState('');
+  const [newAvatar, setNewAvatar] = useState<number | null>(null);
 
   const [isModified, setIsModified] = useState(false);
 
@@ -47,7 +48,7 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
 
   const isFormatValid = (value: string) => {
     // At least 5 characters, no spaces
-    const regex = /^[a-zA-Z0-9_-]{5,}$/;
+    const regex = /^[^\s]{5,}$/;
     return value.trim() !== '' && regex.test(value);
   };
 
@@ -65,6 +66,7 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
       body: JSON.stringify({
         newUserName,
         newParkName,
+        newAvatar,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -83,6 +85,11 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
     } else {
       setMessErrorModification(data.message);
     }
+  };
+
+  const handleSaveAvatar = (avatar: { id: number; src_image: string }) => {
+    setNewAvatar(avatar.id);
+    toProfile();
   };
 
   return (
@@ -109,7 +116,9 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
               <div className='row-span-2 flex items-center justify-center md:order-1'>
                 <img
                   className='w-30 md:w-40'
-                  src={profileIcon}
+                  src={
+                    userAvatar ? `/images/avatar/${userAvatar}` : profileIcon
+                  }
                   alt='profile picture'
                 />
               </div>
@@ -194,19 +203,13 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
         {modalView === 'password' && (
           <div className='flex flex-col items-center justify-center p-4'>
             <EditPassword />
-            <ButtonBlue bg='bg-tertiary-blue' type='button' onClick={toProfile}>
-              {'BACK'}
-            </ButtonBlue>
           </div>
         )}
 
         {/* show edit avatar view */}
         {modalView === 'avatar' && (
           <div className='flex flex-col items-center justify-center p-4'>
-            <EditAvatar />
-            <ButtonBlue bg='bg-tertiary-blue' type='button' onClick={toProfile}>
-              {'BACK'}
-            </ButtonBlue>
+            <EditAvatar onSave={handleSaveAvatar} />
           </div>
         )}
       </BgMenu>

@@ -21,6 +21,7 @@ type GameInfoContextState = {
   decorations: Decorations;
   parkName: string;
   userName: string;
+  userAvatarId: number;
   userAvatar: string;
   avatars: Avatar[];
 };
@@ -41,6 +42,7 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   decorations: [],
   parkName: '',
   userName: '',
+  userAvatarId: 0,
   userAvatar: '',
   avatars: [],
 });
@@ -58,6 +60,7 @@ export function GameInfoContextProvider({
     refetchPark,
     parkName,
     userName,
+    userAvatarId,
     userAvatar,
   } = usePark();
 
@@ -88,6 +91,7 @@ export function GameInfoContextProvider({
       decorations,
       parkName,
       userName,
+      userAvatarId,
       userAvatar,
       avatars,
     }),
@@ -103,6 +107,7 @@ export function GameInfoContextProvider({
       fetchAll,
       parkName,
       userName,
+      userAvatarId,
       userAvatar,
       avatars,
     ],

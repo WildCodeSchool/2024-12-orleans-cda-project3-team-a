@@ -8,8 +8,7 @@ const postPark = express.Router();
 postPark.post('/data-modify', async (req: Request, res) => {
   const userId = req.userId;
 
-  const { newUserName } = req.body;
-  const { newParkName } = req.body;
+  const { newUserName, newParkName, newAvatar } = req.body;
 
   if (userId === undefined) {
     res.json({
@@ -22,7 +21,7 @@ postPark.post('/data-modify', async (req: Request, res) => {
   await db.transaction().execute(async (trx) => {
     await trx
       .updateTable('users')
-      .set({ username: newUserName })
+      .set({ username: newUserName, avatar_id: newAvatar })
       .where('id', '=', userId)
       .execute();
 

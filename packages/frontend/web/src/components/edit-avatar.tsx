@@ -1,62 +1,36 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
 
 import ButtonBlue from './button-blue';
 
-export default function EditAvatar() {
-  const { fetchAll, avatars, userAvatar } = useGameInfoContext();
+type EditAvatarProps = {
+  readonly onSave: (avatar: { id: number; src_image: string }) => void;
+};
 
-  const [isModified, setIsModified] = useState(false);
+export default function EditAvatar({ onSave }: EditAvatarProps) {
+  const { avatars, userAvatar } = useGameInfoContext();
 
-  // Initialise le selectedAvatar en fonction de l’avatar utilisateur
   const initialSelectedIndex = avatars.findIndex(
-    (a) => a.src_image === userAvatar,
+    (avatar) => avatar.src_image === userAvatar,
   );
   const [selectedAvatar, setSelectedAvatar] = useState<number | null>(
     initialSelectedIndex >= 0 ? initialSelectedIndex : null,
   );
 
-  if (isModified) {
-    return <Navigate to='/' />;
-  }
-
   const handleAvatarClick = (index: number) => {
     setSelectedAvatar(index);
   };
 
-  const editAvatar = async () => {
-    if (selectedAvatar === null) {
-      alert('Veuillez sélectionner un avatar.');
-      return;
-    }
-
-    const selectedAvatarId = avatars[selectedAvatar].id;
-
-    const res = await fetch(`/api/game/park/data-modify`, {
-      method: 'POST',
-      body: JSON.stringify({
-        selectedAvatarId,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const data = await res.json();
-
-    if (data.ok === true) {
-      await fetchAll();
-      alert('Modification réussie ✅');
-      setIsModified(true);
-    } else {
-      alert('Échec de la modification');
+  const handleSaveClick = () => {
+    if (selectedAvatar !== null) {
+      const avatarToSave = avatars[selectedAvatar];
+      onSave(avatarToSave);
     }
   };
 
   return (
-    <div className='relative mb-4 w-full overflow-y-auto md:min-w-[90%]'>
+    <div className='relative w-full overflow-y-auto md:min-w-[90%]'>
       <div className='flex flex-col items-center gap-4 p-4'>
         <h1 className='text-lg font-semibold'>{'EDIT AVATAR'}</h1>
         <div className='flex flex-wrap justify-center gap-8 md:w-3/4'>
@@ -64,16 +38,17 @@ export default function EditAvatar() {
             const isSelected = selectedAvatar === index;
             const isCurrentUserAvatar = avatar.src_image === userAvatar;
 
+            const isOrangeBorder =
+              selectedAvatar !== null ? isSelected : isCurrentUserAvatar;
+
             return (
               <div
                 key={avatar.id}
                 onClick={() => {
                   handleAvatarClick(index);
                 }}
-                className={`w-18 cursor-pointer rounded-full border-3 bg-white/50 transition duration-200 ${
-                  isSelected || isCurrentUserAvatar
-                    ? 'border-[#EF8300]'
-                    : 'border-gray-400'
+                className={`w-18 cursor-pointer rounded-full border-3 bg-white/50 ${
+                  isOrangeBorder ? 'border-[#EF8300]' : 'border-gray-400'
                 }`}
               >
                 <img
@@ -87,8 +62,12 @@ export default function EditAvatar() {
         </div>
       </div>
 
-      <div onClick={editAvatar}>
-        <ButtonBlue bg='bg-primary-blue' type='submit'>
+      <div className='mb-4'>
+        <ButtonBlue
+          bg='bg-primary-blue'
+          type='button'
+          onClick={handleSaveClick}
+        >
           {'EDIT'}
         </ButtonBlue>
       </div>
