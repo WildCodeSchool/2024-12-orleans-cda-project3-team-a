@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 
 import Menu from '@/components/menu';
 import NbVisitorsMoons from '@/components/nb-visitors-moons';
+import WelcomeGuide from '@/components/welcome-guide';
 
 import ParkMap from '../assets/images/background/park-map.png';
 import { useGameInfoContext } from '../contexts/game-info-context';
@@ -14,6 +15,7 @@ export default function Home() {
       className='h-screen bg-cover bg-center p-3'
       style={{ backgroundImage: `url(${ParkMap})` }}
     >
+      <WelcomeGuide />
       {/* Display the header menu and nb visitors and moons */}
       <header className='fixed flex justify-between gap-3 sm:z-2 md:w-[88%]'>
         <div className='fixed -right-[15%] z-3 flex w-48 gap-3 md:left-[90%]'>
