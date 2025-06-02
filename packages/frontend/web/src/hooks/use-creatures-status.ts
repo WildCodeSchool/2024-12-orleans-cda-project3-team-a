@@ -9,7 +9,7 @@ export default function useCreaturesStatus(): CreaturesStatusProps {
   const [hasCreatures, setHasCreatures] = useState<boolean>(false);
 
   const checkCreaturesStatus = useCallback(async (): Promise<void> => {
-    const response = await fetch('/api/game/all-creatures');
+    const response = await fetch('/api/game/creature/all-creatures');
 
     if (!response.ok) {
       return;
