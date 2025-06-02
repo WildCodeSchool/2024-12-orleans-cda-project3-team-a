@@ -8,7 +8,7 @@ export default function Page404() {
       <div className='flex h-full flex-col items-center justify-between md:h-auto md:flex-row'>
         <div className='z-2 flex items-center gap-2 rounded bg-white/95 p-1 px-4 text-center shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:rounded-md'>
           <img
-            src='../public/images/minguch.png'
+            src='/public/images/minguch.png'
             alt='Mingush'
             className='w-10'
           />
