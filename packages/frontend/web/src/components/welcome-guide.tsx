@@ -2,8 +2,6 @@ import { useEffect } from 'react';
 
 import useCreaturesStatus from '@/hooks/use-creatures-status';
 
-import mingush from '../assets/images/icons-buttons/minguch.png';
-
 export default function WelcomeGuide() {
   const { hasCreatures, checkCreaturesStatus } = useCreaturesStatus();
   useEffect(() => {
@@ -23,7 +21,11 @@ export default function WelcomeGuide() {
       </div>
       <div className='relative mt-4'>
         <div className='absolute -right-4 -bottom-4'>
-          <img className='w-15' src={mingush} alt='mingush' />
+          <img
+            className='w-15'
+            src='../public/images/minguch.png'
+            alt='mingush'
+          />
         </div>
       </div>
     </div>
