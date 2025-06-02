@@ -18,6 +18,11 @@ export async function up(db: Kysely<DB>): Promise<void> {
     `.execute(trx);
 
     await sql`
+      ALTER TABLE creatures
+      RENAME COLUMN unlock_cost TO profit;
+    `.execute(trx);
+
+    await sql`
       ALTER TABLE parks
       DROP COLUMN entry_price;
     `.execute(trx);
@@ -30,6 +35,11 @@ export async function down(db: Kysely<DB>): Promise<void> {
     await sql`
       ALTER TABLE parks
       ADD COLUMN entry_price INT NOT NULL;
+    `.execute(trx);
+
+    await sql`
+      ALTER TABLE creatures
+      RENAME COLUMN profit TO unlock_cost;
     `.execute(trx);
 
     await sql`

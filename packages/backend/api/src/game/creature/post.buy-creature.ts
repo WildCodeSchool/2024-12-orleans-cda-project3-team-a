@@ -130,6 +130,12 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     })
     .executeTakeFirst();
 
+  const zonesUnlocked = await db
+    .selectFrom('park_zones')
+    .select([db.fn.count('zone_id').as('countZonesUnlocked')])
+    .where('park_id', '=', parkId)
+    .executeTakeFirst();
+
   //insert into park_visitor the new visitor
   await db
     .insertInto('park_visitors')
@@ -137,7 +143,7 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
       entry_time: sql`NOW()`,
       exit_time: sql`NOW() + INTERVAL 4 HOUR`,
       park_id: parkId,
-      visitor_id: zoneId,
+      visitor_id: sql<number>`FLOOR(RAND() * ${zonesUnlocked?.countZonesUnlocked}) + 1`,
     })
     .executeTakeFirst();
 
