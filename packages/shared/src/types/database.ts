@@ -30,9 +30,9 @@ export interface Creatures {
   feed_timer: number | null;
   id: Generated<number>;
   price: number;
+  profit: number | null;
   species: string;
   src_image: string | null;
-  unlock_cost: number | null;
   zone_id: number;
 }
 
@@ -112,7 +112,6 @@ export interface Visitors {
   category: string;
   entry_price: number;
   id: Generated<number>;
-  spending_time: number;
   src_image: string | null;
   unlock_cost: number | null;
   zone_id: number | null;
