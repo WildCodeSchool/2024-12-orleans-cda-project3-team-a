@@ -13,7 +13,7 @@ function hasCreaturesPark(parkId: number) {
     .execute();
 }
 
-hasCreaturesRouter.get('/all-creatures', async (req: Request, res) => {
+hasCreaturesRouter.get('/has-creatures', async (req: Request, res) => {
   const parkId = req.parkId;
 
   if (parkId === undefined) {
