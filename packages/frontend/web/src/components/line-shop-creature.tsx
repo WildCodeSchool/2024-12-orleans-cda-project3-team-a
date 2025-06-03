@@ -17,7 +17,7 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
   const { wallet, fetchAll } = useGameInfoContext();
   const [isBought, setIsBought] = useState(false);
 
-  const hasEnoughMoons = wallet > creature.price;
+  const hasEnoughMoons = wallet >= creature.price;
 
   const buyCreature = async () => {
     if (!hasEnoughMoons) return;

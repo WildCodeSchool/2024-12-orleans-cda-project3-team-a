@@ -33,7 +33,7 @@ export default function BuyCreature({
     return;
   }
 
-  const hasEnoughMoons = wallet > creaturesEnclosId.price;
+  const hasEnoughMoons = wallet >= creaturesEnclosId.price;
 
   const buyCreature = async () => {
     if (!hasEnoughMoons) return;

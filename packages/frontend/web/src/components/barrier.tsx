@@ -20,7 +20,7 @@ type BarrierProps = {
 
 export default function Barrier({ barrier, refetch }: BarrierProps) {
   const { wallet } = useGameInfoContext();
-  const hasEnoughMoons = wallet > barrier.price;
+  const hasEnoughMoons = wallet >= barrier.price;
   const priceFormatted = useNumberFormatter(barrier.price);
 
   const buyBarrier = async () => {
