@@ -23,7 +23,7 @@ export default function WelcomeGuide() {
         <div className='absolute -right-4 -bottom-4'>
           <img
             className='w-12 md:w-20'
-            src='/public/images/minguch.png'
+            src='/images/minguch.png'
             alt='mingush'
           />
         </div>
