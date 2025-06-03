@@ -41,7 +41,7 @@ export default function CreatureLine({
 
   if (creatures.length === 0) {
     return (
-      <p>{`You don't have any ${enclosure.species} yet. Buy your first species..!`}</p>
+      <p>{`You don't have any ${enclosure.species} yet. Buy your first ${enclosure.species}..!`}</p>
     );
   }
 

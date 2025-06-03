@@ -102,6 +102,63 @@ body {
 }
 /* End of animation visitor */
 
+/* Animation Mingush */
+.typewriter {
+  overflow: hidden;
+  /* border-right: 2px solid black; */
+  white-space: nowrap;
+  display: inline-block;
+  width: 0;
+  overflow: hidden;
+}
+
+.typing1 {
+  animation: typing1 3s steps(60, end) forwards, blink-caret 0.7s step-end infinite;
+}
+
+.typing2 {
+  animation: typing2 1.5s steps(40, end) 3.2s forwards, blink-caret 0.7s step-end infinite 3.2s;
+  animation-fill-mode: forwards;
+}
+
+.typing3 {
+  animation: typing3 3s steps(50, end) 5s forwards, blink-caret 0.7s step-end infinite 6.5s;
+  animation-fill-mode: forwards;
+}
+
+.typing4 {
+  animation: typing3 3s steps(30, end) 8.2s forwards, blink-caret 0.7s step-end infinite 6.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes typing1 {
+  from { width: 0; }
+  to { width: 90ch; }
+}
+
+@keyframes typing2 {
+  from { width: 0; }
+  to { width: 30ch; }
+}
+
+@keyframes typing3 {
+  from { width: 0; }
+  to { width: 90ch; }
+}
+
+@keyframes typing4 {
+  from { width: 0; }
+  to { width: 30ch; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: #0f0; }
+}
+
+    /* End animation Mingush*/
+
+
 .text-outline-purple {
   -webkit-text-stroke-width: 4px;
   -webkit-text-stroke-color: #4d40a8;
