@@ -42,7 +42,13 @@ export default function CreatureLine({
 
   if (creatures.length === 0) {
     return (
-      <p>{`You don't have any ${enclosure.species} yet. Buy your first ${enclosure.species}..!`}</p>
+      <div className='flex items-center justify-center gap-4'>
+        <img className='w-12 md:w-15' src='/images/minguch.png' alt='mingush' />
+        <div className='text-secondary-blue flex flex-col justify-center text-center text-xs md:text-base'>
+          <p className='flex justify-center'>{`You don't have any ${enclosure.species} yet.`}</p>
+          <p className='font-extrabold'>{`Buy your first ${enclosure.species}!`}</p>
+        </div>
+      </div>
     );
   }
   const feedCreature = async (parkCreatureId: number, zoneId: number) => {

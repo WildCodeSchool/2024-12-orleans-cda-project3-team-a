@@ -19,6 +19,7 @@ function getEnclosures(parkId: number) {
       'creatures.species',
       'creatures.feed_timer',
       'creatures.price',
+      'creatures.profit',
       'creatures.src_image',
       'creatures.zone_id',
       'creatures.background',
