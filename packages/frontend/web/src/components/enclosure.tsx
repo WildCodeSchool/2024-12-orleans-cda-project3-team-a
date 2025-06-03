@@ -115,7 +115,7 @@ export default function Enclosure({
           key={decoration.creature_id}
           className={`w-15 ${getPosition(decoration.position)}`}
           src={`/images/decorations/${decoration.src_image}`}
-          alt='decorations'
+          alt={decoration.name}
         />
       ))}
       <div className='relative flex flex-col items-center justify-center gap-2'>
