@@ -7,15 +7,17 @@ export default function Rules() {
         {'RULES'}
       </h1>
       <div className='text-xs md:text-base'>
+        <p className='mb-3 text-center font-extrabold'>
+          {`How can you manage the most incredible fantasy creature park ?👀`}
+        </p>
         <p>
-          {`🎉 Welcome to the adventure! 🎉 Ready to manage the most incredible fantasy creature park ?
- In this magical world, you can collect and care for legendary beings while attracting amazed visitors!`}
+          {`  In this magical world, you can collect and care for legendary beings while attracting amazed visitors!`}
         </p>
         <p>{`🌍 Explore the 4 main zones: Fairy, Winged, Mythological, and Shadows. To start, only the Fairy zone is unlocked. Click on it to discover your first enclosures and welcome your creatures!`}</p>
-        <p>{`💰 Your adventure begins with 500 Moons in your wallet. Make the right choices to develop your park!`}</p>
-        <p>{`👥 Attract visitors and make your park thrive: The first creature purchased in a zone attracts 2 visitors who will pay their entrance fee to admire your wonders. Each additional creature brings 1 more visitor.`}</p>
-        <p>{`⚠️ Take care of your creatures! A fantasy park takes work! Don't forget to keep the magic alive, or they'll become inactive, scaring away visitors… reducing your earnings!`}</p>
-        <p>{`✨ It's your turn to play—build the park of your dreams! ✨`}</p>
+        <p>{`💰 Your adventure begins with 50 Moons in your wallet. Make the right choices to develop your park!`}</p>
+        <p>{`👥 Each time you will buy 1 creature, 1 visitor will entry and pay his entrance every 4 hours.`}</p>
+        <p>{`⚠️ Take care of your creatures! Don't forget to keep the magic alive to earn money with your creatures every minute.`}</p>
+        <p className='mt-2 text-center font-extrabold'>{`✨ It's your turn to play—build the park of your dreams! ✨`}</p>
       </div>
       <div className='self-end'>
         <ReturnHome />

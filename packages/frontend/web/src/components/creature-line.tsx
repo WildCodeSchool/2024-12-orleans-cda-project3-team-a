@@ -131,7 +131,7 @@ export default function CreatureLine({
                 className='h-3 px-0 md:h-6 md:py-0.5'
               />
               <p className='text-xs md:text-base'>{potionPrice}</p>
-              <img className='h-2 md:h-5 md:px-0.5' src={Moon} alt='' />
+              <img className='h-2 md:h-5 md:px-0.5' src={Moon} alt='moon' />
             </ButtonBuy>
           </div>
         );
