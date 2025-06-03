@@ -119,7 +119,7 @@ export default function CreatureLine({
                 alt='potion'
                 className='h-3 w-6 px-0 md:h-6 md:px-0.5'
               />
-              <p className='text-xs md:text-base'>{creatureData.price}</p>
+              <p className='text-xs md:text-base'>{potionPrice}</p>
               <img className='w-2 md:w-4' src={Moon} alt='' />
             </ButtonBuy>
           </div>
