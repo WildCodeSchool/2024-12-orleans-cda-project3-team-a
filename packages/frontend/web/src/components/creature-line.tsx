@@ -117,10 +117,10 @@ export default function CreatureLine({
               <img
                 src={`/images/decorations/${getPotionImage(creatureData.zone_id)}`}
                 alt='potion'
-                className='h-3 w-6 px-0 md:h-6 md:px-0.5'
+                className='h-3 px-0 md:h-6 md:py-0.5'
               />
               <p className='text-xs md:text-base'>{potionPrice}</p>
-              <img className='w-2 md:w-4' src={Moon} alt='' />
+              <img className='h-2 md:h-5 md:px-0.5' src={Moon} alt='' />
             </ButtonBuy>
           </div>
         );
