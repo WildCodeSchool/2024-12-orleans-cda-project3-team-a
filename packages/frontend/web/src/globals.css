@@ -111,9 +111,9 @@ body {
 
 @media (max-width: 768px) {
   .typewriter {
+    /* overflow: hidden; */
     display: flex;
-    flex-wrap: wrap;
-    white-space: normal;
+    white-space: wrap;
     width: 100%;
   }
 
@@ -127,15 +127,15 @@ body {
 }
 
 .typing2 {
-  animation: typing2 2s steps(40, end) 2.5s forwards, blink-caret 0.7s;
+  animation: typing2 2s steps(40, end) 1.8s forwards, blink-caret 0.7s;
 }
 
 .typing3 {
-  animation: typing3 2.5s steps(50, end) 3.4s forwards, blink-caret 0.7s;
+  animation: typing3 2.5s steps(50, end) 2.4s forwards, blink-caret 0.7s;
 }
 
 .typing4 {
-  animation: typing4 2.5s steps(30, end) 6s forwards, blink-caret 0.7s;
+  animation: typing4 2.5s steps(30, end) 4.3s forwards, blink-caret 0.7s;
 }
 
 @keyframes typing1 {
