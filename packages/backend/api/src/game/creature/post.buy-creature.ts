@@ -143,8 +143,6 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     return zonesUnlocked[randomIndex].visitor_id;
   }
 
-  console.log('zonesUnlocked:', zonesUnlocked);
-
   //insert into park_visitor the new visitor
   await db
     .insertInto('park_visitors')
