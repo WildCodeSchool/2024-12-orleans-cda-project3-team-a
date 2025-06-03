@@ -53,7 +53,7 @@ body {
 .animate-spin {
   animation: spin 2s linear infinite;
 }
-
+/* Animation Creatures*/
 @keyframes move {
   0%,
   50%,
@@ -71,6 +71,7 @@ body {
 .animate-move {
   animation: move 2s ease-in-out infinite;
 }
+/* Fin Animation Creatures*/
 
 /* Animation for visitor */
 @keyframes moveHorizontal {
@@ -117,48 +118,74 @@ body {
     width: 100%;
   }
 
-  .typing1, .typing2, .typing3, .typing4 {
+  .typing1,
+  .typing2,
+  .typing3,
+  .typing4 {
     animation: none !important;
   }
 }
 
 .typing1 {
-  animation: typing1 2.5s steps(60, end) forwards, blink-caret 0.7s;
+  animation:
+    typing1 2.5s steps(60, end) forwards,
+    blink-caret 0.7s;
 }
 
 .typing2 {
-  animation: typing2 2s steps(40, end) 1.8s forwards, blink-caret 0.7s;
+  animation:
+    typing2 2s steps(40, end) 1.8s forwards,
+    blink-caret 0.7s;
 }
 
 .typing3 {
-  animation: typing3 2.5s steps(50, end) 2.4s forwards, blink-caret 0.7s;
+  animation:
+    typing3 2.5s steps(50, end) 2.4s forwards,
+    blink-caret 0.7s;
 }
 
 .typing4 {
-  animation: typing4 2.5s steps(30, end) 4.3s forwards, blink-caret 0.7s;
+  animation:
+    typing4 2.5s steps(30, end) 4.3s forwards,
+    blink-caret 0.7s;
 }
 
 @keyframes typing1 {
-  from { width: 0; }
-  to { width: 100%; }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 @keyframes typing2 {
-  from { width: 0; }
-  to { width: 100%; }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 @keyframes typing3 {
-  from { width: 0; }
-  to { width: 100%; }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 @keyframes typing4 {
-  from { width: 0; }
-  to { width: 100%; }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 /* End animation Mingush*/
-
 
 .text-outline-purple {
   -webkit-text-stroke-width: 4px;
