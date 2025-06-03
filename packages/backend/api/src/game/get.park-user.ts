@@ -17,7 +17,7 @@ getParkUser.get('/park-user', async (req: Request, res) => {
 
   const userCredentials = await db
     .selectFrom('users')
-    .innerJoin('avatars', 'users.avatar_id', 'avatars.id')
+    .leftJoin('avatars', 'users.avatar_id', 'avatars.id')
     .select([
       'users.username',
       'users.password_hash',
@@ -50,6 +50,7 @@ getParkUser.get('/park-user', async (req: Request, res) => {
   const visitorsCount = visitorsCountResult?.count ?? 0;
 
   res.json({
+    ok: true,
     park,
     visitorsCount,
     userCredentials,

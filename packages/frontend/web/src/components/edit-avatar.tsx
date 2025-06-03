@@ -10,7 +10,6 @@ type EditAvatarProps = {
 
 export default function EditAvatar({ navigate }: EditAvatarProps) {
   const { avatars, userAvatar } = useGameInfoContext();
-  // console.log(avatars);
 
   const [selectedAvatar, setSelectedAvatar] = useState<number | null>(() => {
     const initialAvatar = avatars.find(
@@ -49,7 +48,6 @@ export default function EditAvatar({ navigate }: EditAvatarProps) {
   };
 
   const handleNavigationClick = async () => {
-    // console.log('selected avatar id : ', selectedAvatar);
     await editMyData();
     navigate();
   };

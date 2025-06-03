@@ -8,7 +8,7 @@ import BgMenu from './bg-menu';
 import ButtonBlue from './button-blue';
 import CloseWindow from './close-window';
 import EditAvatar from './edit-avatar';
-// import EditPassword from './edit-password';
+import EditPassword from './edit-password';
 import Input from './input';
 
 type EditProfileProps = {
@@ -204,7 +204,7 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
         {/* show edit password view */}
         {modalView === 'password' && (
           <div className='flex flex-col items-center justify-center p-4'>
-            {/* <EditPassword navigate={toProfile} /> */}
+            <EditPassword navigate={toProfile} />
             <ButtonBlue bg='bg-tertiary-blue' type='button' onClick={toProfile}>
               {'BACK'}
             </ButtonBlue>
