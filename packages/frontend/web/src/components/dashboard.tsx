@@ -14,7 +14,7 @@ type DashboardProps = {
 };
 
 export default function Dashboard({ closeDashboard }: DashboardProps) {
-  const { parkName, wallet, visitorsFormated } = useGameInfoContext();
+  const { parkName, wallet, countVisitorActiveFormated } = useGameInfoContext();
   const { visitors } = useVisitors();
   const { unlockedZones } = useZones();
   const { creaturesEnclos } = useEnclosures();
@@ -53,7 +53,7 @@ export default function Dashboard({ closeDashboard }: DashboardProps) {
                   <img src={moon} alt='money' className='h-6 md:h-7' />
                 </li>
                 <li className='flex items-center justify-center gap-2'>
-                  {visitorsFormated}
+                  {countVisitorActiveFormated}
                   <img src={visitor} alt='money' className='h-6 md:h-7' />
                 </li>
                 <li className='flex items-center justify-center gap-2'>

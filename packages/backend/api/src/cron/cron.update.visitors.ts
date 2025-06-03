@@ -5,7 +5,6 @@ import { db } from '@app/backend-shared';
 
 new CronJob(
   '* * * * *', // cronTime each minute
-  // '* * * * * *',
 
   async function () {
     //recovers count visitor and creatures active
@@ -71,16 +70,16 @@ new CronJob(
       return parkZone[randomIndex].visitor_id;
     }
 
-    //-----------------------------------------------------------------
-    //------------------LOGIC FOR ADD VISITOR IF IS OUT----------------
-    //-----------------------------------------------------------------
+    //----------------------------------------------------
+    //-----------LOGIC FOR ADD VISITOR IF IS OUT----------
+    //----------------------------------------------------
     //Generate table to add in the insert of park_visitors
     const dataVisitorsToInsertByGroup = parkCreaturesVisitors
       .filter((park) => park.nb_visitor_to_add > 0)
       .map((park) => {
         const visitors = Array.from({ length: park.nb_visitor_to_add }, () => ({
           entry_time: sql<Date>`NOW()`,
-          exit_time: sql<Date>`NOW() + interval '4 hours'`,
+          exit_time: sql<Date>`NOW() + INTERVAL 4 HOUR`,
           park_id: park.id,
           visitor_id: getRandomZone(park.id),
         }));
@@ -125,9 +124,9 @@ new CronJob(
       };
     });
 
-    //----------------------------------------------------------------
-    //-----------------ADD NEW VISITOR AND ENTRY PRICE----------------
-    //----------------------------------------------------------------
+    //------------------------------------------------
+    //--------ADD NEW VISITOR AND ENTRY PRICE---------
+    //------------------------------------------------
     if (parkIdsCanAcceptVisitors.length > 0) {
       await Promise.all([
         //1- insert visitor
@@ -151,9 +150,9 @@ new CronJob(
       ]);
     }
 
-    //----------------------------------------------------------------
-    //-----------------ADD PROFIT IF CREATURE ACTIVE------------------
-    //----------------------------------------------------------------
+    //-----------------------------------------------------
+    //---------ADD PROFIT IF CREATURE ACTIVE---------------
+    //-----------------------------------------------------
 
     //recover park where we have to add a profit time
     const parkIdsCreaturesActive = parkCreaturesVisitors

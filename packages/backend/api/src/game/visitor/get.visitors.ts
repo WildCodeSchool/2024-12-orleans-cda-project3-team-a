@@ -1,18 +1,22 @@
 import { type Request, Router } from 'express';
+import { sql } from 'kysely';
 
 import { db } from '@app/backend-shared';
 
 const getVisitorsRoute = Router();
 
+//We recover the count by visitor id by park id
 function getVisitors(parkId: number) {
   return db
     .selectFrom('visitors')
     .leftJoin('park_visitors', (join) =>
       join
         .onRef('park_visitors.visitor_id', '=', 'visitors.id')
-        .on('park_visitors.park_id', '=', parkId),
+        .on('park_visitors.park_id', '=', parkId)
+        .on('park_visitors.exit_time', '>', sql`NOW()`),
     )
     .select([
+      'park_visitors.park_id',
       'park_visitors.visitor_id',
       'visitors.src_image',
       'visitors.category',
@@ -20,6 +24,7 @@ function getVisitors(parkId: number) {
       ({ fn }) => fn.count('park_visitors.visitor_id').as('visitor_count'),
     ])
     .groupBy([
+      'park_visitors.park_id',
       'park_visitors.visitor_id',
       'visitors.src_image',
       'visitors.category',
@@ -28,11 +33,13 @@ function getVisitors(parkId: number) {
     .execute();
 }
 
+//We recover the details of visitor (example : entry and exit time)
 function getVisitorsPark(parkId: number) {
   return db
     .selectFrom('park_visitors')
     .selectAll()
     .where('park_visitors.park_id', '=', parkId)
+    .where('park_visitors.exit_time', '>', new Date())
     .execute();
 }
 

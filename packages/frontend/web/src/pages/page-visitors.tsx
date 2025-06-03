@@ -29,7 +29,7 @@ export default function PageVisitors() {
         </div>
 
         {visitorsPark
-          .filter((visitorPark) => new Date(visitorPark.exit_time) > new Date())
+          // .filter((visitorPark) => new Date(visitorPark.exit_time) > new Date())
           .map((visitorPark, index) => {
             const entryTime = new Date(visitorPark.entry_time);
             const exitTime = new Date(visitorPark.exit_time);
