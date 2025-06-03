@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import ButtonBlue from '@/components/button-blue';
 import Input from '@/components/input';
+import Loader from '@/components/loader';
 
 export default function SignUp() {
   const [email, setEmail] = useState('');
@@ -45,9 +46,15 @@ export default function SignUp() {
     );
   };
 
-  if (isRegistered) {
-    return <Navigate to='/' />;
-  }
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isRegistered) {
+      setTimeout(() => {
+        void navigate('/');
+      }, 3000); // 3 secondes
+    }
+  }, [isRegistered, navigate]);
 
   const signUp = async () => {
     const res = await fetch(`/api/auth/register`, {
@@ -70,14 +77,19 @@ export default function SignUp() {
     };
 
     if (data.ok) {
-      alert('Successful registration ✅, log in📝!');
       setIsRegistered(true);
     } else {
       setMessErrorRegister(data.message);
     }
   };
 
-  return (
+  return isRegistered ? (
+    <p className='text-secondary-blue z-3 mt-20 mb-10 flex flex-col items-center justify-center gap-10 px-10 text-center text-sm text-xs italic md:text-base'>
+      {'Successful registration ✅! '}
+      <br /> {'Redirection to LOGIN...!'}
+      <Loader />
+    </p>
+  ) : (
     <form
       onSubmit={async (event) => {
         event.preventDefault();
@@ -196,7 +208,7 @@ export default function SignUp() {
         ) : null}
       </div>
 
-      <div>
+      <div className='text-center'>
         <ButtonBlue bg='bg-primary-blue' type='submit'>
           {'SIGN UP'}
         </ButtonBlue>
