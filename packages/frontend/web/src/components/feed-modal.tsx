@@ -59,6 +59,7 @@ export default function FeedModal({
                 creatures={creatures}
                 potionPrice={potionPrice}
                 fetchCreatures={fetchCreatures}
+                enclosure={enclosure}
               />
             </div>
           </BgMenu>

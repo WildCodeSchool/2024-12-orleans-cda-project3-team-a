@@ -1,4 +1,5 @@
 import type { Creatures } from '@app/api';
+import type { Enclosure } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
 import { formatRemainingTime } from '@/utils/format-remaining-time';
@@ -12,6 +13,7 @@ type CreatureLineProps = {
   readonly fetchCreatures: () => Promise<void>;
   readonly creatures: Creatures;
   readonly potionPrice: number;
+  readonly enclosure: Enclosure;
 };
 
 function getPotionImage(zoneId: number) {
@@ -33,12 +35,15 @@ export default function CreatureLine({
   fetchCreatures,
   creatures,
   potionPrice,
+  enclosure,
 }: CreatureLineProps) {
   const { wallet, fetchAll } = useGameInfoContext();
   const hasEnoughMoons = wallet >= Number(potionPrice);
 
   if (creatures.length === 0) {
-    return <p>{`You don't have any species yet. Buy your first species..!`}</p>;
+    return (
+      <p>{`You don't have any ${enclosure.species} yet. Buy your first ${enclosure.species}..!`}</p>
+    );
   }
   const feedCreature = async (parkCreatureId: number, zoneId: number) => {
     if (!hasEnoughMoons) return;

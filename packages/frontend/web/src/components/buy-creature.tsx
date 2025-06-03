@@ -20,6 +20,7 @@ export default function BuyCreature({
   fetchCreatures,
 }: BuyCreatureProps) {
   const [name, setName] = useState('');
+  const [nameError, setNameError] = useState('');
   const [isBought, setIsBought] = useState(false);
   const { wallet, fetchAll } = useGameInfoContext();
   const { creaturesEnclos } = useEnclosures();
@@ -37,6 +38,12 @@ export default function BuyCreature({
 
   const buyCreature = async () => {
     if (!hasEnoughMoons) return;
+    if (name === '') {
+      setNameError('Enter name for creature');
+      return;
+    } else {
+      setNameError('');
+    }
     try {
       const response = await fetch(
         `/api/game/creature/buy?creatureId=${creatureId}`,
@@ -108,6 +115,9 @@ export default function BuyCreature({
       </div>
       {isBought ? (
         <p className='text-xs text-green-600 italic'>{'Creature bought!'}</p>
+      ) : null}
+      {nameError ? (
+        <p className='text-xs text-red-500 italic'>{nameError}</p>
       ) : null}
     </div>
   );
