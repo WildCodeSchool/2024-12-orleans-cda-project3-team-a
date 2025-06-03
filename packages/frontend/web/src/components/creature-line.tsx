@@ -42,7 +42,7 @@ export default function CreatureLine({
 
   if (creatures.length === 0) {
     return (
-      <div className='flex items-center justify-center gap-4'>
+      <div className='flex items-center justify-center gap-4 pt-5'>
         <img className='w-12 md:w-15' src='/images/minguch.png' alt='mingush' />
         <div className='text-secondary-blue flex flex-col justify-center text-center text-xs md:text-base'>
           <p className='flex justify-center'>{`You don't have any ${enclosure.species} yet.`}</p>
