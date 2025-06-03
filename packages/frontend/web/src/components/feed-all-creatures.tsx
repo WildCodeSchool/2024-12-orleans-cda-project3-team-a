@@ -41,7 +41,7 @@ export default function FeedAllCreatures({
   const [isFeeding, setIsFeeding] = useState(false);
   const { fetchAll, wallet } = useGameInfoContext();
 
-  const hasEnoughMoons = wallet > Number(potionPrice);
+  const hasEnoughMoons = wallet >= Number(potionPrice);
 
   const creaturesEnclosId = creaturesEnclos.find(
     (creature: Enclosure) => creature.id === creatureId,

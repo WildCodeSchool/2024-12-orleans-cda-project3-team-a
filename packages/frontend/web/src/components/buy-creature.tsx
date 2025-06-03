@@ -33,7 +33,7 @@ export default function BuyCreature({
     return;
   }
 
-  const hasEnoughMoons = wallet > creaturesEnclosId.price;
+  const hasEnoughMoons = wallet >= creaturesEnclosId.price;
 
   const buyCreature = async () => {
     if (!hasEnoughMoons) return;
@@ -75,7 +75,7 @@ export default function BuyCreature({
   return (
     <div className='rounded-lg border-1'>
       <h1 className='pt-2 text-center text-lg md:text-xl'>{`Buy a new ${creaturesEnclosId.species}`}</h1>
-      <div className='flex items-center gap-1 p-2 md:gap-5'>
+      <div className='flex items-center gap-1 p-2 text-xs md:gap-5 md:text-base'>
         <Input
           bgColor='bg-white'
           borderColor='border-gray'
@@ -95,10 +95,10 @@ export default function BuyCreature({
             border='border border-black'
             cursor='pointer'
           >
-            <div className='flex items-center justify-center gap-1'>
+            <div className='flex h-7 items-center justify-center gap-1'>
               <p className='mb:text-2xl'>{'+'}</p>
               <img
-                className='w-7 md:p-0.5'
+                className='w-5 md:w-7 md:p-0.5'
                 src={`/images/creatures/${creaturesEnclosId.src_image}`}
                 alt=''
               />

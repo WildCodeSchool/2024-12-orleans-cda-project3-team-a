@@ -35,7 +35,7 @@ export default function CreatureLine({
   potionPrice,
 }: CreatureLineProps) {
   const { wallet, fetchAll } = useGameInfoContext();
-  const hasEnoughMoons = wallet > Number(potionPrice);
+  const hasEnoughMoons = wallet >= Number(potionPrice);
 
   if (creatures.length === 0) {
     return <p>{`You don't have any species yet. Buy your first species..!`}</p>;
