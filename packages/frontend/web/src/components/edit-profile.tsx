@@ -52,7 +52,11 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
   };
 
   const isFormValid = () => {
-    return isConformUsername && isConformParkName;
+    return (
+      (isConformUsername && isConformParkName) ||
+      isConformUsername ||
+      isConformParkName
+    );
   };
 
   if (isModified) {

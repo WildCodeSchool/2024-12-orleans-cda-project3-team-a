@@ -21,7 +21,7 @@ postPark.post('/data-modify', async (req: Request, res) => {
   const messages: string[] = [];
 
   // update username if exist
-  if (newUserName !== undefined) {
+  if (newUserName !== undefined && newUserName !== '') {
     await db
       .updateTable('users')
       .set({ username: newUserName })
@@ -32,7 +32,7 @@ postPark.post('/data-modify', async (req: Request, res) => {
   }
 
   // update parkname if exist
-  if (newParkName !== undefined) {
+  if (newParkName !== undefined && newParkName !== '') {
     await db
       .updateTable('parks')
       .set({ park_name: newParkName })
