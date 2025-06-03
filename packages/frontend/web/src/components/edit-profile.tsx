@@ -8,7 +8,7 @@ import BgMenu from './bg-menu';
 import ButtonBlue from './button-blue';
 import CloseWindow from './close-window';
 import EditAvatar from './edit-avatar';
-import EditPassword from './edit-password';
+// import EditPassword from './edit-password';
 import Input from './input';
 
 type EditProfileProps = {
@@ -24,7 +24,6 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
 
   const [newUserName, setNewUserName] = useState('');
   const [newParkName, setNewParkName] = useState('');
-  const [newAvatar, setNewAvatar] = useState<number | null>(null);
 
   const [isModified, setIsModified] = useState(false);
 
@@ -66,7 +65,6 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
       body: JSON.stringify({
         newUserName,
         newParkName,
-        newAvatar,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -87,8 +85,8 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
     }
   };
 
-  const handleSaveAvatar = (avatar: { id: number; src_image: string }) => {
-    setNewAvatar(avatar.id);
+  const handleNavigate = async () => {
+    await fetchAll();
     toProfile();
   };
 
@@ -202,14 +200,20 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
         {/* show edit password view */}
         {modalView === 'password' && (
           <div className='flex flex-col items-center justify-center p-4'>
-            <EditPassword />
+            {/* <EditPassword navigate={toProfile} /> */}
+            <ButtonBlue bg='bg-tertiary-blue' type='button' onClick={toProfile}>
+              {'BACK'}
+            </ButtonBlue>
           </div>
         )}
 
         {/* show edit avatar view */}
         {modalView === 'avatar' && (
           <div className='flex flex-col items-center justify-center p-4'>
-            <EditAvatar onSave={handleSaveAvatar} />
+            <EditAvatar navigate={handleNavigate} />
+            <ButtonBlue bg='bg-tertiary-blue' type='button' onClick={toProfile}>
+              {'BACK'}
+            </ButtonBlue>
           </div>
         )}
       </BgMenu>

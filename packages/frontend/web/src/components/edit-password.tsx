@@ -1,19 +1,16 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-
-import { useGameInfoContext } from '@/contexts/game-info-context';
 
 import ButtonBlue from './button-blue';
 import Input from './input';
 
-export default function EditPassword() {
-  const { fetchAll } = useGameInfoContext();
+type EditPasswordProps = {
+  readonly onSave: (password: string) => void;
+};
 
+export default function EditPassword({ onSave }: EditPasswordProps) {
   const [actualPassword, setActualPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
-
-  const [isModified, setIsModified] = useState(false);
 
   const [messErrorModification, setMessErrorModification] = useState('');
 
@@ -26,57 +23,19 @@ export default function EditPassword() {
   const [isTouchedconfirmNewPassword, setIsTouchedconfirmNewPassword] =
     useState(false);
 
-  // const isFormatValid = (value: string) => {
-  //   // At least 5 characters, no spaces
-  //   const regex = /^[a-zA-Z0-9_-]{5,}$/;
-  //   return value.trim() !== '' && regex.test(value);
-  // };
-
-  const isFormValid = () => {
-    return isConformUsername && isConformParkName;
-  };
-
-  if (isModified) {
-    return <Navigate to='/' />;
-  }
-
-  const editPassword = async () => {
-    const res = await fetch(`/api/game/park/data-modify`, {
-      method: 'POST',
-      body: JSON.stringify({
-        newPassword,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const data = (await res.json()) as {
-      ok: boolean;
-      message: string;
-    };
-
-    if (data.ok) {
-      await fetchAll();
-      alert('Successful modification ✅');
-      setIsModified(true);
+  const handleSaveClick = () => {
+    if (newPassword && newPassword === confirmNewPassword) {
+      onSave(newPassword);
+      console.log(newPassword);
     } else {
-      setMessErrorModification(data.message);
+      setMessErrorModification('Passwords do not match or are empty.');
     }
   };
 
   return (
     <div className='relative w-full overflow-y-auto md:min-w-[90%]'>
-      <form
-        onSubmit={async (event) => {
-          event.preventDefault();
-          if (isFormValid()) {
-            await editPassword();
-          }
-        }}
-        className='mb-4 flex flex-col items-center justify-center'
-      >
-        <div className='flex flex-col gap-4 p-4'>
+      <div className='mb-4 flex flex-col items-center justify-center'>
+        <form className='flex flex-col gap-4 p-4'>
           <h1 className='mb-4 text-lg font-semibold'>{'EDIT PASSWORD'}</h1>
 
           <Input
@@ -123,13 +82,19 @@ export default function EditPassword() {
               setIsTouchedconfirmNewPassword(true);
             }}
           />
-        </div>
+        </form>
 
-        <ButtonBlue bg='bg-primary-blue' type='submit'>
+        <ButtonBlue
+          bg='bg-primary-blue'
+          type='submit'
+          onClick={handleSaveClick}
+        >
           {'EDIT'}
         </ButtonBlue>
-        {/* <p className='text-sm text-red-500 italic'>{messErrorModification}</p> */}
-      </form>
+        <p className='mt-1 text-sm text-red-500 italic'>
+          {messErrorModification}
+        </p>
+      </div>
     </div>
   );
 }
