@@ -28,62 +28,65 @@ export default function PageVisitors() {
           <h2>{'Next entry'}</h2>
         </div>
 
-        {visitorsPark.map((visitorPark, index) => {
-          const entryTime = new Date(visitorPark.entry_time);
-          const exitTime = new Date(visitorPark.exit_time);
+        {visitorsPark
+          .filter((visitorPark) => new Date(visitorPark.exit_time) > new Date())
+          .map((visitorPark, index) => {
+            const entryTime = new Date(visitorPark.entry_time);
+            const exitTime = new Date(visitorPark.exit_time);
 
-          return (
-            <div
-              key={visitorPark.id}
-              className='border-secondary-blue bg-primary-blue m-5 grid grid-cols-5 items-center gap-3 border-1 text-center'
-            >
-              <h3>{index + 1}</h3>
-              <p>
-                {entryTime.toLocaleString('fr-FR', {
-                  weekday: 'short',
-                  day: 'numeric',
-                  month: 'short',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  hour12: false,
-                })}
-              </p>
+            return (
+              <div
+                key={visitorPark.id}
+                className='border-secondary-blue bg-primary-blue m-5 grid grid-cols-5 items-center gap-3 border-1 text-center'
+              >
+                <h3>{index + 1}</h3>
+                <p>
+                  {entryTime.toLocaleString('fr-FR', {
+                    weekday: 'short',
+                    day: 'numeric',
+                    month: 'short',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                  })}
+                </p>
 
-              <p className='flex items-center justify-center gap-1'>
-                {
-                  visitors.find(
-                    (visitor) => visitor.visitor_id === visitorPark.visitor_id,
-                  )?.entry_price
-                }
-                <img src={moon} alt='money' className='h-4 md:h-5' />
-              </p>
-
-              <div className='flex justify-center'>
-                <img
-                  src={`/images/creatures/${
+                <p className='flex items-center justify-center gap-1'>
+                  {
                     visitors.find(
                       (visitor) =>
                         visitor.visitor_id === visitorPark.visitor_id,
-                    )?.src_image
-                  }`}
-                  alt='visitor'
-                  className='h-5 md:h-7'
-                />
-              </div>
+                    )?.entry_price
+                  }
+                  <img src={moon} alt='money' className='h-4 md:h-5' />
+                </p>
 
-              <p>
-                {exitTime.toLocaleString('fr-FR', {
-                  weekday: 'short',
-                  day: 'numeric',
-                  month: 'short',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  hour12: false,
-                })}
-              </p>
-            </div>
-          );
-        })}
+                <div className='flex justify-center'>
+                  <img
+                    src={`/images/creatures/${
+                      visitors.find(
+                        (visitor) =>
+                          visitor.visitor_id === visitorPark.visitor_id,
+                      )?.src_image
+                    }`}
+                    alt='visitor'
+                    className='h-5 md:h-7'
+                  />
+                </div>
+
+                <p>
+                  {exitTime.toLocaleString('fr-FR', {
+                    weekday: 'short',
+                    day: 'numeric',
+                    month: 'short',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                  })}
+                </p>
+              </div>
+            );
+          })}
       </div>
     </div>
   );

@@ -7,10 +7,11 @@ import { db } from '@app/backend-shared';
 //reste à gérer les zones
 
 new CronJob(
-  '* * * * * ', // cronTime each minute
+  '* * * * *', // cronTime each minute
   // '* * * * * *',
 
   async function () {
+    console.log('coucou');
     //recovers count visitor and creatures active
     const parkCreaturesVisitors = await db
       .selectFrom('parks')
@@ -55,39 +56,28 @@ new CronJob(
       )
       .map((park) => park.id);
 
-    //recover the table of zones unlock by park
+    //----------------------------------------------------------------------------
+    //------LOGIC TO CHECK WHICH ZONE IS UNLOCKED TO GENERATE RANDOM VISITOR------
+    //----------------------------------------------------------------------------
+    //recover the table of zones unlock by park and visitor id matching
     const parkZonesUnlocked = await db
       .selectFrom('park_zones')
-      .select(['park_id', 'zone_id'])
+      .innerJoin('visitors', 'visitors.zone_id', 'park_zones.id')
+      .select(['park_id', 'park_zones.zone_id', 'visitors.id as visitor_id'])
       .execute();
 
-    //group by parkid
-    const zonesByParkId = parkZonesUnlocked.reduce<Record<number, number[]>>(
-      (acc, parkZone) => {
-        acc[parkZone.park_id].push(parkZone.zone_id);
-        return acc;
-      },
-      {},
-    );
-
-    //function to use to generate a visitor id random
-    function getRandomZone(park_id: number): number | null {
-      const zones = zonesByParkId[park_id];
-      const randomIndex = Math.floor(Math.random() * zones.length);
-      return zones[randomIndex];
+    // function to use to generate a visitor id random
+    function getRandomZone(park_id: number): number {
+      const parkZone = parkZonesUnlocked.filter(
+        (park) => park.park_id === park_id,
+      );
+      const randomIndex = Math.floor(Math.random() * parkZone.length);
+      return parkZone[randomIndex].visitor_id;
     }
 
-    const visitorIdZonesId = await db
-      .selectFrom('visitors')
-      .leftJoin('zones', 'zones.id', 'visitors.zone_id')
-      .select(['visitors.id as visitorId', 'zones.id as zoneId'])
-      .execute();
-
-    // Map to easier acces
-    const visitorIdZonesIdMap = new Map(
-      visitorIdZonesId.map((visitor) => [visitor.visitorId, visitor.zoneId]),
-    );
-
+    //-----------------------------------------------------------------
+    //------------------LOGIC FOR ADD VISITOR IF IS OUT----------------
+    //-----------------------------------------------------------------
     //Generate table to add in the insert of park_visitors
     const dataVisitorsToInsertByGroup = parkCreaturesVisitors
       .filter((park) => park.nb_visitor_to_add > 0)
@@ -98,7 +88,7 @@ new CronJob(
           entry_time: new Date(),
           exit_time: new Date(Date.now() + 4 * 60 * 60 * 1000),
           park_id: park.id,
-          visitor_id: Math.floor(Math.random() * park.nb_zones_unlocked) + 1,
+          visitor_id: getRandomZone(park.id),
         }));
 
         return {
