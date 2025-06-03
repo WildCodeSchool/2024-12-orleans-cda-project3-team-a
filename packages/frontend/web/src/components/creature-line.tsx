@@ -5,6 +5,7 @@ import { formatRemainingTime } from '@/utils/format-remaining-time';
 
 import Female from '../assets/images/icons-buttons/female.png';
 import Male from '../assets/images/icons-buttons/male.png';
+import Moon from '../assets/images/icons-buttons/moon.png';
 import ButtonBuy from './button-buy';
 
 type CreatureLineProps = {
@@ -39,7 +40,6 @@ export default function CreatureLine({
   if (creatures.length === 0) {
     return <p>{`You don't have any species yet. Buy your first species..!`}</p>;
   }
-
   const feedCreature = async (parkCreatureId: number, zoneId: number) => {
     if (!hasEnoughMoons) return;
 
@@ -102,7 +102,6 @@ export default function CreatureLine({
             >
               {remainingTime}
             </div>
-
             <ButtonBuy
               border='border border-black'
               bg='bg-white/75'
@@ -118,8 +117,10 @@ export default function CreatureLine({
               <img
                 src={`/images/decorations/${getPotionImage(creatureData.zone_id)}`}
                 alt='potion'
-                className='h-4 w-8 px-0 md:h-6 md:px-0.5'
+                className='h-3 w-6 px-0 md:h-6 md:px-0.5'
               />
+              <p className='text-xs md:text-base'>{creatureData.price}</p>
+              <img className='w-2 md:w-4' src={Moon} alt='' />
             </ButtonBuy>
           </div>
         );
