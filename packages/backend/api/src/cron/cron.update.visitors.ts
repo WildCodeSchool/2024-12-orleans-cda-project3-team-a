@@ -1,17 +1,13 @@
 import { CronJob } from 'cron';
 import { sql } from 'kysely';
-import { log } from 'node:console';
 
 import { db } from '@app/backend-shared';
-
-//reste à gérer les zones
 
 new CronJob(
   '* * * * *', // cronTime each minute
   // '* * * * * *',
 
   async function () {
-    console.log('coucou');
     //recovers count visitor and creatures active
     const parkCreaturesVisitors = await db
       .selectFrom('parks')
@@ -40,8 +36,6 @@ new CronJob(
       .groupBy('parks.id')
       .execute();
 
-    // console.log('park creature', parkCreaturesVisitors);
-
     // if no result stop the function
     if (parkCreaturesVisitors.length === 0) {
       return;
@@ -56,19 +50,21 @@ new CronJob(
       )
       .map((park) => park.id);
 
-    //----------------------------------------------------------------------------
-    //------LOGIC TO CHECK WHICH ZONE IS UNLOCKED TO GENERATE RANDOM VISITOR------
-    //----------------------------------------------------------------------------
-    //recover the table of zones unlock by park and visitor id matching
-    const parkZonesUnlocked = await db
+    //recover the table of zones unlock by park and visitor id matching + entry_price
+    const parkZoneVisitor = await db
       .selectFrom('park_zones')
       .innerJoin('visitors', 'visitors.zone_id', 'park_zones.id')
-      .select(['park_id', 'park_zones.zone_id', 'visitors.id as visitor_id'])
+      .select([
+        'park_id',
+        'park_zones.zone_id',
+        'visitors.id as visitor_id',
+        'entry_price',
+      ])
       .execute();
 
     // function to use to generate a visitor id random
     function getRandomZone(park_id: number): number {
-      const parkZone = parkZonesUnlocked.filter(
+      const parkZone = parkZoneVisitor.filter(
         (park) => park.park_id === park_id,
       );
       const randomIndex = Math.floor(Math.random() * parkZone.length);
@@ -83,10 +79,8 @@ new CronJob(
       .filter((park) => park.nb_visitor_to_add > 0)
       .map((park) => {
         const visitors = Array.from({ length: park.nb_visitor_to_add }, () => ({
-          // entry_time: sql`NOW()`,
-          // exit_time: sql`NOW() + interval '4 hours'`,
-          entry_time: new Date(),
-          exit_time: new Date(Date.now() + 4 * 60 * 60 * 1000),
+          entry_time: sql<Date>`NOW()`,
+          exit_time: sql<Date>`NOW() + interval '4 hours'`,
           park_id: park.id,
           visitor_id: getRandomZone(park.id),
         }));
@@ -97,15 +91,12 @@ new CronJob(
         };
       });
 
-    //logic to have table parkid sumEntryPrice
-    const entryPriceByVisitorId = await db
-      .selectFrom('visitors')
-      .select(['entry_price', 'id'])
-      .execute();
-
     // Map to easier acces
     const entryPriceMap = new Map(
-      entryPriceByVisitorId.map((visitor) => [visitor.id, visitor.entry_price]),
+      parkZoneVisitor.map((visitor) => [
+        visitor.visitor_id,
+        visitor.entry_price,
+      ]),
     );
 
     //Generate table parkid, sumEntryPrice
