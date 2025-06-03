@@ -71,7 +71,7 @@ export default function ModalShopCreatures({ closeShop }: ModalShopCreatures) {
             ))}
           </div>
         )}
-        <div className='relative top-3 mb-6 flex flex-col gap-10 md:top-5 md:grid md:grid-cols-2'>
+        <div className='relative top-3 mb-6 flex min-w-0 flex-col gap-10 md:top-5 md:grid md:grid-cols-2'>
           {creaturesInZone.map((creature) => (
             <LineCreature key={creature.id} creature={creature} />
           ))}
