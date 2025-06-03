@@ -138,7 +138,7 @@ new CronJob(
           .execute(),
 
         //2- update wallet
-        entryPriceToAdd.map(({ park_id, moneyToAdd }) =>
+        ...entryPriceToAdd.map(({ park_id, moneyToAdd }) =>
           db
             .updateTable('parks')
             .set({
