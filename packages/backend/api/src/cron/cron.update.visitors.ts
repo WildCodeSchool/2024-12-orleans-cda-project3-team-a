@@ -52,7 +52,7 @@ new CronJob(
     //recover the table of zones unlock by park and visitor id matching + entry_price
     const parkZoneVisitor = await db
       .selectFrom('park_zones')
-      .innerJoin('visitors', 'visitors.zone_id', 'park_zones.id')
+      .innerJoin('visitors', 'visitors.zone_id', 'park_zones.zone_id')
       .select([
         'park_id',
         'park_zones.zone_id',
@@ -62,7 +62,7 @@ new CronJob(
       .execute();
 
     // function to use to generate a visitor id random
-    function getRandomZone(park_id: number): number {
+    function getRandomVisitor(park_id: number): number {
       const parkZone = parkZoneVisitor.filter(
         (park) => park.park_id === park_id,
       );
@@ -81,7 +81,7 @@ new CronJob(
           entry_time: sql<Date>`NOW()`,
           exit_time: sql<Date>`NOW() + INTERVAL 4 HOUR`,
           park_id: park.id,
-          visitor_id: getRandomZone(park.id),
+          visitor_id: getRandomVisitor(park.id),
         }));
 
         return {
