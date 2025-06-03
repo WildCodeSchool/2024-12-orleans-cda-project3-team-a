@@ -30,9 +30,9 @@ export interface Creatures {
   feed_timer: number | null;
   id: Generated<number>;
   price: number;
+  profit: number | null;
   species: string;
   src_image: string | null;
-  unlock_cost: number | null;
   zone_id: number;
 }
 
@@ -71,7 +71,6 @@ export interface ParkGifts {
 }
 
 export interface Parks {
-  entry_price: number;
   id: Generated<number>;
   park_name: string;
   user_id: number;
@@ -79,8 +78,8 @@ export interface Parks {
 }
 
 export interface ParkVisitors {
-  entry_time: Generated<Date | null>;
-  exit_time: Date | null;
+  entry_time: Date;
+  exit_time: Date;
   id: Generated<number>;
   park_id: number;
   visitor_id: number;
@@ -111,9 +110,8 @@ export interface Users {
 
 export interface Visitors {
   category: string;
+  entry_price: number;
   id: Generated<number>;
-  spending: number;
-  spending_time: number;
   src_image: string | null;
   unlock_cost: number | null;
   zone_id: number | null;
