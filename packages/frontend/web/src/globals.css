@@ -105,58 +105,59 @@ body {
 /* Animation Mingush */
 .typewriter {
   overflow: hidden;
-  /* border-right: 2px solid black; */
   white-space: nowrap;
-  display: inline-block;
   width: 0;
-  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .typewriter {
+    display: flex;
+    flex-wrap: wrap;
+    white-space: normal;
+    width: 100%;
+  }
+
+  .typing1, .typing2, .typing3, .typing4 {
+    animation: none !important;
+  }
 }
 
 .typing1 {
-  animation: typing1 3s steps(60, end) forwards, blink-caret 0.7s step-end infinite;
+  animation: typing1 2.5s steps(60, end) forwards, blink-caret 0.7s;
 }
 
 .typing2 {
-  animation: typing2 1.5s steps(40, end) 3.2s forwards, blink-caret 0.7s step-end infinite 3.2s;
-  animation-fill-mode: forwards;
+  animation: typing2 2s steps(40, end) 2.5s forwards, blink-caret 0.7s;
 }
 
 .typing3 {
-  animation: typing3 3s steps(50, end) 5s forwards, blink-caret 0.7s step-end infinite 6.5s;
-  animation-fill-mode: forwards;
+  animation: typing3 2.5s steps(50, end) 3.4s forwards, blink-caret 0.7s;
 }
 
 .typing4 {
-  animation: typing3 3s steps(30, end) 8.2s forwards, blink-caret 0.7s step-end infinite 6.5s;
-  animation-fill-mode: forwards;
+  animation: typing4 2.5s steps(30, end) 6s forwards, blink-caret 0.7s;
 }
 
 @keyframes typing1 {
   from { width: 0; }
-  to { width: 90ch; }
+  to { width: 100%; }
 }
 
 @keyframes typing2 {
   from { width: 0; }
-  to { width: 30ch; }
+  to { width: 100%; }
 }
 
 @keyframes typing3 {
   from { width: 0; }
-  to { width: 90ch; }
+  to { width: 100%; }
 }
 
 @keyframes typing4 {
   from { width: 0; }
-  to { width: 30ch; }
+  to { width: 100%; }
 }
-
-@keyframes blink-caret {
-  from, to { border-color: transparent; }
-  50% { border-color: #0f0; }
-}
-
-    /* End animation Mingush*/
+/* End animation Mingush*/
 
 
 .text-outline-purple {
