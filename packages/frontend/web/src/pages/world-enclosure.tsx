@@ -35,7 +35,7 @@ export default function WorldEnclosure() {
   const total = creatureWorld.length;
 
   return (
-    <div className='relative flex min-w-[1200px] flex-wrap md:w-full'>
+    <div className='relative flex min-w-[1200px] flex-wrap overflow-hidden md:w-full'>
       <header className='fixed -right-2 z-3 flex w-48 gap-3 p-2 md:right-0'>
         <InfoNbVisitorsMoons />
         <ReturnHome />
