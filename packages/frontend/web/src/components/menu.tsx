@@ -12,6 +12,7 @@ import EditProfile from './edit-profile';
 import Leaderboard from './leaderboard';
 import Logout from './logout';
 import ShopCreature from './modal-shop-creatures';
+import Portal from './portal';
 
 type ModalName = 'dashboard' | 'shop' | 'ranking' | 'profile' | null;
 
@@ -40,7 +41,7 @@ export default function Menu() {
       <div
         className={`flex w-8 flex-col items-center gap-5 rounded pb-2 md:h-9 md:flex-1 md:flex-row md:rounded-lg md:pr-2 md:pb-0 ${
           isMenuOpen
-            ? 'bg-primary-gray h-[95vh] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none'
+            ? 'bg-primary-gray h-[90vh] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] active:shadow-none'
             : ''
         }`}
       >
@@ -117,31 +118,35 @@ export default function Menu() {
           </div>
         </div>
       </div>
-      <div
-        className={
-          openModal
-            ? 'absolute flex max-h-screen w-[98%] translate-y-10 justify-center pb-6 text-center md:translate-y-2/10'
-            : ''
-        }
-      >
-        {/* Display Dashboard in pop-up if is open*/}
-        {openModal === 'dashboard' ? (
-          <Dashboard closeDashboard={handleClose} />
-        ) : null}
+      <Portal>
+        <div
+          className={
+            openModal
+              ? 'md:pd-0 absolute top-[2%] left-1 flex max-h-screen w-[98%] translate-y-10 justify-center pb-6 text-center md:translate-y-[13%]'
+              : ''
+          }
+        >
+          {/* Display Dashboard in pop-up if is open*/}
+          {openModal === 'dashboard' ? (
+            <Dashboard closeDashboard={handleClose} />
+          ) : null}
 
-        {/* Display Shop in pop-up if is open*/}
-        {openModal === 'shop' ? <ShopCreature closeShop={handleClose} /> : null}
+          {/* Display Shop in pop-up if is open*/}
+          {openModal === 'shop' ? (
+            <ShopCreature closeShop={handleClose} />
+          ) : null}
 
-        {/* Display Rank in pop-up if is open*/}
-        {openModal === 'ranking' ? (
-          <Leaderboard closeRank={handleClose} />
-        ) : null}
+          {/* Display Rank in pop-up if is open*/}
+          {openModal === 'ranking' ? (
+            <Leaderboard closeRank={handleClose} />
+          ) : null}
 
-        {/* Display edit profile in pop-up if is open*/}
-        {openModal === 'profile' ? (
-          <EditProfile closeEditProfile={handleClose} />
-        ) : null}
-      </div>
+          {/* Display edit profile in pop-up if is open*/}
+          {openModal === 'profile' ? (
+            <EditProfile closeEditProfile={handleClose} />
+          ) : null}
+        </div>
+      </Portal>
     </>
   );
 }

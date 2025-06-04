@@ -7,6 +7,7 @@ import CreatePark from './components/create-park';
 import Home from './pages/home';
 import Login from './pages/login';
 import Page404 from './pages/page-404';
+import PageVisitors from './pages/page-visitors';
 import Rules from './pages/rules';
 import SignUp from './pages/sign-up';
 import Test from './pages/test';
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
           {
             path: '/zone/:zone_id',
             element: <WorldEnclosure />,
+          },
+          {
+            path: '/visitors',
+            element: <PageVisitors />,
           },
           {
             path: '/test',

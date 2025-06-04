@@ -42,18 +42,63 @@ body {
 
   --font-fredoka: 'Fredoka', sans-serif; /*Police par defaut*/
   --font-aerokids: 'Aerokids', sans-serif; /*Police Park's name*/
+
+  /* animation mingush */
+  --animate-typing1: typing1 2.5s steps(60, end) forwards, blink-caret 0.7s;
+  --animate-typing2: typing2 2s steps(40, end) 2s forwards, blink-caret 0.7s;
+  --animate-typing3:
+    typing3 2.5s steps(50, end) 2.6s forwards, blink-caret 0.7s;
+  --animate-typing4:
+    typing4 2.5s steps(30, end) 4.5s forwards, blink-caret 0.7s;
+
+  @keyframes typing1 {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes typing2 {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes typing3 {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes typing4 {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
 }
 
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
+  /* fin annimation mingush*/
 }
 
 .animate-spin {
   animation: spin 2s linear infinite;
 }
-
+/* Animation Creatures*/
 @keyframes move {
   0%,
   50%,
@@ -71,6 +116,8 @@ body {
 .animate-move {
   animation: move 2s ease-in-out infinite;
 }
+
+/* Fin Animation Creatures*/
 
 /* Animation for visitor */
 @keyframes moveHorizontal {
@@ -101,6 +148,9 @@ body {
   will-change: transform;
 }
 /* End of animation visitor */
+
+/* Animation Mingush */
+/* End animation Mingush*/
 
 .text-outline-purple {
   -webkit-text-stroke-width: 4px;

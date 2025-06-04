@@ -38,8 +38,7 @@ postPark.post('/', async (req: Request, res) => {
     .values({
       user_id: userId,
       park_name: parkName,
-      entry_price: 20,
-      wallet: 50000,
+      wallet: 50,
     })
     .executeTakeFirst();
 

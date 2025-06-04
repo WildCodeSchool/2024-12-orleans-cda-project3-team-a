@@ -1,32 +1,39 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import type { Visitors } from '@app/api/src/game/visitor/get.visitors';
+import type { Visitors, VisitorsPark } from '@app/api';
 
 export default function useVisitors() {
   const [visitors, setVisitors] = useState<Visitors>([]);
+  const [visitorsPark, setVisitorsPark] = useState<VisitorsPark>([]);
+
+  const fetchVisitors = useCallback(async () => {
+    try {
+      const resp = await fetch(`/api/game/visitors`, {
+        credentials: 'include',
+      });
+      const data = (await resp.json()) as {
+        ok: boolean;
+        visitorsCountById: Visitors;
+        visitorsPark: VisitorsPark;
+      };
+
+      if (!data.ok) {
+        throw new Error('No visitors');
+      }
+
+      setVisitors(data.visitorsCountById);
+      setVisitorsPark(data.visitorsPark);
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('fetch visitors failed');
+    }
+  }, []);
 
   useEffect(() => {
-    async function fetchVisitors() {
-      try {
-        const resp = await fetch(`/api/game/visitors`, {
-          credentials: 'include',
-        });
-        const data = (await resp.json()) as {
-          ok: boolean;
-          visitorsCountById: Visitors;
-        };
-
-        if (!data.ok) {
-          throw new Error('No visitors');
-        }
-        setVisitors(data.visitorsCountById);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('fetch visitors failed');
-      }
-    }
     void fetchVisitors();
-  }, []);
-  return { visitors };
+  }, [fetchVisitors]);
+
+  return { visitors, visitorsPark, refetchVisitors: fetchVisitors };
 }

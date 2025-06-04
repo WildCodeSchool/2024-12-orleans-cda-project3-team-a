@@ -41,7 +41,7 @@ export default function FeedAllCreatures({
   const [isFeeding, setIsFeeding] = useState(false);
   const { fetchAll, wallet } = useGameInfoContext();
 
-  const hasEnoughMoons = wallet > Number(potionPrice);
+  const hasEnoughMoons = wallet >= Number(potionPrice);
 
   const creaturesEnclosId = creaturesEnclos.find(
     (creature: Enclosure) => creature.id === creatureId,
@@ -102,6 +102,11 @@ export default function FeedAllCreatures({
       <h1 className='pt-2 text-center text-lg md:text-xl'>
         {'Making everyone magical'}
       </h1>
+      <p className='flex items-center justify-center text-xs text-red-500 italic md:text-base'>
+        {`This potion costs ${potionPrice} `}
+        <img className='mx-0.5 h-3 md:h-4' src={Moons} alt='moon' />{' '}
+        {` /creatures!`}
+      </p>
       <div className='flex items-center justify-center gap-3 p-2 md:gap-2'>
         <p>{hungryCreatures.length}</p>
         <img

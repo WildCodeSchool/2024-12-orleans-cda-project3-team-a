@@ -50,7 +50,7 @@ export default function Rank({ closeRank }: ModalRank) {
   };
 
   return (
-    <div className='flex items-center overflow-y-auto'>
+    <div className='flex overflow-y-auto'>
       <BgMenu>
         <div className='flex flex-row-reverse'>
           <CloseWindow onClick={closeRank} />
@@ -59,7 +59,7 @@ export default function Rank({ closeRank }: ModalRank) {
           <ul>
             {rank.map((park: Rank, index: number) => (
               <ul
-                className='m-2 grid w-full grid-cols-3 items-center gap-5 rounded bg-white/70 p-3 text-xs md:grid md:grid-cols-5 md:gap-20 md:rounded-md md:text-base'
+                className='m-2 grid w-full grid-cols-3 gap-5 rounded bg-white/70 p-2.5 text-xs md:grid md:grid-cols-5 md:gap-20 md:rounded-md md:text-base'
                 key={park.id}
               >
                 <li className='flex'>

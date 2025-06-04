@@ -10,7 +10,6 @@ postEditPasswordRouter.post('/edit-password', async (req: Request, res) => {
   const userId = req.userId;
 
   const { actualPassword, newPassword, confirmPassword } = req.body;
-  //   console.log(actualPassword, newPassword, confirmPassword);
 
   if (userId === undefined) {
     res.json({
@@ -39,7 +38,6 @@ postEditPasswordRouter.post('/edit-password', async (req: Request, res) => {
     user.password_hash,
     actualPassword,
   );
-  //   console.log(isCorrectPassword);
 
   if (!isCorrectPassword) {
     res.json({

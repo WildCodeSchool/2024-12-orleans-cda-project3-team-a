@@ -20,6 +20,7 @@ export default function BuyCreature({
   fetchCreatures,
 }: BuyCreatureProps) {
   const [name, setName] = useState('');
+  const [nameError, setNameError] = useState('');
   const [isBought, setIsBought] = useState(false);
   const { wallet, fetchAll } = useGameInfoContext();
   const { creaturesEnclos } = useEnclosures();
@@ -33,10 +34,16 @@ export default function BuyCreature({
     return;
   }
 
-  const hasEnoughMoons = wallet > creaturesEnclosId.price;
+  const hasEnoughMoons = wallet >= creaturesEnclosId.price;
 
   const buyCreature = async () => {
     if (!hasEnoughMoons) return;
+    if (name === '') {
+      setNameError('Enter name for creature');
+      return;
+    } else {
+      setNameError('');
+    }
     try {
       const response = await fetch(
         `/api/game/creature/buy?creatureId=${creatureId}`,
@@ -75,7 +82,11 @@ export default function BuyCreature({
   return (
     <div className='rounded-lg border-1'>
       <h1 className='pt-2 text-center text-lg md:text-xl'>{`Buy a new ${creaturesEnclosId.species}`}</h1>
-      <div className='flex items-center gap-1 p-2 md:gap-5'>
+      <p className='flex items-center justify-center text-xs text-green-500 italic md:text-base'>
+        {`This creature earns ${creaturesEnclosId.profit} `}
+        <img className='mx-0.5 h-3 md:h-4' src={Moon} alt='moon' /> {` /min!`}
+      </p>
+      <div className='flex items-center gap-1 p-2 text-xs md:gap-5 md:text-base'>
         <Input
           bgColor='bg-white'
           borderColor='border-gray'
@@ -88,17 +99,17 @@ export default function BuyCreature({
         />
         <div className='flex items-center gap-1'>
           <h1 className='text-xs md:text-base'>{creaturesEnclosId.price}</h1>
-          <img className='h-6 md:h-7' src={Moon} alt='' />
+          <img className='h-6 md:h-7' src={Moon} alt='moon' />
           <ButtonBuy
             onClick={buyCreature}
             bg='bg-white/75'
             border='border border-black'
             cursor='pointer'
           >
-            <div className='flex items-center justify-center gap-1'>
+            <div className='flex h-7 items-center justify-center gap-1'>
               <p className='mb:text-2xl'>{'+'}</p>
               <img
-                className='w-7 md:p-0.5'
+                className='w-5 md:w-7 md:p-0.5'
                 src={`/images/creatures/${creaturesEnclosId.src_image}`}
                 alt=''
               />
@@ -108,6 +119,9 @@ export default function BuyCreature({
       </div>
       {isBought ? (
         <p className='text-xs text-green-600 italic'>{'Creature bought!'}</p>
+      ) : null}
+      {nameError ? (
+        <p className='text-xs text-red-500 italic'>{nameError}</p>
       ) : null}
     </div>
   );

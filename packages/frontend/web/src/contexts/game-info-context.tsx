@@ -6,7 +6,9 @@ import type { Avatar, Decorations, Enclosure, UnlockedZones } from '@app/api';
 import useAvatars from '@/hooks/use-avatars';
 import useDecorations from '@/hooks/use-decorations';
 import useEnclos from '@/hooks/use-enclos';
+import { useNumberFormatter } from '@/hooks/use-number-formatter';
 import usePark from '@/hooks/use-park';
+import useVisitors from '@/hooks/use-visitors';
 import useZones from '@/hooks/use-zones';
 
 type GameInfoContextState = {
@@ -20,6 +22,7 @@ type GameInfoContextState = {
   creaturesEnclos: Enclosure[];
   decorations: Decorations;
   parkName: string;
+  countVisitorActiveFormated: string;
   userName: string;
   userAvatarId: number;
   userAvatar: string;
@@ -41,6 +44,7 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   creaturesEnclos: [],
   decorations: [],
   parkName: '',
+  countVisitorActiveFormated: '',
   userName: '',
   userAvatarId: 0,
   userAvatar: '',
@@ -70,12 +74,23 @@ export function GameInfoContextProvider({
   //get Creatures and decorations
   const { creaturesEnclos, refetchCreatures } = useEnclos();
   const { decorations } = useDecorations();
+  const { visitorsPark, refetchVisitors } = useVisitors();
+
+  const countVisitorActive = visitorsPark.filter(
+    (visitorPark) => new Date(visitorPark.exit_time).getTime() > Date.now(),
+  ).length;
+  const countVisitorActiveFormated = useNumberFormatter(countVisitorActive);
   const { avatars } = useAvatars();
 
   //function to refetch hook necessary for home page
   const fetchAll = useCallback(async () => {
-    await Promise.all([refetchPark(), refetchZones(), refetchCreatures()]);
-  }, [refetchPark, refetchZones, refetchCreatures]);
+    await Promise.all([
+      refetchPark(),
+      refetchZones(),
+      refetchCreatures(),
+      refetchVisitors(),
+    ]);
+  }, [refetchPark, refetchZones, refetchCreatures, refetchVisitors]);
 
   // memorize value to avoid unnecessary changes
   const value = useMemo(
@@ -90,6 +105,7 @@ export function GameInfoContextProvider({
       creaturesEnclos,
       decorations,
       parkName,
+      countVisitorActiveFormated,
       userName,
       userAvatarId,
       userAvatar,
@@ -106,6 +122,7 @@ export function GameInfoContextProvider({
       isLoadingZones,
       fetchAll,
       parkName,
+      countVisitorActiveFormated,
       userName,
       userAvatarId,
       userAvatar,
