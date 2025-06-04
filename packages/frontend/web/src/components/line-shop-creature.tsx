@@ -93,7 +93,7 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
             </p>
           ) : null}
           {nameError ? (
-            <p className='absolute left-1/2 m-0 -translate-x-1/2 text-xs text-red-600 italic'>
+            <p className='absolute m-0 text-xs text-red-600 italic'>
               {nameError}
             </p>
           ) : null}
