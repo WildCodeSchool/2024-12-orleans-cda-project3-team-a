@@ -57,8 +57,7 @@ new CronJob(
           .as('last_hungry'),
       ])
       .groupBy('parks.id')
-      .$narrowType<{ total_creatures: NotNull }>()
-      .$narrowType<{ last_hungry: NotNull }>()
+      .$narrowType<{ total_creatures: NotNull; last_hungry: NotNull }>()
       .execute();
 
     // if no result stop the function
