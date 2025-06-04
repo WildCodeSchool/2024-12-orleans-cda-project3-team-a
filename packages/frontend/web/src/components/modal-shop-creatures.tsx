@@ -26,6 +26,11 @@ export default function ModalShopCreatures({ closeShop }: ModalShopCreatures) {
   return (
     <div className='relative mb-10 w-full overflow-y-auto md:min-w-[90%]'>
       <BgMenu>
+        <div>
+          <h1 className='font-aerokids text-outline-white mb-10 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>
+            {'Shop'}
+          </h1>
+        </div>
         <div className='flex flex-row-reverse'>
           <CloseWindow onClick={closeShop} />
         </div>

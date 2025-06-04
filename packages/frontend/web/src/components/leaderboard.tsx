@@ -56,7 +56,7 @@ export default function Rank({ closeRank }: ModalRank) {
             {'R anking'}
           </h1>
         </div>
-        <div className='absolute top-5 left-[95%]'>
+        <div className='absolute top-5 left-[85%] md:left-[95%]'>
           <CloseWindow onClick={closeRank} />
         </div>
         <div>
