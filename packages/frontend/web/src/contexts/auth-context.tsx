@@ -55,7 +55,7 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
       };
 
       if (!data.ok) {
-        throw new Error('No park (auth context)');
+        throw new Error('No park');
       }
 
       if (data.parkId !== undefined) {
