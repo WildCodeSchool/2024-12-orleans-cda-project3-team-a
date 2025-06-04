@@ -61,7 +61,7 @@ export default function Rank({ closeRank }: ModalRank) {
                 className='m-2 grid w-full grid-cols-3 gap-5 rounded bg-white/70 p-2.5 text-xs text-nowrap md:grid md:grid-cols-5 md:gap-20 md:rounded-md md:text-base'
                 key={park.id}
               >
-                <li className='flex min-w-30'>
+                <li className='flex min-w-[10%]'>
                   {getMedal(index)}
                   {index > 2 && `${index + 1}. `}
                   {park.park_name.length > 15
