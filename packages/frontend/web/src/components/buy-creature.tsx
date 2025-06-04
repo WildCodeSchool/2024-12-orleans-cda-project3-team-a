@@ -43,7 +43,7 @@ export default function BuyCreature({
       return;
     } else if (!/^[a-zA-ZÀ-ÿ0-9 ]{3,}$/.test(name)) {
       setNameError(
-        'Name must be at least 3 characters, using letters, numbers or spaces only',
+        'Name must be at least 3 characters, using letters and numbers',
       );
       return;
     } else {
