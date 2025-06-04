@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
+import useAvatars from '@/hooks/use-avatars';
 
 import ButtonBlue from './button-blue';
 import Loader from './loader';
@@ -10,11 +11,13 @@ type EditAvatarProps = {
 };
 
 export default function EditAvatar({ navigate }: EditAvatarProps) {
-  const { avatars, userAvatar } = useGameInfoContext();
+  // const { avatars, userAvatar } = useGameInfoContext();
+  const { avatars } = useAvatars();
+  const { user } = useGameInfoContext();
 
   const [selectedAvatar, setSelectedAvatar] = useState<number | null>(() => {
     const initialAvatar = avatars.find(
-      (avatar) => avatar.src_image === userAvatar,
+      (avatar) => avatar.src_image === user?.src_image,
     );
     return initialAvatar ? initialAvatar.id : null;
   });
@@ -36,8 +39,8 @@ export default function EditAvatar({ navigate }: EditAvatarProps) {
   }, [isModified, navigate]);
 
   const editMyData = async () => {
-    const res = await fetch(`/api/game/park/data-modify`, {
-      method: 'POST',
+    const res = await fetch(`/api/game/park/`, {
+      method: 'PATCH',
       body: JSON.stringify({
         selectedAvatar,
       }),
@@ -64,11 +67,13 @@ export default function EditAvatar({ navigate }: EditAvatarProps) {
   };
 
   return isModified ? (
-    <p className='text-secondary-blue z-3 mt-20 mb-10 flex flex-col items-center justify-center gap-10 px-10 text-center text-sm italic md:text-base'>
-      {'Successful registration ✅! '}
-      <br /> {'Redirection to LOGIN...!'}
+    <div className='mb-5 flex flex-col items-center justify-center'>
+      <p className='text-secondary-blue z-3 mt-20 mb-10 flex flex-col items-center justify-center gap-10 px-10 text-center text-sm italic md:text-base'>
+        {'Successful registration ✅! '}
+        <br /> {'Redirection to LOGIN...!'}
+      </p>
       <Loader />
-    </p>
+    </div>
   ) : (
     <div className='relative w-full overflow-y-auto md:min-w-[90%]'>
       <div className='flex flex-col items-center gap-4 p-4'>
@@ -76,7 +81,7 @@ export default function EditAvatar({ navigate }: EditAvatarProps) {
         <div className='flex flex-wrap justify-center gap-8 md:w-3/4'>
           {avatars.map((avatar, index) => {
             const isSelected = selectedAvatar === avatar.id;
-            const isCurrentUserAvatar = avatar.src_image === userAvatar;
+            const isCurrentUserAvatar = avatar.src_image === user?.src_image;
 
             const isOrangeBorder =
               selectedAvatar !== null ? isSelected : isCurrentUserAvatar;

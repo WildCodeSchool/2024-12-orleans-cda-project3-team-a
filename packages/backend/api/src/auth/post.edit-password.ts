@@ -41,7 +41,7 @@ postEditPasswordRouter.post('/edit-password', async (req: Request, res) => {
 
   if (!isCorrectPassword) {
     res.json({
-      message: 'Passwords do not match baby!',
+      message: 'Passwords do not match!',
       ok: false,
     });
     return;

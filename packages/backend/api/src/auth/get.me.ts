@@ -4,6 +4,25 @@ import { db } from '@app/backend-shared';
 
 import authGuard from '@/middlewares/auth.guard';
 
+function getUser(userId: number) {
+  return db
+    .selectFrom('users')
+    .leftJoin('parks', 'users.id', 'parks.user_id')
+    .leftJoin('avatars', 'users.avatar_id', 'avatars.id')
+    .select([
+      'users.id',
+      'users.username',
+      'users.email',
+      'parks.id as parkId',
+      'users.avatar_id',
+      'avatars.src_image',
+    ])
+    .where('users.id', '=', userId)
+    .executeTakeFirst();
+}
+
+export type User = Awaited<ReturnType<typeof getUser>>;
+
 const getMeRouter = Router();
 
 getMeRouter.get('/me', authGuard, async (req: Request, res) => {
@@ -16,35 +35,21 @@ getMeRouter.get('/me', authGuard, async (req: Request, res) => {
     return;
   }
 
-  try {
-    const user = await db
-      .selectFrom('users')
-      .leftJoin('parks', 'parks.user_id', 'users.id')
-      .select(['users.id', 'users.email', 'parks.id as parkId'])
-      .where('users.id', '=', userId)
-      .executeTakeFirst();
+  const user = await getUser(userId);
 
-    if (!user) {
-      res.json({
-        ok: false,
-        message: 'user is empty',
-      });
-      return;
-    }
-
-    res.json({
-      ok: true,
-      message: 'user retrieve',
-      user,
-    });
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
+  if (!user) {
     res.json({
       ok: false,
-      message: 'get me failed',
+      message: 'user is empty',
     });
+    return;
   }
+
+  res.json({
+    ok: true,
+    message: 'user retrieve',
+    user,
+  });
 });
 
 export default getMeRouter;

@@ -7,9 +7,6 @@ export default function usePark() {
   const [visitorsCount, setVisitorsCount] = useState(0);
   const [isLoadingPark, setIsLoadingPark] = useState(true);
   const [parkName, setParkName] = useState('');
-  const [userName, setUserName] = useState('');
-  const [userAvatarId, setUserAvatarId] = useState(0);
-  const [userAvatar, setUserAvatar] = useState('');
 
   const fetchPark = useCallback(async () => {
     try {
@@ -26,9 +23,6 @@ export default function usePark() {
       setWallet(data.park.wallet);
       setVisitorsCount(data.visitorsCount);
       setParkName(data.park.park_name);
-      setUserName(data.userCredentials.username);
-      setUserAvatarId(data.userCredentials.id);
-      setUserAvatar(data.userCredentials.src_image);
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
@@ -52,9 +46,6 @@ export default function usePark() {
     visitorsFormated,
     isLoadingPark,
     parkName,
-    userName,
-    userAvatarId,
-    userAvatar,
     refetchPark: fetchPark,
   };
 }

@@ -15,18 +15,6 @@ getParkUser.get('/park-user', async (req: Request, res) => {
     return;
   }
 
-  const userCredentials = await db
-    .selectFrom('users')
-    .leftJoin('avatars', 'users.avatar_id', 'avatars.id')
-    .select([
-      'users.username',
-      'users.password_hash',
-      'avatars.id',
-      'avatars.src_image',
-    ])
-    .where('users.id', '=', userId)
-    .executeTakeFirst();
-
   const park = await db
     .selectFrom('parks')
     .selectAll()
@@ -53,7 +41,6 @@ getParkUser.get('/park-user', async (req: Request, res) => {
     ok: true,
     park,
     visitorsCount,
-    userCredentials,
   });
 });
 

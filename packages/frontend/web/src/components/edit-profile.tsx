@@ -21,9 +21,9 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
     'profile',
   );
 
-  const { parkName, userName, userAvatar, fetchAll } = useGameInfoContext();
+  const { parkName, user, fetchAll } = useGameInfoContext();
 
-  const [newUserName, setNewUserName] = useState('');
+  const [newUsername, setNewUsername] = useState('');
   const [newParkName, setNewParkName] = useState('');
 
   const [isModified, setIsModified] = useState(false);
@@ -71,10 +71,10 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
   }, [isModified, navigate]);
 
   const editMyData = async () => {
-    const res = await fetch(`/api/game/park/data-modify`, {
-      method: 'POST',
+    const res = await fetch(`/api/game/park/`, {
+      method: 'PATCH',
       body: JSON.stringify({
-        newUserName,
+        newUsername,
         newParkName,
       }),
       headers: {
@@ -103,7 +103,7 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
     <BgMenu>
       <div className='mb-5 flex flex-col items-center justify-center'>
         <p className='text-secondary-blue z-3 mt-20 mb-10 flex flex-col items-center justify-center gap-10 px-10 text-center text-sm italic md:text-base'>
-          {'Successful registration ✅! '}
+          {'Successful modification ✅! '}
         </p>
         <Loader />
       </div>
@@ -133,7 +133,9 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
                 <img
                   className='w-30 md:w-40'
                   src={
-                    userAvatar ? `/images/avatar/${userAvatar}` : profileIcon
+                    user?.src_image
+                      ? `/images/avatar/${user.src_image}`
+                      : profileIcon
                   }
                   alt='profile picture'
                 />
@@ -155,10 +157,10 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
                   bgColor='bg-primary-blue'
                   borderColor='border-secondary-blue'
                   type='text'
-                  placeholder={`Username : ${userName}`}
-                  value={newUserName}
+                  placeholder={`Username : ${user?.username}`}
+                  value={newUsername}
                   onChangeInput={(value) => {
-                    setNewUserName(value);
+                    setNewUsername(value);
                     setIsConformUsername(isFormatValid(value));
                   }}
                   onBlur={() => {

@@ -3,12 +3,12 @@ import express from 'express';
 
 import { db } from '@app/backend-shared';
 
-const postPark = express.Router();
+const patchPark = express.Router();
 
-postPark.post('/data-modify', async (req: Request, res) => {
+patchPark.patch('/', async (req: Request, res) => {
   const userId = req.userId;
 
-  const { newUserName, newParkName, selectedAvatar } = req.body;
+  const { newUsername, newParkName, selectedAvatar } = req.body;
 
   if (userId === undefined) {
     res.json({
@@ -21,10 +21,10 @@ postPark.post('/data-modify', async (req: Request, res) => {
   const messages: string[] = [];
 
   // update username if exist
-  if (newUserName !== undefined && newUserName !== '') {
+  if (newUsername !== undefined && newUsername !== '') {
     await db
       .updateTable('users')
-      .set({ username: newUserName })
+      .set({ username: newUsername })
       .where('id', '=', userId)
       .executeTakeFirst();
 
@@ -67,4 +67,4 @@ postPark.post('/data-modify', async (req: Request, res) => {
   });
 });
 
-export default postPark;
+export default patchPark;
