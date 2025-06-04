@@ -2,6 +2,7 @@ import { useGameInfoContext } from '@/contexts/game-info-context';
 import useEnclosures from '@/hooks/use-enclos';
 import useVisitors from '@/hooks/use-visitors';
 import useZones from '@/hooks/use-zones';
+import { formatNumber } from '@/utils/number-formatter';
 
 import moon from '../assets/images/icons-buttons/moon.png';
 import padlock from '../assets/images/icons-buttons/padlock-unlocked.svg';
@@ -49,7 +50,7 @@ export default function Dashboard({ closeDashboard }: DashboardProps) {
               </h2>
               <ul className='grid min-h-30 grid-cols-2 gap-2 rounded border-1 border-gray-500 bg-white/60 p-3 pt-5 md:rounded-md'>
                 <li className='flex items-center justify-center gap-2'>
-                  {wallet.toLocaleString('fr-FR')}
+                  {formatNumber(wallet)}
                   <img src={moon} alt='money' className='h-6 md:h-7' />
                 </li>
                 <li className='flex items-center justify-center gap-2'>
@@ -118,7 +119,7 @@ export default function Dashboard({ closeDashboard }: DashboardProps) {
                     .map((creature) => (
                       <div key={creature.id}>
                         <p className='flex items-center justify-center gap-2'>
-                          {creature.quantityCreature}{' '}
+                          {creature.quantityCreature}
                           <img
                             src={`/images/creatures/${creature.src_image}`}
                             alt={creature.species}
