@@ -15,7 +15,6 @@ type ModalRank = {
 
 export default function Rank({ closeRank }: ModalRank) {
   const rank = useLeaderboard();
-
   if (!rank) {
     return;
   }
@@ -64,26 +63,33 @@ export default function Rank({ closeRank }: ModalRank) {
           <ul>
             {rank.map((park: Rank, index: number) => (
               <ul
-                className='m-2 grid w-full grid-cols-3 gap-5 rounded bg-white/70 p-2.5 text-xs md:grid md:grid-cols-5 md:gap-20 md:rounded-md md:text-base'
+                className='m-2 grid w-full grid-cols-3 gap-5 rounded bg-white/70 p-2.5 text-xs text-nowrap md:grid md:grid-cols-5 md:gap-20 md:rounded-md md:text-base'
                 key={park.id}
               >
-                <li className='flex'>
+                <li className='flex min-w-[10%]'>
                   {getMedal(index)}
                   {index > 2 && `${index + 1}. `}
-                  {park.park_name}
-                </li>
+                  {park.park_name.length > 15
+                    ? park.park_name.slice(0, 10) + '...'
+                    : park.username}
 
+                  {/* {rank.park_name. */}
+                </li>
                 <li>{park.username}</li>
                 <li>
                   {park.active_creatures} {'Créatures'}
                 </li>
-                <div className='hidden md:flex'>
+                <div className='hidden items-center md:flex'>
                   <li>{park.wallet}</li>
-                  <img className='w-7' src={Moons} alt='Money' />
+                  <img className='max-h-5 max-w-5' src={Moons} alt='Money' />
                 </div>
                 <div className='hidden md:flex'>
                   <li>{park.total_visitors}</li>
-                  <img className='w-7' src={Visitor} alt='Visitors' />
+                  <img
+                    className='max-h-7 max-w-7'
+                    src={Visitor}
+                    alt='Visitors'
+                  />
                 </div>
               </ul>
             ))}
