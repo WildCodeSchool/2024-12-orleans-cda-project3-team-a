@@ -74,7 +74,7 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
         <img
           className='w-12 md:w-18'
           src={`/images/creatures/${creature.src_image}`}
-          alt=''
+          alt={creature.species}
         />
         <div className='relative'>
           <Input

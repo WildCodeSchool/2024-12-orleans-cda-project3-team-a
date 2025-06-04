@@ -5,6 +5,7 @@ import type { Enclosure } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
 import useEnclosures from '@/hooks/use-enclos';
+import { formatNumber } from '@/utils/number-formatter';
 
 import Moon from '../assets/images/icons-buttons/moon.png';
 import ButtonBuy from './button-buy';
@@ -87,6 +88,10 @@ export default function BuyCreature({
   return (
     <div className='rounded-lg border-1'>
       <h1 className='pt-2 text-center text-lg md:text-xl'>{`Buy a new ${creaturesEnclosId.species}`}</h1>
+      <p className='flex items-center justify-center text-xs text-green-500 italic md:text-base'>
+        {`This creature earns ${creaturesEnclosId.profit} `}
+        <img className='mx-0.5 h-3 md:h-4' src={Moon} alt='moon' /> {` /min!`}
+      </p>
       <div className='flex items-center gap-1 p-2 text-xs md:gap-5 md:text-base'>
         <Input
           bgColor='bg-white'
@@ -99,8 +104,10 @@ export default function BuyCreature({
           }}
         />
         <div className='flex items-center gap-1'>
-          <h1 className='text-xs md:text-base'>{creaturesEnclosId.price}</h1>
-          <img className='h-6 md:h-7' src={Moon} alt='' />
+          <h1 className='text-xs md:text-base'>
+            {formatNumber(creaturesEnclosId.price)}
+          </h1>
+          <img className='h-6 md:h-7' src={Moon} alt='moon' />
           <ButtonBuy
             onClick={buyCreature}
             bg='bg-white/75'
@@ -112,7 +119,7 @@ export default function BuyCreature({
               <img
                 className='w-5 md:w-7 md:p-0.5'
                 src={`/images/creatures/${creaturesEnclosId.src_image}`}
-                alt=''
+                alt={creaturesEnclosId.species}
               />
             </div>
           </ButtonBuy>
