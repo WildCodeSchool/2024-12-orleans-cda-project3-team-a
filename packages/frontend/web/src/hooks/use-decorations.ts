@@ -15,7 +15,6 @@ export default function useDecorations() {
       if (data.ok) {
         setDecorations(data.decorations);
       }
-      console.log(data);
     } catch (error) {
       console.error('fetch failed', error);
     }
