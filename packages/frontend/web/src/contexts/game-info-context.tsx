@@ -22,6 +22,7 @@ type GameInfoContextState = {
   decorations: Decorations;
   parkName: string;
   countVisitorActiveFormated: string;
+  isLoadingCreature: boolean;
 };
 
 // Define the type for provider
@@ -40,6 +41,7 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   decorations: [],
   parkName: '',
   countVisitorActiveFormated: '',
+  isLoadingCreature: false,
 });
 
 // create the provider
@@ -79,6 +81,8 @@ export function GameInfoContextProvider({
     ]);
   }, [refetchPark, refetchZones, refetchCreatures, refetchVisitors]);
 
+  const isLoadingCreature = creaturesEnclos.length === 0;
+
   // memorize value to avoid unnecessary changes
   const value = useMemo(
     () => ({
@@ -88,6 +92,7 @@ export function GameInfoContextProvider({
       wallet,
       isLoadingPark,
       isLoadingZones,
+      isLoadingCreature,
       fetchAll,
       creaturesEnclos,
       decorations,
@@ -103,6 +108,7 @@ export function GameInfoContextProvider({
       wallet,
       isLoadingPark,
       isLoadingZones,
+      isLoadingCreature,
       fetchAll,
       parkName,
       countVisitorActiveFormated,

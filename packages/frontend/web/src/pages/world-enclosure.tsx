@@ -12,7 +12,8 @@ import { useGameInfoContext } from '@/contexts/game-info-context';
 import useFetchBarriers from '@/hooks/use-fetch-barriers';
 
 export default function WorldEnclosure() {
-  const { creaturesEnclos, decorations, unlockedZones } = useGameInfoContext();
+  const { creaturesEnclos, decorations, unlockedZones, isLoadingCreature } =
+    useGameInfoContext();
   const { zone_id: zoneId } = useParams();
 
   const { barriers, isLoading, refetch } = useFetchBarriers();
@@ -27,11 +28,9 @@ export default function WorldEnclosure() {
     return <Navigate to='/home' />;
   }
 
-  if (creaturesEnclos.length === 0) {
-    <Loader />;
-    return;
+  if (isLoadingCreature) {
+    return <Loader />;
   }
-
   const creatureWorld = creaturesEnclos.filter(
     (creature: Enclosure) => creature.zone_id === Number(zoneId),
   );
