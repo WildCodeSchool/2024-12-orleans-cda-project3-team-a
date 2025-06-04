@@ -50,9 +50,14 @@ export default function Rank({ closeRank }: ModalRank) {
   };
 
   return (
-    <div className='flex overflow-y-auto'>
+    <div className='relative mb-[8%] overflow-y-auto'>
       <BgMenu>
-        <div className='flex flex-row-reverse'>
+        <div>
+          <h1 className='font-aerokids text-outline-white mb-5 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>
+            {'R anking'}
+          </h1>
+        </div>
+        <div className='absolute top-5 left-[95%]'>
           <CloseWindow onClick={closeRank} />
         </div>
         <div>
@@ -88,3 +93,4 @@ export default function Rank({ closeRank }: ModalRank) {
     </div>
   );
 }
+// <h1 className='font-aerokids text-outline-white mb-10 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>{'ranking'}</h1>
