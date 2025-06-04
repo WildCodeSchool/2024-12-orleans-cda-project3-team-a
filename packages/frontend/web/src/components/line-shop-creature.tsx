@@ -16,12 +16,23 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
   const [name, setName] = useState('');
   const { wallet, fetchAll } = useGameInfoContext();
   const [isBought, setIsBought] = useState(false);
+  const [nameError, setNameError] = useState('');
 
   const hasEnoughMoons = wallet >= creature.price;
 
   const buyCreature = async () => {
     if (!hasEnoughMoons) return;
-
+    if (name.trim() === '') {
+      setNameError('Enter name for creature');
+      return;
+    } else if (!/^[a-zA-ZÀ-ÿ0-9 ]{3,}$/.test(name)) {
+      setNameError(
+        'Name must be at least 3 characters, using letters, numbers or spaces only',
+      );
+      return;
+    } else {
+      setNameError('');
+    }
     try {
       const response = await fetch(
         `/api/game/creature/buy?creatureId=${creature.id}`,
@@ -80,6 +91,9 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
             <p className='absolute left-1/2 m-0 -translate-x-1/2 text-xs text-green-600 italic'>
               {'Creature bought!'}
             </p>
+          ) : null}
+          {nameError ? (
+            <p className='text-xs text-red-500 italic'>{nameError}</p>
           ) : null}
         </div>
         <ButtonBuy
