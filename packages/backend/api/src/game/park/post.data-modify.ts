@@ -58,6 +58,7 @@ postPark.post('/data-modify', async (req: Request, res) => {
       ok: false,
       message: 'Nothing to update',
     });
+    return;
   }
 
   res.json({

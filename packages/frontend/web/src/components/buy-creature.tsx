@@ -5,6 +5,7 @@ import type { Enclosure } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
 import useEnclosures from '@/hooks/use-enclos';
+import { formatNumber } from '@/utils/number-formatter';
 
 import Moon from '../assets/images/icons-buttons/moon.png';
 import ButtonBuy from './button-buy';
@@ -98,7 +99,9 @@ export default function BuyCreature({
           }}
         />
         <div className='flex items-center gap-1'>
-          <h1 className='text-xs md:text-base'>{creaturesEnclosId.price}</h1>
+          <h1 className='text-xs md:text-base'>
+            {formatNumber(creaturesEnclosId.price)}
+          </h1>
           <img className='h-6 md:h-7' src={Moon} alt='moon' />
           <ButtonBuy
             onClick={buyCreature}
@@ -111,7 +114,7 @@ export default function BuyCreature({
               <img
                 className='w-5 md:w-7 md:p-0.5'
                 src={`/images/creatures/${creaturesEnclosId.src_image}`}
-                alt=''
+                alt={creaturesEnclosId.species}
               />
             </div>
           </ButtonBuy>

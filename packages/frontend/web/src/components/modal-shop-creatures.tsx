@@ -64,7 +64,7 @@ export default function ModalShopCreatures({ closeShop }: ModalShopCreatures) {
               >
                 <img
                   src={`/images/logo/${zone.src_image}`}
-                  alt=''
+                  alt={zone.name}
                   className={`h-[90%] ${zone.park_zone_id === null ? 'cursor-not-allowed grayscale' : ''}`}
                 />
               </button>

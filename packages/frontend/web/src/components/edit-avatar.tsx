@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
 
 import ButtonBlue from './button-blue';
+import Loader from './loader';
 
 type EditAvatarProps = {
   readonly navigate: () => void;
@@ -18,11 +19,21 @@ export default function EditAvatar({ navigate }: EditAvatarProps) {
     return initialAvatar ? initialAvatar.id : null;
   });
 
+  const [isModified, setIsModified] = useState(false);
+
   const [messErrorModification, setMessErrorModification] = useState('');
 
   const handleAvatarClick = (id: number) => {
     setSelectedAvatar(id);
   };
+
+  useEffect(() => {
+    if (isModified) {
+      setTimeout(() => {
+        navigate();
+      }, 3000); // 3 secondes
+    }
+  }, [isModified, navigate]);
 
   const editMyData = async () => {
     const res = await fetch(`/api/game/park/data-modify`, {
@@ -41,7 +52,7 @@ export default function EditAvatar({ navigate }: EditAvatarProps) {
     };
 
     if (data.ok) {
-      alert('Successful modification ✅');
+      setIsModified(true);
     } else {
       setMessErrorModification(data.message);
     }
@@ -52,7 +63,13 @@ export default function EditAvatar({ navigate }: EditAvatarProps) {
     navigate();
   };
 
-  return (
+  return isModified ? (
+    <p className='text-secondary-blue z-3 mt-20 mb-10 flex flex-col items-center justify-center gap-10 px-10 text-center text-sm italic md:text-base'>
+      {'Successful registration ✅! '}
+      <br /> {'Redirection to LOGIN...!'}
+      <Loader />
+    </p>
+  ) : (
     <div className='relative w-full overflow-y-auto md:min-w-[90%]'>
       <div className='flex flex-col items-center gap-4 p-4'>
         <h1 className='text-lg font-semibold'>{'EDIT AVATAR'}</h1>

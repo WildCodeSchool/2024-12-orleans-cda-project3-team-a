@@ -6,10 +6,10 @@ import type { Avatar, Decorations, Enclosure, UnlockedZones } from '@app/api';
 import useAvatars from '@/hooks/use-avatars';
 import useDecorations from '@/hooks/use-decorations';
 import useEnclos from '@/hooks/use-enclos';
-import { useNumberFormatter } from '@/hooks/use-number-formatter';
 import usePark from '@/hooks/use-park';
 import useVisitors from '@/hooks/use-visitors';
 import useZones from '@/hooks/use-zones';
+import { formatNumber } from '@/utils/number-formatter';
 
 type GameInfoContextState = {
   walletFormated: string;
@@ -79,7 +79,7 @@ export function GameInfoContextProvider({
   const countVisitorActive = visitorsPark.filter(
     (visitorPark) => new Date(visitorPark.exit_time).getTime() > Date.now(),
   ).length;
-  const countVisitorActiveFormated = useNumberFormatter(countVisitorActive);
+  const countVisitorActiveFormated = formatNumber(countVisitorActive);
   const { avatars } = useAvatars();
 
   //function to refetch hook necessary for home page

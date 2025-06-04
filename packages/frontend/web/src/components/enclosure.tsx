@@ -115,7 +115,7 @@ export default function Enclosure({
           key={decoration.creature_id}
           className={`w-15 ${getPosition(decoration.position)}`}
           src={`/images/decorations/${decoration.src_image}`}
-          alt=''
+          alt={decoration.name}
         />
       ))}
       <div className='relative flex flex-col items-center justify-center gap-2'>
@@ -126,7 +126,7 @@ export default function Enclosure({
         <img
           className={`w-30 ${isLocked ? '' : isHungry ? 'animate-none grayscale' : 'animate-move'}`}
           src={`/images/creatures/${isLocked ? enclosures.src_sign : enclosures.src_image}   `}
-          alt=''
+          alt={`${isLocked ? 'creature locked' : enclosures.species}   `}
         />
 
         <h1 className={` ${isLocked ? 'absolute top-10' : 'hidden'} `}>

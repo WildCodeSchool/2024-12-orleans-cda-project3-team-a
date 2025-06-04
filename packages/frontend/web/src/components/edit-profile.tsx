@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
 
@@ -10,6 +10,7 @@ import CloseWindow from './close-window';
 import EditAvatar from './edit-avatar';
 import EditPassword from './edit-password';
 import Input from './input';
+import Loader from './loader';
 
 type EditProfileProps = {
   readonly closeEditProfile: () => void;
@@ -59,9 +60,15 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
     );
   };
 
-  if (isModified) {
-    return <Navigate to='/' />;
-  }
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isModified) {
+      setTimeout(() => {
+        void navigate('/');
+      }, 3000); // 3 secondes
+    }
+  }, [isModified, navigate]);
 
   const editMyData = async () => {
     const res = await fetch(`/api/game/park/data-modify`, {
@@ -81,8 +88,6 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
     };
 
     if (data.ok) {
-      await fetchAll();
-      alert('Successful modification ✅');
       setIsModified(true);
     } else {
       setMessErrorModification(data.message);
@@ -94,7 +99,16 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
     toProfile();
   };
 
-  return (
+  return isModified ? (
+    <BgMenu>
+      <div className='mb-5 flex flex-col items-center justify-center'>
+        <p className='text-secondary-blue z-3 mt-20 mb-10 flex flex-col items-center justify-center gap-10 px-10 text-center text-sm italic md:text-base'>
+          {'Successful registration ✅! '}
+        </p>
+        <Loader />
+      </div>
+    </BgMenu>
+  ) : (
     <div className='relative w-full overflow-y-auto md:min-w-[90%]'>
       <BgMenu>
         <div className='absolute top-0 right-0 m-3'>

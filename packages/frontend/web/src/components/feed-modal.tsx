@@ -30,7 +30,7 @@ export default function FeedModal({
         <img
           className='w-7'
           src={`/images/creatures/${enclosure.src_image}`}
-          alt=''
+          alt={enclosure.species}
         />
       </div>
       {/* Display content of Feed Modal */}

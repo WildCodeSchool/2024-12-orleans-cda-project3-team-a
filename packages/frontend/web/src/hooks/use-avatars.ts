@@ -8,9 +8,7 @@ export default function useAvatars() {
 
   const fetchAvatars = useCallback(async () => {
     try {
-      const response = await fetch(`/api/game/avatars`, {
-        credentials: 'include',
-      });
+      const response = await fetch(`/api/game/avatars`);
 
       const data = await response.json();
 

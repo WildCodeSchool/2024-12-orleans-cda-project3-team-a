@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ButtonBlue from './button-blue';
 import Input from './input';
+import Loader from './loader';
 
 type EditPasswordProps = {
   readonly navigate: () => void;
@@ -28,6 +29,8 @@ export default function EditPassword({ navigate }: EditPasswordProps) {
   const [isTouchedConfirmPassword, setIsTouchedConfirmPassword] =
     useState(false);
 
+  const [isModified, setIsModified] = useState(false);
+
   const [messErrorModification, setMessErrorModification] = useState('');
 
   const isFormValid = () => {
@@ -37,6 +40,14 @@ export default function EditPassword({ navigate }: EditPasswordProps) {
       isConformConfirmPassword
     );
   };
+
+  useEffect(() => {
+    if (isModified) {
+      setTimeout(() => {
+        navigate();
+      }, 2000); // 2 secondes
+    }
+  }, [isModified, navigate]);
 
   const editPassword = async () => {
     const res = await fetch(`/api/auth/edit-password`, {
@@ -58,14 +69,19 @@ export default function EditPassword({ navigate }: EditPasswordProps) {
     };
 
     if (data.ok) {
-      alert('Successful password update ✅ !');
-      navigate();
+      setIsModified(true);
     } else {
       setMessErrorModification(data.message);
     }
   };
 
-  return (
+  return isModified ? (
+    <p className='text-secondary-blue z-3 mt-20 mb-10 flex flex-col items-center justify-center gap-10 px-10 text-center text-sm italic md:text-base'>
+      {'Successful registration ✅! '}
+      <br /> {'Redirection to LOGIN...!'}
+      <Loader />
+    </p>
+  ) : (
     <div className='relative w-full overflow-y-auto md:min-w-[90%]'>
       <div className='flex flex-col items-center justify-center'>
         <form

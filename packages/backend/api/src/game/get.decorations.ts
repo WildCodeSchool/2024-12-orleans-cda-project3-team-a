@@ -7,7 +7,7 @@ const getDecorationsRoute = express.Router();
 function getDecorations() {
   return db
     .selectFrom('decorations')
-    .select(['src_image', 'creature_id', 'position'])
+    .select(['src_image', 'creature_id', 'position', 'name'])
     .execute();
 }
 

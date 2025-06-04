@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useNumberFormatter } from './use-number-formatter';
+import { formatNumber } from '@/utils/number-formatter';
 
 export default function usePark() {
   const [wallet, setWallet] = useState(0);
@@ -43,8 +43,8 @@ export default function usePark() {
     void fetchPark();
   }, [fetchPark]);
 
-  const walletFormated = useNumberFormatter(wallet);
-  const visitorsFormated = useNumberFormatter(visitorsCount);
+  const walletFormated = formatNumber(wallet);
+  const visitorsFormated = formatNumber(visitorsCount);
 
   return {
     wallet,
