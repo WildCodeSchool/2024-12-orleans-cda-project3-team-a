@@ -16,7 +16,7 @@ async function getRank() {
         .select([
           'pc.park_id',
           sql<number>`COUNT(CASE 
-            WHEN pc.feed_date >= DATE_SUB(NOW(), INTERVAL c.feed_timer MINUTE) 
+            WHEN pc.feed_date > DATE_SUB(NOW(), INTERVAL c.feed_timer MINUTE) 
             THEN 1 END)`.as('active_creature'),
         ])
         .groupBy('pc.park_id')

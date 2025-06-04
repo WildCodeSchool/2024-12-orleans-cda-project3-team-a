@@ -38,8 +38,13 @@ export default function BuyCreature({
 
   const buyCreature = async () => {
     if (!hasEnoughMoons) return;
-    if (name === '') {
+    if (name.trim() === '') {
       setNameError('Enter name for creature');
+      return;
+    } else if (!/^[a-zA-ZÀ-ÿ0-9 ]{3,}$/.test(name)) {
+      setNameError(
+        'Name must be at least 3 characters, using letters, numbers or spaces only',
+      );
       return;
     } else {
       setNameError('');

@@ -50,7 +50,7 @@ export default function Rank({ closeRank }: ModalRank) {
   };
 
   return (
-    <div className='flex overflow-y-auto'>
+    <div className='relative mb-[10%] overflow-y-auto'>
       <BgMenu>
         <div className='flex flex-row-reverse'>
           <CloseWindow onClick={closeRank} />
@@ -62,7 +62,7 @@ export default function Rank({ closeRank }: ModalRank) {
                 className='m-2 grid w-full grid-cols-3 gap-5 rounded bg-white/70 p-2.5 text-xs md:grid md:grid-cols-5 md:gap-20 md:rounded-md md:text-base'
                 key={park.id}
               >
-                <li className='flex'>
+                <li className='class="col-span-2 flex'>
                   {getMedal(index)}
                   {index > 2 && `${index + 1}. `}
                   {park.park_name}
@@ -72,13 +72,17 @@ export default function Rank({ closeRank }: ModalRank) {
                 <li>
                   {park.active_creatures} {'Créatures'}
                 </li>
-                <div className='hidden md:flex'>
+                <div className='hidden items-center md:flex'>
                   <li>{park.wallet}</li>
-                  <img className='w-7' src={Moons} alt='Money' />
+                  <img className='max-h-5 max-w-5' src={Moons} alt='Money' />
                 </div>
                 <div className='hidden md:flex'>
                   <li>{park.total_visitors}</li>
-                  <img className='w-7' src={Visitor} alt='Visitors' />
+                  <img
+                    className='max-h-7 max-w-7'
+                    src={Visitor}
+                    alt='Visitors'
+                  />
                 </div>
               </ul>
             ))}
