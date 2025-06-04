@@ -53,7 +53,7 @@ export default function Rank({ closeRank }: ModalRank) {
       <BgMenu>
         <div>
           <h1 className='font-aerokids text-outline-white mb-5 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>
-            {'R anking'}
+            {'Ranking'}
           </h1>
         </div>
         <div className='absolute top-5 left-[85%] md:left-[95%]'>
@@ -71,7 +71,7 @@ export default function Rank({ closeRank }: ModalRank) {
                   {index > 2 && `${index + 1}. `}
                   {park.park_name.length > 15
                     ? park.park_name.slice(0, 10) + '...'
-                    : park.username}
+                    : park.park_name}
 
                   {/* {rank.park_name. */}
                 </li>
