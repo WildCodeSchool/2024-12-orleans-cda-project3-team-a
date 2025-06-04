@@ -20,16 +20,9 @@ export default function WorldEnclosure() {
     (unlockedZone) => unlockedZone.zone_id === Number(zoneId),
   );
 
-  console.log(creaturesEnclos);
-
   //check if this zone is unlocked
   if (isUnlocked?.park_zone_id === null) {
     return <Navigate to='/home' />;
-  }
-
-  if (creaturesEnclos.length === 0) {
-    <Loader />;
-    return;
   }
 
   const creatureWorld = creaturesEnclos.filter(
