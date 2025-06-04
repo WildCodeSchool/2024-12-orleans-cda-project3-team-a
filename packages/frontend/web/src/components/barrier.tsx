@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import type { Barrier } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import { useNumberFormatter } from '@/hooks/use-number-formatter';
+import { formatNumber } from '@/utils/number-formatter';
 
 import barrierIcon from '../assets/images/deco/barrier.png';
 import directionDown from '../assets/images/deco/direction-down.png';
@@ -21,7 +21,7 @@ type BarrierProps = {
 export default function Barrier({ barrier, refetch }: BarrierProps) {
   const { wallet } = useGameInfoContext();
   const hasEnoughMoons = wallet >= barrier.price;
-  const priceFormatted = useNumberFormatter(barrier.price);
+  const priceFormatted = formatNumber(barrier.price);
 
   const buyBarrier = async () => {
     //Buy only if we have enough money
