@@ -17,26 +17,36 @@ new CronJob(
     //recovers count visitor and creatures active
     const parkCreaturesVisitors = await db
       .selectFrom('parks')
-      .leftJoin('park_creatures', 'park_creatures.park_id', 'parks.id')
-      .leftJoin(
-        'park_visitors',
-        'park_creatures.park_id',
-        'park_visitors.park_id',
+      .leftJoin('park_creatures', (join) =>
+        join
+          .onRef('park_creatures.park_id', '=', 'parks.id')
+          .on(sql`park_creatures.feed_date > NOW()`),
+      )
+      .leftJoin('park_visitors', (join) =>
+        join
+          .onRef('park_creatures.park_id', '=', 'park_visitors.park_id')
+          .on(sql`park_visitors.exit_time > NOW()`),
       )
       .leftJoin('park_zones', 'park_zones.park_id', 'parks.id')
       .select([
         'parks.id',
-        sql<number>`COUNT(DISTINCT CASE WHEN park_creatures.feed_date > NOW() THEN park_creatures.id END)`.as(
-          'active_creatures',
-        ),
-        sql<number>`COUNT(DISTINCT park_creatures.id)`.as('total_creatures'),
+        sql<number>`COUNT(DISTINCT park_creatures.id)`.as('active_creatures'),
+        sql<number>`
+      (
+        SELECT COUNT(DISTINCT pc.id)
+        FROM park_creatures pc
+        WHERE pc.park_id = parks.id
+      )
+    `.as('total_creatures'),
+        sql<number>`COUNT(DISTINCT park_creatures.id )`.as('active_creatures'),
         sql<Date>`MAX(park_creatures.feed_date)`.as('last_hungry'),
-        sql<number>`COUNT(DISTINCT CASE WHEN park_visitors.exit_time > NOW() THEN park_visitors.id END)`.as(
-          'active_visitors',
-        ),
-        sql<number>`COUNT(DISTINCT park_creatures.id) - COUNT(DISTINCT CASE WHEN park_visitors.exit_time > NOW() THEN park_visitors.id END)`.as(
-          'nb_visitor_to_add',
-        ),
+        sql<number>`COUNT(DISTINCT park_visitors.id)`.as('active_visitors'),
+        sql<number>`
+      (
+        SELECT COUNT(DISTINCT pc.id)
+        FROM park_creatures pc
+        WHERE pc.park_id = parks.id
+      ) - COUNT(DISTINCT park_visitors.id)`.as('nb_visitor_to_add'),
         sql<number>`COUNT(DISTINCT park_zones.id)`.as('nb_zones_unlocked'),
       ])
       .groupBy('parks.id')
