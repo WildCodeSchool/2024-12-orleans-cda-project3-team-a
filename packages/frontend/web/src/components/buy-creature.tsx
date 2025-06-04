@@ -93,7 +93,8 @@ export default function BuyCreature({
             onClick={buyCreature}
             bg='bg-white/75'
             border='border border-black'
-            cursor='pointer'
+            cursor={!hasEnoughMoons ? 'not-allowed' : 'pointer'}
+            isGrayscale={!hasEnoughMoons}
           >
             <div className='flex items-center justify-center gap-1'>
               <p className='mb:text-2xl'>{'+'}</p>
