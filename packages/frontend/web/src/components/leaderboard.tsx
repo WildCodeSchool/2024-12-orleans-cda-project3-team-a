@@ -49,7 +49,7 @@ export default function Rank({ closeRank }: ModalRank) {
   };
 
   return (
-    <div className='relative mb-[10%] overflow-y-auto'>
+    <div className='relative mb-[8%] overflow-y-auto'>
       <BgMenu>
         <div className='flex flex-row-reverse'>
           <CloseWindow onClick={closeRank} />
