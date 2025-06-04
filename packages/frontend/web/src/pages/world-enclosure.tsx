@@ -25,6 +25,12 @@ export default function WorldEnclosure() {
     return <Navigate to='/home' />;
   }
 
+  if (creaturesEnclos.length === 0) {
+    console.log(creaturesEnclos);
+    <Loader />;
+    return;
+  }
+
   const creatureWorld = creaturesEnclos.filter(
     (creature: Enclosure) => creature.zone_id === Number(zoneId),
   );
