@@ -1,6 +1,7 @@
 import { CronJob } from 'cron';
 import crypto from 'crypto';
 import { sql } from 'kysely';
+import type { NotNull } from 'kysely';
 
 import { db } from '@app/backend-shared';
 
@@ -17,39 +18,47 @@ new CronJob(
     //recovers count visitor and creatures active
     const parkCreaturesVisitors = await db
       .selectFrom('parks')
+
       .leftJoin('park_creatures', (join) =>
         join
           .onRef('park_creatures.park_id', '=', 'parks.id')
           .on(sql`park_creatures.feed_date > NOW()`),
       )
+
       .leftJoin('park_visitors', (join) =>
         join
           .onRef('park_creatures.park_id', '=', 'park_visitors.park_id')
           .on(sql`park_visitors.exit_time > NOW()`),
       )
+
       .leftJoin('park_zones', 'park_zones.park_id', 'parks.id')
-      .select([
+
+      .select(({ fn, eb }) => [
         'parks.id',
-        sql<number>`COUNT(DISTINCT park_creatures.id)`.as('active_creatures'),
-        sql<number>`
-      (
-        SELECT COUNT(DISTINCT pc.id)
-        FROM park_creatures pc
-        WHERE pc.park_id = parks.id
-      )
-    `.as('total_creatures'),
-        sql<number>`COUNT(DISTINCT park_creatures.id )`.as('active_creatures'),
-        sql<Date>`MAX(park_creatures.feed_date)`.as('last_hungry'),
-        sql<number>`COUNT(DISTINCT park_visitors.id)`.as('active_visitors'),
-        sql<number>`
-      (
-        SELECT COUNT(DISTINCT pc.id)
-        FROM park_creatures pc
-        WHERE pc.park_id = parks.id
-      ) - COUNT(DISTINCT park_visitors.id)`.as('nb_visitor_to_add'),
-        sql<number>`COUNT(DISTINCT park_zones.id)`.as('nb_zones_unlocked'),
+
+        fn.count<number>('park_creatures.id').as('active_creatures'),
+
+        fn.count<number>('park_visitors.id').as('active_visitors'),
+
+        fn.count<number>('park_zones.id').as('nb_zones_unlocked'),
+
+        // subquery to know total_creatures
+        eb
+          .selectFrom('park_creatures')
+          .select([fn.count<number>('id').as('total_creatures')])
+          .whereRef('park_creatures.park_id', '=', 'parks.id')
+          .as('total_creatures'),
+
+        // subquery to know last feed creature
+        eb
+          .selectFrom('park_creatures')
+          .select([fn.max('park_creatures.feed_date').as('last_hungry')])
+          .whereRef('park_creatures.park_id', '=', 'parks.id')
+          .as('last_hungry'),
       ])
       .groupBy('parks.id')
+      .$narrowType<{ total_creatures: NotNull }>()
+      .$narrowType<{ last_hungry: NotNull }>()
       .execute();
 
     // if no result stop the function
@@ -91,15 +100,19 @@ new CronJob(
     //-----------LOGIC FOR ADD VISITOR IF IS OUT----------
     //----------------------------------------------------
     //Generate table to add in the insert of park_visitors
+
     const dataVisitorsToInsertByGroup = parkCreaturesVisitors
-      .filter((park) => park.nb_visitor_to_add > 0)
+      .filter((park) => park.total_creatures > park.active_visitors)
       .map((park) => {
-        const visitors = Array.from({ length: park.nb_visitor_to_add }, () => ({
-          entry_time: sql<Date>`NOW()`,
-          exit_time: sql<Date>`NOW() + INTERVAL 4 HOUR`,
-          park_id: park.id,
-          visitor_id: getRandomVisitor(park.id),
-        }));
+        const visitors = Array.from(
+          { length: park.total_creatures - park.active_visitors },
+          () => ({
+            entry_time: sql<Date>`NOW()`,
+            exit_time: sql<Date>`NOW() + INTERVAL 4 HOUR`,
+            park_id: park.id,
+            visitor_id: getRandomVisitor(park.id),
+          }),
+        );
 
         return {
           park_id: park.id,
