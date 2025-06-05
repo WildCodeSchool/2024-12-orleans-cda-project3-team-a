@@ -99,6 +99,11 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
     toProfile();
   };
 
+  const avatarSource =
+    user?.src_image !== null
+      ? `/images/avatar/${user?.src_image}`
+      : profileIcon;
+
   return isModified ? (
     <BgMenu>
       <div className='mb-5 flex flex-col items-center justify-center'>
@@ -132,11 +137,7 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
               <div className='row-span-2 flex items-center justify-center md:order-1'>
                 <img
                   className='w-30 md:w-40'
-                  src={
-                    user?.src_image
-                      ? `/images/avatar/${user.src_image}`
-                      : profileIcon
-                  }
+                  src={avatarSource}
                   alt='profile picture'
                 />
               </div>

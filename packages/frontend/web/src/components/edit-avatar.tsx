@@ -11,7 +11,6 @@ type EditAvatarProps = {
 };
 
 export default function EditAvatar({ navigate }: EditAvatarProps) {
-  // const { avatars, userAvatar } = useGameInfoContext();
   const { avatars } = useAvatars();
   const { user } = useGameInfoContext();
 

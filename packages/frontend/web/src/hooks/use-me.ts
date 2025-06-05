@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import type { User } from '@app/api';
 
 export default function useEnclosures() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User>();
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchUser = useCallback(async () => {
