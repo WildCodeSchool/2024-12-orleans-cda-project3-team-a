@@ -77,7 +77,7 @@ export default function Rank({ closeRank }: ModalRank) {
                     : park.park_name}
                 </li>
                 <li>
-                  {park.username != null && park.username.length > 15
+                  {park.username !== null && park.username.length > 15
                     ? park.username.slice(0, 10) + '...'
                     : (park.username ?? 'Unknown user')}
                 </li>
