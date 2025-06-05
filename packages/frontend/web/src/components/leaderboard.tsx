@@ -85,7 +85,7 @@ export default function Rank({ closeRank }: ModalRank) {
                       src={
                         park.avatar_id === null
                           ? profileIcon
-                          : `/images/creatures/${park.src_image}`
+                          : `/images/avatar/${park.src_image}`
                       }
                       alt='avatar'
                       className='w-5 md:w-7'
