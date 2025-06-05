@@ -57,6 +57,7 @@ export default function Menu() {
           <img
             src={iconMenu}
             alt='Menu'
+            title='Menu'
             onClick={handleMenu}
             className='cursor-pointer md:h-7 md:w-7'
           />
@@ -74,7 +75,12 @@ export default function Menu() {
               }}
               className='cursor-pointer'
             >
-              <img src={iconDashboard} alt='Dashboard' className='h-6 md:h-7' />
+              <img
+                src={iconDashboard}
+                alt='Dashboard'
+                title='Dashboard'
+                className='h-6 md:h-7'
+              />
             </div>
             <div
               onClick={() => {
@@ -84,6 +90,7 @@ export default function Menu() {
               <img
                 src={iconShop}
                 alt='Shop'
+                title='Shop'
                 className='h-6 cursor-pointer md:h-7'
               />
             </div>
@@ -94,6 +101,7 @@ export default function Menu() {
                 }}
                 src={iconRanking}
                 alt='Ranking'
+                title='Ranking'
                 className='h-6 cursor-pointer md:h-7'
               />
             </div>
@@ -107,11 +115,17 @@ export default function Menu() {
                 }}
                 src={iconProfil}
                 alt='Profil'
+                title='Profil'
                 className='h-6 cursor-pointer md:h-7'
               />
             </div>
             <Link to='/rules'>
-              <img src={iconRules} alt='Rules' className='h-6 md:h-7' />
+              <img
+                src={iconRules}
+                alt='Rules'
+                title='Rules'
+                className='h-6 md:h-7'
+              />
             </Link>
 
             <Logout />

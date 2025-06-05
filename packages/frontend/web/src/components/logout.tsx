@@ -14,7 +14,7 @@ export default function Logout() {
       ok: boolean;
     };
     if (data.ok) {
-      auth?.setIsLoggedIn(false);
+      auth.setIsLoggedIn(false);
     }
   };
 
@@ -27,7 +27,7 @@ export default function Logout() {
       <img
         src={icoDeconnection}
         alt='deconnection'
-        title='deconnection'
+        title='Deconnection'
         className='h-6 md:h-7'
       />
     </button>
