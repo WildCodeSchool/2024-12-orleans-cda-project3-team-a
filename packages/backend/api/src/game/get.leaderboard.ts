@@ -9,6 +9,7 @@ async function getRank() {
   return db
     .selectFrom('parks as p')
     .leftJoin('users as u', 'p.user_id', 'u.id')
+    .leftJoin('avatars', 'avatar_id', 'u.avatar_id')
     .leftJoin(
       db
         .selectFrom('park_creatures as pc')
@@ -38,6 +39,8 @@ async function getRank() {
       'p.park_name',
       'p.wallet',
       'u.username',
+      'u.avatar_id',
+      'avatars.src_image',
       sql<number>`COALESCE(pc.active_creature, 0)`.as('active_creatures'),
       sql<number>`COALESCE(pv_stats.visitor, 0)`.as('total_visitors'),
     ])
