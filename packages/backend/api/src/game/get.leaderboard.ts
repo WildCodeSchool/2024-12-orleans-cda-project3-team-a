@@ -10,7 +10,7 @@ async function getRank() {
     db
       .selectFrom('parks as p')
       .leftJoin('users as u', 'p.user_id', 'u.id')
-      .leftJoin('avatars', 'avatar_id', 'u.avatar_id')
+      .leftJoin('avatars', 'avatars.id', 'u.avatar_id')
       //recover creatures active
       .leftJoin(
         db
