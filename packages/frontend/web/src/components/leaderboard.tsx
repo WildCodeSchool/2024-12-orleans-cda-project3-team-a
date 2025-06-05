@@ -108,7 +108,7 @@ export default function Rank({ closeRank }: ModalRank) {
                   <img className='max-h-5 max-w-5' src={Moons} alt='Money' />
                 </div>
                 <div className='hidden md:flex'>
-                  <li>{formatNumber(park.total_visitors)}</li>
+                  <li>{formatNumber(park.active_visitors)}</li>
                   <img
                     className='max-h-7 max-w-7'
                     src={Visitor}
