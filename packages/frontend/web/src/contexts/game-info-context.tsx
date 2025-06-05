@@ -61,7 +61,7 @@ export function GameInfoContextProvider({
 
   //get Creatures and decorations
   const { creaturesEnclos, refetchCreatures } = useEnclos();
-  const { decorations } = useDecorations();
+  const { decorations, refetchDecorations } = useDecorations();
   const { visitorsPark, refetchVisitors } = useVisitors();
 
   const countVisitorActive = visitorsPark.filter(
@@ -76,8 +76,15 @@ export function GameInfoContextProvider({
       refetchZones(),
       refetchCreatures(),
       refetchVisitors(),
+      refetchDecorations(),
     ]);
-  }, [refetchPark, refetchZones, refetchCreatures, refetchVisitors]);
+  }, [
+    refetchPark,
+    refetchZones,
+    refetchCreatures,
+    refetchVisitors,
+    refetchDecorations,
+  ]);
 
   // memorize value to avoid unnecessary changes
   const value = useMemo(
