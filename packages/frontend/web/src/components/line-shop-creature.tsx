@@ -102,7 +102,8 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
           onClick={buyCreature}
           bg='bg-white/75'
           border='border border-black'
-          cursor='pointer'
+          cursor={!hasEnoughMoons ? 'not-allowed' : 'pointer'}
+          isGrayscale={!hasEnoughMoons}
         >
           <div className='flex items-center justify-center gap-0.5 p-0.5'>
             <p className=''>{creature.price}</p>

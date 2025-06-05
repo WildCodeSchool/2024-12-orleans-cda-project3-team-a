@@ -1,5 +1,7 @@
 import type { Rank } from '@app/api';
 
+import { formatNumber } from '@/utils/number-formatter';
+
 import BronzeMedal from '../assets/images/icons-buttons/bronze-medal.png';
 import GoldMedal from '../assets/images/icons-buttons/gold-medal.png';
 import Moons from '../assets/images/icons-buttons/moon.png';
@@ -49,11 +51,11 @@ export default function Rank({ closeRank }: ModalRank) {
   };
 
   return (
-    <div className='relative mb-[8%] overflow-y-auto'>
+    <div className='relative mb-[6%] overflow-y-auto'>
       <BgMenu>
         <div>
           <h1 className='font-aerokids text-outline-white mb-5 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>
-            {'Ranking'}
+            {'Leaderboard'}
           </h1>
         </div>
         <div className='absolute top-5 left-[85%] md:left-[95%]'>
@@ -72,19 +74,23 @@ export default function Rank({ closeRank }: ModalRank) {
                   {park.park_name.length > 15
                     ? park.park_name.slice(0, 10) + '...'
                     : park.park_name}
-
-                  {/* {rank.park_name. */}
                 </li>
-                <li>{park.username}</li>
+                <li>
+                  {park.username
+                    ? park.username.length > 15
+                      ? park.username.slice(0, 10) + '...'
+                      : park.username
+                    : 'Utilisateur inconnue'}
+                </li>
                 <li>
                   {park.active_creatures} {'Créatures'}
                 </li>
                 <div className='hidden items-center md:flex'>
-                  <li>{park.wallet}</li>
+                  <li>{formatNumber(park.wallet ?? 0)}</li>
                   <img className='max-h-5 max-w-5' src={Moons} alt='Money' />
                 </div>
                 <div className='hidden md:flex'>
-                  <li>{park.total_visitors}</li>
+                  <li>{formatNumber(park.total_visitors)}</li>
                   <img
                     className='max-h-7 max-w-7'
                     src={Visitor}
@@ -99,4 +105,3 @@ export default function Rank({ closeRank }: ModalRank) {
     </div>
   );
 }
-// <h1 className='font-aerokids text-outline-white mb-10 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>{'ranking'}</h1>
