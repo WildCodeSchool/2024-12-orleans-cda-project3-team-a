@@ -25,8 +25,12 @@ const authProviderContext = createContext<AuthProviderState>({
   isLoggedIn: false,
   isLoading: true,
   hasParkId: false,
-  setIsLoggedIn: () => Promise.resolve(),
-  setHasParkId: () => Promise.resolve(),
+  setIsLoggedIn: () => {
+    //
+  },
+  setHasParkId: () => {
+    //
+  },
   refetchUser: () => Promise.resolve(),
 });
 
@@ -46,8 +50,8 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
 
     if (data.ok) {
       setIsLoggedIn(true);
+      setUser(data.user);
     }
-    setUser(data.user);
     setIsLoading(false);
   }, []);
 
