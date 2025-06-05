@@ -39,7 +39,7 @@ function getVisitorsPark(parkId: number) {
     .selectFrom('park_visitors')
     .selectAll()
     .where('park_visitors.park_id', '=', parkId)
-    .where('park_visitors.exit_time', '>', new Date())
+    .where('park_visitors.exit_time', '>', sql<Date>`NOW()`)
     .execute();
 }
 
