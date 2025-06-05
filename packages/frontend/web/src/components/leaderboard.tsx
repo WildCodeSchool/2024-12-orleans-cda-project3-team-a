@@ -5,6 +5,7 @@ import { formatNumber } from '@/utils/number-formatter';
 import BronzeMedal from '../assets/images/icons-buttons/bronze-medal.png';
 import GoldMedal from '../assets/images/icons-buttons/gold-medal.png';
 import Moons from '../assets/images/icons-buttons/moon.png';
+import profileIcon from '../assets/images/icons-buttons/profile.png';
 import SilverMedal from '../assets/images/icons-buttons/silver-medal.png';
 import Visitor from '../assets/images/icons-buttons/visitors.png';
 import useLeaderboard from '../hooks/use-leaderboard';
@@ -66,7 +67,7 @@ export default function Rank({ closeRank }: ModalRank) {
           <ul>
             {rank.map((park: Rank, index: number) => (
               <ul
-                className='m-2 grid w-full grid-cols-3 gap-5 rounded bg-white/70 p-2.5 text-xs text-nowrap md:grid md:grid-cols-5 md:gap-20 md:rounded-md md:text-base'
+                className='m-2 grid w-98/100 grid-cols-3 gap-5 rounded bg-white/70 p-2 text-xs text-nowrap md:grid md:grid-cols-5 md:gap-20 md:rounded-md md:text-base'
                 key={park.id}
               >
                 <li className='flex min-w-[10%]'>
@@ -76,20 +77,38 @@ export default function Rank({ closeRank }: ModalRank) {
                     ? park.park_name.slice(0, 10) + '...'
                     : park.park_name}
                 </li>
-                <li>
-                  {park.username !== null && park.username.length > 15
-                    ? park.username.slice(0, 10) + '...'
-                    : (park.username ?? 'Unknown user')}
-                </li>
+
+                {/* div for display the picture avatar and pseudo */}
+                <div className='flex flex-row items-center justify-center gap-1 text-center'>
+                  <li>
+                    <img
+                      src={
+                        park.avatar_id === null
+                          ? profileIcon
+                          : `/images/creatures/${park.src_image}`
+                      }
+                      alt='avatar'
+                      className='w-5 md:w-7'
+                    />
+                  </li>
+
+                  <li>
+                    {park.username !== null && park.username.length > 15
+                      ? park.username.slice(0, 10) + '...'
+                      : (park.username ?? 'Unknown user')}
+                  </li>
+                </div>
+
                 <li>
                   {park.active_creatures} {'Créatures'}
                 </li>
+
                 <div className='hidden items-center md:flex'>
                   <li>{formatNumber(park.wallet ?? 0)}</li>
                   <img className='max-h-5 max-w-5' src={Moons} alt='Money' />
                 </div>
                 <div className='hidden md:flex'>
-                  <li>{formatNumber(park.total_visitors)}</li>
+                  <li>{formatNumber(park.active_visitors)}</li>
                   <img
                     className='max-h-7 max-w-7'
                     src={Visitor}
