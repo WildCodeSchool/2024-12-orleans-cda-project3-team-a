@@ -132,13 +132,13 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
 
   const zonesUnlocked = await db
     .selectFrom('park_zones')
-    .innerJoin('visitors', 'visitors.zone_id', 'park_zones.id')
+    .innerJoin('visitors', 'visitors.zone_id', 'park_zones.zone_id')
     .select(['park_zones.zone_id', 'visitors.id as visitor_id'])
     .where('park_zones.park_id', '=', parkId)
     .execute();
 
   // function to use to generate a visitor id random
-  function getRandomZone(): number {
+  function getRandomVisitor(): number {
     const randomIndex = Math.floor(Math.random() * zonesUnlocked.length);
     return zonesUnlocked[randomIndex].visitor_id;
   }
@@ -150,7 +150,7 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
       entry_time: sql`NOW()`,
       exit_time: sql`NOW() + INTERVAL 4 HOUR`,
       park_id: parkId,
-      visitor_id: getRandomZone(),
+      visitor_id: getRandomVisitor(),
     })
     .executeTakeFirst();
 

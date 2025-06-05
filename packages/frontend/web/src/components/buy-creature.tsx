@@ -5,6 +5,7 @@ import type { Enclosure } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
 import useEnclosures from '@/hooks/use-enclos';
+import { formatNumber } from '@/utils/number-formatter';
 
 import Moon from '../assets/images/icons-buttons/moon.png';
 import ButtonBuy from './button-buy';
@@ -20,6 +21,7 @@ export default function BuyCreature({
   fetchCreatures,
 }: BuyCreatureProps) {
   const [name, setName] = useState('');
+  const [nameError, setNameError] = useState('');
   const [isBought, setIsBought] = useState(false);
   const { wallet, fetchAll } = useGameInfoContext();
   const { creaturesEnclos } = useEnclosures();
@@ -33,10 +35,21 @@ export default function BuyCreature({
     return;
   }
 
-  const hasEnoughMoons = wallet > creaturesEnclosId.price;
+  const hasEnoughMoons = wallet >= creaturesEnclosId.price;
 
   const buyCreature = async () => {
     if (!hasEnoughMoons) return;
+    if (name.trim() === '') {
+      setNameError('Enter name for creature');
+      return;
+    } else if (!/^[a-zA-ZÀ-ÿ0-9 ]{3,}$/.test(name)) {
+      setNameError(
+        'Name must be at least 3 characters, using letters and numbers',
+      );
+      return;
+    } else {
+      setNameError('');
+    }
     try {
       const response = await fetch(
         `/api/game/creature/buy?creatureId=${creatureId}`,
@@ -75,7 +88,11 @@ export default function BuyCreature({
   return (
     <div className='rounded-lg border-1'>
       <h1 className='pt-2 text-center text-lg md:text-xl'>{`Buy a new ${creaturesEnclosId.species}`}</h1>
-      <div className='flex items-center gap-1 p-2 md:gap-5'>
+      <p className='flex items-center justify-center text-xs text-green-500 italic md:text-base'>
+        {`This creature earns ${creaturesEnclosId.profit} `}
+        <img className='mx-0.5 h-3 md:h-4' src={Moon} alt='moon' /> {` /min!`}
+      </p>
+      <div className='flex items-center gap-1 p-2 text-xs md:gap-5 md:text-base'>
         <Input
           bgColor='bg-white'
           borderColor='border-gray'
@@ -87,20 +104,23 @@ export default function BuyCreature({
           }}
         />
         <div className='flex items-center gap-1'>
-          <h1 className='text-xs md:text-base'>{creaturesEnclosId.price}</h1>
-          <img className='h-6 md:h-7' src={Moon} alt='' />
+          <h1 className='text-xs md:text-base'>
+            {formatNumber(creaturesEnclosId.price)}
+          </h1>
+          <img className='h-6 md:h-7' src={Moon} alt='moon' />
           <ButtonBuy
             onClick={buyCreature}
             bg='bg-white/75'
             border='border border-black'
-            cursor='pointer'
+            cursor={!hasEnoughMoons ? 'not-allowed' : 'pointer'}
+            isGrayscale={!hasEnoughMoons}
           >
-            <div className='flex items-center justify-center gap-1'>
+            <div className='flex h-7 items-center justify-center gap-1'>
               <p className='mb:text-2xl'>{'+'}</p>
               <img
-                className='w-7 md:p-0.5'
+                className='w-5 md:w-7 md:p-0.5'
                 src={`/images/creatures/${creaturesEnclosId.src_image}`}
-                alt=''
+                alt={creaturesEnclosId.species}
               />
             </div>
           </ButtonBuy>
@@ -108,6 +128,9 @@ export default function BuyCreature({
       </div>
       {isBought ? (
         <p className='text-xs text-green-600 italic'>{'Creature bought!'}</p>
+      ) : null}
+      {nameError ? (
+        <p className='text-xs text-red-500 italic'>{nameError}</p>
       ) : null}
     </div>
   );

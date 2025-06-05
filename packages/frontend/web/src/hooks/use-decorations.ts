@@ -1,23 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import type { Decorations } from '@app/api';
 
 export default function useDecorations() {
   const [decorations, setDecorations] = useState<Decorations>([]);
 
-  useEffect(() => {
-    async function fetchCreatures() {
-      try {
-        const response = await fetch(`/api/game/decorations`, {
-          credentials: 'include',
-        });
-        const data = await response.json();
+  const fetchDecorations = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/game/decorations`, {
+        credentials: 'include',
+      });
+      const data = await response.json();
+      if (data.ok === true) {
         setDecorations(data.decorations);
-      } catch (error) {
-        console.error('fetch failed', error);
       }
+    } catch (error) {
+      console.error('fetch failed', error);
     }
-    void fetchCreatures();
   }, []);
-  return { decorations };
+
+  useEffect(() => {
+    void fetchDecorations();
+  }, [fetchDecorations]);
+
+  return { decorations, refetchDecorations: fetchDecorations };
 }
