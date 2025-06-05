@@ -1,5 +1,4 @@
 import { CronJob } from 'cron';
-import crypto from 'crypto';
 import { sql } from 'kysely';
 import type { NotNull } from 'kysely';
 
@@ -9,8 +8,6 @@ new CronJob(
   '* * * * *', // cronTime each minute
 
   async function () {
-    const randomSteven = crypto.randomBytes(16).toString('hex');
-
     //recovers count visitor and creatures active
     const parkCreaturesVisitors = await db
       .selectFrom('parks')
