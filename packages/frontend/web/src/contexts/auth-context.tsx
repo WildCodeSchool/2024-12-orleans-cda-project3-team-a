@@ -38,9 +38,7 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
 
   //fetch to know if we are logged in
   const fetchAuth = useCallback(async () => {
-    const res = await fetch(`/api/auth/me`, {
-      credentials: 'include',
-    });
+    const res = await fetch(`/api/auth/me`);
     const data = (await res.json()) as {
       ok: boolean;
       user: User;

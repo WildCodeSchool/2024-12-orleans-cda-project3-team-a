@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/auth-context';
 import { useGameInfoContext } from '@/contexts/game-info-context';
 
-// import type { User } from '@app/api';
-
 import profileIcon from '../assets/images/icons-buttons/profile.png';
 import BgMenu from './bg-menu';
 import ButtonBlue from './button-blue';

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { useAuth } from '@/contexts/auth-context';
-// import { useGameInfoContext } from '@/contexts/game-info-context';
 import useAvatars from '@/hooks/use-avatars';
 
 import ButtonBlue from './button-blue';
