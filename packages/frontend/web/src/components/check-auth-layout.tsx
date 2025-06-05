@@ -12,7 +12,7 @@ export default function CheckAuthLayout() {
   }
 
   //if NOT logged in -> go "/" = login ("/home" & "/create-park" & ... are FORBIDDEN)
-  if (isLoggedIn) {
+  if (!isLoggedIn) {
     return <Navigate to='/' />;
   }
 

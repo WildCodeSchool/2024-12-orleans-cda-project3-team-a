@@ -11,7 +11,7 @@ export default function CheckParkIdLayout() {
   }
 
   //if we have a parkId -> wait
-  if (hasParkId) {
+  if (!hasParkId) {
     return <Navigate to='/create-park' />;
   }
 
