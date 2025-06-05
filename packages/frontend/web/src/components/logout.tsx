@@ -1,6 +1,6 @@
 import { useAuth } from '@/contexts/auth-context';
 
-import icoDeconnection from '../assets/images/icons-buttons/deconnection.png';
+import icoLogout from '../assets/images/icons-buttons/deconnection.png';
 
 export default function Logout() {
   const auth = useAuth();
@@ -24,12 +24,7 @@ export default function Logout() {
       className='flex cursor-pointer items-center justify-center'
       onClick={logout}
     >
-      <img
-        src={icoDeconnection}
-        alt='deconnection'
-        title='Deconnection'
-        className='h-6 md:h-7'
-      />
+      <img src={icoLogout} alt='logout' title='Logout' className='h-6 md:h-7' />
     </button>
   );
 }
