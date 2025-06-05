@@ -121,7 +121,7 @@ export default function Menu() {
         <div
           className={
             openModal
-              ? 'md:pd-0 absolute top-[2%] left-1 flex max-h-screen w-[98%] translate-y-10 justify-center pb-6 text-center md:translate-y-[13%]'
+              ? 'md:pd-0 absolute top-[2%] left-1 flex max-h-screen w-[98%] translate-y-10 justify-center pb-6 text-center md:translate-y-[10%]'
               : ''
           }
         >
