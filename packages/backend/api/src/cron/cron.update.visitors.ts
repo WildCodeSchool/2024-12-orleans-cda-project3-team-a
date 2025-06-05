@@ -11,10 +11,6 @@ new CronJob(
   async function () {
     const randomSteven = crypto.randomBytes(16).toString('hex');
 
-    // console.log(randomSteven);
-
-    console.log('start cron', randomSteven, new Date());
-
     //recovers count visitor and creatures active
     const parkCreaturesVisitors = await db
       .selectFrom('parks')
@@ -215,7 +211,6 @@ new CronJob(
         .where('parks.id', 'in', parkIdsCreaturesActive)
         .execute();
     }
-    console.log('end cron', randomSteven, new Date());
   },
   null, // onComplete
   true, // start
