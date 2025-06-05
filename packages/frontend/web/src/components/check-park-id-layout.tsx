@@ -3,17 +3,15 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '@/contexts/auth-context';
 
 export default function CheckParkIdLayout() {
-  const auth = useAuth();
-  const hasParkId = auth?.hasParkId;
-  const isLoading = auth?.isLoading;
+  const { isLoading, hasParkId } = useAuth();
 
   //if loading -> wait
-  if (isLoading === true) {
+  if (isLoading) {
     return;
   }
 
   //if we have a parkId -> wait
-  if (hasParkId === false) {
+  if (!hasParkId) {
     return <Navigate to='/create-park' />;
   }
 

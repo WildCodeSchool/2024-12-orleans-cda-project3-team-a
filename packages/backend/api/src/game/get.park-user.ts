@@ -38,6 +38,7 @@ getParkUser.get('/park-user', async (req: Request, res) => {
   const visitorsCount = visitorsCountResult?.count ?? 0;
 
   res.json({
+    ok: true,
     park,
     visitorsCount,
   });

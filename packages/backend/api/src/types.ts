@@ -5,3 +5,5 @@ export type * from './game/get.decorations';
 export type * from './game/creature/get.creatures';
 export type * from './game/visitor/get.visitors';
 export type * from './game/get.leaderboard';
+export type * from './game/get.avatars';
+export type * from './auth/get.me';

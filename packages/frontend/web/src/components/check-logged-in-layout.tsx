@@ -3,17 +3,15 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '@/contexts/auth-context';
 
 export default function CheckLoggedInLayout() {
-  const auth = useAuth();
-  const isLoggedIn = auth?.isLoggedIn;
-  const isLoading = auth?.isLoading;
+  const { isLoading, isLoggedIn } = useAuth();
 
   //if loading -> wait
-  if (isLoading === true) {
+  if (isLoading) {
     return;
   }
 
   //if logged in -> go home ("/" & "/signup" are FORBIDDEN)
-  if (isLoggedIn === true) {
+  if (isLoggedIn) {
     return <Navigate to='/home' />;
   }
 
