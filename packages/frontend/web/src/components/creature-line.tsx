@@ -41,6 +41,7 @@ export default function CreatureLine({
 }: CreatureLineProps) {
   const { wallet, fetchAll } = useGameInfoContext();
   const hasEnoughMoons = wallet >= Number(potionPrice);
+  // Record to define different types for keys and values
   const [clickedButtons, setClickedButtons] = useState<Record<number, boolean>>(
     {},
   );
