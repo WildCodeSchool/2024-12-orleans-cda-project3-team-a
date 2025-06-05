@@ -59,7 +59,7 @@ export function GameInfoContextProvider({
 
   const { unlockedZones, isLoadingZones, refetchZones } = useZones();
   const { creaturesEnclos, refetchCreatures } = useEnclos();
-  const { decorations } = useDecorations();
+  const { decorations, refetchDecorations } = useDecorations();
   const { visitorsPark, refetchVisitors } = useVisitors();
   const { user, isLoading: isLoadingUser, refetchUser } = useUser();
 
@@ -74,13 +74,19 @@ export function GameInfoContextProvider({
       refetchZones(),
       refetchCreatures(),
       refetchVisitors(),
+      refetchDecorations(),
       refetchUser(),
     ]);
   }, [
     refetchPark,
+
     refetchZones,
+
     refetchCreatures,
+
     refetchVisitors,
+    refetchDecorations,
+
     refetchUser,
   ]);
 
