@@ -41,7 +41,7 @@ export default function FeedAllCreatures({
   const { creaturesEnclos } = useEnclosures();
   const [isFeeding, setIsFeeding] = useState(false);
   const { fetchAll, wallet } = useGameInfoContext();
-  const [clicked, setClicked] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
   const hasEnoughMoons = wallet >= Number(potionPrice);
 
@@ -122,21 +122,21 @@ export default function FeedAllCreatures({
           bg='bg-white/75'
           border='border border-black'
           cursor={
-            !clicked && hungryCreatures.length > 0 && hasEnoughMoons
+            !isClicked && hungryCreatures.length > 0 && hasEnoughMoons
               ? 'pointer'
               : 'not-allowed'
           }
           isGrayscale={
-            clicked || hungryCreatures.length === 0 || !hasEnoughMoons
+            isClicked || hungryCreatures.length === 0 || !hasEnoughMoons
           }
           isDisabled={
-            clicked || hungryCreatures.length === 0 || !hasEnoughMoons
+            isClicked || hungryCreatures.length === 0 || !hasEnoughMoons
           }
           onClick={async () => {
-            if (clicked || hungryCreatures.length === 0 || !hasEnoughMoons)
+            if (isClicked || hungryCreatures.length === 0 || !hasEnoughMoons)
               return;
 
-            setClicked(true);
+            setIsClicked(true);
 
             for (const creature of hungryCreatures) {
               await feedCreatures(zoneId, creature.id);

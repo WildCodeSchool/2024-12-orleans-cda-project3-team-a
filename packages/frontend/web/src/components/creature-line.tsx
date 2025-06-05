@@ -41,10 +41,9 @@ export default function CreatureLine({
 }: CreatureLineProps) {
   const { wallet, fetchAll } = useGameInfoContext();
   const hasEnoughMoons = wallet >= Number(potionPrice);
+
   // Record to define different types for keys and values
-  const [clickedButtons, setClickedButtons] = useState<Record<number, boolean>>(
-    {},
-  );
+  const [isClicked, setIsClicked] = useState<Record<number, boolean>>({});
 
   if (creatures.length === 0) {
     return (
@@ -123,14 +122,14 @@ export default function CreatureLine({
               border='border border-black'
               bg='bg-white/75'
               cursor={!shouldEat || !hasEnoughMoons ? 'not-allowed' : 'pointer'}
-              isInvisible={!shouldEat || clickedButtons[creatureData.id]}
+              isInvisible={!shouldEat || isClicked[creatureData.id]}
               isGrayscale={!shouldEat || !hasEnoughMoons}
               isDisabled={
-                !shouldEat || !hasEnoughMoons || clickedButtons[creatureData.id]
+                !shouldEat || !hasEnoughMoons || isClicked[creatureData.id]
               }
               onClick={async () => {
                 if (shouldEat && hasEnoughMoons) {
-                  setClickedButtons((prev) => ({
+                  setIsClicked((prev) => ({
                     ...prev,
                     [creatureData.id]: true,
                   }));
@@ -139,7 +138,7 @@ export default function CreatureLine({
                   } catch (err) {
                     // eslint-disable-next-line no-console
                     console.error(err);
-                    setClickedButtons((prev) => ({
+                    setIsClicked((prev) => ({
                       ...prev,
                       [creatureData.id]: false,
                     }));
