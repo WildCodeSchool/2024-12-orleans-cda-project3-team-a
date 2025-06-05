@@ -69,7 +69,6 @@ export default function EditAvatar({ navigate }: EditAvatarProps) {
     <div className='mb-5 flex flex-col items-center justify-center'>
       <p className='text-secondary-blue z-3 mt-20 mb-10 flex flex-col items-center justify-center gap-10 px-10 text-center text-sm italic md:text-base'>
         {'Successful modification ✅! '}
-        <br /> {'Redirection to LOGIN...!'}
       </p>
       <Loader />
     </div>
