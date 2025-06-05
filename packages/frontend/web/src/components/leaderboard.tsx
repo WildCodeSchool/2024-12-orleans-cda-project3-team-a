@@ -17,6 +17,7 @@ type ModalRank = {
 
 export default function Rank({ closeRank }: ModalRank) {
   const rank = useLeaderboard();
+
   if (!rank) {
     return;
   }
@@ -76,11 +77,9 @@ export default function Rank({ closeRank }: ModalRank) {
                     : park.park_name}
                 </li>
                 <li>
-                  {park.username
-                    ? park.username.length > 15
-                      ? park.username.slice(0, 10) + '...'
-                      : park.username
-                    : 'Utilisateur inconnue'}
+                  {park.username != null && park.username.length > 15
+                    ? park.username.slice(0, 10) + '...'
+                    : (park.username ?? 'Unknown user')}
                 </li>
                 <li>
                   {park.active_creatures} {'Créatures'}
