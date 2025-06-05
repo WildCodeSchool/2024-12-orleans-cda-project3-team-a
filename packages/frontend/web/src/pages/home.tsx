@@ -20,8 +20,8 @@ export default function Home() {
         <WelcomeGuide />
       </Portal>
       {/* Display the header menu and nb visitors and moons */}
-      <header className='fixed flex justify-between gap-3 sm:z-2 md:w-[88%]'>
-        <div className='fixed -right-[15%] z-3 flex w-[50%] gap-3 md:left-[90%]'>
+      <header className='fixed top-0 left-0 z-10 flex w-full items-center justify-between gap-3 p-3 md:w-[80%]'>
+        <div className='fixed top-0 right-0 z-3 p-3'>
           <NbVisitorsMoons />
         </div>
         <Menu />

@@ -124,6 +124,9 @@ export default function CreatureLine({
               cursor={!shouldEat || !hasEnoughMoons ? 'not-allowed' : 'pointer'}
               isInvisible={!shouldEat || clickedButtons[creatureData.id]}
               isGrayscale={!shouldEat || !hasEnoughMoons}
+              isDisabled={
+                !shouldEat || !hasEnoughMoons || clickedButtons[creatureData.id]
+              }
               onClick={async () => {
                 if (shouldEat && hasEnoughMoons) {
                   setClickedButtons((prev) => ({
@@ -133,6 +136,7 @@ export default function CreatureLine({
                   try {
                     await feedCreature(creatureData.id, creatureData.zone_id);
                   } catch (err) {
+                    // eslint-disable-next-line no-console
                     console.error(err);
                     setClickedButtons((prev) => ({
                       ...prev,

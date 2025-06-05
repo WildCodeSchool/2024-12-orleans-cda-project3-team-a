@@ -41,6 +41,7 @@ export default function FeedAllCreatures({
   const { creaturesEnclos } = useEnclosures();
   const [isFeeding, setIsFeeding] = useState(false);
   const { fetchAll, wallet } = useGameInfoContext();
+  const [clicked, setClicked] = useState(false);
 
   const hasEnoughMoons = wallet >= Number(potionPrice);
 
@@ -115,19 +116,27 @@ export default function FeedAllCreatures({
           src={`/images/creatures/${creaturesEnclosId.src_image}`}
           alt='creature'
         />
-        <p>{totalPrice}</p>
+        <p>{formatNumber(totalPrice)}</p>
         <img className='h-6 md:h-7' src={Moons} alt='moon' />
         <ButtonBuy
           bg='bg-white/75'
           border='border border-black'
           cursor={
-            hungryCreatures.length > 0 && hasEnoughMoons
+            !clicked && hungryCreatures.length > 0 && hasEnoughMoons
               ? 'pointer'
               : 'not-allowed'
           }
-          isGrayscale={hungryCreatures.length === 0 || !hasEnoughMoons}
+          isGrayscale={
+            clicked || hungryCreatures.length === 0 || !hasEnoughMoons
+          }
+          isDisabled={
+            clicked || hungryCreatures.length === 0 || !hasEnoughMoons
+          }
           onClick={async () => {
-            if (hungryCreatures.length === 0 || !hasEnoughMoons) return;
+            if (clicked || hungryCreatures.length === 0 || !hasEnoughMoons)
+              return;
+
+            setClicked(true);
 
             for (const creature of hungryCreatures) {
               await feedCreatures(zoneId, creature.id);
