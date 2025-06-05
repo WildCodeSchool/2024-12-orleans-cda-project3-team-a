@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { fetchModule } from 'vite';
 
 import type { Decorations } from '@app/api';
 
@@ -12,7 +11,7 @@ export default function useDecorations() {
         credentials: 'include',
       });
       const data = await response.json();
-      if (data.ok) {
+      if (data.ok === true) {
         setDecorations(data.decorations);
       }
     } catch (error) {
