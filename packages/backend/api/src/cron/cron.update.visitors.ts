@@ -27,7 +27,7 @@ new CronJob(
 
       .leftJoin('park_visitors', (join) =>
         join
-          .onRef('park_creatures.park_id', '=', 'park_visitors.park_id')
+          .onRef('park_visitors.park_id', '=', 'parks.id')
           .on(sql`park_visitors.exit_time > NOW()`),
       )
 
@@ -69,7 +69,7 @@ new CronJob(
     const parkIdsCanAcceptVisitors = parkCreaturesVisitors
       .filter(
         (park) =>
-          park.last_hungry > new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) &&
+          park.last_hungry > new Date(Date.now() - 1 * 24 * 60 * 60 * 1000) &&
           park.active_visitors < park.total_creatures,
       )
       .map((park) => park.id);
@@ -89,7 +89,9 @@ new CronJob(
     // function to use to generate a visitor id random
     function getRandomVisitor(park_id: number): number {
       const parkZone = parkZoneVisitor.filter(
-        (park) => park.park_id === park_id,
+        (park) =>
+          parkIdsCanAcceptVisitors.includes(park.park_id) &&
+          park.park_id === park_id,
       );
       const randomIndex = Math.floor(Math.random() * parkZone.length);
       return parkZone[randomIndex].visitor_id;
@@ -101,7 +103,11 @@ new CronJob(
     //Generate table to add in the insert of park_visitors
 
     const dataVisitorsToInsertByGroup = parkCreaturesVisitors
-      .filter((park) => park.total_creatures > park.active_visitors)
+      .filter(
+        (park) =>
+          parkIdsCanAcceptVisitors.includes(park.id) &&
+          park.total_creatures > park.active_visitors,
+      )
       .map((park) => {
         const visitors = Array.from(
           { length: park.total_creatures - park.active_visitors },
