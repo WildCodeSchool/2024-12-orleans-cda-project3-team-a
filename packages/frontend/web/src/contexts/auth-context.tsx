@@ -1,11 +1,14 @@
 import {
   type PropsWithChildren,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from 'react';
+
+import type { User } from '@app/api';
 
 type AuthProviderProps = PropsWithChildren<object>;
 type AuthProviderState = {
@@ -14,35 +17,43 @@ type AuthProviderState = {
   isLoading: boolean;
   hasParkId: boolean;
   setHasParkId: (value: boolean) => void;
+  user?: User;
+  refetchUser: () => Promise<void>;
 };
 
-const authProviderContext = createContext<AuthProviderState | undefined>(
-  undefined,
-);
+const authProviderContext = createContext<AuthProviderState>({
+  isLoggedIn: false,
+  isLoading: true,
+  hasParkId: false,
+  setIsLoggedIn: () => Promise.resolve(),
+  setHasParkId: () => Promise.resolve(),
+  refetchUser: () => Promise.resolve(),
+});
 
 export default function AuthContext({ children, ...props }: AuthProviderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<User>();
   const [isLoading, setIsLoading] = useState(true);
   const [hasParkId, setHasParkId] = useState(false);
 
-  useEffect(() => {
-    //fetch to know if we are logged in
-    const fetchAuth = async () => {
-      const res = await fetch(`/api/auth/me`, {
-        credentials: 'include',
-      });
-      const data = (await res.json()) as {
-        ok: boolean;
-      };
-
-      if (data.ok) {
-        setIsLoggedIn(true);
-      }
-
-      setIsLoading(false);
+  //fetch to know if we are logged in
+  const fetchAuth = useCallback(async () => {
+    const res = await fetch(`/api/auth/me`, {
+      credentials: 'include',
+    });
+    const data = (await res.json()) as {
+      ok: boolean;
+      user: User;
     };
-    void fetchAuth();
 
+    if (data.ok) {
+      setIsLoggedIn(true);
+    }
+    setUser(data.user);
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
     //fetch to know if we have already a park id or not yet
     const fetchParkId = async () => {
       const res = await fetch(`/api/game/park`, {
@@ -62,8 +73,9 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
         setHasParkId(true);
       }
     };
+    void fetchAuth();
     void fetchParkId();
-  }, []);
+  }, [fetchAuth]);
 
   const value = useMemo(
     () => ({
@@ -72,8 +84,10 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
       isLoading,
       hasParkId,
       setHasParkId,
+      user,
+      refetchUser: fetchAuth,
     }),
-    [isLoggedIn, isLoading, hasParkId],
+    [isLoggedIn, isLoading, hasParkId, user, fetchAuth],
   );
 
   return (

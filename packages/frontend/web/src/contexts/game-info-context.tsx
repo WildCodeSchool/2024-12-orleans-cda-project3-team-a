@@ -1,11 +1,10 @@
 import { createContext, useCallback, useContext, useMemo } from 'react';
 import type { PropsWithChildren } from 'react';
 
-import type { Decorations, Enclosure, UnlockedZones, User } from '@app/api';
+import type { Decorations, Enclosure, UnlockedZones } from '@app/api';
 
 import useDecorations from '@/hooks/use-decorations';
 import useEnclos from '@/hooks/use-enclos';
-import useUser from '@/hooks/use-me';
 import usePark from '@/hooks/use-park';
 import useVisitors from '@/hooks/use-visitors';
 import useZones from '@/hooks/use-zones';
@@ -18,13 +17,11 @@ type GameInfoContextState = {
   unlockedZones: UnlockedZones;
   isLoadingPark: boolean;
   isLoadingZones: boolean;
-  isLoadingUser: boolean;
   fetchAll: () => Promise<void>;
   creaturesEnclos: Enclosure[];
   decorations: Decorations;
   parkName: string;
   countVisitorActiveFormated: string;
-  user: User | null;
 };
 
 type GameInfoContextProviderProps = PropsWithChildren;
@@ -36,13 +33,11 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   unlockedZones: [],
   isLoadingPark: true,
   isLoadingZones: true,
-  isLoadingUser: true,
   fetchAll: () => Promise.resolve(),
   creaturesEnclos: [],
   decorations: [],
   parkName: '',
   countVisitorActiveFormated: '',
-  user: null,
 });
 
 export function GameInfoContextProvider({
@@ -61,7 +56,6 @@ export function GameInfoContextProvider({
   const { creaturesEnclos, refetchCreatures } = useEnclos();
   const { decorations, refetchDecorations } = useDecorations();
   const { visitorsPark, refetchVisitors } = useVisitors();
-  const { user, isLoading: isLoadingUser, refetchUser } = useUser();
 
   const countVisitorActive = visitorsPark.filter(
     (visitorPark) => new Date(visitorPark.exit_time).getTime() > Date.now(),
@@ -75,7 +69,6 @@ export function GameInfoContextProvider({
       refetchCreatures(),
       refetchVisitors(),
       refetchDecorations(),
-      refetchUser(),
     ]);
   }, [
     refetchPark,
@@ -83,7 +76,6 @@ export function GameInfoContextProvider({
     refetchCreatures,
     refetchVisitors,
     refetchDecorations,
-    refetchUser,
   ]);
 
   // memorize value to avoid unnecessary changes
@@ -95,13 +87,11 @@ export function GameInfoContextProvider({
       wallet,
       isLoadingPark,
       isLoadingZones,
-      isLoadingUser,
       fetchAll,
       creaturesEnclos,
       decorations,
       parkName,
       countVisitorActiveFormated,
-      user,
     }),
     [
       walletFormated,
@@ -110,13 +100,11 @@ export function GameInfoContextProvider({
       wallet,
       isLoadingPark,
       isLoadingZones,
-      isLoadingUser,
       fetchAll,
       creaturesEnclos,
       decorations,
       parkName,
       countVisitorActiveFormated,
-      user,
     ],
   );
 

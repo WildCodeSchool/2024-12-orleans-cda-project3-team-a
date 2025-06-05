@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { useGameInfoContext } from '@/contexts/game-info-context';
+import { useAuth } from '@/contexts/auth-context';
+// import { useGameInfoContext } from '@/contexts/game-info-context';
 import useAvatars from '@/hooks/use-avatars';
 
 import ButtonBlue from './button-blue';
@@ -12,7 +13,7 @@ type EditAvatarProps = {
 
 export default function EditAvatar({ navigate }: EditAvatarProps) {
   const { avatars } = useAvatars();
-  const { user } = useGameInfoContext();
+  const { user } = useAuth();
 
   const [selectedAvatar, setSelectedAvatar] = useState<number | null>(() => {
     const initialAvatar = avatars.find(

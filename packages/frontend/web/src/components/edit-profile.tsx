@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useAuth } from '@/contexts/auth-context';
 import { useGameInfoContext } from '@/contexts/game-info-context';
+
+// import type { User } from '@app/api';
 
 import profileIcon from '../assets/images/icons-buttons/profile.png';
 import BgMenu from './bg-menu';
@@ -21,7 +24,8 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
     'profile',
   );
 
-  const { parkName, user, fetchAll } = useGameInfoContext();
+  const { parkName } = useGameInfoContext();
+  const { user, refetchUser } = useAuth();
 
   const [newUsername, setNewUsername] = useState('');
   const [newParkName, setNewParkName] = useState('');
@@ -95,7 +99,7 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
   };
 
   const handleNavigate = async () => {
-    await fetchAll();
+    await refetchUser();
     toProfile();
   };
 
