@@ -4,17 +4,15 @@ import { useAuth } from '@/contexts/auth-context';
 import { GameInfoContextProvider } from '@/contexts/game-info-context';
 
 export default function CheckAuthLayout() {
-  const auth = useAuth();
-  const isLoggedIn = auth?.isLoggedIn;
-  const isLoading = auth?.isLoading;
+  const { isLoading, isLoggedIn } = useAuth();
 
   //if loading -> wait
-  if (isLoading === true) {
+  if (isLoading) {
     return;
   }
 
   //if NOT logged in -> go "/" = login ("/home" & "/create-park" & ... are FORBIDDEN)
-  if (isLoggedIn === false) {
+  if (isLoggedIn) {
     return <Navigate to='/' />;
   }
 
