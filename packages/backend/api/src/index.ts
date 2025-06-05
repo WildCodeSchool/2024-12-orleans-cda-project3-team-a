@@ -3,7 +3,6 @@ import express from 'express';
 
 import { env } from '@app/shared';
 
-import './cron/cron.delete.inactive-visitor';
 import './cron/cron.update.visitors';
 import router from './router';
 
