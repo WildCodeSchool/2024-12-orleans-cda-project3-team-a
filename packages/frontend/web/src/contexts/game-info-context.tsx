@@ -79,17 +79,14 @@ export function GameInfoContextProvider({
     ]);
   }, [
     refetchPark,
-
     refetchZones,
-
     refetchCreatures,
-
     refetchVisitors,
     refetchDecorations,
-
     refetchUser,
   ]);
 
+  // memorize value to avoid unnecessary changes
   const value = useMemo(
     () => ({
       walletFormated,
