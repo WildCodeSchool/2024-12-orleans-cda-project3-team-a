@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import type { Creatures } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
@@ -36,6 +38,9 @@ export default function CreatureLine({
 }: CreatureLineProps) {
   const { wallet, fetchAll } = useGameInfoContext();
   const hasEnoughMoons = wallet > Number(potionPrice);
+  const [clickedButtons, setClickedButtons] = useState<Record<number, boolean>>(
+    {},
+  );
 
   if (creatures.length === 0) {
     return <p>{`You don't have any species yet. Buy your first species..!`}</p>;
@@ -106,11 +111,23 @@ export default function CreatureLine({
               border='border border-black'
               bg='bg-white/75'
               cursor={!shouldEat || !hasEnoughMoons ? 'not-allowed' : 'pointer'}
-              isInvisible={!shouldEat}
+              isInvisible={!shouldEat || clickedButtons[creatureData.id]}
               isGrayscale={!shouldEat || !hasEnoughMoons}
               onClick={async () => {
                 if (shouldEat && hasEnoughMoons) {
-                  await feedCreature(creatureData.id, creatureData.zone_id);
+                  setClickedButtons((prev) => ({
+                    ...prev,
+                    [creatureData.id]: true,
+                  }));
+                  try {
+                    await feedCreature(creatureData.id, creatureData.zone_id);
+                  } catch (err) {
+                    console.error(err);
+                    setClickedButtons((prev) => ({
+                      ...prev,
+                      [creatureData.id]: false,
+                    }));
+                  }
                 }
               }}
             >
