@@ -58,26 +58,32 @@ new CronJob(
       return;
     }
 
-    //we add visitor in the park only when the last creature is not hungry more than 2 days and if active visitor < total creature
+    //we add visitor in the park only when the last creature is not hungry more than 1 day and if active visitor < total creature
     const parkIdsCanAcceptVisitors = parkCreaturesVisitors
       .filter(
         (park) =>
           park.last_hungry > new Date(Date.now() - 1 * 24 * 60 * 60 * 1000) &&
-          park.active_visitors < park.total_creatures,
+          park.total_creatures > park.active_visitors,
       )
       .map((park) => park.id);
 
     //recover the table of zones unlock by park and visitor id matching + entry_price
-    const parkZoneVisitor = await db
-      .selectFrom('park_zones')
-      .innerJoin('visitors', 'visitors.zone_id', 'park_zones.zone_id')
-      .select([
-        'park_id',
-        'park_zones.zone_id',
-        'visitors.id as visitor_id',
-        'entry_price',
-      ])
-      .execute();
+    const parkZoneVisitor =
+      parkIdsCanAcceptVisitors.length !== 0
+        ? await db
+            .selectFrom('park_zones')
+            .innerJoin('visitors', 'visitors.zone_id', 'park_zones.zone_id')
+            .select([
+              'park_zones.park_id',
+              'park_zones.zone_id',
+              'visitors.id as visitor_id',
+              'visitors.entry_price',
+            ])
+            .where('park_zones.park_id', 'in', parkIdsCanAcceptVisitors)
+            .execute()
+        : [];
+
+    console.log('park zone visitor', parkZoneVisitor);
 
     // function to use to generate a visitor id random
     function getRandomVisitor(park_id: number): number {
@@ -96,11 +102,7 @@ new CronJob(
     //Generate table to add in the insert of park_visitors
 
     const dataVisitorsToInsertByGroup = parkCreaturesVisitors
-      .filter(
-        (park) =>
-          parkIdsCanAcceptVisitors.includes(park.id) &&
-          park.total_creatures > park.active_visitors,
-      )
+      .filter((park) => parkIdsCanAcceptVisitors.includes(park.id))
       .map((park) => {
         const visitors = Array.from(
           { length: park.total_creatures - park.active_visitors },
@@ -117,6 +119,8 @@ new CronJob(
           visitors,
         };
       });
+
+    console.log('dataVisitorsToInsertByGroup', dataVisitorsToInsertByGroup);
 
     // Map to easier acces
     const entryPriceMap = new Map(
