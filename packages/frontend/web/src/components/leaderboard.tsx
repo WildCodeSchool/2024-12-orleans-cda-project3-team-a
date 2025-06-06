@@ -53,7 +53,7 @@ export default function Rank({ closeRank }: ModalRank) {
   };
 
   return (
-    <div className='relative mb-[6%] overflow-y-auto'>
+    <div className='relative mb-[20%] overflow-y-auto md:mb-[12%]'>
       <BgMenu>
         <div>
           <h1 className='font-aerokids text-outline-white mb-5 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>
@@ -64,13 +64,20 @@ export default function Rank({ closeRank }: ModalRank) {
           <CloseWindow onClick={closeRank} />
         </div>
         <div>
-          <ul>
+          <div className='flex justify-between p-2 text-xs md:w-full md:justify-between md:text-base'>
+            <p>{'Park name'}</p>
+            <p>{'Username'}</p>
+            <p>{'Active Creatures'}</p>
+            <p className='hidden md:block'>{'Wallet'}</p>
+            <p className='hidden md:block'>{'Active Visitors'}</p>
+          </div>
+          <ul className='flex flex-col gap-5'>
             {rank.map((park: Rank, index: number) => (
               <ul
-                className='m-2 grid w-98/100 grid-cols-3 gap-5 rounded bg-white/70 p-2 text-xs text-nowrap md:grid md:grid-cols-5 md:gap-20 md:rounded-md md:text-base'
+                className='flex w-full justify-between gap-5 rounded bg-white/70 p-2 text-xs text-nowrap md:grid md:grid-cols-5 md:gap-20 md:rounded-md md:text-base'
                 key={park.id}
               >
-                <li className='flex min-w-[10%]'>
+                <li className='flex w-20 items-center'>
                   {getMedal(index)}
                   {index > 2 && `${index + 1}. `}
                   {park.park_name.length > 15
@@ -79,8 +86,8 @@ export default function Rank({ closeRank }: ModalRank) {
                 </li>
 
                 {/* div for display the picture avatar and pseudo */}
-                <div className='flex flex-row items-center justify-center gap-1 text-center'>
-                  <li>
+                <li className='flex w-20 flex-row items-center gap-1'>
+                  <div>
                     <img
                       src={
                         park.avatar_id === null
@@ -88,33 +95,33 @@ export default function Rank({ closeRank }: ModalRank) {
                           : `/images/avatar/${park.src_image}`
                       }
                       alt='avatar'
-                      className='w-5 md:w-7'
+                      className='max-w-7'
                     />
-                  </li>
+                  </div>
 
-                  <li>
+                  <div>
                     {park.username !== null && park.username.length > 15
                       ? park.username.slice(0, 10) + '...'
                       : (park.username ?? 'Unknown user')}
-                  </li>
-                </div>
-
-                <li>
-                  {park.active_creatures} {'Créatures'}
+                  </div>
                 </li>
 
-                <div className='hidden items-center md:flex'>
-                  <li>{formatNumber(park.wallet ?? 0)}</li>
+                <li className='flex w-15 items-center justify-center'>
+                  {park.active_creatures}
+                </li>
+
+                <li className='hidden items-center justify-between md:flex'>
+                  <div>{formatNumber(park.wallet ?? 0)}</div>
                   <img className='max-h-5 max-w-5' src={Moons} alt='Money' />
-                </div>
-                <div className='hidden md:flex'>
-                  <li>{formatNumber(park.active_visitors)}</li>
+                </li>
+                <li className='hidden items-center justify-between md:flex'>
+                  <div>{formatNumber(park.active_visitors)}</div>
                   <img
                     className='max-h-7 max-w-7'
                     src={Visitor}
                     alt='Visitors'
                   />
-                </div>
+                </li>
               </ul>
             ))}
           </ul>
