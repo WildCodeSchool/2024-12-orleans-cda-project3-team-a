@@ -62,6 +62,10 @@ export function GameInfoContextProvider({
   ).length;
   const countVisitorActiveFormated = formatNumber(countVisitorActive);
 
+  const parkRefetch = useCallback(async () => {
+    await Promise.all([refetchPark()]);
+  }, [refetchPark]);
+
   const fetchAll = useCallback(async () => {
     await Promise.all([
       refetchPark(),
@@ -87,11 +91,12 @@ export function GameInfoContextProvider({
       wallet,
       isLoadingPark,
       isLoadingZones,
-      fetchAll,
       creaturesEnclos,
       decorations,
       parkName,
       countVisitorActiveFormated,
+      fetchAll,
+      parkRefetch,
     }),
     [
       walletFormated,
@@ -100,11 +105,12 @@ export function GameInfoContextProvider({
       wallet,
       isLoadingPark,
       isLoadingZones,
-      fetchAll,
       creaturesEnclos,
       decorations,
       parkName,
       countVisitorActiveFormated,
+      fetchAll,
+      parkRefetch,
     ],
   );
 
