@@ -40,7 +40,7 @@ export default function FeedAllCreatures({
 }: CreatureId) {
   const { creaturesEnclos } = useEnclosures();
   const [isFeeding, setIsFeeding] = useState(false);
-  const { fetchAll, wallet } = useGameInfoContext();
+  const { creaturesRefetch, wallet, parkRefetch } = useGameInfoContext();
   const [isClicked, setIsClicked] = useState(false);
 
   const hasEnoughMoons = wallet >= Number(potionPrice);
@@ -85,8 +85,11 @@ export default function FeedAllCreatures({
       const result = await response.json();
 
       if (result.ok === true) {
-        await fetchCreatures();
-        await fetchAll();
+        await Promise.all([
+          fetchCreatures(),
+          creaturesRefetch(),
+          parkRefetch(),
+        ]);
         setIsFeeding(true);
         //display for 2 seconds a message to inform that is bought
         setTimeout(() => {

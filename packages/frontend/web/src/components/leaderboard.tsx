@@ -5,6 +5,7 @@ import { formatNumber } from '@/utils/number-formatter';
 import BronzeMedal from '../assets/images/icons-buttons/bronze-medal.png';
 import GoldMedal from '../assets/images/icons-buttons/gold-medal.png';
 import Moons from '../assets/images/icons-buttons/moon.png';
+import profileIcon from '../assets/images/icons-buttons/profile.png';
 import SilverMedal from '../assets/images/icons-buttons/silver-medal.png';
 import Visitor from '../assets/images/icons-buttons/visitors.png';
 import useLeaderboard from '../hooks/use-leaderboard';
@@ -52,7 +53,7 @@ export default function Rank({ closeRank }: ModalRank) {
   };
 
   return (
-    <div className='relative mb-[6%] overflow-y-auto'>
+    <div className='relative mb-[20%] overflow-y-auto md:mb-[12%]'>
       <BgMenu>
         <div>
           <h1 className='font-aerokids text-outline-white mb-5 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>
@@ -63,39 +64,62 @@ export default function Rank({ closeRank }: ModalRank) {
           <CloseWindow onClick={closeRank} />
         </div>
         <div>
-          <ul>
+          <div className='flex justify-between p-2 text-xs md:w-full md:justify-between md:text-base'>
+            <p>{'Park name'}</p>
+            <p>{'Username'}</p>
+            <p>{'Active Creatures'}</p>
+            <p className='hidden md:block'>{'Wallet'}</p>
+            <p className='hidden md:block'>{'Active Visitors'}</p>
+          </div>
+          <ul className='flex flex-col gap-5'>
             {rank.map((park: Rank, index: number) => (
               <ul
-                className='m-2 grid w-full grid-cols-3 gap-5 rounded bg-white/70 p-2.5 text-xs text-nowrap md:grid md:grid-cols-5 md:gap-20 md:rounded-md md:text-base'
+                className='flex w-full justify-between gap-5 rounded bg-white/70 p-2 text-xs text-nowrap md:grid md:grid-cols-5 md:gap-20 md:rounded-md md:text-base'
                 key={park.id}
               >
-                <li className='flex min-w-[10%]'>
+                <li className='flex w-20 items-center'>
                   {getMedal(index)}
                   {index > 2 && `${index + 1}. `}
                   {park.park_name.length > 15
                     ? park.park_name.slice(0, 10) + '...'
                     : park.park_name}
                 </li>
-                <li>
-                  {park.username !== null && park.username.length > 15
-                    ? park.username.slice(0, 10) + '...'
-                    : (park.username ?? 'Unknown user')}
+
+                {/* div for display the picture avatar and pseudo */}
+                <li className='flex w-20 flex-row items-center gap-1'>
+                  <img
+                    src={
+                      park.avatar_id === null
+                        ? profileIcon
+                        : `/images/avatar/${park.src_image}`
+                    }
+                    alt='avatar'
+                    className='max-w-7'
+                  />
+
+                  <p>
+                    {park.username !== null && park.username.length > 15
+                      ? park.username.slice(0, 10) + '...'
+                      : (park.username ?? 'Unknown user')}
+                  </p>
                 </li>
-                <li>
-                  {park.active_creatures} {'Créatures'}
+
+                <li className='flex w-15 items-center justify-center'>
+                  {park.active_creatures}
                 </li>
-                <div className='hidden items-center md:flex'>
-                  <li>{formatNumber(park.wallet ?? 0)}</li>
+
+                <li className='hidden items-center justify-between md:flex'>
+                  <p>{formatNumber(park.wallet ?? 0)}</p>
                   <img className='max-h-5 max-w-5' src={Moons} alt='Money' />
-                </div>
-                <div className='hidden md:flex'>
-                  <li>{formatNumber(park.total_visitors)}</li>
+                </li>
+                <li className='hidden items-center justify-between md:flex'>
+                  <p>{formatNumber(park.active_visitors)}</p>
                   <img
                     className='max-h-7 max-w-7'
                     src={Visitor}
                     alt='Visitors'
                   />
-                </div>
+                </li>
               </ul>
             ))}
           </ul>

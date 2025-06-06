@@ -10,12 +10,17 @@ import Input from './input';
 export default function CreatePark() {
   const [parkName, setParkName] = useState('');
 
-  const auth = useAuth();
-  const hasParkId = auth?.hasParkId;
-  const { fetchAll } = useGameInfoContext();
+  const { hasParkId, setHasParkId } = useAuth();
+  const {
+    parkRefetch,
+    zonesRefetch,
+    creaturesRefetch,
+    visitorsRefetch,
+    decorationsRefetch,
+  } = useGameInfoContext();
 
   // if we have a parkid go Home
-  if (hasParkId === true) {
+  if (hasParkId) {
     return <Navigate to='/home' />;
   }
 
@@ -37,9 +42,15 @@ export default function CreatePark() {
     };
 
     if (data.ok) {
-      auth?.setHasParkId(true);
+      setHasParkId(true);
       //Refetch necessary fetch
-      await fetchAll();
+      await Promise.all([
+        parkRefetch(),
+        zonesRefetch(),
+        creaturesRefetch(),
+        visitorsRefetch(),
+        decorationsRefetch(),
+      ]);
     }
   };
 

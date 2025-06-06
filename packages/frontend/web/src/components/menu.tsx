@@ -8,12 +8,13 @@ import iconRanking from '../assets/images/icons-buttons/ranking.png';
 import iconRules from '../assets/images/icons-buttons/rules.png';
 import iconShop from '../assets/images/icons-buttons/shop.png';
 import Dashboard from './dashboard';
+import EditProfile from './edit-profile';
 import Leaderboard from './leaderboard';
 import Logout from './logout';
 import ShopCreature from './modal-shop-creatures';
 import Portal from './portal';
 
-type ModalName = 'dashboard' | 'shop' | 'ranking' | 'profil' | null;
+type ModalName = 'dashboard' | 'shop' | 'ranking' | 'profile' | null;
 
 export default function Menu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -56,6 +57,7 @@ export default function Menu() {
           <img
             src={iconMenu}
             alt='Menu'
+            title='Menu'
             onClick={handleMenu}
             className='cursor-pointer md:h-7 md:w-7'
           />
@@ -73,7 +75,12 @@ export default function Menu() {
               }}
               className='cursor-pointer'
             >
-              <img src={iconDashboard} alt='Dashboard' className='h-6 md:h-7' />
+              <img
+                src={iconDashboard}
+                alt='Dashboard'
+                title='Dashboard'
+                className='h-6 md:h-7'
+              />
             </div>
             <div
               onClick={() => {
@@ -83,6 +90,7 @@ export default function Menu() {
               <img
                 src={iconShop}
                 alt='Shop'
+                title='Shop'
                 className='h-6 cursor-pointer md:h-7'
               />
             </div>
@@ -93,6 +101,7 @@ export default function Menu() {
                 }}
                 src={iconRanking}
                 alt='Ranking'
+                title='Ranking'
                 className='h-6 cursor-pointer md:h-7'
               />
             </div>
@@ -102,15 +111,21 @@ export default function Menu() {
             <div>
               <img
                 onClick={() => {
-                  handleClick('profil');
+                  handleClick('profile');
                 }}
                 src={iconProfil}
                 alt='Profil'
+                title='Profil'
                 className='h-6 cursor-pointer md:h-7'
               />
             </div>
             <Link to='/rules'>
-              <img src={iconRules} alt='Rules' className='h-6 md:h-7' />
+              <img
+                src={iconRules}
+                alt='Rules'
+                title='Rules'
+                className='h-6 md:h-7'
+              />
             </Link>
 
             <Logout />
@@ -138,6 +153,11 @@ export default function Menu() {
           {/* Display Rank in pop-up if is open*/}
           {openModal === 'ranking' ? (
             <Leaderboard closeRank={handleClose} />
+          ) : null}
+
+          {/* Display edit profile in pop-up if is open*/}
+          {openModal === 'profile' ? (
+            <EditProfile closeEditProfile={handleClose} />
           ) : null}
         </div>
       </Portal>

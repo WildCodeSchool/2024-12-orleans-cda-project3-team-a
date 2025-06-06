@@ -17,17 +17,19 @@ type GameInfoContextState = {
   unlockedZones: UnlockedZones;
   isLoadingPark: boolean;
   isLoadingZones: boolean;
-  fetchAll: () => Promise<void>;
   creaturesEnclos: Enclosure[];
   decorations: Decorations;
   parkName: string;
   countVisitorActiveFormated: string;
+  parkRefetch: () => Promise<void>;
+  zonesRefetch: () => Promise<void>;
+  creaturesRefetch: () => Promise<void>;
+  visitorsRefetch: () => Promise<void>;
+  decorationsRefetch: () => Promise<void>;
 };
 
-// Define the type for provider
 type GameInfoContextProviderProps = PropsWithChildren;
 
-// create the context
 export const gameInfoContext = createContext<GameInfoContextState>({
   walletFormated: '',
   wallet: 0,
@@ -35,18 +37,20 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   unlockedZones: [],
   isLoadingPark: true,
   isLoadingZones: true,
-  fetchAll: () => Promise.resolve(),
   creaturesEnclos: [],
   decorations: [],
   parkName: '',
   countVisitorActiveFormated: '',
+  parkRefetch: () => Promise.resolve(),
+  zonesRefetch: () => Promise.resolve(),
+  creaturesRefetch: () => Promise.resolve(),
+  visitorsRefetch: () => Promise.resolve(),
+  decorationsRefetch: () => Promise.resolve(),
 });
 
-// create the provider
 export function GameInfoContextProvider({
   children,
 }: GameInfoContextProviderProps) {
-  // get wallet and visitors with hook
   const {
     walletFormated,
     visitorsFormated,
@@ -56,10 +60,7 @@ export function GameInfoContextProvider({
     parkName,
   } = usePark();
 
-  // get unlocked zones with useZones
   const { unlockedZones, isLoadingZones, refetchZones } = useZones();
-
-  //get Creatures and decorations
   const { creaturesEnclos, refetchCreatures } = useEnclos();
   const { decorations, refetchDecorations } = useDecorations();
   const { visitorsPark, refetchVisitors } = useVisitors();
@@ -69,22 +70,20 @@ export function GameInfoContextProvider({
   ).length;
   const countVisitorActiveFormated = formatNumber(countVisitorActive);
 
-  //function to refetch hook necessary for home page
-  const fetchAll = useCallback(async () => {
-    await Promise.all([
-      refetchPark(),
-      refetchZones(),
-      refetchCreatures(),
-      refetchVisitors(),
-      refetchDecorations(),
-    ]);
-  }, [
-    refetchPark,
-    refetchZones,
-    refetchCreatures,
-    refetchVisitors,
-    refetchDecorations,
-  ]);
+  const parkRefetch = useCallback(() => refetchPark(), [refetchPark]);
+  const zonesRefetch = useCallback(() => refetchZones(), [refetchZones]);
+  const creaturesRefetch = useCallback(
+    () => refetchCreatures(),
+    [refetchCreatures],
+  );
+  const visitorsRefetch = useCallback(
+    () => refetchVisitors(),
+    [refetchVisitors],
+  );
+  const decorationsRefetch = useCallback(
+    () => refetchDecorations(),
+    [refetchDecorations],
+  );
 
   // memorize value to avoid unnecessary changes
   const value = useMemo(
@@ -95,24 +94,32 @@ export function GameInfoContextProvider({
       wallet,
       isLoadingPark,
       isLoadingZones,
-      fetchAll,
       creaturesEnclos,
       decorations,
       parkName,
       countVisitorActiveFormated,
+      parkRefetch,
+      zonesRefetch,
+      creaturesRefetch,
+      visitorsRefetch,
+      decorationsRefetch,
     }),
     [
       walletFormated,
       visitorsFormated,
       unlockedZones,
-      creaturesEnclos,
-      decorations,
       wallet,
       isLoadingPark,
       isLoadingZones,
-      fetchAll,
+      creaturesEnclos,
+      decorations,
       parkName,
       countVisitorActiveFormated,
+      parkRefetch,
+      zonesRefetch,
+      creaturesRefetch,
+      visitorsRefetch,
+      decorationsRefetch,
     ],
   );
 
@@ -123,5 +130,4 @@ export function GameInfoContextProvider({
   );
 }
 
-// Hook created to call him in others components
 export const useGameInfoContext = () => useContext(gameInfoContext);

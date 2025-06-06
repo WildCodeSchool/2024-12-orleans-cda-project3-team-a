@@ -23,7 +23,13 @@ export default function BuyCreature({
   const [name, setName] = useState('');
   const [nameError, setNameError] = useState('');
   const [isBought, setIsBought] = useState(false);
-  const { wallet, fetchAll } = useGameInfoContext();
+  const {
+    wallet,
+    zonesRefetch,
+    creaturesRefetch,
+    visitorsRefetch,
+    parkRefetch,
+  } = useGameInfoContext();
   const { creaturesEnclos } = useEnclosures();
   const { zone_id: zoneId } = useParams();
 
@@ -70,8 +76,14 @@ export default function BuyCreature({
       const result = await response.json();
 
       if (result.ok === true) {
-        await fetchAll();
-        await fetchCreatures();
+        await Promise.all([
+          parkRefetch(),
+          zonesRefetch(),
+          fetchCreatures(),
+          creaturesRefetch(),
+          visitorsRefetch(),
+        ]);
+
         setName('');
         setIsBought(true);
         //display for 2 seconds a message to inform that is bought

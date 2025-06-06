@@ -39,7 +39,7 @@ export default function CreatureLine({
   potionPrice,
   enclosure,
 }: CreatureLineProps) {
-  const { wallet, fetchAll } = useGameInfoContext();
+  const { wallet, parkRefetch } = useGameInfoContext();
   const hasEnoughMoons = wallet >= Number(potionPrice);
 
   // Record to define different types for keys and values
@@ -74,8 +74,7 @@ export default function CreatureLine({
 
       const result = await response.json();
       if (result.ok === true) {
-        await fetchCreatures();
-        await fetchAll();
+        await Promise.all([fetchCreatures(), parkRefetch()]);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
