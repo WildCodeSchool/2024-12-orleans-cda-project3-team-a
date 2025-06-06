@@ -131,11 +131,9 @@ export function GameInfoContextProvider({
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
-      console.log(new Date().toLocaleString());
       await parkRefetch();
     }, 20000);
 
-    // Nettoyage à la désactivation du composant
     return () => {
       clearInterval(intervalId);
     };
