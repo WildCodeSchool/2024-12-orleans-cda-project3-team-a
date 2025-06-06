@@ -14,7 +14,7 @@ export default function NbVisitorsMoons() {
       <div className='flex flex-row items-center gap-0.5 md:gap-1'>
         {countVisitorActiveFormated}
         <Link to='/visitors'>
-          <img src={visitor} alt='visitors' className='h-6 md:h-7' />
+          <img src={visitor} alt='visitors' className='h-6 md:h-7 md:max-w-7' />
         </Link>
       </div>
       <div

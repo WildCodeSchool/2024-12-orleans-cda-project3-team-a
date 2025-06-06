@@ -24,7 +24,6 @@ export default function FeedModal({
 }: FeedModalProps) {
   return (
     <>
-      {/* 'Display quantity creature in header' */}
       <div className='bg-primary-gray absolute top-1.5 left-2 flex items-center justify-center gap-3 rounded-lg p-1 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:h-10 md:w-20'>
         <p>{enclosure.quantityCreature}</p>
         <img
@@ -33,8 +32,7 @@ export default function FeedModal({
           alt={enclosure.species}
         />
       </div>
-      {/* Display content of Feed Modal */}
-      {/* transparent bg to disable the click of several modals */}
+
       <div className='fixed top-0 left-0 z-5 h-full w-full bg-transparent'>
         <div className='absolute top-15 left-[5%] max-h-[90%] w-[90%] overflow-auto'>
           <BgMenu>
@@ -55,12 +53,32 @@ export default function FeedModal({
                   creatureId={enclosure.id}
                 />
               </div>
-              <CreatureLine
-                creatures={creatures}
-                potionPrice={potionPrice}
-                fetchCreatures={fetchCreatures}
-                enclosure={enclosure}
-              />
+              <div className=''>
+                {creatures.length === 0 ? (
+                  <div className='flex items-center justify-center gap-4 pt-5'>
+                    <img
+                      className='w-12 md:w-15'
+                      src='/images/minguch.png'
+                      alt='mingush'
+                    />
+                    <div className='text-secondary-blue flex flex-col justify-center text-center text-xs md:text-base'>
+                      <p className='flex justify-center'>{`You don't have any ${enclosure.species} yet.`}</p>
+                      <p className='font-extrabold'>{`Buy your first ${enclosure.species}!`}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className='flex flex-col gap-4 pt-3 md:grid md:grid-cols-2'>
+                    {creatures.map((creature) => (
+                      <CreatureLine
+                        key={creature.id}
+                        creature={creature}
+                        potionPrice={potionPrice}
+                        fetchCreatures={fetchCreatures}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </BgMenu>
         </div>
