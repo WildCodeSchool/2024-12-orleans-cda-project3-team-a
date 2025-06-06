@@ -53,7 +53,7 @@ export default function Rank({ closeRank }: ModalRank) {
   };
 
   return (
-    <div className='relative mb-[10%] overflow-y-auto'>
+    <div className='relative mb-[20%] overflow-y-auto md:mb-[12%]'>
       <BgMenu>
         <div>
           <h1 className='font-aerokids text-outline-white mb-5 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>

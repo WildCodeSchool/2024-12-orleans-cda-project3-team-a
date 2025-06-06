@@ -24,6 +24,7 @@ export default function FeedModal({
 }: FeedModalProps) {
   return (
     <>
+      {/* 'Display quantity creature in header' */}
       <div className='bg-primary-gray absolute top-1.5 left-2 flex items-center justify-center gap-3 rounded-lg p-1 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:h-10 md:w-20'>
         <p>{enclosure.quantityCreature}</p>
         <img
@@ -32,7 +33,8 @@ export default function FeedModal({
           alt={enclosure.species}
         />
       </div>
-
+      {/* Display content of Feed Modal */}
+      {/* transparent bg to disable the click of several modals */}
       <div className='fixed top-0 left-0 z-5 h-full w-full bg-transparent'>
         <div className='absolute top-15 left-[5%] max-h-[90%] w-[90%] overflow-auto'>
           <BgMenu>
