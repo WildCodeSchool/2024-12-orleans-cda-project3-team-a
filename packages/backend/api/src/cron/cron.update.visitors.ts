@@ -83,8 +83,6 @@ new CronJob(
             .execute()
         : [];
 
-    console.log('park zone visitor', parkZoneVisitor);
-
     // function to use to generate a visitor id random
     function getRandomVisitor(park_id: number): number {
       const parkZone = parkZoneVisitor.filter(
@@ -119,8 +117,6 @@ new CronJob(
           visitors,
         };
       });
-
-    console.log('dataVisitorsToInsertByGroup', dataVisitorsToInsertByGroup);
 
     // Map to easier acces
     const entryPriceMap = new Map(
