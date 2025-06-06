@@ -87,17 +87,15 @@ export default function Rank({ closeRank }: ModalRank) {
 
                 {/* div for display the picture avatar and pseudo */}
                 <li className='flex w-20 flex-row items-center gap-1'>
-                  <div>
-                    <img
-                      src={
-                        park.avatar_id === null
-                          ? profileIcon
-                          : `/images/avatar/${park.src_image}`
-                      }
-                      alt='avatar'
-                      className='max-w-7'
-                    />
-                  </div>
+                  <img
+                    src={
+                      park.avatar_id === null
+                        ? profileIcon
+                        : `/images/avatar/${park.src_image}`
+                    }
+                    alt='avatar'
+                    className='max-w-7'
+                  />
 
                   <div>
                     {park.username !== null && park.username.length > 15
@@ -111,7 +109,7 @@ export default function Rank({ closeRank }: ModalRank) {
                 </li>
 
                 <li className='hidden items-center justify-between md:flex'>
-                  <div>{formatNumber(park.wallet ?? 0)}</div>
+                  <p>{formatNumber(park.wallet ?? 0)}</p>
                   <img className='max-h-5 max-w-5' src={Moons} alt='Money' />
                 </li>
                 <li className='hidden items-center justify-between md:flex'>
