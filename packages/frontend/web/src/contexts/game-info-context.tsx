@@ -17,11 +17,15 @@ type GameInfoContextState = {
   unlockedZones: UnlockedZones;
   isLoadingPark: boolean;
   isLoadingZones: boolean;
-  fetchAll: () => Promise<void>;
   creaturesEnclos: Enclosure[];
   decorations: Decorations;
   parkName: string;
   countVisitorActiveFormated: string;
+  parkRefetch: () => Promise<void>;
+  zonesRefetch: () => Promise<void>;
+  creaturesRefetch: () => Promise<void>;
+  visitorsRefetch: () => Promise<void>;
+  decorationsRefetch: () => Promise<void>;
 };
 
 type GameInfoContextProviderProps = PropsWithChildren;
@@ -33,11 +37,15 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   unlockedZones: [],
   isLoadingPark: true,
   isLoadingZones: true,
-  fetchAll: () => Promise.resolve(),
   creaturesEnclos: [],
   decorations: [],
   parkName: '',
   countVisitorActiveFormated: '',
+  parkRefetch: () => Promise.resolve(),
+  zonesRefetch: () => Promise.resolve(),
+  creaturesRefetch: () => Promise.resolve(),
+  visitorsRefetch: () => Promise.resolve(),
+  decorationsRefetch: () => Promise.resolve(),
 });
 
 export function GameInfoContextProvider({
@@ -62,21 +70,20 @@ export function GameInfoContextProvider({
   ).length;
   const countVisitorActiveFormated = formatNumber(countVisitorActive);
 
-  const fetchAll = useCallback(async () => {
-    await Promise.all([
-      refetchPark(),
-      refetchZones(),
-      refetchCreatures(),
-      refetchVisitors(),
-      refetchDecorations(),
-    ]);
-  }, [
-    refetchPark,
-    refetchZones,
-    refetchCreatures,
-    refetchVisitors,
-    refetchDecorations,
-  ]);
+  const parkRefetch = useCallback(() => refetchPark(), [refetchPark]);
+  const zonesRefetch = useCallback(() => refetchZones(), [refetchZones]);
+  const creaturesRefetch = useCallback(
+    () => refetchCreatures(),
+    [refetchCreatures],
+  );
+  const visitorsRefetch = useCallback(
+    () => refetchVisitors(),
+    [refetchVisitors],
+  );
+  const decorationsRefetch = useCallback(
+    () => refetchDecorations(),
+    [refetchDecorations],
+  );
 
   // memorize value to avoid unnecessary changes
   const value = useMemo(
@@ -87,11 +94,15 @@ export function GameInfoContextProvider({
       wallet,
       isLoadingPark,
       isLoadingZones,
-      fetchAll,
       creaturesEnclos,
       decorations,
       parkName,
       countVisitorActiveFormated,
+      parkRefetch,
+      zonesRefetch,
+      creaturesRefetch,
+      visitorsRefetch,
+      decorationsRefetch,
     }),
     [
       walletFormated,
@@ -100,11 +111,15 @@ export function GameInfoContextProvider({
       wallet,
       isLoadingPark,
       isLoadingZones,
-      fetchAll,
       creaturesEnclos,
       decorations,
       parkName,
       countVisitorActiveFormated,
+      parkRefetch,
+      zonesRefetch,
+      creaturesRefetch,
+      visitorsRefetch,
+      decorationsRefetch,
     ],
   );
 

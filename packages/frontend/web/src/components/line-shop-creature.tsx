@@ -14,7 +14,7 @@ type LineShopCreatureProps = {
 
 export default function LineShopCreature({ creature }: LineShopCreatureProps) {
   const [name, setName] = useState('');
-  const { wallet, fetchAll } = useGameInfoContext();
+  const { wallet, parkRefetch, visitorsRefetch } = useGameInfoContext();
   const [isBought, setIsBought] = useState(false);
   const [nameError, setNameError] = useState('');
 
@@ -51,13 +51,13 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
 
       const result = await response.json();
       if (result.ok === true) {
+        await Promise.all([parkRefetch(), visitorsRefetch()]);
         setName('');
         setIsBought(true);
         //display for 2 seconds a message to inform that is bought
         setTimeout(() => {
           setIsBought(false);
         }, 2000);
-        await fetchAll();
       }
     } catch (error) {
       // eslint-disable-next-line no-console
