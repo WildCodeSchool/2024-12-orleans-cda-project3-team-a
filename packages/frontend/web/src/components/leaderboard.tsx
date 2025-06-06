@@ -97,11 +97,11 @@ export default function Rank({ closeRank }: ModalRank) {
                     className='max-w-7'
                   />
 
-                  <div>
+                  <p>
                     {park.username !== null && park.username.length > 15
                       ? park.username.slice(0, 10) + '...'
                       : (park.username ?? 'Unknown user')}
-                  </div>
+                  </p>
                 </li>
 
                 <li className='flex w-15 items-center justify-center'>
@@ -113,7 +113,7 @@ export default function Rank({ closeRank }: ModalRank) {
                   <img className='max-h-5 max-w-5' src={Moons} alt='Money' />
                 </li>
                 <li className='hidden items-center justify-between md:flex'>
-                  <div>{formatNumber(park.active_visitors)}</div>
+                  <p>{formatNumber(park.active_visitors)}</p>
                   <img
                     className='max-h-7 max-w-7'
                     src={Visitor}

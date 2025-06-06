@@ -51,8 +51,7 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
 
       const result = await response.json();
       if (result.ok === true) {
-        await parkRefetch();
-        await visitorsRefetch();
+        await Promise.all([parkRefetch(), visitorsRefetch()]);
         setName('');
         setIsBought(true);
         //display for 2 seconds a message to inform that is bought

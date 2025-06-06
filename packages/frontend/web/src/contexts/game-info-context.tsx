@@ -21,7 +21,6 @@ type GameInfoContextState = {
   decorations: Decorations;
   parkName: string;
   countVisitorActiveFormated: string;
-  fetchAll: () => Promise<void>;
   parkRefetch: () => Promise<void>;
   zonesRefetch: () => Promise<void>;
   creaturesRefetch: () => Promise<void>;
@@ -42,7 +41,6 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   decorations: [],
   parkName: '',
   countVisitorActiveFormated: '',
-  fetchAll: () => Promise.resolve(),
   parkRefetch: () => Promise.resolve(),
   zonesRefetch: () => Promise.resolve(),
   creaturesRefetch: () => Promise.resolve(),
@@ -87,22 +85,6 @@ export function GameInfoContextProvider({
     [refetchDecorations],
   );
 
-  const fetchAll = useCallback(async () => {
-    await Promise.all([
-      refetchPark(),
-      refetchZones(),
-      refetchCreatures(),
-      refetchVisitors(),
-      refetchDecorations(),
-    ]);
-  }, [
-    refetchPark,
-    refetchZones,
-    refetchCreatures,
-    refetchVisitors,
-    refetchDecorations,
-  ]);
-
   // memorize value to avoid unnecessary changes
   const value = useMemo(
     () => ({
@@ -116,7 +98,6 @@ export function GameInfoContextProvider({
       decorations,
       parkName,
       countVisitorActiveFormated,
-      fetchAll,
       parkRefetch,
       zonesRefetch,
       creaturesRefetch,
@@ -134,7 +115,6 @@ export function GameInfoContextProvider({
       decorations,
       parkName,
       countVisitorActiveFormated,
-      fetchAll,
       parkRefetch,
       zonesRefetch,
       creaturesRefetch,

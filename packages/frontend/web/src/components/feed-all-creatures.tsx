@@ -84,9 +84,11 @@ export default function FeedAllCreatures({
       const result = await response.json();
 
       if (result.ok === true) {
-        await fetchCreatures();
-        await creaturesRefetch();
-        await parkRefetch();
+        await Promise.all([
+          fetchCreatures(),
+          creaturesRefetch(),
+          parkRefetch(),
+        ]);
         setIsFeeding(true);
         //display for 2 seconds a message to inform that is bought
         setTimeout(() => {

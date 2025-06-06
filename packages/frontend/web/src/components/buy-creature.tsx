@@ -76,11 +76,14 @@ export default function BuyCreature({
       const result = await response.json();
 
       if (result.ok === true) {
-        await zonesRefetch();
-        await fetchCreatures();
-        await creaturesRefetch();
-        await visitorsRefetch();
-        await parkRefetch();
+        await Promise.all([
+          parkRefetch(),
+          zonesRefetch(),
+          fetchCreatures(),
+          creaturesRefetch(),
+          visitorsRefetch(),
+        ]);
+
         setName('');
         setIsBought(true);
         //display for 2 seconds a message to inform that is bought

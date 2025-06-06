@@ -69,8 +69,7 @@ export default function CreatureLine({
 
       const result = await response.json();
       if (result.ok === true) {
-        await fetchCreatures();
-        await parkRefetch();
+        await Promise.all([fetchCreatures(), parkRefetch()]);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
