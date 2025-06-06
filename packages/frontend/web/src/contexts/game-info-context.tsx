@@ -17,11 +17,16 @@ type GameInfoContextState = {
   unlockedZones: UnlockedZones;
   isLoadingPark: boolean;
   isLoadingZones: boolean;
-  fetchAll: () => Promise<void>;
   creaturesEnclos: Enclosure[];
   decorations: Decorations;
   parkName: string;
   countVisitorActiveFormated: string;
+  fetchAll: () => Promise<void>;
+  parkRefetch: () => Promise<void>;
+  zonesRefetch: () => Promise<void>;
+  creaturesRefetch: () => Promise<void>;
+  visitorsRefetch: () => Promise<void>;
+  decorationsRefetch: () => Promise<void>;
 };
 
 type GameInfoContextProviderProps = PropsWithChildren;
@@ -33,11 +38,16 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   unlockedZones: [],
   isLoadingPark: true,
   isLoadingZones: true,
-  fetchAll: () => Promise.resolve(),
   creaturesEnclos: [],
   decorations: [],
   parkName: '',
   countVisitorActiveFormated: '',
+  fetchAll: () => Promise.resolve(),
+  parkRefetch: () => Promise.resolve(),
+  zonesRefetch: () => Promise.resolve(),
+  creaturesRefetch: () => Promise.resolve(),
+  visitorsRefetch: () => Promise.resolve(),
+  decorationsRefetch: () => Promise.resolve(),
 });
 
 export function GameInfoContextProvider({
@@ -62,9 +72,20 @@ export function GameInfoContextProvider({
   ).length;
   const countVisitorActiveFormated = formatNumber(countVisitorActive);
 
-  const parkRefetch = useCallback(async () => {
-    await Promise.all([refetchPark()]);
-  }, [refetchPark]);
+  const parkRefetch = useCallback(() => refetchPark(), [refetchPark]);
+  const zonesRefetch = useCallback(() => refetchZones(), [refetchZones]);
+  const creaturesRefetch = useCallback(
+    () => refetchCreatures(),
+    [refetchCreatures],
+  );
+  const visitorsRefetch = useCallback(
+    () => refetchVisitors(),
+    [refetchVisitors],
+  );
+  const decorationsRefetch = useCallback(
+    () => refetchDecorations(),
+    [refetchDecorations],
+  );
 
   const fetchAll = useCallback(async () => {
     await Promise.all([
@@ -97,6 +118,10 @@ export function GameInfoContextProvider({
       countVisitorActiveFormated,
       fetchAll,
       parkRefetch,
+      zonesRefetch,
+      creaturesRefetch,
+      visitorsRefetch,
+      decorationsRefetch,
     }),
     [
       walletFormated,
@@ -111,6 +136,10 @@ export function GameInfoContextProvider({
       countVisitorActiveFormated,
       fetchAll,
       parkRefetch,
+      zonesRefetch,
+      creaturesRefetch,
+      visitorsRefetch,
+      decorationsRefetch,
     ],
   );
 

@@ -14,7 +14,7 @@ type LineShopCreatureProps = {
 
 export default function LineShopCreature({ creature }: LineShopCreatureProps) {
   const [name, setName] = useState('');
-  const { wallet, fetchAll } = useGameInfoContext();
+  const { wallet } = useGameInfoContext();
   const [isBought, setIsBought] = useState(false);
   const [nameError, setNameError] = useState('');
 
@@ -57,7 +57,6 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
         setTimeout(() => {
           setIsBought(false);
         }, 2000);
-        await fetchAll();
       }
     } catch (error) {
       // eslint-disable-next-line no-console
