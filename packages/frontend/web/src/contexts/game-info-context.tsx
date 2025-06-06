@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext, useMemo } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+} from 'react';
 import type { PropsWithChildren } from 'react';
 
 import type { Decorations, Enclosure, UnlockedZones } from '@app/api';
@@ -122,6 +128,16 @@ export function GameInfoContextProvider({
       decorationsRefetch,
     ],
   );
+
+  useEffect(() => {
+    const intervalId = setInterval(async () => {
+      await parkRefetch();
+    }, 20000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [parkRefetch]);
 
   return (
     <gameInfoContext.Provider value={value}>
