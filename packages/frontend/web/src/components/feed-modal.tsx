@@ -55,12 +55,32 @@ export default function FeedModal({
                   creatureId={enclosure.id}
                 />
               </div>
-              <CreatureLine
-                creatures={creatures}
-                potionPrice={potionPrice}
-                fetchCreatures={fetchCreatures}
-                enclosure={enclosure}
-              />
+              <div className=''>
+                {creatures.length === 0 ? (
+                  <div className='flex items-center justify-center gap-4 pt-5'>
+                    <img
+                      className='w-12 md:w-15'
+                      src='/images/minguch.png'
+                      alt='mingush'
+                    />
+                    <div className='text-secondary-blue flex flex-col justify-center text-center text-xs md:text-base'>
+                      <p className='flex justify-center'>{`You don't have any ${enclosure.species} yet.`}</p>
+                      <p className='font-extrabold'>{`Buy your first ${enclosure.species}!`}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className='flex flex-col gap-4 pt-3 md:grid md:grid-cols-2'>
+                    {creatures.map((creature) => (
+                      <CreatureLine
+                        key={creature.id}
+                        creature={creature}
+                        potionPrice={potionPrice}
+                        fetchCreatures={fetchCreatures}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </BgMenu>
         </div>
