@@ -90,6 +90,9 @@ postFeedCreature.post('/feed', async (req: Request, res) => {
     message: 'feed_date updated',
     creature,
     potionPrice: potionPrice.price,
+
+    parkCreatureId,
+    zoneId,
   });
 });
 

@@ -62,15 +62,20 @@ export default function FeedAllCreatures({
   );
   const totalPrice = hungryCreatures.length * potionPrice;
 
+  //verifier si parkCreatureId est l'id de la table creatures ou park_creatures
+  //paquet de 500 coté back
   const feedCreatures = async (zoneId: number, parkCreatureId: number) => {
     if (hungryCreatures.length === 0) return;
+
+    // console.log('parkCreatureId :', parkCreatureId);
+    // console.log('creatureEnclos :', creaturesEnclos[0].id);
 
     if (!hasEnoughMoons) {
       return;
     }
 
     try {
-      const response = await fetch(`/api/game/creature/feed`, {
+      const response = await fetch(`/api/game/creature/feed-all`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -78,6 +83,7 @@ export default function FeedAllCreatures({
         },
         body: JSON.stringify({
           parkCreatureId,
+          creaturesEnclos,
           zoneId,
         }),
       });

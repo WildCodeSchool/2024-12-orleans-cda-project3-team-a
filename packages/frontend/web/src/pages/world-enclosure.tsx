@@ -28,11 +28,7 @@ export default function WorldEnclosure() {
   if (creaturesEnclos.length === 0 || decorations.length === 0) {
     return;
   }
-
-  const creatureWorld = creaturesEnclos.filter(
-    (creature: Enclosure) => creature.zone_id === Number(zoneId),
-  );
-  const total = creatureWorld.length;
+  const total = creaturesEnclos.length;
 
   return (
     <div className='relative flex min-w-[1200px] flex-wrap overflow-hidden md:w-full'>
@@ -40,7 +36,7 @@ export default function WorldEnclosure() {
         <InfoNbVisitorsMoons />
         <ReturnHome />
       </header>
-      {creatureWorld.map((enclosure: Enclosure) => {
+      {creaturesEnclos.map((enclosure: Enclosure) => {
         const decorationsList = decorations.filter(
           (decoration) => decoration.creature_id === enclosure.id,
         );

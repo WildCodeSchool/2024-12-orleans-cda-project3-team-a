@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import type { Creatures, InactiveCreatureCount } from '@app/api';
 
-export default function useCreatures(creatureId: number) {
+export default function useCreatures(creatureId: number, zoneId: number) {
   const [creatures, setCreatures] = useState<Creatures>([]);
   const [inactiveCreatures, setInactiveCreatures] =
     useState<InactiveCreatureCount>();
@@ -11,7 +11,7 @@ export default function useCreatures(creatureId: number) {
   const fetchCreatures = useCallback(async () => {
     try {
       const response = await fetch(
-        `/api/game/creature?creature_id=${creatureId}`,
+        `/api/game/creature?creature_id=${creatureId}&zoneId=${zoneId}`,
         {
           credentials: 'include',
         },
@@ -24,7 +24,7 @@ export default function useCreatures(creatureId: number) {
       // eslint-disable-next-line no-console
       console.error('fetch creature failed', error);
     }
-  }, [creatureId]);
+  }, [creatureId, zoneId]);
 
   useEffect(() => {
     void fetchCreatures();

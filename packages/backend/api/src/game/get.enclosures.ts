@@ -5,7 +5,7 @@ import { db } from '@app/backend-shared';
 
 const getEnclosuresRoute = express.Router();
 
-function getEnclosures(parkId: number) {
+function getEnclosures(parkId: number, zoneId: number) {
   return db
     .selectFrom('creatures')
     .leftJoin('park_creatures', (join) =>
@@ -26,6 +26,7 @@ function getEnclosures(parkId: number) {
       'zones.src_sign',
       db.fn.count('park_creatures.creature_id').as('quantityCreature'),
     ])
+    .where('creatures.zone_id', '=', zoneId)
     .groupBy('creatures.id')
     .execute();
 }
@@ -34,6 +35,7 @@ export type Enclosure = Awaited<ReturnType<typeof getEnclosures>>[number];
 
 getEnclosuresRoute.get('/enclos', async (req: Request, res) => {
   const parkId = req.parkId;
+  const zoneId = req.query.zoneId;
 
   if (parkId === undefined) {
     res.json({
@@ -42,7 +44,15 @@ getEnclosuresRoute.get('/enclos', async (req: Request, res) => {
     return;
   }
 
-  const enclosure = await getEnclosures(parkId);
+  if (typeof zoneId !== 'string') {
+    res.json({
+      ok: false,
+      message: 'zoneId missing',
+    });
+    return;
+  }
+
+  const enclosure = await getEnclosures(parkId, parseInt(zoneId));
 
   if (enclosure.length === 0) {
     res.json({

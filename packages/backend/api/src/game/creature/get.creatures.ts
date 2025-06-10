@@ -4,7 +4,7 @@ import { db } from '@app/backend-shared';
 
 const getCreaturesRoute = Router();
 
-function getCreatures(parkId: number, creatureId: number) {
+function getCreatures(parkId: number, creatureId: number, zoneId: number) {
   return db
     .selectFrom('park_creatures')
     .innerJoin('creatures', 'park_creatures.creature_id', 'creatures.id')
@@ -19,11 +19,16 @@ function getCreatures(parkId: number, creatureId: number) {
     ])
     .where('park_creatures.park_id', '=', parkId)
     .where('park_creatures.creature_id', '=', creatureId)
+    .where('creatures.zone_id', '=', zoneId)
     .groupBy('park_creatures.id')
     .execute();
 }
 
-function getInactiveCreatureCount(parkId: number, creatureId: number) {
+function getInactiveCreatureCount(
+  parkId: number,
+  creatureId: number,
+  zoneId: number,
+) {
   const dateNow = new Date();
   return db
     .selectFrom('park_creatures')
@@ -31,6 +36,7 @@ function getInactiveCreatureCount(parkId: number, creatureId: number) {
     .select(({ fn }) => [fn.countAll().as('total_inactive_creatures')])
     .where('park_creatures.park_id', '=', parkId)
     .where('park_creatures.creature_id', '=', creatureId)
+    .where('creatures.zone_id', '=', zoneId)
     .where('park_creatures.feed_date', '<', dateNow)
     .executeTakeFirst();
 }
@@ -44,6 +50,7 @@ export type InactiveCreatureCount = Awaited<
 getCreaturesRoute.get('/', async (req: Request, res) => {
   const parkId = req.parkId;
   const creatureId = req.query.creature_id;
+  const zoneId = req.query.zoneId;
 
   if (parkId === undefined) {
     res.json({
@@ -60,9 +67,17 @@ getCreaturesRoute.get('/', async (req: Request, res) => {
     return;
   }
 
+  if (typeof zoneId !== 'string') {
+    res.json({
+      ok: false,
+      message: 'zoneId missing',
+    });
+    return;
+  }
+
   const [creatures, inactiveCreatures] = await Promise.all([
-    getCreatures(parkId, parseInt(creatureId)),
-    getInactiveCreatureCount(parkId, parseInt(creatureId)),
+    getCreatures(parkId, parseInt(creatureId), parseInt(zoneId)),
+    getInactiveCreatureCount(parkId, parseInt(creatureId), parseInt(zoneId)),
   ]);
 
   const potionPrice = await db
