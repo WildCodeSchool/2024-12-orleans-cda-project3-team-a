@@ -33,7 +33,7 @@ function getEnclosures(parkId: number, zoneId: number) {
 
 export type Enclosure = Awaited<ReturnType<typeof getEnclosures>>[number];
 
-getEnclosuresRoute.get('/enclos', async (req: Request, res) => {
+getEnclosuresRoute.get('/enclosure', async (req: Request, res) => {
   const parkId = req.parkId;
   const zoneId = req.query.zoneId;
 

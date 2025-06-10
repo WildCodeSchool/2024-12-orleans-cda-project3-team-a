@@ -33,7 +33,6 @@ export default function CreatePark() {
       headers: {
         'Content-Type': 'application/json',
       },
-      credentials: 'include',
     });
 
     // typage du data

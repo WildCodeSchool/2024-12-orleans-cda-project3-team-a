@@ -9,7 +9,6 @@ export default function useZones() {
   const fetchZones = useCallback(async () => {
     try {
       const response = await fetch(`/api/game/zones-count`, {
-        credentials: 'include',
       });
 
       const data = await response.json();

@@ -1,5 +1,5 @@
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import useEnclosures from '@/hooks/use-enclos';
+import useEnclosures from '@/hooks/use-enclosure';
 import useVisitors from '@/hooks/use-visitors';
 import useZones from '@/hooks/use-zones';
 import { formatNumber } from '@/utils/number-formatter';

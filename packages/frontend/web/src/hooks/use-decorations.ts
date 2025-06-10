@@ -8,7 +8,6 @@ export default function useDecorations() {
   const fetchDecorations = useCallback(async () => {
     try {
       const response = await fetch(`/api/game/decorations`, {
-        credentials: 'include',
       });
       const data = await response.json();
       if (data.ok === true) {

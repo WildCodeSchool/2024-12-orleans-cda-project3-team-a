@@ -45,7 +45,6 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
             name,
             zoneId: creature.zone_id,
           }),
-          credentials: 'include',
         },
       );
 

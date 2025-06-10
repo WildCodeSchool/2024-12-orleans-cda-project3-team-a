@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import useEnclosures from '@/hooks/use-enclos';
+import useEnclosures from '@/hooks/use-enclosure';
 
 import BgMenu from './bg-menu';
 import CloseWindow from './close-window';

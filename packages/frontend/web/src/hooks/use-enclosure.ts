@@ -13,8 +13,7 @@ export default function useEnclosures() {
     }
 
     try {
-      const response = await fetch(`/api/game/enclos?zoneId=${zoneId}`, {
-        credentials: 'include',
+      const response = await fetch(`/api/game/enclosure?zoneId=${zoneId}`, {
       });
       const data = await response.json();
       if (data.ok === false) {

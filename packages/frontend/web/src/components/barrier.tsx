@@ -36,7 +36,6 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
         body: JSON.stringify({
           barrierId: barrier.barrierId,
         }),
-        credentials: 'include',
       });
       const result = await response.json();
 

@@ -14,7 +14,6 @@ export default function useFetchBarriers() {
     setIsLoading(true);
     try {
       const response = await fetch(`/api/game/barriers?zoneId=${zoneId}`, {
-        credentials: 'include',
       });
       const data = await response.json();
       setBarriers(data.barriers);

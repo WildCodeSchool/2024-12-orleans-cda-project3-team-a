@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import type { Enclosure } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import useEnclosures from '@/hooks/use-enclos';
+import useEnclosures from '@/hooks/use-enclosure';
 import { formatNumber } from '@/utils/number-formatter';
 
 import Moon from '../assets/images/icons-buttons/moon.png';
@@ -68,7 +68,6 @@ export default function BuyCreature({
             name,
             zoneId,
           }),
-          credentials: 'include',
         },
       );
 

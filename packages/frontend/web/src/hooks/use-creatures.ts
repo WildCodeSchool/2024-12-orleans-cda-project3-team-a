@@ -13,7 +13,6 @@ export default function useCreatures(creatureId: number, zoneId: number) {
       const response = await fetch(
         `/api/game/creature?creature_id=${creatureId}&zoneId=${zoneId}`,
         {
-          credentials: 'include',
         },
       );
       const data = await response.json();
