@@ -5,9 +5,9 @@ import { db } from '@app/backend-shared';
 
 const postFeedAll = Router();
 
-postFeedAll.post('/feed', async (req: Request, res) => {
+postFeedAll.post('/feed-all', async (req: Request, res) => {
   const parkId = req.parkId;
-  const { parkCreatureId, zoneId } = req.body;
+  const { creatureId, zoneId } = req.body;
 
   if (parkId === undefined) {
     res.json({
@@ -16,19 +16,19 @@ postFeedAll.post('/feed', async (req: Request, res) => {
     return;
   }
 
-  const wallet = await db
+  const park = await db
     .selectFrom('parks')
     .select('wallet')
     .where('parks.id', '=', parkId)
     .executeTakeFirst();
 
-  const potionPrice = await db
+  const potion = await db
     .selectFrom('potions')
     .select('price')
     .where('potions.zone_id', '=', zoneId)
     .executeTakeFirst();
 
-  if (!wallet || typeof wallet !== 'number') {
+  if (!park || typeof park.wallet !== 'number') {
     res.json({
       ok: false,
       message: 'Wallet is empty',
@@ -36,7 +36,7 @@ postFeedAll.post('/feed', async (req: Request, res) => {
     return;
   }
 
-  if (!potionPrice || typeof potionPrice !== 'number') {
+  if (!potion || typeof potion.price !== 'number') {
     res.json({
       ok: false,
       message: 'Potion price is null',
@@ -44,7 +44,9 @@ postFeedAll.post('/feed', async (req: Request, res) => {
     return;
   }
 
-  const countCreatureToUpdate = Math.floor(wallet / potionPrice);
+  const potionPrice = potion.price;
+
+  const countCreatureToUpdate = Math.floor(park.wallet / potionPrice);
 
   // Check if the creature is active
   const inactiveCreatures = await db
@@ -55,7 +57,7 @@ postFeedAll.post('/feed', async (req: Request, res) => {
       'creatures.feed_timer',
       'creatures.id as creatureId',
     ])
-    .where('park_creatures.creature_id', '=', parkCreatureId)
+    .where('park_creatures.creature_id', '=', creatureId)
     .where('creatures.zone_id', '=', zoneId)
     .where('park_creatures.feed_date', '<', new Date())
     .limit(countCreatureToUpdate)
@@ -65,22 +67,13 @@ postFeedAll.post('/feed', async (req: Request, res) => {
     res.json({
       ok: false,
       message: 'no inactive creature',
-      parkCreatureId,
+      creatureId,
     });
     return;
   }
 
   const idsCreaturesToFeed = inactiveCreatures.map((creature) => creature.id);
   const feedTimerCreature = inactiveCreatures[0].feed_timer;
-
-  // if (inactiveCreatures.feed_timer !== null) {
-  //   res.json({
-  //     ok: false,
-  //     message: 'format is not compatible',
-  //     crature: inactiveCreatures.feed_timer,
-  //   });
-  //   return;
-  // }
 
   //request for soustraction price of potion
   const updateWallet = await db
@@ -107,7 +100,7 @@ postFeedAll.post('/feed', async (req: Request, res) => {
     .set({
       feed_date: sql`NOW() + INTERVAL ${feedTimerCreature} MINUTE`,
     })
-    .where('creature_id', '=', parkCreatureId)
+    .where('creature_id', '=', creatureId)
     .where('park_creatures.id', 'in', idsCreaturesToFeed)
     .executeTakeFirst();
 
@@ -115,10 +108,7 @@ postFeedAll.post('/feed', async (req: Request, res) => {
     ok: true,
     message: 'feed_date updated',
     inactiveCreatures,
-    potionPrice,
-
-    parkCreatureId,
-    zoneId,
+    potion,
   });
 });
 
