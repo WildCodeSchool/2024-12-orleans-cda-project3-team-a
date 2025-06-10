@@ -8,7 +8,7 @@ export default function useZones() {
 
   const fetchZones = useCallback(async () => {
     try {
-      const response = await fetch(`/api/game/zones-count`, {});
+      const response = await fetch(`/api/game/zones-count`);
 
       const data = await response.json();
 

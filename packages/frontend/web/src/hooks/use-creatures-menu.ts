@@ -7,7 +7,7 @@ export default function useCreaturesMenu() {
 
   const fetchCreaturesMenu = useCallback(async () => {
     try {
-      const response = await fetch(`/api/game/creatures-menu`, {});
+      const response = await fetch(`/api/game/creatures-menu`);
       const data = await response.json();
       if (data.ok === false) {
         throw new Error('No park');
