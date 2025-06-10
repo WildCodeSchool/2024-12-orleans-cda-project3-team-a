@@ -28,8 +28,8 @@ postLoginRouter.post('/login', async (req, res) => {
 
   if (!user) {
     res.json({
-      message: 'User or password incorrect',
       ok: false,
+      message: 'User or password incorrect',
     });
     return;
   }

@@ -6,19 +6,19 @@ import { db } from '@app/backend-shared';
 const postRegisterRouter = express.Router();
 
 postRegisterRouter.post('/register', async (req, res) => {
-  const { username, email, password, confirmPassword, avatarId } = req.body;
+  const { username, email, password, confirmPassword } = req.body;
 
   const user = await db
     .selectFrom('users')
-    .selectAll()
+    .select('email')
     .where('users.email', '=', email)
     .executeTakeFirst();
 
   //check is mail is already existing
   if (user) {
     res.json({
-      message: 'Email already used',
       ok: false,
+      message: 'Email already used',
     });
     return;
   }
@@ -46,13 +46,12 @@ postRegisterRouter.post('/register', async (req, res) => {
       email,
       username,
       password_hash: hashedPassword,
-      avatar_id: avatarId ?? null, //optional
     })
     .executeTakeFirst();
 
   res.json({
-    message: 'User registered',
     ok: true,
+    message: 'User registered',
   });
 });
 

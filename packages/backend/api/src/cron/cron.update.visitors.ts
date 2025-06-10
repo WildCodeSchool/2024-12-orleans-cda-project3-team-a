@@ -195,9 +195,8 @@ new CronJob(
           //we sum the number of creature active and multiply by his profit
           wallet: sql`
         wallet + (
-          SELECT COALESCE(SUM( 1 
-          * (SELECT profit FROM creatures WHERE park_creatures.creature_id = creatures.id) 
-          ), 0)
+          SELECT COALESCE(SUM(SELECT profit FROM creatures WHERE park_creatures.creature_id = creatures.id) 
+          , 0)
           FROM park_creatures
           WHERE park_creatures.park_id = parks.id
           AND park_creatures.feed_date > NOW()

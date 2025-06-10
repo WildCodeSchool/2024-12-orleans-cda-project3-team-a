@@ -109,7 +109,7 @@ export default function FeedAllCreatures({
       <p className='flex items-center justify-center text-xs text-red-500 italic md:text-base'>
         {`This potion costs ${formatNumber(potionPrice)} `}
         <img className='mx-0.5 h-3 md:h-4' src={Moons} alt='moon' />
-        {` /creatures!`}
+        {` /creature!`}
       </p>
       <div className='flex items-center justify-center gap-3 p-2 md:gap-2'>
         <p>{hungryCreatures.length}</p>

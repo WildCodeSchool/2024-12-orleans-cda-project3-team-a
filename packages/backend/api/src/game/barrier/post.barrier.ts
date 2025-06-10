@@ -46,7 +46,6 @@ postBarrier.post('/', async (req: Request, res) => {
     res.json({
       ok: false,
       message: 'direction already in stock',
-      barrier,
     });
     return;
   }
