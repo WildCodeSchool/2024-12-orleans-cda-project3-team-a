@@ -72,27 +72,10 @@ postFeedAll.post('/feed-all', async (req: Request, res) => {
     return;
   }
 
+  const countUpdatedCreatures = inactiveCreatures.length;
+
   const idsCreaturesToFeed = inactiveCreatures.map((creature) => creature.id);
   const feedTimerCreature = inactiveCreatures[0].feed_timer;
-
-  //request for soustraction price of potion
-  const updateWallet = await db
-    .updateTable('parks')
-    .set((eb) => ({
-      wallet: eb('wallet', '-', potionPrice * countCreatureToUpdate),
-    }))
-    .where('id', '=', parkId)
-    .where('wallet', '>=', potionPrice * countCreatureToUpdate)
-    .executeTakeFirst();
-
-  //if not enough money, update row = 0, no time will be added to feed_date
-  if (updateWallet.numUpdatedRows === 0n) {
-    res.json({
-      ok: false,
-      message: 'Not enough money',
-    });
-    return;
-  }
 
   //update feed_date
   await db
@@ -104,11 +87,33 @@ postFeedAll.post('/feed-all', async (req: Request, res) => {
     .where('park_creatures.id', 'in', idsCreaturesToFeed)
     .executeTakeFirst();
 
+  //request for soustraction price of potion
+  const updateWallet = await db
+    .updateTable('parks')
+    .set((eb) => ({
+      wallet: eb('wallet', '-', potionPrice * countUpdatedCreatures),
+    }))
+    .where('id', '=', parkId)
+    .where('wallet', '>=', potionPrice * countUpdatedCreatures)
+    .executeTakeFirst();
+
+  //if not enough money, update row = 0, no time will be added to feed_date
+  if (updateWallet.numUpdatedRows === 0n) {
+    res.json({
+      ok: false,
+      message: 'Not enough money',
+    });
+    return;
+  }
+
   res.json({
     ok: true,
     message: 'feed_date updated',
     inactiveCreatures,
     potion,
+    countUpdatedCreatures,
+    potionPrice,
+    countCreatureToUpdate,
   });
 });
 
