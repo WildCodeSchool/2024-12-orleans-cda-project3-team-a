@@ -30,8 +30,6 @@ function getCreaturesMenu(parkId: number) {
     .execute();
 }
 
-export type Enclosure = Awaited<ReturnType<typeof getCreaturesMenu>>[number];
-
 getCreaturesMenuRoute.get('/creatures-menu', async (req: Request, res) => {
   const parkId = req.parkId;
 
