@@ -12,8 +12,7 @@ export default function useCreatures(creatureId: number, zoneId: number) {
     try {
       const response = await fetch(
         `/api/game/creature?creature_id=${creatureId}&zoneId=${zoneId}`,
-        {
-        },
+        {},
       );
       const data = await response.json();
       setCreatures(data.creatures);
