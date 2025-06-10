@@ -3,12 +3,12 @@ import { useEffect } from 'react';
 import useCreaturesStatus from '@/hooks/use-creatures-status';
 
 export default function WelcomeGuide() {
-  const { hasCreatures, checkCreaturesStatus } = useCreaturesStatus();
+  const { hasCreature, checkCreatureStatus } = useCreaturesStatus();
   useEffect(() => {
-    void checkCreaturesStatus();
-  }, [checkCreaturesStatus]);
+    void checkCreatureStatus();
+  }, [checkCreatureStatus]);
 
-  if (hasCreatures) {
+  if (hasCreature) {
     return null;
   }
   return (

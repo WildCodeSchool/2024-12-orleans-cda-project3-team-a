@@ -8,7 +8,7 @@ const getParkUser = Router();
 getParkUser.get('/park-user', async (req: Request, res) => {
   const userId = req.userId;
 
-  if (userId == null) {
+  if (userId === undefined) {
     res.json({
       ok: false,
       message: 'userId empty',
@@ -18,7 +18,7 @@ getParkUser.get('/park-user', async (req: Request, res) => {
 
   const park = await db
     .selectFrom('parks')
-    .selectAll()
+    .select(['id', 'park_name', 'wallet'])
     .where('parks.user_id', '=', userId)
     .executeTakeFirst();
 

@@ -23,13 +23,12 @@ hasCreaturesRouter.get('/has-creatures', async (req: Request, res) => {
     return;
   }
 
-  const creatures = await hasCreaturesPark(parkId);
-  const hasCreatures = !creatures;
+  const hasCreature = !!(await hasCreaturesPark(parkId));
 
   res.json({
     ok: true,
-    hasCreatures,
-    message: hasCreatures ? 'Park has creatures' : 'Park has no creatures',
+    hasCreature,
+    message: hasCreature ? 'Park has creatures' : 'Park has no creatures',
   });
 });
 

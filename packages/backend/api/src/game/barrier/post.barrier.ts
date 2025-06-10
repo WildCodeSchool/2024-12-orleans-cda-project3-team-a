@@ -63,8 +63,8 @@ postBarrier.post('/', async (req: Request, res) => {
   //if not enough money, update row = 0 so return to not add barrier in bdd
   if (updateWallet.numUpdatedRows === 0n) {
     res.json({
-      message: 'Not enough money',
       ok: false,
+      message: 'Not enough money',
     });
     return;
   }
