@@ -26,8 +26,6 @@ export default function Enclosure({
     useCreatures(enclosures.id, enclosures.zone_id);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // console.log(totalCreaturesInZone)
-
   const handleEnclosureClick = () => {
     setIsModalOpen(true);
   };

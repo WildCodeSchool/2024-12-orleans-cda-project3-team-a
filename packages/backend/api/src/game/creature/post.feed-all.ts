@@ -46,7 +46,7 @@ postFeedAll.post('/feed-all', async (req: Request, res) => {
 
   const potionPrice = potion.price;
 
-  const countCreatureToUpdate = Math.floor(park.wallet / potionPrice);
+  const maxCreatureToUpdate = Math.floor(park.wallet / potionPrice);
 
   // Check if the creature is active
   const inactiveCreatures = await db
@@ -58,9 +58,10 @@ postFeedAll.post('/feed-all', async (req: Request, res) => {
       'creatures.id as creatureId',
     ])
     .where('park_creatures.creature_id', '=', creatureId)
+    .where('park_creatures.park_id', '=', parkId)
     .where('creatures.zone_id', '=', zoneId)
     .where('park_creatures.feed_date', '<', new Date())
-    .limit(countCreatureToUpdate)
+    .limit(maxCreatureToUpdate)
     .execute();
 
   if (inactiveCreatures.length === 0) {
@@ -109,11 +110,6 @@ postFeedAll.post('/feed-all', async (req: Request, res) => {
   res.json({
     ok: true,
     message: 'feed_date updated',
-    inactiveCreatures,
-    potion,
-    countUpdatedCreatures,
-    potionPrice,
-    countCreatureToUpdate,
   });
 });
 
