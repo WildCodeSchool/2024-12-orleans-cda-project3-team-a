@@ -1,7 +1,10 @@
+import { useState } from 'react';
+
 import type { Enclosure } from '@app/api';
 import type { Creatures } from '@app/api';
 
 import BgMenu from './bg-menu';
+import ButtonBlue from './button-blue';
 import BuyCreature from './buy-creature';
 import CloseWindow from './close-window';
 import CreatureLine from './creature-line';
@@ -22,6 +25,9 @@ export default function FeedModal({
   fetchCreatures,
   creatures,
 }: FeedModalProps) {
+  const isScreen = window.innerWidth < 768;
+  const [visibleCreatures, setVisibleCreatures] = useState(isScreen ? 5 : 10);
+
   return (
     <>
       {/* 'Display quantity creature in header' */}
@@ -69,16 +75,32 @@ export default function FeedModal({
                     </div>
                   </div>
                 ) : (
-                  <div className='flex flex-col gap-4 pt-3 md:grid md:grid-cols-2'>
-                    {creatures.map((creature) => (
-                      <CreatureLine
-                        key={creature.id}
-                        creature={creature}
-                        potionPrice={potionPrice}
-                        fetchCreatures={fetchCreatures}
-                      />
-                    ))}
-                  </div>
+                  <>
+                    <div className='flex flex-col gap-4 pt-3 md:grid md:grid-cols-2'>
+                      {creatures.slice(0, visibleCreatures).map((creature) => (
+                        <CreatureLine
+                          key={creature.id}
+                          creature={creature}
+                          potionPrice={potionPrice}
+                          fetchCreatures={fetchCreatures}
+                        />
+                      ))}
+                    </div>
+
+                    {visibleCreatures < creatures.length && (
+                      <div className='flex justify-center pt-4'>
+                        <ButtonBlue
+                          bg='bg-primary-blue'
+                          type='button'
+                          onClick={() => {
+                            setVisibleCreatures((prev) => prev + 10);
+                          }}
+                        >
+                          {'View more'}
+                        </ButtonBlue>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </div>

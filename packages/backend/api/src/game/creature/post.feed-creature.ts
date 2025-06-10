@@ -88,8 +88,6 @@ postFeedCreature.post('/feed', async (req: Request, res) => {
   res.json({
     ok: true,
     message: 'feed_date updated',
-    creature,
-    potionPrice: potionPrice.price,
   });
 });
 

@@ -8,9 +8,7 @@ export default function useVisitors() {
 
   const fetchVisitors = useCallback(async () => {
     try {
-      const resp = await fetch(`/api/game/visitors`, {
-        credentials: 'include',
-      });
+      const resp = await fetch(`/api/game/visitors`);
       const data = (await resp.json()) as {
         ok: boolean;
         visitorsCountById: Visitors;

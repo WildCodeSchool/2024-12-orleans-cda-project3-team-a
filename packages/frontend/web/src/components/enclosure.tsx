@@ -23,7 +23,7 @@ export default function Enclosure({
 }: EnclosureProps) {
   const isLocked = enclosures.quantityCreature === 0;
   const { inactiveCreatures, refetchCreature, creatures, potionPrice } =
-    useCreatures(enclosures.id);
+    useCreatures(enclosures.id, enclosures.zone_id);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleEnclosureClick = () => {

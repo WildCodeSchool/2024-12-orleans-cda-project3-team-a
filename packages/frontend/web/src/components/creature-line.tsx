@@ -49,7 +49,6 @@ export default function CreatureLine({
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
         body: JSON.stringify({
           parkCreatureId,
           zoneId,

@@ -1,5 +1,5 @@
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import useEnclosures from '@/hooks/use-enclos';
+import useCreaturesMenu from '@/hooks/use-creatures-menu';
 import useVisitors from '@/hooks/use-visitors';
 import useZones from '@/hooks/use-zones';
 import { formatNumber } from '@/utils/number-formatter';
@@ -18,9 +18,9 @@ export default function Dashboard({ closeDashboard }: DashboardProps) {
   const { parkName, wallet, countVisitorActiveFormated } = useGameInfoContext();
   const { visitors } = useVisitors();
   const { unlockedZones } = useZones();
-  const { creaturesEnclos } = useEnclosures();
+  const { creaturesMenu } = useCreaturesMenu();
 
-  const countCreaturesIdUnlocked = creaturesEnclos.reduce((count, element) => {
+  const countCreaturesIdUnlocked = creaturesMenu.reduce((count, element) => {
     return count + (Number(element.quantityCreature) >= 1 ? 1 : 0);
   }, 0);
 
@@ -63,7 +63,7 @@ export default function Dashboard({ closeDashboard }: DashboardProps) {
                 </li>
                 <li className='flex items-center justify-center gap-1'>
                   <img src={padlock} alt='unlocked' className='h-6 md:h-7' />
-                  {`${countCreaturesIdUnlocked}/${creaturesEnclos.length} creatures unlocked`}
+                  {`${countCreaturesIdUnlocked}/${creaturesMenu.length} creatures unlocked`}
                 </li>
               </ul>
             </div>
@@ -114,7 +114,7 @@ export default function Dashboard({ closeDashboard }: DashboardProps) {
                   />
                 </h2>
                 <div className='grid grid-cols-2 gap-4 rounded border-1 border-gray-500 bg-white/60 p-3 pt-8 md:rounded-md'>
-                  {creaturesEnclos
+                  {creaturesMenu
                     .filter((creature) => creature.zone_id === zone.zone_id)
                     .map((creature) => (
                       <div key={creature.id}>

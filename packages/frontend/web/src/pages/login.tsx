@@ -22,7 +22,6 @@ export default function Login() {
       headers: {
         'Content-Type': 'application/json',
       },
-      credentials: 'include',
     });
 
     //typage data
@@ -37,10 +36,10 @@ export default function Login() {
 
     //if good user put setisloggedin in true and hasParkId in true and go home
     if (data.ok) {
-      auth?.setIsLoggedIn(true);
+      auth.setIsLoggedIn(true);
 
       if (data.user.parkId !== null) {
-        auth?.setHasParkId(true);
+        auth.setHasParkId(true);
       }
 
       await navigate('/home');

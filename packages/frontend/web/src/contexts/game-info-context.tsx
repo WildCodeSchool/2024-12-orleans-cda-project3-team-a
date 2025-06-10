@@ -10,7 +10,7 @@ import type { PropsWithChildren } from 'react';
 import type { Decorations, Enclosure, UnlockedZones } from '@app/api';
 
 import useDecorations from '@/hooks/use-decorations';
-import useEnclos from '@/hooks/use-enclos';
+import useEnclos from '@/hooks/use-enclosure';
 import usePark from '@/hooks/use-park';
 import useVisitors from '@/hooks/use-visitors';
 import useZones from '@/hooks/use-zones';

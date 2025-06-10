@@ -3,9 +3,9 @@ import type { Request } from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getEnclosuresRoute = express.Router();
+const getCreaturesMenuRoute = express.Router();
 
-function getEnclosures(parkId: number, zoneId: number) {
+function getCreaturesMenu(parkId: number) {
   return db
     .selectFrom('creatures')
     .leftJoin('park_creatures', (join) =>
@@ -26,16 +26,12 @@ function getEnclosures(parkId: number, zoneId: number) {
       'zones.src_sign',
       db.fn.count('park_creatures.creature_id').as('quantityCreature'),
     ])
-    .where('creatures.zone_id', '=', zoneId)
     .groupBy('creatures.id')
     .execute();
 }
 
-export type Enclosure = Awaited<ReturnType<typeof getEnclosures>>[number];
-
-getEnclosuresRoute.get('/enclosure', async (req: Request, res) => {
+getCreaturesMenuRoute.get('/creatures-menu', async (req: Request, res) => {
   const parkId = req.parkId;
-  const zoneId = req.query.zoneId;
 
   if (parkId === undefined) {
     res.json({
@@ -44,17 +40,9 @@ getEnclosuresRoute.get('/enclosure', async (req: Request, res) => {
     return;
   }
 
-  if (typeof zoneId !== 'string') {
-    res.json({
-      ok: false,
-      message: 'zoneId missing',
-    });
-    return;
-  }
+  const creaturesMenu = await getCreaturesMenu(parkId);
 
-  const enclosure = await getEnclosures(parkId, parseInt(zoneId));
-
-  if (enclosure.length === 0) {
+  if (creaturesMenu.length === 0) {
     res.json({
       ok: false,
       message: 'no creatures found ',
@@ -64,8 +52,8 @@ getEnclosuresRoute.get('/enclosure', async (req: Request, res) => {
 
   res.json({
     ok: true,
-    enclosure,
+    creaturesMenu,
   });
 });
 
-export default getEnclosuresRoute;
+export default getCreaturesMenuRoute;
