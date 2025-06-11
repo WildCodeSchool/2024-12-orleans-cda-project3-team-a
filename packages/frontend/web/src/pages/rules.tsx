@@ -8,7 +8,7 @@ export default function Rules() {
       </h1>
       <div className='text-xs md:text-base'>
         <p className='mb-3 text-center font-extrabold'>
-          {`How would you manage the most incredible fantasy creature park ?👀`}
+          {`How would you manage the most incredible fantasy creature park?👀`}
         </p>
         <p>
           {`In this magical world, you can buy creatures that will attract visitors in your park!`}
