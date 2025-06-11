@@ -3,4 +3,141 @@
  * Please do not edit it manually.
  */
 
-export interface DB {}
+import type { ColumnType } from "kysely";
+
+export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
+  ? ColumnType<S, I | undefined, U>
+  : ColumnType<T, T | undefined, T>;
+
+export interface Avatars {
+  id: Generated<number>;
+  src_image: string;
+}
+
+export interface Barriers {
+  direction: string | null;
+  id: Generated<number>;
+  link_world: string | null;
+  name: string;
+  position: string | null;
+  price: number;
+  src_image: string | null;
+  zone_id: number;
+}
+
+export interface Creatures {
+  background: string;
+  feed_timer: number | null;
+  id: Generated<number>;
+  price: number;
+  profit: number | null;
+  species: string;
+  src_image: string | null;
+  zone_id: number;
+}
+
+export interface Decorations {
+  creature_id: number;
+  id: Generated<number>;
+  name: string;
+  position: string;
+  src_image: string;
+}
+
+export interface ParkBarriers {
+  barrier_id: number;
+  id: Generated<number>;
+  park_id: number;
+}
+
+export interface ParkCreatures {
+  adult_at: Date;
+  creature_id: number;
+  feed_date: Date;
+  gender: "female" | "male";
+  id: Generated<number>;
+  is_adult: number;
+  is_parent: number;
+  name: string;
+  park_id: number;
+}
+
+export interface ParkGifts {
+  gift_date: Date | null;
+  id: Generated<number>;
+  park_id: number;
+  type: string;
+  value: string;
+}
+
+export interface Parks {
+  id: Generated<number>;
+  park_name: string;
+  user_id: number;
+  wallet: number | null;
+}
+
+export interface ParkVisitors {
+  entry_time: Date;
+  exit_time: Date;
+  id: Generated<number>;
+  park_id: number;
+  visitor_id: number;
+}
+
+export interface ParkZones {
+  id: Generated<number>;
+  park_id: number;
+  zone_id: number;
+}
+
+export interface Potions {
+  id: Generated<number>;
+  name: string;
+  price: number | null;
+  src_image: string | null;
+  zone_id: number;
+}
+
+export interface Users {
+  avatar_id: number | null;
+  created_at: Generated<Date | null>;
+  email: string;
+  id: Generated<number>;
+  password_hash: string;
+  username: string;
+}
+
+export interface Visitors {
+  category: string;
+  entry_price: number;
+  id: Generated<number>;
+  src_image: string | null;
+  unlock_cost: number | null;
+  zone_id: number | null;
+}
+
+export interface Zones {
+  id: Generated<number>;
+  link: string;
+  name: string;
+  src_image: string;
+  src_sign: string;
+}
+
+export interface DB {
+  avatars: Avatars;
+  barriers: Barriers;
+  creatures: Creatures;
+  decorations: Decorations;
+  park_barriers: ParkBarriers;
+  park_creatures: ParkCreatures;
+  park_gifts: ParkGifts;
+  park_visitors: ParkVisitors;
+  park_zones: ParkZones;
+  parks: Parks;
+  potions: Potions;
+  users: Users;
+  visitors: Visitors;
+  zones: Zones;
+}

@@ -1,8 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka&display=swap');
 @import 'tailwindcss';
 
+@font-face {
+  font-family: 'Aerokids';
+  font-style: normal;
+  font-weight: normal;
+  src: url('/fonts/aerokids.otf') format('opentype');
+}
+
+html {
+  overflow-y: hidden;
+}
 body {
   height: 100dvh;
   width: 100dvw;
   margin: 0;
   padding: 0;
+  overflow-y: hidden;
+  @apply font-fredoka;
+}
+
+@theme {
+  --color-primary-blue: #d2e7f5; /* background des inputs dans les logs */
+  --color-secondary-blue: #0c5985; /*Couleur des stroks, et du texte rules, bievneue...*/
+  --color-tertiary-blue: #f3faff; /*Couleur du button rules*/
+  --color-primary-gray: #e5e5e5; /*Couleur du rectangle sous le pattern */
+  --color-secondary-gray: #d9d9d9; /* Couleur des boutons quand les créatures ont faim*/
+
+  --color-fairy-blue: #68c9f4; /*Couleur bleu enclot fairy */ /*couleur logo fantasy park*/
+  --color-fairy-green: #92d635; /*Couleur verte enclot fairy */ /*couleur logo fantasy park*/
+  --color-winged-red: #f75a61; /*Couleur rouge enclot winged */ /*couleur logo fantasy park*/
+  --color-winged-yellow: #ebe364; /*Couleur jaune enclot winged */
+  --color-mythologic-beige: #ebc682; /*Couleur beige enclot mythologic */
+  --color-mythologic-dark-beige: #c69a4a; /* beige foncé pour mythologic */
+  --color-shadow-purple: #615269; /*Couleur violet enclot shadow */
+  --color-shadow-green: #3f6f35; /*Couleur verte enclot shadow */
+
+  --color-title-purple: #b19ebb; /*couleur logo fantasy park*/
+  --color-title-purple-dark: #4f49be; /*couleur logo fantasy park*/
+  --color-title-orange: #e8bd41; /*couleur logo fantasy park*/
+
+  --font-fredoka: 'Fredoka', sans-serif; /*Police par defaut*/
+  --font-aerokids: 'Aerokids', sans-serif; /*Police Park's name*/
+
+  /* animation mingush */
+  --animate-typing1: typing1 2.5s steps(60, end) forwards, blink-caret 0.7s;
+  --animate-typing2: typing2 2s steps(40, end) 2s forwards, blink-caret 0.7s;
+  --animate-typing3:
+    typing3 2.5s steps(50, end) 2.6s forwards, blink-caret 0.7s;
+  --animate-typing4:
+    typing4 2.5s steps(30, end) 4.5s forwards, blink-caret 0.7s;
+
+  @keyframes typing1 {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes typing2 {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes typing3 {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes typing4 {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+  /* fin annimation mingush*/
+}
+
+.animate-spin {
+  animation: spin 2s linear infinite;
+}
+/* Animation Creatures*/
+@keyframes move {
+  0%,
+  50%,
+  100% {
+    transform: scaleY(1) scaleX(1) rotate(0deg);
+  }
+  25% {
+    transform: scaleY(1.05) scaleX(0.98) rotate(1deg) translateX(5px);
+  }
+  75% {
+    transform: scaleY(1.05) scaleX(0.98) rotate(-1deg) translateX(-5px);
+  }
+}
+
+.animate-move {
+  animation: move 2s ease-in-out infinite;
+}
+
+/* Fin Animation Creatures*/
+
+/* Animation for visitor */
+@keyframes moveHorizontal {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes moveVertical {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.move-horizontal {
+  animation: moveHorizontal 8s linear infinite;
+  will-change: transform;
+}
+
+.move-vertical {
+  animation: moveVertical 0.6s ease-in-out infinite;
+  will-change: transform;
+}
+/* End of animation visitor */
+
+/* Animation Mingush */
+/* End animation Mingush*/
+
+.text-outline-purple {
+  -webkit-text-stroke-width: 4px;
+  -webkit-text-stroke-color: #4d40a8;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-outline-white {
+  -webkit-text-stroke-width: 0.5px;
+  -webkit-text-stroke-color: white;
+  -webkit-text-fill-color: transparent;
 }

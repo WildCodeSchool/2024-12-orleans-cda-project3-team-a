@@ -1,9 +1,11 @@
 /* eslint-disable no-console */
-import { FileMigrationProvider, Migrator } from 'kysely';
+import { Migrator } from 'kysely';
 import { promises as fs } from 'node:fs';
 import * as path from 'node:path';
 
 import { db } from '@app/backend-shared';
+
+import { FileMigrationProvider } from './file-migration-provider';
 
 const migrator = new Migrator({
   db,

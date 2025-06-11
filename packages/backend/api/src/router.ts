@@ -1,9 +1,16 @@
 import express from 'express';
 
-import demoRouter from './demo';
+import authRouter from './auth';
+import gameRouter from './game';
+import authGuard from './middlewares/auth.guard';
+import authMiddleware from './middlewares/auth.middlewarre';
 
 const router = express.Router();
 
-router.use('/demo', demoRouter);
+router.use(authMiddleware);
+router.use('/auth', authRouter);
+
+router.use(authGuard);
+router.use('/game', gameRouter);
 
 export default router;

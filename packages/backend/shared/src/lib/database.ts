@@ -21,6 +21,7 @@ const dialect = new MysqlDialect({
     password: DB_PASS,
     port: +DB_PORT,
     connectionLimit: 10,
+    timezone: 'Z',
   }),
 });
 

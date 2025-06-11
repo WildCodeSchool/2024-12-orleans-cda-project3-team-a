@@ -1,0 +1,49 @@
+import { useCallback, useEffect, useState } from 'react';
+
+import { formatNumber } from '@/utils/number-formatter';
+
+export default function usePark() {
+  const [wallet, setWallet] = useState(0);
+  const [visitorsCount, setVisitorsCount] = useState(0);
+  const [isLoadingPark, setIsLoadingPark] = useState(true);
+  const [parkName, setParkName] = useState('');
+
+  const fetchPark = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/game/park-user`);
+
+      const data = await response.json();
+
+      if (data.ok === false) {
+        throw new Error('No park');
+      }
+
+      setWallet(data.park.wallet);
+      setVisitorsCount(data.visitorsCount);
+      setParkName(data.park.park_name);
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('fetchPark failed');
+    } finally {
+      setIsLoadingPark(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void fetchPark();
+  }, [fetchPark]);
+
+  const walletFormated = formatNumber(wallet);
+  const visitorsFormated = formatNumber(visitorsCount);
+
+  return {
+    wallet,
+    walletFormated,
+    visitorsFormated,
+    isLoadingPark,
+    parkName,
+    refetchPark: fetchPark,
+  };
+}

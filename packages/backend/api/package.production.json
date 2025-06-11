@@ -1,0 +1,12 @@
+{
+  "name": "@app/api",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "argon2": "0.41.1"
+  }
+}
