@@ -184,7 +184,7 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
 
   res.json({
     ok: true,
-    message: 'creature add and visitor',
+    message: 'creature and visitor added',
   });
 });
 export default postBuyCreature;

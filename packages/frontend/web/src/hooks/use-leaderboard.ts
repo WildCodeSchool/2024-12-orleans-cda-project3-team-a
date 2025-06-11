@@ -12,6 +12,7 @@ export default function useRank() {
         const data = await response.json();
         setRank(data.rank);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('fetch failed', error);
       }
     }

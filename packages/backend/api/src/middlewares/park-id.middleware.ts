@@ -28,8 +28,8 @@ export default async function parkIdMiddleware(
   //check if we have a park with the userId
   if (!park) {
     res.json({
-      message: 'park not found',
       ok: false,
+      message: 'park not found',
     });
     return;
   }

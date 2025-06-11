@@ -64,9 +64,7 @@ export default function CreatePark() {
         }
       </p>
       <p>
-        {
-          'First of all, you need to choose a wonderful name to your park :'
-        }{' '}
+        {'First of all, you need to choose a wonderful name to your park :'}
       </p>
       <form
         className='flex flex-col items-center gap-4'

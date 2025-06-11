@@ -3,10 +3,10 @@ import * as jose from 'jose';
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 const FRONTEND_HOST = process.env.FRONTEND_HOST ?? '';
-const ACCESS_TOKEN_SRECRET = process.env.ACCESS_TOKEN_SECRET;
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 
-const secret = new TextEncoder().encode(ACCESS_TOKEN_SRECRET);
+const secret = new TextEncoder().encode(ACCESS_TOKEN_SECRET);
 const refreshTokenSecret = new TextEncoder().encode(REFRESH_TOKEN_SECRET);
 
 export default async function authMiddleware(
@@ -25,6 +25,7 @@ export default async function authMiddleware(
 
     req.isAuthenticated = true;
     req.userId = payload.userId;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (atError) {
     req.isAuthenticated = false;
     const refreshToken = req.signedCookies.refreshToken;
@@ -59,6 +60,7 @@ export default async function authMiddleware(
 
       req.isAuthenticated = true;
       req.userId = payload.userId;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (rfError) {
       req.isAuthenticated = false;
     }

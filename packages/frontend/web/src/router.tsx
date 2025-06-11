@@ -10,7 +10,6 @@ import Page404 from './pages/page-404';
 import PageVisitors from './pages/page-visitors';
 import Rules from './pages/rules';
 import SignUp from './pages/sign-up';
-import Test from './pages/test';
 import WelcomeLayout from './pages/welcome-layout';
 import WorldEnclosure from './pages/world-enclosure';
 
@@ -64,15 +63,10 @@ const router = createBrowserRouter([
             path: '/visitors',
             element: <PageVisitors />,
           },
-          {
-            path: '/test',
-            element: <Test />,
-          },
         ],
       },
     ],
   },
-  //A supprimer plus tard!
   {
     path: '/*',
     element: <Page404 />,

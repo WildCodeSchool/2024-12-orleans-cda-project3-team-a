@@ -104,7 +104,7 @@ export default function FeedAllCreatures({
   return (
     <div className='w-full rounded-lg border-1 p-0.5 md:w-[30%]'>
       <h1 className='pt-2 text-center text-lg md:text-xl'>
-        {'Making everyone magical'}
+        {'Make them all magical'}
       </h1>
       <p className='flex items-center justify-center text-xs text-red-500 italic md:text-base'>
         {`This potion costs ${formatNumber(potionPrice)} `}
