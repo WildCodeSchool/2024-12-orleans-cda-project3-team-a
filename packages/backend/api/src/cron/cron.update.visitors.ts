@@ -62,7 +62,12 @@ new CronJob(
       return;
     }
 
-    console.log('parkCreaturesVisitors', new Date(), parkCreaturesVisitors);
+    console.log(
+      'parkCreaturesVisitors',
+      new Date(),
+      randomSteven,
+      parkCreaturesVisitors,
+    );
 
     //we add visitor in the park only when the last creature is not hungry more than 1 day and if active visitor < total creature
     const parkIdsCanAcceptVisitors = parkCreaturesVisitors
@@ -76,6 +81,7 @@ new CronJob(
     console.log(
       'parkIdsCanAcceptVisitors',
       new Date(),
+      randomSteven,
       parkIdsCanAcceptVisitors,
     );
 
@@ -95,7 +101,7 @@ new CronJob(
             .execute()
         : [];
 
-    console.log('parkZoneVisitor', new Date(), parkZoneVisitor);
+    console.log('parkZoneVisitor', new Date(), randomSteven, parkZoneVisitor);
 
     // function to use to generate a visitor id random
     function getRandomVisitor(park_id: number): number {
@@ -135,6 +141,7 @@ new CronJob(
     console.log(
       'dataVisitorsToInsertByGroup',
       new Date(),
+      randomSteven,
       dataVisitorsToInsertByGroup,
     );
 
