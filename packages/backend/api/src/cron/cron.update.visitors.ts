@@ -8,6 +8,8 @@ new CronJob(
   '* * * * *', // cronTime each minute
 
   async function () {
+    console.log('start of cron :', new Date());
+
     //recovers count visitor and creatures active
     const parkCreaturesVisitors = await db
       .selectFrom('parks')
@@ -207,6 +209,7 @@ new CronJob(
         .where('parks.id', 'in', parkIdsCreaturesActive)
         .execute();
     }
+    console.log('end of cron :', new Date());
   },
   null, // onComplete
   true, // start
