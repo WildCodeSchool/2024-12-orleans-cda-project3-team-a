@@ -4,6 +4,7 @@ import type { Decorations } from '@app/api';
 import type { Enclosure } from '@app/api';
 
 import useCreatures from '@/hooks/use-creatures';
+import { enclosuresCount } from '@/utils/enclosures-count';
 
 import alert from '../assets/images/icons-buttons/alert.png';
 import ButtonBuy from './button-buy';
@@ -24,6 +25,7 @@ export default function Enclosure({
   const isLocked = enclosures.quantityCreature === 0;
   const { inactiveCreatures, refetchCreature, creatures, potionPrice } =
     useCreatures(enclosures.id, enclosures.zone_id);
+  const { isFour, isSix } = enclosuresCount(totalCreaturesInZone);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleEnclosureClick = () => {
@@ -93,8 +95,6 @@ export default function Enclosure({
     }
   };
 
-  const isFour = totalCreaturesInZone === 4;
-  const isSix = totalCreaturesInZone === 6;
   const sizeEnclos = isFour ? 'w-1/2' : isSix ? 'w-1/3' : '';
   const getPosition = isFour
     ? decoPositionFour
@@ -120,7 +120,7 @@ export default function Enclosure({
       ))}
       <div className='relative flex flex-col items-center justify-center gap-2'>
         <img
-          className={`absolute top-1 w-10 ${isFour ? 'left-3/5' : 'left-13/20'} `}
+          className={`absolute top-1 w-8 ${isFour ? 'left-3/5' : 'left-13/20'} ${isLocked ? '' : isHungry ? 'animate-alert' : ''}`}
           src={isLocked ? '' : isHungry ? alert : ''}
         />
         <img

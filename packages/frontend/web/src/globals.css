@@ -92,8 +92,8 @@ body {
   to {
     transform: rotate(360deg);
   }
-  /* fin annimation mingush*/
 }
+/* fin annimation mingush*/
 
 .animate-spin {
   animation: spin 2s linear infinite;
@@ -149,8 +149,23 @@ body {
 }
 /* End of animation visitor */
 
-/* Animation Mingush */
-/* End animation Mingush*/
+/* Animation Alert */
+@keyframes alert {
+  0% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(-1);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.animate-alert {
+  animation: alert 1s ease-in-out infinite;
+}
+/* End Animation Alert*/
 
 .text-outline-purple {
   -webkit-text-stroke-width: 4px;
