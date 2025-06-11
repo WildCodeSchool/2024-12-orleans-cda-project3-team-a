@@ -16,7 +16,7 @@ export default function useCreatures(creatureId: number, zoneId: number) {
       const data = await response.json();
       setCreatures(data.creatures);
       setInactiveCreatures(data.inactiveCreatures);
-      setPotionPrice(data.potionPrice.price);
+      setPotionPrice(data.potion.price);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('fetch creature failed', error);

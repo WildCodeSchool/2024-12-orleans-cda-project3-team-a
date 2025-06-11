@@ -64,7 +64,7 @@ export default function Rank({ closeRank }: ModalRank) {
           <CloseWindow onClick={closeRank} />
         </div>
         <div>
-          <div className='flex justify-between p-2 text-xs md:w-full md:justify-between md:text-base'>
+          <div className='flex justify-between p-2 text-xs md:w-full md:text-base'>
             <p>{'Park name'}</p>
             <p>{'Username'}</p>
             <p>{'Active Creatures'}</p>

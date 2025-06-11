@@ -28,7 +28,6 @@ postFeedCreature.post('/feed', async (req: Request, res) => {
     res.json({
       ok: false,
       message: 'active creature is null',
-      parkCreatureId,
     });
     return;
   }
@@ -37,7 +36,6 @@ postFeedCreature.post('/feed', async (req: Request, res) => {
     res.json({
       ok: false,
       message: 'format is not compatible',
-      crature: creature.feed_timer,
     });
     return;
   }

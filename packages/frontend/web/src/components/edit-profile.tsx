@@ -49,8 +49,8 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
   };
 
   const isFormatValid = (value: string) => {
-    // At least 5 characters, no spaces
-    const regex = /^[^\s]{5,}$/;
+    // At least 6 characters
+    const regex = /^.{6,}$/;
     return value.trim() !== '' && regex.test(value);
   };
 
@@ -172,7 +172,7 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
                 />
                 {!isConformUsername && isTouchedUsername ? (
                   <p className='text-sm text-red-500 italic'>
-                    {'At least 5 char. without spaces'}
+                    {'At least 6 chars.'}
                   </p>
                 ) : null}
               </div>
@@ -195,7 +195,7 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
                 />
                 {!isConformParkName && isTouchedParkName ? (
                   <p className='text-sm text-red-500 italic'>
-                    {'At least 5 char. without spaces'}
+                    {'At least 6 chars.'}
                   </p>
                 ) : null}
               </div>
