@@ -194,13 +194,13 @@ new CronJob(
         .set({
           //we sum the number of creature active and multiply by his profit
           wallet: sql`
-        wallet + (
-          SELECT COALESCE(SUM(SELECT profit FROM creatures WHERE park_creatures.creature_id = creatures.id) 
+        parks.wallet + COALESCE(
+        (SELECT SUM(profit)
+        FROM park_creatures 
+        JOIN creatures ON creature_id = creatures.id
+        WHERE feed_date > NOW()
+        AND park_id = parks.id)
           , 0)
-          FROM park_creatures
-          WHERE park_creatures.park_id = parks.id
-          AND park_creatures.feed_date > NOW()
-        )
       `,
         })
         //we add the entry price especially for parks with outgoing visitors, avoid to add + 0
