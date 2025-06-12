@@ -50,44 +50,42 @@ body {
     typing3 2.5s steps(50, end) 2.6s forwards, blink-caret 0.7s;
   --animate-typing4:
     typing4 2.5s steps(30, end) 4.5s forwards, blink-caret 0.7s;
-
-  @keyframes typing1 {
-    from {
-      width: 0;
-    }
-    to {
-      width: 100%;
-    }
+}
+@keyframes typing1 {
+  from {
+    width: 0;
   }
-
-  @keyframes typing2 {
-    from {
-      width: 0;
-    }
-    to {
-      width: 100%;
-    }
-  }
-
-  @keyframes typing3 {
-    from {
-      width: 0;
-    }
-    to {
-      width: 100%;
-    }
-  }
-
-  @keyframes typing4 {
-    from {
-      width: 0;
-    }
-    to {
-      width: 100%;
-    }
+  to {
+    width: 100%;
   }
 }
 
+@keyframes typing2 {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes typing3 {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes typing4 {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
 @keyframes spin {
   to {
     transform: rotate(360deg);

@@ -47,6 +47,24 @@ function getMaxZone() {
     .executeTakeFirst();
 }
 
+// check how many of each creature have been bought in this zone
+function getCreaturesForUnlock(
+  zoneId: number,
+  parkId: number,
+  forUnlock: number,
+) {
+  return db
+    .selectFrom('creatures as c')
+    .leftJoin('park_creatures as pc', (join) =>
+      join.onRef('pc.creature_id', '=', 'c.id').on('pc.park_id', '=', parkId),
+    )
+    .select(['c.id', sql<number>`COUNT(pc.creature_id)`.as('count')])
+    .where('c.zone_id', '=', zoneId)
+    .groupBy('c.id')
+    .having(sql<number>`COUNT(pc.creature_id)`, '<', forUnlock)
+    .execute();
+}
+
 postBuyCreature.post('/buy', async (req: Request, res) => {
   const parkId = req.parkId;
 
@@ -165,6 +183,8 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     getIsNextZoneUnlocked(parkId, zoneId),
     getMaxZone(),
   ]);
+  const forUnlock =
+    zoneId === 1 ? 15 : zoneId === 2 ? 10 : zoneId === 3 ? 5 : 0;
 
   //if we have unlocked all creature in the zone, we add the next zone if is not already the case
   //don't do this if we are in the last zone
