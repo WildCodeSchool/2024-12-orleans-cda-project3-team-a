@@ -1,3 +1,4 @@
+import useEnclosures from '@/hooks/use-enclosure';
 import useVisitors from '@/hooks/use-visitors';
 
 export type ZoneIdProps = {
@@ -5,6 +6,7 @@ export type ZoneIdProps = {
 };
 export default function Visitor({ zoneId }: ZoneIdProps) {
   const { visitors } = useVisitors();
+  const { creaturesEnclos } = useEnclosures();
 
   //count the number of visitors in the zone selected and max = 4
   const countVisitorZone = Math.min(
@@ -23,6 +25,15 @@ export default function Visitor({ zoneId }: ZoneIdProps) {
   const visitorZone = visitors.find(
     (visitor) => Number(visitor.visitor_id) === Number(zoneId),
   );
+
+  const hasCreature = creaturesEnclos.filter(
+    (creature) => Number(creature.quantityCreature) > 0,
+  );
+
+  //if no creature buy in the zone, do not display visitor even if they are generated randomly
+  if (hasCreature.length === 0) {
+    return;
+  }
 
   return (
     <div className='animate-move-horizontal flex w-15 gap-4 will-change-transform'>
