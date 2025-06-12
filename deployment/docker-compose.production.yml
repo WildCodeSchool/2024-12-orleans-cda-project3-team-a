@@ -40,18 +40,18 @@ services:
       - ./.env
     depends_on:
       database:
-        condition: services_healthy
+        condition: service_healthy
   migrations:
     image: theosky/migrations:latest
-    restart: never
+    restart: no
     env_file:
       - ./.env
     depends_on:
       database:
-        condition: services_healthy
+        condition: service_healthy
   web:
     image: theosky/client:latest
-    restart: never
+    restart: no
     volumes:
       - web-client-build:/app
 

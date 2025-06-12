@@ -28,6 +28,13 @@ export default function Dashboard({ closeDashboard }: DashboardProps) {
     return count + (element.park_zone_id !== null ? 1 : 0);
   }, 0);
 
+  //necessary to exit with the escape key
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeDashboard();
+    }
+  });
+
   return (
     <div className='relative mb-[10%] overflow-auto'>
       <BgMenu>

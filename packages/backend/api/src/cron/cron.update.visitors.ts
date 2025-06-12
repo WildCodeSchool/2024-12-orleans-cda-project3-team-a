@@ -24,14 +24,14 @@ new CronJob(
           .selectFrom('park_creatures')
           .select(({ fn }) => [fn.count<number>('id').as('active_creatures')])
           .whereRef('park_creatures.park_id', '=', 'parks.id')
-          .where('park_creatures.feed_date', '>', now)
+          .where('park_creatures.feed_date', '>', sql<Date>`NOW()`)
           .as('active_creatures'),
         // subquery to know active_visitors
         eb
           .selectFrom('park_visitors')
           .select(({ fn }) => [fn.count<number>('id').as('active_visitors')])
           .whereRef('park_visitors.park_id', '=', 'parks.id')
-          .where('park_visitors.exit_time', '>', now)
+          .where('park_visitors.exit_time', '>', sql<Date>`NOW()`)
           .as('active_visitors'),
         // subquery to know nb_zones_unlocked
         eb
