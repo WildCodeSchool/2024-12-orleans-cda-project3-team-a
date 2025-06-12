@@ -51,7 +51,7 @@ export default function WorldEnclosure() {
             className='absolute left-1/2 z-2 h-full -translate-x-1/2'
           />
         </div>
-      ) : (
+      ) : isSix ? (
         <div>
           <img
             src={pathHor}
@@ -69,6 +69,8 @@ export default function WorldEnclosure() {
             className='absolute left-2/3 z-2 h-full -translate-x-1/2'
           />
         </div>
+      ) : (
+        ''
       )}
 
       <header className='fixed -right-2 z-2 flex gap-3 p-3 md:right-0'>

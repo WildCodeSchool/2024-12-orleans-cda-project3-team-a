@@ -4,7 +4,12 @@ import type { Decorations } from '@app/api';
 import type { Enclosure } from '@app/api';
 
 import useCreatures from '@/hooks/use-creatures';
+<<<<<<< HEAD
 import { enclosuresCount } from '@/utils/enclosures-count';
+=======
+import { getBackgroundEnclosure } from '@/utils/get-background-enclosure';
+import { getPositionCreatures } from '@/utils/get-position-creatures';
+>>>>>>> 3609073ec89b38168fbddc46081400044895e66c
 
 import alert from '../assets/images/icons-buttons/alert.png';
 import ButtonBuy from './button-buy';
@@ -41,6 +46,7 @@ export default function Enclosure({
   );
   const isHungry = totalInactive > 0;
 
+<<<<<<< HEAD
   const getBackground = (background: string) => {
     switch (background) {
       case 'green':
@@ -94,16 +100,16 @@ export default function Enclosure({
         return '';
     }
   };
+=======
+  const isFour = totalCreaturesInZone === 4;
+  const isSix = totalCreaturesInZone === 6;
+>>>>>>> 3609073ec89b38168fbddc46081400044895e66c
 
   const sizeEnclos = isFour ? 'w-1/2' : isSix ? 'w-1/3' : '';
-  const getPosition = isFour
-    ? decoPositionFour
-    : isSix
-      ? decoPositionSix
-      : () => '';
+
   return (
     <div
-      className={`relative flex h-[50vh] ${sizeEnclos} cursor-pointer flex-col justify-center p-4 ${getBackground(enclosures.background)} `}
+      className={`relative flex h-[50vh] ${sizeEnclos} cursor-pointer flex-col justify-center p-4 ${getBackgroundEnclosure(enclosures.background)} `}
       onClick={() => {
         if (!isModalOpen) {
           handleEnclosureClick();
@@ -113,7 +119,7 @@ export default function Enclosure({
       {decorations.map((decoration) => (
         <img
           key={decoration.creature_id}
-          className={`w-15 ${getPosition(decoration.position)}`}
+          className={`w-15 ${getPositionCreatures(totalCreaturesInZone, decoration.position)}`}
           src={`/images/decorations/${decoration.src_image}`}
           alt={decoration.name}
         />
