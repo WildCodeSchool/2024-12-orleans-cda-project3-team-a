@@ -50,6 +50,25 @@ body {
     typing3 2.5s steps(50, end) 2.6s forwards, blink-caret 0.7s;
   --animate-typing4:
     typing4 2.5s steps(30, end) 4.5s forwards, blink-caret 0.7s;
+  /*moving creature */
+  --animate-move: move 2s ease-in-out infinite;
+  /* spin loader */
+  --animate-spin: spin 2s linear infinite;
+  /* moving visitors */
+  --animate-move-horizontal: moveHorizontal 8s linear infinite;
+  --animate-move-vertical: moveVertical 0.6s ease-in-out infinite;
+  /* alert */
+  --animate-alert: alert 1s ease-in-out infinite;
+}
+
+@keyframes typing1 {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
 }
 @keyframes typing1 {
   from {
@@ -68,8 +87,33 @@ body {
     width: 100%;
   }
 }
+@keyframes typing2 {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
 
 @keyframes typing3 {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@keyframes typing3 {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes typing4 {
   from {
     width: 0;
   }
@@ -90,12 +134,9 @@ body {
   to {
     transform: rotate(360deg);
   }
-  /* fin annimation mingush*/
 }
+/* fin annimation mingush*/
 
-.animate-spin {
-  animation: spin 2s linear infinite;
-}
 /* Animation Creatures*/
 @keyframes move {
   0%,
@@ -109,10 +150,6 @@ body {
   75% {
     transform: scaleY(1.05) scaleX(0.98) rotate(-1deg) translateX(-5px);
   }
-}
-
-.animate-move {
-  animation: move 2s ease-in-out infinite;
 }
 
 /* Fin Animation Creatures*/
@@ -136,19 +173,22 @@ body {
     transform: translateY(-10px);
   }
 }
-.move-horizontal {
-  animation: moveHorizontal 8s linear infinite;
-  will-change: transform;
-}
 
-.move-vertical {
-  animation: moveVertical 0.6s ease-in-out infinite;
-  will-change: transform;
-}
 /* End of animation visitor */
 
-/* Animation Mingush */
-/* End animation Mingush*/
+/* Animation Alert */
+@keyframes alert {
+  0% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(-1);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+/* End Animation Alert*/
 
 .text-outline-purple {
   -webkit-text-stroke-width: 4px;
