@@ -7,7 +7,8 @@ import visitor from '../assets/images/icons-buttons/visitors.png';
 import { useGameInfoContext } from '../contexts/game-info-context';
 
 export default function NbVisitorsMoons() {
-  const { wallet, countVisitorActiveFormated } = useGameInfoContext();
+  const { wallet, countVisitorActiveFormated, isWalletUpdated, profitWallet } =
+    useGameInfoContext();
 
   return (
     <div className='bg-secondary-gray flex h-8 w-fit cursor-default items-center justify-between gap-2 rounded px-2 py-0.5 text-xs shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:h-9 md:rounded-md md:text-base'>
@@ -23,11 +24,19 @@ export default function NbVisitorsMoons() {
         </Link>
       </div>
       <div
-        className='flex flex-row items-center gap-0.5 md:gap-1'
+        className='relative flex flex-row items-center gap-0.5 md:gap-1'
         title={wallet.toLocaleString()}
       >
         {formatNumber(wallet)}
         <img src={moon} alt='money' className='h-6 md:h-7' title='Moons' />
+        <div className='animate-wallet-up absolute -bottom-10 text-green-700'>
+          {isWalletUpdated ? (
+            <p>
+              {'+'}
+              {profitWallet.toLocaleString()}
+            </p>
+          ) : null}
+        </div>
       </div>
     </div>
   );

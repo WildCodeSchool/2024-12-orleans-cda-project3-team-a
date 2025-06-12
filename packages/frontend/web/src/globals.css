@@ -50,15 +50,22 @@ body {
     typing3 2.5s steps(50, end) 2.6s forwards, blink-caret 0.7s;
   --animate-typing4:
     typing4 2.5s steps(30, end) 4.5s forwards, blink-caret 0.7s;
+
   /*moving creature */
   --animate-move: move 2s ease-in-out infinite;
+
   /* spin loader */
   --animate-spin: spin 2s linear infinite;
+
   /* moving visitors */
   --animate-move-horizontal: moveHorizontal 8s linear infinite;
   --animate-move-vertical: moveVertical 0.6s ease-in-out infinite;
+
   /* alert */
   --animate-alert: alert 1s ease-in-out infinite;
+
+  /* wallet */
+  --animate-wallet-up: walletUp 2s ease-in-out forwards;
 }
 
 @keyframes typing1 {
@@ -156,6 +163,26 @@ body {
   }
 }
 /* End Animation Alert*/
+
+/* Animation wallet */
+@keyframes walletUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+/* End animation wallet */
 
 .text-outline-purple {
   -webkit-text-stroke-width: 4px;

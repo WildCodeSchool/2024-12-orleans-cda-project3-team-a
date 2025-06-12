@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { formatNumber } from '@/utils/number-formatter';
 
 export default function usePark() {
-  const [wallet, setWallet] = useState(0);
   const [visitorsCount, setVisitorsCount] = useState(0);
   const [isLoadingPark, setIsLoadingPark] = useState(true);
   const [parkName, setParkName] = useState('');
@@ -18,7 +17,6 @@ export default function usePark() {
         throw new Error('No park');
       }
 
-      setWallet(data.park.wallet);
       setVisitorsCount(data.visitorsCount);
       setParkName(data.park.park_name);
 
@@ -35,12 +33,9 @@ export default function usePark() {
     void fetchPark();
   }, [fetchPark]);
 
-  const walletFormated = formatNumber(wallet);
   const visitorsFormated = formatNumber(visitorsCount);
 
   return {
-    wallet,
-    walletFormated,
     visitorsFormated,
     isLoadingPark,
     parkName,
