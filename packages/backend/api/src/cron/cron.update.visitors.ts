@@ -81,12 +81,12 @@ new CronJob(
       )
       .map((park) => park.id);
 
-    // console.log(
-    //   'parkIdsCanAcceptVisitors',
-    //   new Date(),
-    //   randomSteven,
-    //   parkIdsCanAcceptVisitors,
-    // );
+    console.log(
+      'parkIdsCanAcceptVisitors',
+      new Date(),
+      randomSteven,
+      parkIdsCanAcceptVisitors,
+    );
 
     //recover the table of zones unlock by park and visitor id matching + entry_price
     const parkZoneVisitor =
@@ -104,7 +104,7 @@ new CronJob(
             .execute()
         : [];
 
-    // console.log('parkZoneVisitor', new Date(), randomSteven, parkZoneVisitor);
+    console.log('parkZoneVisitor', new Date(), randomSteven, parkZoneVisitor);
 
     // function to use to generate a visitor id random
     function getRandomVisitor(park_id: number): number {
@@ -141,12 +141,12 @@ new CronJob(
         };
       });
 
-    // console.log(
-    //   'dataVisitorsToInsertByGroup',
-    //   new Date(),
-    //   randomSteven,
-    //   dataVisitorsToInsertByGroup,
-    // );
+    console.log(
+      'dataVisitorsToInsertByGroup',
+      new Date(),
+      randomSteven,
+      dataVisitorsToInsertByGroup,
+    );
 
     // Map to easier acces
     const entryPriceMap = new Map(
@@ -185,11 +185,11 @@ new CronJob(
     //------------------------------------------------
     //--------ADD NEW VISITOR AND ENTRY PRICE---------
     //------------------------------------------------
-    // console.log(
-    //   'start request for update park_visitors',
-    //   randomSteven,
-    //   new Date(),
-    // );
+    console.log(
+      'start request for update park_visitors',
+      randomSteven,
+      new Date(),
+    );
     if (parkIdsCanAcceptVisitors.length > 0) {
       await Promise.all([
         //1- insert visitor
@@ -212,11 +212,11 @@ new CronJob(
         ),
       ]);
     }
-    // console.log(
-    //   'END request for update park_visitors',
-    //   randomSteven,
-    //   new Date(),
-    // );
+    console.log(
+      'END request for update park_visitors',
+      randomSteven,
+      new Date(),
+    );
 
     //-----------------------------------------------------
     //---------ADD PROFIT IF CREATURE ACTIVE---------------
@@ -227,11 +227,11 @@ new CronJob(
       .filter((park) => park.active_creatures > 0)
       .map((park) => park.id);
 
-    // console.log(
-    //   'start request for update parks with creature profit',
-    //   randomSteven,
-    //   new Date(),
-    // );
+    console.log(
+      'start request for update parks with creature profit',
+      randomSteven,
+      new Date(),
+    );
     if (parkIdsCreaturesActive.length > 0) {
       //update wallet with visitors who spending money each money according to the number creature active
       await db
@@ -253,13 +253,13 @@ new CronJob(
         .execute();
     }
 
-    // console.log(
-    //   'END request for update parks with creature profit',
-    //   randomSteven,
-    //   new Date(),
-    // );
+    console.log(
+      'END request for update parks with creature profit',
+      randomSteven,
+      new Date(),
+    );
 
-    // console.log('end cron', randomSteven, new Date());
+    console.log('end cron', randomSteven, new Date());
   },
   null, // onComplete
   true, // start
