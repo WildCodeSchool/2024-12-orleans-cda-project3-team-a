@@ -10,51 +10,59 @@ new CronJob(
 
   async function () {
     const randomSteven = crypto.randomBytes(16).toString('hex');
-    console.log('start cron', randomSteven, new Date());
+    // console.log('start cron', randomSteven, new Date());
+
+    const now = new Date();
 
     //recovers count visitor and creatures active
     const parkCreaturesVisitors = await db
       .selectFrom('parks')
-
-      .leftJoin('park_creatures', (join) =>
-        join
-          .onRef('park_creatures.park_id', '=', 'parks.id')
-          .on(sql`park_creatures.feed_date > NOW()`),
-      )
-
-      .leftJoin('park_visitors', (join) =>
-        join
-          .onRef('park_visitors.park_id', '=', 'parks.id')
-          .on(sql`park_visitors.exit_time > NOW()`),
-      )
-
-      .leftJoin('park_zones', 'park_zones.park_id', 'parks.id')
-
-      .select(({ fn, eb }) => [
+      .select(({ eb }) => [
         'parks.id',
 
-        fn.count<number>('park_creatures.id').as('active_creatures'),
+        // subquery to know active_creature
+        eb
+          .selectFrom('park_creatures')
+          .select(({ fn }) => [fn.count<number>('id').as('active_creatures')])
+          .whereRef('park_creatures.park_id', '=', 'parks.id')
+          .where('park_creatures.feed_date', '>', now)
+          .as('active_creatures'),
 
-        fn.count<number>('park_visitors.id').as('active_visitors'),
+        // subquery to know active_visitors
+        eb
+          .selectFrom('park_visitors')
+          .select(({ fn }) => [fn.count<number>('id').as('active_visitors')])
+          .whereRef('park_visitors.park_id', '=', 'parks.id')
+          .where('park_visitors.exit_time', '>', now)
+          .as('active_visitors'),
 
-        fn.count<number>('park_zones.id').as('nb_zones_unlocked'),
+        // subquery to know nb_zones_unlocked
+        eb
+          .selectFrom('park_zones')
+          .select(({ fn }) => [fn.count<number>('id').as('nb_zones_unlocked')])
+          .whereRef('park_zones.park_id', '=', 'parks.id')
+          .as('nb_zones_unlocked'),
 
         // subquery to know total_creatures
         eb
           .selectFrom('park_creatures')
-          .select([fn.count<number>('id').as('total_creatures')])
+          .select(({ fn }) => [fn.count<number>('id').as('total_creatures')])
           .whereRef('park_creatures.park_id', '=', 'parks.id')
           .as('total_creatures'),
 
         // subquery to know last feed creature
         eb
           .selectFrom('park_creatures')
-          .select([fn.max('park_creatures.feed_date').as('last_hungry')])
+          .select(({ fn }) => [fn.max('feed_date').as('last_hungry')])
           .whereRef('park_creatures.park_id', '=', 'parks.id')
           .as('last_hungry'),
       ])
-      .groupBy('parks.id')
-      .$narrowType<{ total_creatures: NotNull; last_hungry: NotNull }>()
+      .$narrowType<{
+        total_creatures: NotNull;
+        last_hungry: NotNull;
+        active_visitors: NotNull;
+        active_creatures: NotNull;
+      }>()
       .execute();
 
     // if no result stop the function
@@ -78,12 +86,12 @@ new CronJob(
       )
       .map((park) => park.id);
 
-    console.log(
-      'parkIdsCanAcceptVisitors',
-      new Date(),
-      randomSteven,
-      parkIdsCanAcceptVisitors,
-    );
+    // console.log(
+    //   'parkIdsCanAcceptVisitors',
+    //   new Date(),
+    //   randomSteven,
+    //   parkIdsCanAcceptVisitors,
+    // );
 
     //recover the table of zones unlock by park and visitor id matching + entry_price
     const parkZoneVisitor =
@@ -101,7 +109,7 @@ new CronJob(
             .execute()
         : [];
 
-    console.log('parkZoneVisitor', new Date(), randomSteven, parkZoneVisitor);
+    // console.log('parkZoneVisitor', new Date(), randomSteven, parkZoneVisitor);
 
     // function to use to generate a visitor id random
     function getRandomVisitor(park_id: number): number {
@@ -138,12 +146,12 @@ new CronJob(
         };
       });
 
-    console.log(
-      'dataVisitorsToInsertByGroup',
-      new Date(),
-      randomSteven,
-      dataVisitorsToInsertByGroup,
-    );
+    // console.log(
+    //   'dataVisitorsToInsertByGroup',
+    //   new Date(),
+    //   randomSteven,
+    //   dataVisitorsToInsertByGroup,
+    // );
 
     // Map to easier acces
     const entryPriceMap = new Map(
@@ -182,11 +190,11 @@ new CronJob(
     //------------------------------------------------
     //--------ADD NEW VISITOR AND ENTRY PRICE---------
     //------------------------------------------------
-    console.log(
-      'start request for update park_visitors',
-      randomSteven,
-      new Date(),
-    );
+    // console.log(
+    //   'start request for update park_visitors',
+    //   randomSteven,
+    //   new Date(),
+    // );
     if (parkIdsCanAcceptVisitors.length > 0) {
       await Promise.all([
         //1- insert visitor
@@ -209,11 +217,11 @@ new CronJob(
         ),
       ]);
     }
-    console.log(
-      'END request for update park_visitors',
-      randomSteven,
-      new Date(),
-    );
+    // console.log(
+    //   'END request for update park_visitors',
+    //   randomSteven,
+    //   new Date(),
+    // );
 
     //-----------------------------------------------------
     //---------ADD PROFIT IF CREATURE ACTIVE---------------
@@ -224,11 +232,11 @@ new CronJob(
       .filter((park) => park.active_creatures > 0)
       .map((park) => park.id);
 
-    console.log(
-      'start request for update parks with creature profit',
-      randomSteven,
-      new Date(),
-    );
+    // console.log(
+    //   'start request for update parks with creature profit',
+    //   randomSteven,
+    //   new Date(),
+    // );
     if (parkIdsCreaturesActive.length > 0) {
       //update wallet with visitors who spending money each money according to the number creature active
       await db
@@ -250,13 +258,13 @@ new CronJob(
         .execute();
     }
 
-    console.log(
-      'END request for update parks with creature profit',
-      randomSteven,
-      new Date(),
-    );
+    // console.log(
+    //   'END request for update parks with creature profit',
+    //   randomSteven,
+    //   new Date(),
+    // );
 
-    console.log('end cron', randomSteven, new Date());
+    // console.log('end cron', randomSteven, new Date());
   },
   null, // onComplete
   true, // start
