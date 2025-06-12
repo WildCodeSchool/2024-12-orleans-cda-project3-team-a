@@ -39,14 +39,6 @@ function getIsNextZoneUnlocked(parkId: number, zoneId: number) {
     .executeTakeFirst();
 }
 
-//count the number of zone we can unlock
-function getMaxZone() {
-  return db
-    .selectFrom('zones')
-    .select([db.fn.count('zones.id').as('countZone')])
-    .executeTakeFirst();
-}
-
 // check how many of each creature have been bought in this zone
 function getCreaturesForUnlock(
   zoneId: number,
@@ -169,48 +161,42 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     })
     .executeTakeFirst();
 
-  const [
-    totalCreaturesByZone,
-    creaturesUnlockedByZone,
-    isNextZoneUnlocked,
-    maxZone,
-  ] = await Promise.all([
-    getTotalCreaturesByZone(zoneId),
-    getCreaturesUnlockedByZone(zoneId, parkId),
-    getIsNextZoneUnlocked(parkId, zoneId),
-    getMaxZone(),
-  ]);
+  const [totalCreaturesByZone, creaturesUnlockedByZone, isNextZoneUnlocked] =
+    await Promise.all([
+      getTotalCreaturesByZone(zoneId),
+      getCreaturesUnlockedByZone(zoneId, parkId),
+      getIsNextZoneUnlocked(parkId, zoneId),
+    ]);
 
   const countUnlock: Record<number, number> = {
-    1: 4,
-    2: 5,
-    3: 2,
+    1: 15,
+    2: 10,
+    3: 5,
   };
 
   //if we have unlocked all creature in the zone, we add the next zone if is not already the case
   //don't do this if we are in the last zone
-  if (Number(zoneId) !== Number(maxZone?.countZone)) {
-    const forUnlock = countUnlock[zoneId] ?? 0;
+  const forUnlock = countUnlock[zoneId] ?? 0;
 
-    if (forUnlock > 0) {
-      const creaturesUnlock = await getCreaturesForUnlock(
-        zoneId,
-        parkId,
-        forUnlock,
-      );
+  if (forUnlock > 0) {
+    const creaturesUnlock = await getCreaturesForUnlock(
+      zoneId,
+      parkId,
+      forUnlock,
+    );
 
-      if (creaturesUnlock.length === 0) {
-        if (!isNextZoneUnlocked) {
-          await db
-            .insertInto('park_zones')
-            .values({
-              park_id: parkId,
-              zone_id: Number(zoneId) + 1,
-            })
-            .executeTakeFirst();
-        }
+    if (creaturesUnlock.length === 0) {
+      if (!isNextZoneUnlocked) {
+        await db
+          .insertInto('park_zones')
+          .values({
+            park_id: parkId,
+            zone_id: Number(zoneId) + 1,
+          })
+          .executeTakeFirst();
       }
     }
+    // }
   }
 
   res.json({
