@@ -1,5 +1,6 @@
 //cron to delete inactiv visitors
 import { CronJob } from 'cron';
+import { sql } from 'kysely';
 
 import { db } from '@app/backend-shared';
 
@@ -9,7 +10,7 @@ new CronJob(
   async function () {
     await db
       .deleteFrom('park_visitors')
-      .where('exit_time', '<', new Date())
+      .where('exit_time', '<', sql<Date>`NOW()`)
       .execute();
   },
   null, // onComplete
