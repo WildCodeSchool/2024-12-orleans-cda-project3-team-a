@@ -196,7 +196,6 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
           .executeTakeFirst();
       }
     }
-    // }
   }
 
   res.json({
