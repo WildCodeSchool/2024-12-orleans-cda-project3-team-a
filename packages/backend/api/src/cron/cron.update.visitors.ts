@@ -10,7 +10,7 @@ new CronJob(
 
   async function () {
     const randomSteven = crypto.randomBytes(16).toString('hex');
-    // console.log('start cron', randomSteven, new Date());
+    console.log('start cron', randomSteven, new Date());
 
     const now = new Date();
 
@@ -19,7 +19,6 @@ new CronJob(
       .selectFrom('parks')
       .select(({ eb }) => [
         'parks.id',
-
         // subquery to know active_creature
         eb
           .selectFrom('park_creatures')
@@ -27,7 +26,6 @@ new CronJob(
           .whereRef('park_creatures.park_id', '=', 'parks.id')
           .where('park_creatures.feed_date', '>', now)
           .as('active_creatures'),
-
         // subquery to know active_visitors
         eb
           .selectFrom('park_visitors')
@@ -35,21 +33,18 @@ new CronJob(
           .whereRef('park_visitors.park_id', '=', 'parks.id')
           .where('park_visitors.exit_time', '>', now)
           .as('active_visitors'),
-
         // subquery to know nb_zones_unlocked
         eb
           .selectFrom('park_zones')
           .select(({ fn }) => [fn.count<number>('id').as('nb_zones_unlocked')])
           .whereRef('park_zones.park_id', '=', 'parks.id')
           .as('nb_zones_unlocked'),
-
         // subquery to know total_creatures
         eb
           .selectFrom('park_creatures')
           .select(({ fn }) => [fn.count<number>('id').as('total_creatures')])
           .whereRef('park_creatures.park_id', '=', 'parks.id')
           .as('total_creatures'),
-
         // subquery to know last feed creature
         eb
           .selectFrom('park_creatures')
