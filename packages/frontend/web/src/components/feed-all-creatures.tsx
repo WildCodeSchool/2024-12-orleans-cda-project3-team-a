@@ -111,7 +111,7 @@ export default function FeedAllCreatures({
         {` /creature!`}
       </p>
       <div className='flex items-center justify-center gap-3 p-2 md:gap-2'>
-        <p>{hungryCreatures.length}</p>
+        <p>{hungryCreatures.length.toLocaleString()}</p>
         <img
           className='w-8'
           src={`/images/creatures/${creaturesEnclosId.src_image}`}
