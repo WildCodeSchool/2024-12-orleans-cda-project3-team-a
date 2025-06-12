@@ -4,7 +4,6 @@ import useCreaturesStatus from '@/hooks/use-creatures-status';
 
 export default function WelcomeGuide() {
   const { hasCreatures, checkCreaturesStatus } = useCreaturesStatus();
-  const isScreen = window.innerWidth > 950;
 
   useEffect(() => {
     void checkCreaturesStatus();
@@ -15,7 +14,7 @@ export default function WelcomeGuide() {
   }
   return (
     <div
-      className={`absolute top-[65%] left-[50%] ${isScreen ? 'w-3/4' : 'm:w-13/20'} -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-white/90 p-5 text-xs font-bold md:text-base`}
+      className={`absolute top-[65%] left-[50%] -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-white/90 p-5 text-xs font-bold md:w-3/4 md:text-base lg:w-9/20`}
     >
       <div className='text-secondary-blue flex flex-col gap-3'>
         <p className='whitespace-wrap md:animate-typing1 md:flex md:w-0 md:flex-wrap md:overflow-hidden md:whitespace-nowrap'>{`Now that you've bestowed a name upon your magical park.`}</p>
