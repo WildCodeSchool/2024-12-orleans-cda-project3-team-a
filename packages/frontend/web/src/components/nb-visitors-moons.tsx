@@ -29,7 +29,11 @@ export default function NbVisitorsMoons() {
       >
         {formatNumber(wallet)}
         <img src={moon} alt='money' className='h-6 md:h-7' title='Moons' />
-        <div className='animate-wallet-up absolute -bottom-10 text-green-700'>
+        <div
+          //add a key to re-render the animation
+          key={Date.now()}
+          className='animate-wallet-up absolute -bottom-10 text-green-600'
+        >
           {isWalletUpdated ? (
             <p>
               {'+'}

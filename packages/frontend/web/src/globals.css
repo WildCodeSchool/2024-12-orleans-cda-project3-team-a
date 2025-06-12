@@ -125,7 +125,6 @@ body {
     transform: scaleY(1.05) scaleX(0.98) rotate(-1deg) translateX(-5px);
   }
 }
-
 /* Fin Animation Creatures*/
 
 /* Animation for visitor */
@@ -147,7 +146,6 @@ body {
     transform: translateY(-10px);
   }
 }
-
 /* End of animation visitor */
 
 /* Animation Alert */
@@ -181,7 +179,6 @@ body {
     opacity: 0;
   }
 }
-
 /* End animation wallet */
 
 .text-outline-purple {

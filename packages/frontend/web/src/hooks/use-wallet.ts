@@ -7,7 +7,7 @@ export default function useWallet() {
 
   const fetchWallet = useCallback(async () => {
     try {
-      const response = await fetch(`/api/game/park-user`);
+      const response = await fetch(`/api/game/wallet`);
 
       const data = (await response.json()) as {
         ok: boolean;

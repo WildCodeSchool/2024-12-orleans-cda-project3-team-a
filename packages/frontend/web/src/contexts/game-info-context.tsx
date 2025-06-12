@@ -143,7 +143,7 @@ export function GameInfoContextProvider({
 
   const previousWalletRef = useRef(wallet);
 
-  //Set interval to update the wallet each 10 seconds and recover the gain to display it
+  //Set interval to update the wallet each 5 seconds and recover the gain to display it
   useEffect(() => {
     const intervalId = setInterval(async () => {
       const previousWallet = previousWalletRef.current;
@@ -160,7 +160,7 @@ export function GameInfoContextProvider({
       }
 
       previousWalletRef.current = newWallet;
-    }, 10000);
+    }, 5000);
 
     return () => {
       clearInterval(intervalId);
