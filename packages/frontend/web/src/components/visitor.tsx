@@ -1,4 +1,4 @@
-import useEnclosures from '@/hooks/use-enclosure';
+import { useGameInfoContext } from '@/contexts/game-info-context';
 import useVisitors from '@/hooks/use-visitors';
 
 export type ZoneIdProps = {
@@ -6,7 +6,7 @@ export type ZoneIdProps = {
 };
 export default function Visitor({ zoneId }: ZoneIdProps) {
   const { visitors } = useVisitors();
-  const { creaturesEnclos } = useEnclosures();
+  const { creaturesEnclos } = useGameInfoContext();
 
   //count the number of visitors in the zone selected and max = 4
   const countVisitorZone = Math.min(
