@@ -18,7 +18,7 @@ getParkUser.get('/park-user', async (req: Request, res) => {
 
   const park = await db
     .selectFrom('parks')
-    .select(['id', 'park_name', 'wallet'])
+    .select(['id', 'park_name'])
     .where('parks.user_id', '=', userId)
     .executeTakeFirst();
 
