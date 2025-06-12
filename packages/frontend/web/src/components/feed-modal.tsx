@@ -28,7 +28,7 @@ export default function FeedModal({
   const isScreen = window.innerWidth < 768;
   const [visibleCreatures, setVisibleCreatures] = useState(isScreen ? 5 : 10);
 
-  //necessary to exit with the escape key
+  //use to exit with the escape key
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       onClick();
