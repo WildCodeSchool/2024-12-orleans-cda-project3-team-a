@@ -45,11 +45,16 @@ body {
 
   /* animation mingush */
   --animate-typing1: typing1 2.5s steps(60, end) forwards, blink-caret 0.7s;
-  --animate-typing2: typing2 2s steps(40, end) 2s forwards, blink-caret 0.7s;
+  --animate-typing2: typing2 2s steps(40, end) 1.3s forwards, blink-caret 0.7s;
   --animate-typing3:
-    typing3 2.5s steps(50, end) 2.6s forwards, blink-caret 0.7s;
+    typing3 2.5s steps(50, end) 2s forwards, blink-caret 0.7s;
   --animate-typing4:
-    typing4 2.5s steps(30, end) 4.5s forwards, blink-caret 0.7s;
+    typing4 2.5s steps(30, end) 2.4s forwards, blink-caret 0.7s;
+  --animate-typing5: 
+    typing5 2.5s steps(40, end) 4.3s forwards, blink-caret 0.7s;
+  --animate-typing6: 
+    typing6 2.5s steps(40, end) 4.5s forwards, blink-caret 0.7s;
+
   /*moving creature */
   --animate-move: move 2s ease-in-out infinite;
   /* spin loader */
@@ -95,6 +100,25 @@ body {
   to {
     width: 100%;
   }
+  
+}
+@keyframes typing5 {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+  
+}
+@keyframes typing6 {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+  
 }
 
 @keyframes spin {
