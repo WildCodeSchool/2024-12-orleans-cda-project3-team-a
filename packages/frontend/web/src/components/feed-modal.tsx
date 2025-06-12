@@ -46,13 +46,19 @@ export default function FeedModal({
           alt={enclosure.species}
         />
       </div>
+
       {/* Display content of Feed Modal */}
       {/* transparent bg to disable the click of several modals */}
       <div
         className='fixed top-0 left-0 z-5 h-full w-full bg-transparent'
         onClick={onClick}
       >
-        <div className='absolute top-15 left-[5%] max-h-[90%] w-[90%] overflow-auto'>
+        <div
+          className='absolute top-15 left-[5%] max-h-[90%] w-[90%] overflow-auto'
+          onClick={(event) => {
+            event.stopPropagation();
+          }}
+        >
           <BgMenu>
             <div className='absolute top-0 right-0 m-3'>
               <CloseWindow onClick={onClick} />
