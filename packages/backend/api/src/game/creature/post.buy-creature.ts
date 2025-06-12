@@ -94,7 +94,6 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     res.json({
       ok: false,
       message: 'creatureId is not a string',
-      creatureId,
     });
     return;
   }
@@ -110,8 +109,6 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     res.json({
       ok: false,
       message: 'no creature find in the zone chosen',
-      creatureId,
-      zoneId,
     });
     return;
   }
@@ -207,7 +204,7 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
 
   res.json({
     ok: true,
-    message: 'creature add and visitor',
+    message: 'creature and visitor added',
   });
 });
 export default postBuyCreature;

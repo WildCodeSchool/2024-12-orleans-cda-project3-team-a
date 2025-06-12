@@ -68,7 +68,6 @@ postFeedAll.post('/feed-all', async (req: Request, res) => {
     res.json({
       ok: false,
       message: 'no inactive creature',
-      creatureId,
     });
     return;
   }

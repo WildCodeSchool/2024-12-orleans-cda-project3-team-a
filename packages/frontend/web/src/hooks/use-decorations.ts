@@ -13,6 +13,7 @@ export default function useDecorations() {
         setDecorations(data.decorations);
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('fetch failed', error);
     }
   }, []);

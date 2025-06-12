@@ -1,4 +1,5 @@
 import { CronJob } from 'cron';
+import crypto from 'crypto';
 import { sql } from 'kysely';
 import type { NotNull } from 'kysely';
 
@@ -8,6 +9,9 @@ new CronJob(
   '* * * * *', // cronTime each minute
 
   async function () {
+    const randomSteven = crypto.randomBytes(16).toString('hex');
+    console.log('start cron', randomSteven, new Date());
+
     //recovers count visitor and creatures active
     const parkCreaturesVisitors = await db
       .selectFrom('parks')
@@ -58,6 +62,13 @@ new CronJob(
       return;
     }
 
+    console.log(
+      'parkCreaturesVisitors',
+      new Date(),
+      randomSteven,
+      parkCreaturesVisitors,
+    );
+
     //we add visitor in the park only when the last creature is not hungry more than 1 day and if active visitor < total creature
     const parkIdsCanAcceptVisitors = parkCreaturesVisitors
       .filter(
@@ -66,6 +77,13 @@ new CronJob(
           park.total_creatures > park.active_visitors,
       )
       .map((park) => park.id);
+
+    console.log(
+      'parkIdsCanAcceptVisitors',
+      new Date(),
+      randomSteven,
+      parkIdsCanAcceptVisitors,
+    );
 
     //recover the table of zones unlock by park and visitor id matching + entry_price
     const parkZoneVisitor =
@@ -82,6 +100,8 @@ new CronJob(
             .where('park_zones.park_id', 'in', parkIdsCanAcceptVisitors)
             .execute()
         : [];
+
+    console.log('parkZoneVisitor', new Date(), randomSteven, parkZoneVisitor);
 
     // function to use to generate a visitor id random
     function getRandomVisitor(park_id: number): number {
@@ -117,6 +137,13 @@ new CronJob(
           visitors,
         };
       });
+
+    console.log(
+      'dataVisitorsToInsertByGroup',
+      new Date(),
+      randomSteven,
+      dataVisitorsToInsertByGroup,
+    );
 
     // Map to easier acces
     const entryPriceMap = new Map(
@@ -155,6 +182,11 @@ new CronJob(
     //------------------------------------------------
     //--------ADD NEW VISITOR AND ENTRY PRICE---------
     //------------------------------------------------
+    console.log(
+      'start request for update park_visitors',
+      randomSteven,
+      new Date(),
+    );
     if (parkIdsCanAcceptVisitors.length > 0) {
       await Promise.all([
         //1- insert visitor
@@ -177,6 +209,11 @@ new CronJob(
         ),
       ]);
     }
+    console.log(
+      'END request for update park_visitors',
+      randomSteven,
+      new Date(),
+    );
 
     //-----------------------------------------------------
     //---------ADD PROFIT IF CREATURE ACTIVE---------------
@@ -187,6 +224,11 @@ new CronJob(
       .filter((park) => park.active_creatures > 0)
       .map((park) => park.id);
 
+    console.log(
+      'start request for update parks with creature profit',
+      randomSteven,
+      new Date(),
+    );
     if (parkIdsCreaturesActive.length > 0) {
       //update wallet with visitors who spending money each money according to the number creature active
       await db
@@ -194,20 +236,27 @@ new CronJob(
         .set({
           //we sum the number of creature active and multiply by his profit
           wallet: sql`
-        wallet + (
-          SELECT COALESCE(SUM( 1 
-          * (SELECT profit FROM creatures WHERE park_creatures.creature_id = creatures.id) 
-          ), 0)
-          FROM park_creatures
-          WHERE park_creatures.park_id = parks.id
-          AND park_creatures.feed_date > NOW()
-        )
+        parks.wallet + COALESCE(
+        (SELECT SUM(profit)
+        FROM park_creatures 
+        JOIN creatures ON creature_id = creatures.id
+        WHERE feed_date > NOW()
+        AND park_id = parks.id)
+          , 0)
       `,
         })
         //we add the entry price especially for parks with outgoing visitors, avoid to add + 0
         .where('parks.id', 'in', parkIdsCreaturesActive)
         .execute();
     }
+
+    console.log(
+      'END request for update parks with creature profit',
+      randomSteven,
+      new Date(),
+    );
+
+    console.log('end cron', randomSteven, new Date());
   },
   null, // onComplete
   true, // start

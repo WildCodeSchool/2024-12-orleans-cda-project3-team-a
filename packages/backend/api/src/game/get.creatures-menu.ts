@@ -17,13 +17,10 @@ function getCreaturesMenu(parkId: number) {
     .select([
       'creatures.id',
       'creatures.species',
-      'creatures.feed_timer',
       'creatures.price',
-      'creatures.profit',
       'creatures.src_image',
       'creatures.zone_id',
       'creatures.background',
-      'zones.src_sign',
       db.fn.count('park_creatures.creature_id').as('quantityCreature'),
     ])
     .groupBy('creatures.id')

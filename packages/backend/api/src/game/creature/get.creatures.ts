@@ -80,7 +80,7 @@ getCreaturesRoute.get('/', async (req: Request, res) => {
     getInactiveCreatureCount(parkId, parseInt(creatureId), parseInt(zoneId)),
   ]);
 
-  const potionPrice = await db
+  const potion = await db
     .selectFrom('potions')
     .leftJoin('creatures', 'potions.zone_id', 'creatures.zone_id')
     .select('potions.price')
@@ -88,10 +88,9 @@ getCreaturesRoute.get('/', async (req: Request, res) => {
     .executeTakeFirst();
 
   res.json({
-    parkId,
     creatures,
     inactiveCreatures,
-    potionPrice,
+    potion,
   });
 });
 
