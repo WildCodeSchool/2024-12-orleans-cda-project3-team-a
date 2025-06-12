@@ -94,7 +94,6 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     res.json({
       ok: false,
       message: 'creatureId is not a string',
-      creatureId,
     });
     return;
   }
@@ -110,8 +109,6 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     res.json({
       ok: false,
       message: 'no creature find in the zone chosen',
-      creatureId,
-      zoneId,
     });
     return;
   }
@@ -190,6 +187,8 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     3: 2,
   };
 
+  //if we have unlocked all creature in the zone, we add the next zone if is not already the case
+  //don't do this if we are in the last zone
   if (Number(zoneId) !== Number(maxZone?.countZone)) {
     const forUnlock = countUnlock[zoneId] ?? 0;
 
@@ -216,7 +215,7 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
 
   res.json({
     ok: true,
-    message: 'creature add and visitor',
+    message: 'creature and visitor added',
   });
 });
 
