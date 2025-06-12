@@ -4,12 +4,9 @@ import type { Decorations } from '@app/api';
 import type { Enclosure } from '@app/api';
 
 import useCreatures from '@/hooks/use-creatures';
-<<<<<<< HEAD
 import { enclosuresCount } from '@/utils/enclosures-count';
-=======
 import { getBackgroundEnclosure } from '@/utils/get-background-enclosure';
 import { getPositionCreatures } from '@/utils/get-position-creatures';
->>>>>>> 3609073ec89b38168fbddc46081400044895e66c
 
 import alert from '../assets/images/icons-buttons/alert.png';
 import ButtonBuy from './button-buy';
@@ -30,8 +27,9 @@ export default function Enclosure({
   const isLocked = enclosures.quantityCreature === 0;
   const { inactiveCreatures, refetchCreature, creatures, potionPrice } =
     useCreatures(enclosures.id, enclosures.zone_id);
-  const { isFour, isSix } = enclosuresCount(totalCreaturesInZone);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { isFour, isSix } = enclosuresCount(totalCreaturesInZone);
 
   const handleEnclosureClick = () => {
     setIsModalOpen(true);
@@ -45,65 +43,6 @@ export default function Enclosure({
     inactiveCreatures?.total_inactive_creatures ?? 0,
   );
   const isHungry = totalInactive > 0;
-
-<<<<<<< HEAD
-  const getBackground = (background: string) => {
-    switch (background) {
-      case 'green':
-        return 'bg-fairy-green';
-      case 'blue':
-        return 'bg-fairy-blue';
-      case 'yellow':
-        return 'bg-winged-yellow';
-      case 'red':
-        return 'bg-winged-red';
-      case 'beige':
-        return 'bg-mythologic-beige';
-      case 'dark-beige':
-        return 'bg-mythologic-dark-beige';
-      case 'dark-green':
-        return 'bg-shadow-green';
-      case 'purple':
-        return 'bg-shadow-purple';
-    }
-  };
-  const decoPositionFour = (position: string) => {
-    switch (position) {
-      case 'top-left':
-        return 'absolute top-1/10 left-1/20';
-      case 'top-right':
-        return 'absolute top-1/10 left-17/20';
-      case 'bottom-left':
-        return 'absolute top-7/10 left-1/20';
-      case 'bottom-right':
-        return 'absolute top-7/10 left-17/20';
-      case 'top-center':
-        return 'absolute top-1/10 center';
-      default:
-        return '';
-    }
-  };
-
-  const decoPositionSix = (position: string) => {
-    switch (position) {
-      case 'top-left':
-        return 'absolute top-5 left-1/20';
-      case 'top-right':
-        return 'absolute top-5 left-3/4';
-      case 'bottom-left':
-        return 'absolute top-60 left-1/20';
-      case 'bottom-right':
-        return 'absolute bottom-10 left-3/4';
-      case 'top-center':
-        return 'absolute top-5 center';
-      default:
-        return '';
-    }
-  };
-=======
-  const isFour = totalCreaturesInZone === 4;
-  const isSix = totalCreaturesInZone === 6;
->>>>>>> 3609073ec89b38168fbddc46081400044895e66c
 
   const sizeEnclos = isFour ? 'w-1/2' : isSix ? 'w-1/3' : '';
 
