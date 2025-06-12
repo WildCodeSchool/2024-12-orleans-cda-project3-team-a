@@ -12,8 +12,6 @@ export default function Login() {
   const [isErrorLogin, setIsErrorLogin] = useState(false);
   const navigate = useNavigate();
 
-  console.log('eee  ');
-
   const login = async () => {
     //get the response to know if user and password ok
     const res = await fetch(`/api/auth/login`, {
