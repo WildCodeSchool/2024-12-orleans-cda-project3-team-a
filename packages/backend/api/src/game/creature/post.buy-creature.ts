@@ -94,6 +94,7 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     res.json({
       ok: false,
       message: 'creatureId is not a string',
+      creatureId,
     });
     return;
   }
@@ -109,6 +110,8 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     res.json({
       ok: false,
       message: 'no creature find in the zone chosen',
+      creatureId,
+      zoneId,
     });
     return;
   }
@@ -180,31 +183,41 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     getIsNextZoneUnlocked(parkId, zoneId),
     getMaxZone(),
   ]);
-  const forUnlock =
-    zoneId === 1 ? 15 : zoneId === 2 ? 10 : zoneId === 3 ? 5 : 0;
 
-  //if we have unlocked all creature in the zone, we add the next zone if is not already the case
-  //don't do this if we are in the last zone
+  const countUnlock: Record<number, number> = {
+    1: 4,
+    2: 5,
+    3: 2,
+  };
+
   if (Number(zoneId) !== Number(maxZone?.countZone)) {
-    if (
-      creaturesUnlockedByZone?.countCreaturesUnlockedByZone ===
-      totalCreaturesByZone?.quantityCreature
-    ) {
-      if (!isNextZoneUnlocked) {
-        await db
-          .insertInto('park_zones')
-          .values({
-            park_id: parkId,
-            zone_id: Number(zoneId) + 1,
-          })
-          .executeTakeFirst();
+    const forUnlock = countUnlock[zoneId] ?? 0;
+
+    if (forUnlock > 0) {
+      const creaturesUnlock = await getCreaturesForUnlock(
+        zoneId,
+        parkId,
+        forUnlock,
+      );
+
+      if (creaturesUnlock.length === 0) {
+        if (!isNextZoneUnlocked) {
+          await db
+            .insertInto('park_zones')
+            .values({
+              park_id: parkId,
+              zone_id: Number(zoneId) + 1,
+            })
+            .executeTakeFirst();
+        }
       }
     }
   }
 
   res.json({
     ok: true,
-    message: 'creature and visitor added',
+    message: 'creature add and visitor',
   });
 });
+
 export default postBuyCreature;
