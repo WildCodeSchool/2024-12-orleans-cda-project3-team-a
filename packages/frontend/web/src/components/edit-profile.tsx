@@ -68,7 +68,7 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
     if (isModified) {
       setTimeout(() => {
         void navigate('/');
-      }, 3000); // 3 secondes
+      }, 2000); // 2 secondes
     }
   }, [isModified, navigate]);
 
@@ -108,7 +108,7 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
 
   return isModified ? (
     <BgMenu>
-      <div className='mb-5 flex flex-col items-center justify-center'>
+      <div className='top-6 mb-5 flex flex-col items-center justify-center'>
         <p className='text-secondary-blue z-3 mt-20 mb-10 flex flex-col items-center justify-center gap-10 px-10 text-center text-sm italic md:text-base'>
           {'Successful modification ✅! '}
         </p>
@@ -116,7 +116,7 @@ export default function EditProfile({ closeEditProfile }: EditProfileProps) {
       </div>
     </BgMenu>
   ) : (
-    <div className='relative w-full overflow-y-auto md:min-w-[90%]'>
+    <div className='relative top-6 w-[80%] overflow-y-auto md:min-w-[80%]'>
       <BgMenu>
         <div className='absolute top-0 right-0 m-3'>
           <CloseWindow onClick={closeEditProfile} />

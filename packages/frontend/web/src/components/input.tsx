@@ -19,7 +19,7 @@ export default function Input({
 }: InputProps) {
   return (
     <input
-      className={`${borderColor} ${bgColor} h-7 w-51 rounded border px-2 focus:border-2 focus:outline-none md:w-74 md:rounded-md`}
+      className={`${borderColor} ${bgColor} h-7 w-50 rounded border px-2 focus:border-2 focus:outline-none md:w-70 md:rounded-md`}
       type={type}
       placeholder={placeholder}
       value={value}

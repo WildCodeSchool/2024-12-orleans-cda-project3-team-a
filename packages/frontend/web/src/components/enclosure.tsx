@@ -4,6 +4,7 @@ import type { Decorations } from '@app/api';
 import type { Enclosure } from '@app/api';
 
 import useCreatures from '@/hooks/use-creatures';
+import { enclosuresCount } from '@/utils/enclosures-count';
 import { getBackgroundEnclosure } from '@/utils/get-background-enclosure';
 import { getPositionCreatures } from '@/utils/get-position-creatures';
 
@@ -28,6 +29,8 @@ export default function Enclosure({
     useCreatures(enclosures.id, enclosures.zone_id);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const { isFour, isSix } = enclosuresCount(totalCreaturesInZone);
+
   const handleEnclosureClick = () => {
     setIsModalOpen(true);
   };
@@ -40,9 +43,6 @@ export default function Enclosure({
     inactiveCreatures?.total_inactive_creatures ?? 0,
   );
   const isHungry = totalInactive > 0;
-
-  const isFour = totalCreaturesInZone === 4;
-  const isSix = totalCreaturesInZone === 6;
 
   const sizeEnclos = isFour ? 'w-1/2' : isSix ? 'w-1/3' : '';
 
@@ -65,7 +65,7 @@ export default function Enclosure({
       ))}
       <div className='relative flex flex-col items-center justify-center gap-2'>
         <img
-          className={`absolute top-1 w-10 ${isFour ? 'left-3/5' : 'left-13/20'} `}
+          className={`absolute top-1 w-8 ${isFour ? 'left-3/5' : 'left-13/20'} ${isLocked ? '' : isHungry ? 'animate-alert' : ''}`}
           src={isLocked ? '' : isHungry ? alert : ''}
         />
         <img
