@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { formatNumber } from '@/utils/number-formatter';
-
 export default function usePark() {
-  const [visitorsCount, setVisitorsCount] = useState(0);
+  // const [visitorsCount, setVisitorsCount] = useState(0);
   const [isLoadingPark, setIsLoadingPark] = useState(true);
   const [parkName, setParkName] = useState('');
 
@@ -17,7 +15,7 @@ export default function usePark() {
         throw new Error('No park');
       }
 
-      setVisitorsCount(data.visitorsCount);
+      // setVisitorsCount(data.visitorsCount);
       setParkName(data.park.park_name);
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,10 +31,7 @@ export default function usePark() {
     void fetchPark();
   }, [fetchPark]);
 
-  const visitorsFormated = formatNumber(visitorsCount);
-
   return {
-    visitorsFormated,
     isLoadingPark,
     parkName,
     refetchPark: fetchPark,

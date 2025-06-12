@@ -1,5 +1,4 @@
 import { type Request, Router } from 'express';
-import { sql } from 'kysely';
 
 import { db } from '@app/backend-shared';
 
@@ -30,19 +29,9 @@ getParkUser.get('/park-user', async (req: Request, res) => {
     return;
   }
 
-  const visitorsCountResult = await db
-    .selectFrom('park_visitors')
-    .select(({ fn }) => [fn.countAll<number>().as('count')])
-    .where('park_visitors.park_id', '=', park.id)
-    .where('park_visitors.exit_time', '>', sql<Date>`NOW()`)
-    .executeTakeFirst();
-
-  const visitorsCount = visitorsCountResult?.count ?? 0;
-
   res.json({
     ok: true,
     park,
-    visitorsCount,
   });
 });
 

@@ -22,7 +22,6 @@ import { formatNumber } from '@/utils/number-formatter';
 type GameInfoContextState = {
   walletFormated: string;
   wallet: number;
-  visitorsFormated: string;
   unlockedZones: UnlockedZones;
   isLoadingPark: boolean;
   isLoadingZones: boolean;
@@ -44,7 +43,6 @@ type GameInfoContextProviderProps = PropsWithChildren;
 export const gameInfoContext = createContext<GameInfoContextState>({
   walletFormated: '',
   wallet: 0,
-  visitorsFormated: '',
   unlockedZones: [],
   isLoadingPark: true,
   isLoadingZones: true,
@@ -64,7 +62,7 @@ export const gameInfoContext = createContext<GameInfoContextState>({
 export function GameInfoContextProvider({
   children,
 }: GameInfoContextProviderProps) {
-  const { visitorsFormated, isLoadingPark, refetchPark, parkName } = usePark();
+  const { isLoadingPark, refetchPark, parkName } = usePark();
 
   const { walletFormated, wallet, refetchWallet } = useWallet();
 
@@ -101,7 +99,6 @@ export function GameInfoContextProvider({
   const value = useMemo(
     () => ({
       walletFormated,
-      visitorsFormated,
       unlockedZones,
       wallet,
       walletRefetch,
@@ -121,7 +118,6 @@ export function GameInfoContextProvider({
     }),
     [
       walletFormated,
-      visitorsFormated,
       unlockedZones,
       wallet,
       walletRefetch,
