@@ -27,7 +27,7 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
       return;
     } else if (!/^[a-zA-ZÀ-ÿ0-9 ]{3,}$/.test(name)) {
       setNameError(
-        'Name must be at least 3 characters, using letters and numbers',
+        'Name must be at least 3 characters, using letters or numbers',
       );
       return;
     } else {
@@ -45,7 +45,6 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
             name,
             zoneId: creature.zone_id,
           }),
-          credentials: 'include',
         },
       );
 

@@ -10,9 +10,7 @@ export default function usePark() {
 
   const fetchPark = useCallback(async () => {
     try {
-      const response = await fetch(`/api/game/park-user`, {
-        credentials: 'include',
-      });
+      const response = await fetch(`/api/game/park-user`);
 
       const data = await response.json();
 

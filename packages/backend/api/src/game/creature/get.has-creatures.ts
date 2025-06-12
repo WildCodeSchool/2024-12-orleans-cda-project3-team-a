@@ -9,8 +9,7 @@ function hasCreaturesPark(parkId: number) {
     .selectFrom('park_creatures')
     .select(['id'])
     .where('park_id', '=', parkId)
-    .limit(1)
-    .execute();
+    .executeTakeFirst();
 }
 
 hasCreaturesRouter.get('/has-creatures', async (req: Request, res) => {
@@ -24,13 +23,12 @@ hasCreaturesRouter.get('/has-creatures', async (req: Request, res) => {
     return;
   }
 
-  const creatures = await hasCreaturesPark(parkId);
-  const hasCreatures = creatures.length > 0;
+  const hasCreature = !!(await hasCreaturesPark(parkId));
 
   res.json({
     ok: true,
-    hasCreatures,
-    message: hasCreatures ? 'Park has creatures' : 'Park has no creatures',
+    hasCreature,
+    message: hasCreature ? 'Park has creatures' : 'Park has no creatures',
   });
 });
 

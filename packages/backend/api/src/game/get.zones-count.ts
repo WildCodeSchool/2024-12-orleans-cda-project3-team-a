@@ -45,7 +45,6 @@ getZonesCount.get('/zones-count', async (req: Request, res) => {
   const unlockedZonesResult = await getZones(parkId);
 
   res.json({
-    parkId: parkId,
     unlockedZonesResult,
   });
 });

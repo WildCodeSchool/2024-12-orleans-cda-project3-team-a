@@ -9,6 +9,7 @@ export default function Login() {
   const auth = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isErrorLogin, setIsErrorLogin] = useState(false);
   const navigate = useNavigate();
 
   const login = async () => {
@@ -22,7 +23,6 @@ export default function Login() {
       headers: {
         'Content-Type': 'application/json',
       },
-      credentials: 'include',
     });
 
     //typage data
@@ -37,13 +37,15 @@ export default function Login() {
 
     //if good user put setisloggedin in true and hasParkId in true and go home
     if (data.ok) {
-      auth?.setIsLoggedIn(true);
+      auth.setIsLoggedIn(true);
 
       if (data.user.parkId !== null) {
-        auth?.setHasParkId(true);
+        auth.setHasParkId(true);
       }
 
       await navigate('/home');
+    } else {
+      setIsErrorLogin(true);
     }
   };
 
@@ -80,6 +82,12 @@ export default function Login() {
           setPassword(value);
         }}
       />
+
+      {isErrorLogin ? (
+        <p className='text-xs text-red-500 italic md:text-sm'>
+          {'Wrong password or email not registered!'}{' '}
+        </p>
+      ) : null}
 
       <ButtonBlue bg='bg-primary-blue' type='submit'>
         {'LOG IN'}

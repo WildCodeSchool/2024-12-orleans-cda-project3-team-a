@@ -1,7 +1,10 @@
+import { useState } from 'react';
+
 import type { Enclosure } from '@app/api';
 import type { Creatures } from '@app/api';
 
 import BgMenu from './bg-menu';
+import ButtonBlue from './button-blue';
 import BuyCreature from './buy-creature';
 import CloseWindow from './close-window';
 import CreatureLine from './creature-line';
@@ -22,6 +25,16 @@ export default function FeedModal({
   fetchCreatures,
   creatures,
 }: FeedModalProps) {
+  const isScreen = window.innerWidth < 768;
+  const [visibleCreatures, setVisibleCreatures] = useState(isScreen ? 5 : 10);
+
+  //use to exit with the escape key
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      onClick();
+    }
+  });
+
   return (
     <>
       {/* 'Display quantity creature in header' */}
@@ -33,10 +46,19 @@ export default function FeedModal({
           alt={enclosure.species}
         />
       </div>
+
       {/* Display content of Feed Modal */}
       {/* transparent bg to disable the click of several modals */}
-      <div className='fixed top-0 left-0 z-5 h-full w-full bg-transparent'>
-        <div className='absolute top-15 left-[5%] max-h-[90%] w-[90%] overflow-auto'>
+      <div
+        className='fixed top-0 left-0 z-5 h-full w-full bg-transparent'
+        onClick={onClick}
+      >
+        <div
+          className='absolute top-15 left-[5%] max-h-[90%] w-[90%] overflow-auto'
+          onClick={(event) => {
+            event.stopPropagation();
+          }}
+        >
           <BgMenu>
             <div className='absolute top-0 right-0 m-3'>
               <CloseWindow onClick={onClick} />
@@ -69,16 +91,32 @@ export default function FeedModal({
                     </div>
                   </div>
                 ) : (
-                  <div className='flex flex-col gap-4 pt-3 md:grid md:grid-cols-2'>
-                    {creatures.map((creature) => (
-                      <CreatureLine
-                        key={creature.id}
-                        creature={creature}
-                        potionPrice={potionPrice}
-                        fetchCreatures={fetchCreatures}
-                      />
-                    ))}
-                  </div>
+                  <>
+                    <div className='flex flex-col gap-4 pt-3 md:grid md:grid-cols-2'>
+                      {creatures.slice(0, visibleCreatures).map((creature) => (
+                        <CreatureLine
+                          key={creature.id}
+                          creature={creature}
+                          potionPrice={potionPrice}
+                          fetchCreatures={fetchCreatures}
+                        />
+                      ))}
+                    </div>
+
+                    {visibleCreatures < creatures.length && (
+                      <div className='flex justify-center pt-4'>
+                        <ButtonBlue
+                          bg='bg-primary-blue'
+                          type='button'
+                          onClick={() => {
+                            setVisibleCreatures((prev) => prev + 10);
+                          }}
+                        >
+                          {'View more'}
+                        </ButtonBlue>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </div>

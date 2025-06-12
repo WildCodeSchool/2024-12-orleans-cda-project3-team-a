@@ -25,13 +25,13 @@ export default function Visitor({ zoneId }: ZoneIdProps) {
   );
 
   return (
-    <div className='move-horizontal flex w-20 gap-4'>
+    <div className='animate-move-horizontal flex w-15 gap-4 will-change-transform'>
       {Array.from({ length: countVisitorZone }, (_, index) => (
         <img
           src={`/images/creatures/${visitorZone?.src_image}`}
           alt={visitorZone?.category}
           title={visitorZone?.category}
-          className='move-vertical'
+          className='animate-move-vertical will-change-transform'
           key={index}
         />
       ))}

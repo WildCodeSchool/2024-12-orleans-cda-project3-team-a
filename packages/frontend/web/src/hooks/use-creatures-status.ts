@@ -1,14 +1,14 @@
 import { useCallback, useState } from 'react';
 
 type CreaturesStatusProps = {
-  hasCreatures: boolean;
-  checkCreaturesStatus: () => Promise<void>;
+  hasCreature: boolean;
+  checkCreatureStatus: () => Promise<void>;
 };
 
 export default function useCreaturesStatus(): CreaturesStatusProps {
-  const [hasCreatures, setHasCreatures] = useState<boolean>(false);
+  const [hasCreature, setHasCreature] = useState<boolean>(false);
 
-  const checkCreaturesStatus = useCallback(async (): Promise<void> => {
+  const checkCreatureStatus = useCallback(async (): Promise<void> => {
     const response = await fetch('/api/game/creature/has-creatures');
 
     if (!response.ok) {
@@ -20,11 +20,11 @@ export default function useCreaturesStatus(): CreaturesStatusProps {
     if (data.hasCreatures === false) {
       return;
     }
-    setHasCreatures(data.hasCreatures);
+    setHasCreature(data.hasCreature);
   }, []);
 
   return {
-    hasCreatures,
-    checkCreaturesStatus,
+    hasCreature,
+    checkCreatureStatus,
   };
 }

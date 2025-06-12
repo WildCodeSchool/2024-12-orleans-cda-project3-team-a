@@ -4,7 +4,7 @@ import type { Enclosure } from '@app/api';
 import type { Creatures } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import useEnclosures from '@/hooks/use-enclos';
+import useEnclosures from '@/hooks/use-enclosure';
 import { formatNumber } from '@/utils/number-formatter';
 
 import Moons from '../assets/images/icons-buttons/moon.png';
@@ -62,7 +62,7 @@ export default function FeedAllCreatures({
   );
   const totalPrice = hungryCreatures.length * potionPrice;
 
-  const feedCreatures = async (zoneId: number, parkCreatureId: number) => {
+  const feedCreatures = async (zoneId: number, creatureId: number) => {
     if (hungryCreatures.length === 0) return;
 
     if (!hasEnoughMoons) {
@@ -70,14 +70,13 @@ export default function FeedAllCreatures({
     }
 
     try {
-      const response = await fetch(`/api/game/creature/feed`, {
+      const response = await fetch(`/api/game/creature/feed-all`, {
         method: 'POST',
-        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          parkCreatureId,
+          creatureId,
           zoneId,
         }),
       });
@@ -105,12 +104,12 @@ export default function FeedAllCreatures({
   return (
     <div className='w-full rounded-lg border-1 p-0.5 md:w-[30%]'>
       <h1 className='pt-2 text-center text-lg md:text-xl'>
-        {'Making everyone magical'}
+        {'Make them all magical'}
       </h1>
       <p className='flex items-center justify-center text-xs text-red-500 italic md:text-base'>
         {`This potion costs ${formatNumber(potionPrice)} `}
         <img className='mx-0.5 h-3 md:h-4' src={Moons} alt='moon' />
-        {` /creatures!`}
+        {` /creature!`}
       </p>
       <div className='flex items-center justify-center gap-3 p-2 md:gap-2'>
         <p>{hungryCreatures.length}</p>
@@ -141,9 +140,7 @@ export default function FeedAllCreatures({
 
             setIsClicked(true);
 
-            for (const creature of hungryCreatures) {
-              await feedCreatures(zoneId, creature.id);
-            }
+            await feedCreatures(zoneId, creatureId);
           }}
         >
           <img

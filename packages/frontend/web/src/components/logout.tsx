@@ -8,7 +8,6 @@ export default function Logout() {
   const logout = async () => {
     const res = await fetch(`/api/auth/logout`, {
       method: 'post',
-      credentials: 'include',
     });
     const data = (await res.json()) as {
       ok: boolean;

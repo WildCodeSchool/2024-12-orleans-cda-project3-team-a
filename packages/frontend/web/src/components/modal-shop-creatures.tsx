@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import useEnclosures from '@/hooks/use-enclos';
+import useCreaturesMenu from '@/hooks/use-creatures-menu';
 
 import BgMenu from './bg-menu';
 import CloseWindow from './close-window';
@@ -12,19 +12,19 @@ type ModalShopCreatures = {
 };
 
 export default function ModalShopCreatures({ closeShop }: ModalShopCreatures) {
-  const { creaturesEnclos } = useEnclosures();
+  const { creaturesMenu } = useCreaturesMenu();
   const { unlockedZones: zones } = useGameInfoContext();
 
   const [selectedZoneId, setSelectedZoneId] = useState<number>(1);
 
-  const creaturesInZone = creaturesEnclos.filter(
+  const creaturesInZone = creaturesMenu.filter(
     (creature) => creature.zone_id === selectedZoneId,
   );
 
   const isScreen = window.innerWidth < 768;
 
   return (
-    <div className='relative mb-10 w-full overflow-y-auto md:min-w-[90%]'>
+    <div className='relative top-4 mb-10 overflow-y-auto md:min-w-[80%]'>
       <BgMenu>
         <div>
           <h1 className='font-aerokids text-outline-white mb-10 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>

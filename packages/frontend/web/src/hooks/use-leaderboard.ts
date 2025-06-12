@@ -8,10 +8,11 @@ export default function useRank() {
   useEffect(() => {
     async function fetchRank() {
       try {
-        const response = await fetch(`/api/game/leaderboard`, {});
+        const response = await fetch(`/api/game/leaderboard`);
         const data = await response.json();
         setRank(data.rank);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('fetch failed', error);
       }
     }

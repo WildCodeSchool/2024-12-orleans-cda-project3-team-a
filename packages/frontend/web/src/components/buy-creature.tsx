@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import type { Enclosure } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import useEnclosures from '@/hooks/use-enclos';
+import useEnclosures from '@/hooks/use-enclosure';
 import { formatNumber } from '@/utils/number-formatter';
 
 import Moon from '../assets/images/icons-buttons/moon.png';
@@ -50,7 +50,7 @@ export default function BuyCreature({
       return;
     } else if (!/^[a-zA-ZÀ-ÿ0-9 ]{3,}$/.test(name)) {
       setNameError(
-        'Name must be at least 3 characters, using letters and numbers',
+        'Name must be at least 3 characters, using letters or numbers',
       );
       return;
     } else {
@@ -68,7 +68,6 @@ export default function BuyCreature({
             name,
             zoneId,
           }),
-          credentials: 'include',
         },
       );
 

@@ -1,18 +1,30 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import useCreaturesStatus from '@/hooks/use-creatures-status';
 
+import Loader from './loader';
+
 export default function WelcomeGuide() {
-  const { hasCreatures, checkCreaturesStatus } = useCreaturesStatus();
+  const { hasCreature, checkCreatureStatus } = useCreaturesStatus();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    void checkCreaturesStatus();
-  }, [checkCreaturesStatus]);
+    const fetchCreatureStatus = async () => {
+      await checkCreatureStatus();
+      setIsLoading(false);
+    };
 
-  if (hasCreatures) {
+    void fetchCreatureStatus();
+  }, [checkCreatureStatus]);
+
+  if (hasCreature) {
     return null;
   }
-  return (
+  return isLoading ? (
+    <div className='absolute flex w-1/2 -translate-x-1/2 -translate-y-1/6 transform justify-center rounded-md bg-white/90 p-5'>
+      <Loader />
+    </div>
+  ) : (
     <div
       className={`absolute top-[65%] left-[50%] w-4/5 -translate-x-1/2 -translate-y-1/2 transform rounded-md bg-white/90 p-5 text-xs font-bold md:w-3/4 md:text-base lg:w-5/10`}
     >

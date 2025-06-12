@@ -58,9 +58,7 @@ export default function AuthContext({ children, ...props }: AuthProviderProps) {
   useEffect(() => {
     //fetch to know if we have already a park id or not yet
     const fetchParkId = async () => {
-      const res = await fetch(`/api/game/park`, {
-        credentials: 'include',
-      });
+      const res = await fetch(`/api/game/park`);
 
       const data = (await res.json()) as {
         parkId: number | undefined;
