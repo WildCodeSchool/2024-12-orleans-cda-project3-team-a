@@ -4,7 +4,6 @@ import type { Enclosure } from '@app/api';
 import type { Creatures } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import useEnclosures from '@/hooks/use-enclosure';
 import { formatNumber } from '@/utils/number-formatter';
 
 import Moons from '../assets/images/icons-buttons/moon.png';
@@ -38,9 +37,9 @@ export default function FeedAllCreatures({
   potionPrice,
   fetchCreatures,
 }: CreatureId) {
-  const { creaturesEnclos } = useEnclosures();
   const [isFeeding, setIsFeeding] = useState(false);
-  const { creaturesRefetch, wallet, parkRefetch } = useGameInfoContext();
+  const { creaturesRefetch, wallet, parkRefetch, creaturesEnclos } =
+    useGameInfoContext();
   const [isClicked, setIsClicked] = useState(false);
 
   const hasEnoughMoons = wallet >= Number(potionPrice);
