@@ -168,15 +168,21 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
       getIsNextZoneUnlocked(parkId, zoneId),
     ]);
 
-  const countUnlock: Record<number, number> = {
-    1: 15,
-    2: 10,
-    3: 5,
+  const zone = await db
+    .selectFrom('zones')
+    .select(['name'])
+    .where('id', '=', zoneId)
+    .executeTakeFirst();
+
+  const countUnlock: Record<string, number> = {
+    Fairy: 15,
+    Winged: 10,
+    Mythologic: 5,
   };
 
   //if we have unlocked all creature in the zone, we add the next zone if is not already the case
   //don't do this if we are in the last zone
-  const forUnlock = countUnlock[zoneId] ?? 0;
+  const forUnlock = countUnlock[zone?.name ?? ''] ?? 0;
 
   if (forUnlock > 0) {
     const creaturesUnlock = await getCreaturesForUnlock(
