@@ -55,7 +55,6 @@ body {
   --animate-typing6:
     typing6 2.5s steps(40, end) 5.2s forwards, blink-caret 0.7s;
 
-
   /*moving creature */
   --animate-move: move 2s ease-in-out infinite;
 
