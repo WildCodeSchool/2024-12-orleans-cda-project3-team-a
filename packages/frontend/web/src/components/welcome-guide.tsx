@@ -33,7 +33,7 @@ export default function WelcomeGuide() {
         <p className='whitespace-wrap md:animate-typing2 md:flex md:w-0 md:overflow-hidden md:whitespace-nowrap'>{`It's time to bring  it to life with your very first creature!`}</p>
         <p className='whitespace-wrap md:animate-typing3 md:flex md:w-0 md:overflow-hidden md:whitespace-nowrap'>{`For now, the Fairy realm is open to you.`}</p>
         <p className='whitespace-wrap md:animate-typing4 md:flex md:w-0 md:overflow-hidden md:whitespace-nowrap'>{`To unlock the next realm, the "Winged" world.`}</p>
-        <p className='whitespace-wrap md:animate-typing5 md:flex md:w-0 md:overflow-hidden md:whitespace-nowrap'>{` You'll need to buy at least one creature of each species into your park.`}</p>
+        <p className='whitespace-wrap md:animate-typing5 md:flex md:w-0 md:overflow-hidden md:whitespace-nowrap'>{`You'll need to buy at least 15 creatures of each species.`}</p>
         <p className='whitespace-wrap md:animate-typing6 md:flex md:w-0 md:overflow-hidden md:whitespace-nowrap'>{`Let the adventure begin! ✨🐉`}</p>
       </div>
       <div className='relative mt-4'>

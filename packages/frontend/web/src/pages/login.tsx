@@ -85,7 +85,7 @@ export default function Login() {
 
       {isErrorLogin ? (
         <p className='text-xs text-red-500 italic md:text-sm'>
-          {'Wrong password or email not registered!'}{' '}
+          {'Wrong password or email not registered!'}
         </p>
       ) : null}
 
