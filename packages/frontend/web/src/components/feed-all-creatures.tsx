@@ -4,7 +4,6 @@ import type { Enclosure } from '@app/api';
 import type { Creatures } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import useEnclosures from '@/hooks/use-enclosure';
 import { formatNumber } from '@/utils/number-formatter';
 
 import Moons from '../assets/images/icons-buttons/moon.png';
@@ -38,9 +37,9 @@ export default function FeedAllCreatures({
   potionPrice,
   fetchCreatures,
 }: CreatureId) {
-  const { creaturesEnclos } = useEnclosures();
   const [isFeeding, setIsFeeding] = useState(false);
-  const { creaturesRefetch, wallet, parkRefetch } = useGameInfoContext();
+  const { creaturesRefetch, wallet, parkRefetch, creaturesEnclos } =
+    useGameInfoContext();
   const [isClicked, setIsClicked] = useState(false);
 
   const hasEnoughMoons = wallet >= Number(potionPrice);
@@ -106,13 +105,13 @@ export default function FeedAllCreatures({
       <h1 className='pt-2 text-center text-lg md:text-xl'>
         {'Make them all magical'}
       </h1>
-      <p className='flex items-center justify-center text-xs text-red-500 italic md:text-base'>
+      <p className='text-secondary-blue flex items-center justify-center text-xs italic md:text-base'>
         {`This potion costs ${formatNumber(potionPrice)} `}
         <img className='mx-0.5 h-3 md:h-4' src={Moons} alt='moon' />
         {` /creature!`}
       </p>
       <div className='flex items-center justify-center gap-3 p-2 md:gap-2'>
-        <p>{hungryCreatures.length}</p>
+        <p>{hungryCreatures.length.toLocaleString()}</p>
         <img
           className='w-8'
           src={`/images/creatures/${creaturesEnclosId.src_image}`}

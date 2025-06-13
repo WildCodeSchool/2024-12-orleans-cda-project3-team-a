@@ -28,21 +28,37 @@ export default function FeedModal({
   const isScreen = window.innerWidth < 768;
   const [visibleCreatures, setVisibleCreatures] = useState(isScreen ? 5 : 10);
 
+  //use to exit with the escape key
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      onClick();
+    }
+  });
+
   return (
     <>
       {/* 'Display quantity creature in header' */}
       <div className='bg-primary-gray absolute top-1.5 left-2 flex items-center justify-center gap-3 rounded-lg p-1 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:h-10 md:w-20'>
-        <p>{enclosure.quantityCreature}</p>
+        <p>{enclosure.quantityCreature.toLocaleString()}</p>
         <img
           className='w-7'
           src={`/images/creatures/${enclosure.src_image}`}
           alt={enclosure.species}
         />
       </div>
+
       {/* Display content of Feed Modal */}
       {/* transparent bg to disable the click of several modals */}
-      <div className='fixed top-0 left-0 z-5 h-full w-full bg-transparent'>
-        <div className='absolute top-15 left-[5%] max-h-[90%] w-[90%] overflow-auto'>
+      <div
+        className='fixed top-0 left-0 z-5 h-full w-full bg-transparent'
+        onClick={onClick}
+      >
+        <div
+          className='absolute top-15 left-[5%] max-h-[90%] w-[90%] overflow-auto'
+          onClick={(event) => {
+            event.stopPropagation();
+          }}
+        >
           <BgMenu>
             <div className='absolute top-0 right-0 m-3'>
               <CloseWindow onClick={onClick} />

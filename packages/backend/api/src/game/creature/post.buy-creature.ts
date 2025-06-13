@@ -39,12 +39,22 @@ function getIsNextZoneUnlocked(parkId: number, zoneId: number) {
     .executeTakeFirst();
 }
 
-//count the number of zone we can unlock
-function getMaxZone() {
+// check how many of each creature have been bought in this zone
+function getCreaturesForUnlock(
+  zoneId: number,
+  parkId: number,
+  forUnlock: number,
+) {
   return db
-    .selectFrom('zones')
-    .select([db.fn.count('zones.id').as('countZone')])
-    .executeTakeFirst();
+    .selectFrom('creatures as c')
+    .leftJoin('park_creatures as pc', (join) =>
+      join.onRef('pc.creature_id', '=', 'c.id').on('pc.park_id', '=', parkId),
+    )
+    .select(['c.id', sql<number>`COUNT(pc.creature_id)`.as('count')])
+    .where('c.zone_id', '=', zoneId)
+    .groupBy('c.id')
+    .having(sql<number>`COUNT(pc.creature_id)`, '<', forUnlock)
+    .execute();
 }
 
 postBuyCreature.post('/buy', async (req: Request, res) => {
@@ -151,25 +161,37 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     })
     .executeTakeFirst();
 
-  const [
-    totalCreaturesByZone,
-    creaturesUnlockedByZone,
-    isNextZoneUnlocked,
-    maxZone,
-  ] = await Promise.all([
-    getTotalCreaturesByZone(zoneId),
-    getCreaturesUnlockedByZone(zoneId, parkId),
-    getIsNextZoneUnlocked(parkId, zoneId),
-    getMaxZone(),
-  ]);
+  const [totalCreaturesByZone, creaturesUnlockedByZone, isNextZoneUnlocked] =
+    await Promise.all([
+      getTotalCreaturesByZone(zoneId),
+      getCreaturesUnlockedByZone(zoneId, parkId),
+      getIsNextZoneUnlocked(parkId, zoneId),
+    ]);
+
+  const zone = await db
+    .selectFrom('zones')
+    .select(['name'])
+    .where('id', '=', zoneId)
+    .executeTakeFirst();
+
+  const countUnlock: Record<string, number> = {
+    Fairy: 15,
+    Winged: 10,
+    Mythologic: 5,
+  };
 
   //if we have unlocked all creature in the zone, we add the next zone if is not already the case
   //don't do this if we are in the last zone
-  if (Number(zoneId) !== Number(maxZone?.countZone)) {
-    if (
-      creaturesUnlockedByZone?.countCreaturesUnlockedByZone ===
-      totalCreaturesByZone?.quantityCreature
-    ) {
+  const forUnlock = countUnlock[zone?.name ?? ''] ?? 0;
+
+  if (forUnlock > 0) {
+    const creaturesUnlock = await getCreaturesForUnlock(
+      zoneId,
+      parkId,
+      forUnlock,
+    );
+
+    if (creaturesUnlock.length === 0) {
       if (!isNextZoneUnlocked) {
         await db
           .insertInto('park_zones')
@@ -187,4 +209,5 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     message: 'creature and visitor added',
   });
 });
+
 export default postBuyCreature;

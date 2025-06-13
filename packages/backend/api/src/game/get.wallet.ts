@@ -2,9 +2,9 @@ import { type Request, Router } from 'express';
 
 import { db } from '@app/backend-shared';
 
-const getParkUser = Router();
+const getWallet = Router();
 
-getParkUser.get('/park-user', async (req: Request, res) => {
+getWallet.get('/wallet', async (req: Request, res) => {
   const userId = req.userId;
 
   if (userId === undefined) {
@@ -17,14 +17,14 @@ getParkUser.get('/park-user', async (req: Request, res) => {
 
   const park = await db
     .selectFrom('parks')
-    .select(['id', 'park_name'])
+    .select('wallet')
     .where('parks.user_id', '=', userId)
     .executeTakeFirst();
 
   if (!park) {
     res.json({
       ok: false,
-      message: 'no park for this user',
+      message: 'no wallet for this user',
     });
     return;
   }
@@ -35,4 +35,4 @@ getParkUser.get('/park-user', async (req: Request, res) => {
   });
 });
 
-export default getParkUser;
+export default getWallet;
