@@ -83,7 +83,7 @@ export default function Enclosure({
             border='border border-black'
             cursor='pointer'
           >
-            {enclosures.quantityCreature}
+            {enclosures.quantityCreature.toLocaleString()}
           </ButtonBuy>
         )}
       </div>

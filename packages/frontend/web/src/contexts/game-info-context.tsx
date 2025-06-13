@@ -4,6 +4,8 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
+  useState,
 } from 'react';
 import type { PropsWithChildren } from 'react';
 
@@ -13,13 +15,13 @@ import useDecorations from '@/hooks/use-decorations';
 import useEnclos from '@/hooks/use-enclosure';
 import usePark from '@/hooks/use-park';
 import useVisitors from '@/hooks/use-visitors';
+import useWallet from '@/hooks/use-wallet';
 import useZones from '@/hooks/use-zones';
 import { formatNumber } from '@/utils/number-formatter';
 
 type GameInfoContextState = {
   walletFormated: string;
   wallet: number;
-  visitorsFormated: string;
   unlockedZones: UnlockedZones;
   isLoadingPark: boolean;
   isLoadingZones: boolean;
@@ -32,6 +34,8 @@ type GameInfoContextState = {
   creaturesRefetch: () => Promise<void>;
   visitorsRefetch: () => Promise<void>;
   decorationsRefetch: () => Promise<void>;
+  isWalletUpdated: boolean;
+  profitWallet: number;
 };
 
 type GameInfoContextProviderProps = PropsWithChildren;
@@ -39,7 +43,6 @@ type GameInfoContextProviderProps = PropsWithChildren;
 export const gameInfoContext = createContext<GameInfoContextState>({
   walletFormated: '',
   wallet: 0,
-  visitorsFormated: '',
   unlockedZones: [],
   isLoadingPark: true,
   isLoadingZones: true,
@@ -52,19 +55,16 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   creaturesRefetch: () => Promise.resolve(),
   visitorsRefetch: () => Promise.resolve(),
   decorationsRefetch: () => Promise.resolve(),
+  isWalletUpdated: false,
+  profitWallet: 0,
 });
 
 export function GameInfoContextProvider({
   children,
 }: GameInfoContextProviderProps) {
-  const {
-    walletFormated,
-    visitorsFormated,
-    wallet,
-    isLoadingPark,
-    refetchPark,
-    parkName,
-  } = usePark();
+  const { isLoadingPark, refetchPark, parkName } = usePark();
+
+  const { walletFormated, wallet, refetchWallet } = useWallet();
 
   const { unlockedZones, isLoadingZones, refetchZones } = useZones();
   const { creaturesEnclos, refetchCreatures } = useEnclos();
@@ -76,6 +76,7 @@ export function GameInfoContextProvider({
   ).length;
   const countVisitorActiveFormated = formatNumber(countVisitorActive);
 
+  const walletRefetch = useCallback(() => refetchWallet(), [refetchWallet]);
   const parkRefetch = useCallback(() => refetchPark(), [refetchPark]);
   const zonesRefetch = useCallback(() => refetchZones(), [refetchZones]);
   const creaturesRefetch = useCallback(
@@ -91,13 +92,16 @@ export function GameInfoContextProvider({
     [refetchDecorations],
   );
 
+  const [isWalletUpdated, setIsWalletUpdated] = useState(false);
+  const [profitWallet, setProfitWallet] = useState(0);
+
   // memorize value to avoid unnecessary changes
   const value = useMemo(
     () => ({
       walletFormated,
-      visitorsFormated,
       unlockedZones,
       wallet,
+      walletRefetch,
       isLoadingPark,
       isLoadingZones,
       creaturesEnclos,
@@ -109,12 +113,14 @@ export function GameInfoContextProvider({
       creaturesRefetch,
       visitorsRefetch,
       decorationsRefetch,
+      isWalletUpdated,
+      profitWallet,
     }),
     [
       walletFormated,
-      visitorsFormated,
       unlockedZones,
       wallet,
+      walletRefetch,
       isLoadingPark,
       isLoadingZones,
       creaturesEnclos,
@@ -126,18 +132,36 @@ export function GameInfoContextProvider({
       creaturesRefetch,
       visitorsRefetch,
       decorationsRefetch,
+      isWalletUpdated,
+      profitWallet,
     ],
   );
 
+  const previousWalletRef = useRef(wallet);
+
+  //Set interval to update the wallet each 5 seconds and recover the gain to display it
   useEffect(() => {
     const intervalId = setInterval(async () => {
-      await parkRefetch();
-    }, 20000);
+      const previousWallet = previousWalletRef.current;
+
+      const newWallet = await walletRefetch();
+      if (newWallet === null) return;
+
+      if (newWallet > previousWallet) {
+        setProfitWallet(newWallet - previousWallet);
+        setIsWalletUpdated(true);
+      } else {
+        setProfitWallet(0);
+        setIsWalletUpdated(false);
+      }
+
+      previousWalletRef.current = newWallet;
+    }, 5000);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [parkRefetch]);
+  }, [walletRefetch]);
 
   return (
     <gameInfoContext.Provider value={value}>

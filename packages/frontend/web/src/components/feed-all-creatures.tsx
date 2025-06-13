@@ -105,13 +105,13 @@ export default function FeedAllCreatures({
       <h1 className='pt-2 text-center text-lg md:text-xl'>
         {'Make them all magical'}
       </h1>
-      <p className='flex items-center justify-center text-xs text-red-500 italic md:text-base'>
+      <p className='text-secondary-blue flex items-center justify-center text-xs italic md:text-base'>
         {`This potion costs ${formatNumber(potionPrice)} `}
         <img className='mx-0.5 h-3 md:h-4' src={Moons} alt='moon' />
         {` /creature!`}
       </p>
       <div className='flex items-center justify-center gap-3 p-2 md:gap-2'>
-        <p>{hungryCreatures.length}</p>
+        <p>{hungryCreatures.length.toLocaleString()}</p>
         <img
           className='w-8'
           src={`/images/creatures/${creaturesEnclosId.src_image}`}
