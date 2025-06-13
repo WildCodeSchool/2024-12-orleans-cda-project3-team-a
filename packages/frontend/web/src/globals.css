@@ -47,13 +47,13 @@ body {
   --animate-typing1: typing1 2.5s steps(60, end) forwards, blink-caret 0.7s;
   --animate-typing2: typing2 2s steps(40, end) 1.3s forwards, blink-caret 0.7s;
   --animate-typing3:
-    typing3 2.5s steps(50, end) 2s forwards, blink-caret 0.7s;
+    typing3 2.5s steps(50, end) 2.3s forwards, blink-caret 0.7s;
   --animate-typing4:
-    typing4 2.5s steps(30, end) 2.4s forwards, blink-caret 0.7s;
+    typing4 2.5s steps(30, end) 2.8s forwards, blink-caret 0.7s;
   --animate-typing5: 
-    typing5 2.5s steps(40, end) 4.3s forwards, blink-caret 0.7s;
+    typing5 2.5s steps(40, end) 3.8s forwards, blink-caret 0.7s;
   --animate-typing6: 
-    typing6 2.5s steps(40, end) 4.5s forwards, blink-caret 0.7s;
+    typing6 2.5s steps(40, end) 5.2s forwards, blink-caret 0.7s;
 
   /*moving creature */
   --animate-move: move 2s ease-in-out infinite;
