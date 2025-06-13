@@ -50,9 +50,9 @@ body {
     typing3 2.5s steps(50, end) 2.3s forwards, blink-caret 0.7s;
   --animate-typing4:
     typing4 2.5s steps(30, end) 2.8s forwards, blink-caret 0.7s;
-  --animate-typing5: 
+  --animate-typing5:
     typing5 2.5s steps(40, end) 3.8s forwards, blink-caret 0.7s;
-  --animate-typing6: 
+  --animate-typing6:
     typing6 2.5s steps(40, end) 5.2s forwards, blink-caret 0.7s;
 
   /*moving creature */
@@ -100,7 +100,6 @@ body {
   to {
     width: 100%;
   }
-  
 }
 @keyframes typing5 {
   from {
@@ -109,7 +108,6 @@ body {
   to {
     width: 100%;
   }
-  
 }
 @keyframes typing6 {
   from {
@@ -118,7 +116,6 @@ body {
   to {
     width: 100%;
   }
-  
 }
 
 @keyframes spin {
