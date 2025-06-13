@@ -40,25 +40,25 @@ export default function WorldEnclosure() {
     <div className='relative flex min-w-[1200px] flex-wrap overflow-hidden md:w-full'>
       <img
         src={pathHor}
-        alt=''
+        alt='Horizontal path'
         className='absolute top-1/2 z-2 min-w-[1200px] -translate-y-1/2'
       />
       {isFour ? (
         <img
           src={pathVert}
-          alt=''
+          alt='Vertical path'
           className='absolute left-1/2 z-2 h-full -translate-x-1/2'
         />
       ) : isSix ? (
         <div>
           <img
             src={pathVert}
-            alt=''
+            alt='Vertical path'
             className='absolute left-1/3 z-2 h-full -translate-x-1/2'
           />
           <img
             src={pathVert}
-            alt=''
+            alt='Vertical path'
             className='absolute left-2/3 z-2 h-full -translate-x-1/2'
           />
         </div>
