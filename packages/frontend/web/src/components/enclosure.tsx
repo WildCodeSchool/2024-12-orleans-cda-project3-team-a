@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { Decorations } from '@app/api';
 import type { Enclosure } from '@app/api';
@@ -45,6 +45,16 @@ export default function Enclosure({
   const isHungry = totalInactive > 0;
 
   const sizeEnclos = isFour ? 'w-1/2' : isSix ? 'w-1/3' : '';
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      await refetchCreature();
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [refetchCreature]);
 
   return (
     <div
