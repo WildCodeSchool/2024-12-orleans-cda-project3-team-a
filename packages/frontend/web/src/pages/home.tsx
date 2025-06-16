@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import InfoBulle from '@/components/info-bulle';
 import Menu from '@/components/menu';
 import NbVisitorsMoons from '@/components/nb-visitors-moons';
 import Portal from '@/components/portal';
@@ -26,6 +27,9 @@ export default function Home() {
         </div>
         <Menu />
       </header>
+      <div className='absolute top-1/2 left-1/3'>
+        <InfoBulle />
+      </div>
 
       {/* Display of 4 worlds */}
       <div className='mt-8 flex h-[95%] flex-col justify-around sm:grid sm:grid-cols-2 sm:gap-8'>
