@@ -1,6 +1,6 @@
 import useCreaturesMenu from '@/hooks/use-creatures-menu';
 
-const requiredPerZone: Record<number, number> = {
+const requiredbyZone: Record<number, number> = {
   1: 3,
   2: 2,
   3: 5,
@@ -33,7 +33,7 @@ export default function InfoBulleHome() {
       const totalForSpecies = creaturesInZone
         .filter((c) => c.species === species)
         .reduce((sum, c) => sum + Number(c.quantityCreature), 0);
-      return totalForSpecies >= requiredPerZone[zoneId];
+      return totalForSpecies >= requiredbyZone[zoneId];
     });
 
     if (!isZoneComplete) {
@@ -62,8 +62,8 @@ export default function InfoBulleHome() {
     speciesMap[c.species] += quantity;
   });
 
-  //recover the minimum number of creatures per zone
-  const required = requiredPerZone[currentZoneId];
+  //recover the minimum number of creatures by zone
+  const required = requiredbyZone[currentZoneId];
 
   return (
     <div className='hidden md:flex md:items-center md:justify-center'>
