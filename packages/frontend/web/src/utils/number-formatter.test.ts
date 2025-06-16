@@ -28,8 +28,15 @@ describe('number formatter', () => {
     expect(result).toBeUndefined();
   });
 
+  it('-5400 should return -5K', () => {
+    const firstNumber = -5400;
+    const result = formatNumber(firstNumber);
+    expect(result).toBe('-5.4K');
+  });
+
   it('coucou should return null', () => {
-    const firstNumber = -5000;
+    //@ts-expect-error - should be a number but test with string
+    const firstNumber = 'Nan' as number;
     const result = formatNumber(firstNumber);
     expect(result).toBeUndefined();
   });

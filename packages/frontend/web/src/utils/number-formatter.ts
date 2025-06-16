@@ -13,7 +13,7 @@ export function formatNumber(number: number) {
     return roundedFloor(number / 1_000_000).toString() + 'M';
   }
 
-  if (number >= 1_000) {
+  if (number >= 1_000 || number <= -1_000) {
     return roundedFloor(number / 1_000).toString() + 'K';
   }
 
