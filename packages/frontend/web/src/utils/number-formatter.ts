@@ -1,5 +1,5 @@
 export function formatNumber(number: number) {
-  if (typeof number !== 'number') {
+  if (typeof number !== 'number' || Number.isNaN(number)) {
     return;
   }
 

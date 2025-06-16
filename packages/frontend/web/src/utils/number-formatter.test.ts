@@ -34,9 +34,8 @@ describe('number formatter', () => {
     expect(result).toBe('-5.4K');
   });
 
-  it('coucou should return null', () => {
-    //@ts-expect-error - should be a number but test with string
-    const firstNumber = 'Nan' as number;
+  it('NaN should return null', () => {
+    const firstNumber = NaN;
     const result = formatNumber(firstNumber);
     expect(result).toBeUndefined();
   });
