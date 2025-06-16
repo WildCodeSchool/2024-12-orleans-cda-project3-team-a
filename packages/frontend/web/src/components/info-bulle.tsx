@@ -1,8 +1,8 @@
 import useCreaturesMenu from '@/hooks/use-creatures-menu';
 
 const requiredbyZone: Record<number, number> = {
-  1: 3,
-  2: 2,
+  1: 15,
+  2: 10,
   3: 5,
   4: 0,
 };
@@ -67,15 +67,16 @@ export default function InfoBulleHome() {
 
   return (
     <div className='hidden md:flex md:items-center md:justify-center'>
-      <div className='flex flex-row justify-center gap-6 rounded-md bg-white p-4 text-base shadow-lg'>
+      <div className='flex flex-row justify-center gap-6 rounded-md bg-white p-4 text-base shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'>
         <img className='h-10 w-10' src='/images/minguch.png' alt='Mingush' />
 
         <div className='flex flex-col'>
           <p className='mb-2 text-center'>
-            {'To unlock the next Zone you need:'}{' '}
+            {'To unlock the next Zone you need:'}
           </p>
 
           <div className='flex justify-center gap-4'>
+            {/* Displays each creature species with its total number purchased */}
             {Object.entries(speciesMap).map(([species, count]) => {
               const creature = creaturestotal.find(
                 (c) => c.species === species,
@@ -94,7 +95,9 @@ export default function InfoBulleHome() {
                   />
                   <p
                     className={`mt-1 text-sm ${
-                      count >= required ? 'text-green-500' : 'text-gray-600'
+                      count >= required
+                        ? 'font-semibold text-green-600'
+                        : 'text-gray-600'
                     }`}
                   >
                     {count} {'/'} {required}
