@@ -22,7 +22,7 @@ describe('post /api/auth/log', () => {
   });
 
   //root to login KO user is BDD but passwork KO
-  it('should return creature and visitor added', async () => {
+  it('wrong password should return error', async () => {
     const email = 'test@mail.com';
     const password = '1234';
 
@@ -38,7 +38,7 @@ describe('post /api/auth/log', () => {
   });
 
   //root to login KO user is not in BDD
-  it('should return creature and visitor added', async () => {
+  it('wrong mail should return error', async () => {
     const email = 'reloutest@mail.com';
     const password = '123456';
 
