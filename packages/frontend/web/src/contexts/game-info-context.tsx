@@ -34,6 +34,7 @@ type GameInfoContextState = {
   creaturesRefetch: () => Promise<void>;
   visitorsRefetch: () => Promise<void>;
   decorationsRefetch: () => Promise<void>;
+  walletRefetch: () => Promise<void>;
   isWalletUpdated: boolean;
   profitWallet: number;
 };
@@ -55,6 +56,7 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   creaturesRefetch: () => Promise.resolve(),
   visitorsRefetch: () => Promise.resolve(),
   decorationsRefetch: () => Promise.resolve(),
+  walletRefetch: () => Promise.resolve(),
   isWalletUpdated: false,
   profitWallet: 0,
 });
