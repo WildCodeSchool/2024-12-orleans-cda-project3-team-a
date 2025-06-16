@@ -21,8 +21,7 @@ postLoginRouter.post('/login', async (req, res) => {
   const user = await db
     .selectFrom('users')
     .leftJoin('parks', 'parks.user_id', 'users.id')
-    .select(['users.password_hash', 'users.id'])
-    .select(['parks.id as parkId'])
+    .select(['users.password_hash', 'users.id', 'parks.id as parkId'])
     .where('users.email', '=', email)
     .executeTakeFirst();
 
