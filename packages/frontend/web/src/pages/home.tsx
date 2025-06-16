@@ -1,21 +1,62 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import DailyGift from '@/components/daily-gift';
 import Menu from '@/components/menu';
 import NbVisitorsMoons from '@/components/nb-visitors-moons';
 import Portal from '@/components/portal';
 import WelcomeGuide from '@/components/welcome-guide';
+import useGift from '@/hooks/use-gift';
 
 import ParkMap from '../assets/images/background/park-map.png';
 import { useGameInfoContext } from '../contexts/game-info-context';
 
 export default function Home() {
+  const [showDailyGift, setShowDailyGift] = useState(true);
   const { unlockedZones } = useGameInfoContext();
+  const { gift, fetchGift } = useGift();
+
+  useEffect(() => {
+    void fetchGift();
+  }, [fetchGift]);
 
   return (
     <div
       className='h-screen bg-cover bg-center p-3'
       style={{ backgroundImage: `url(${ParkMap})` }}
     >
+      {gift !== undefined ? (
+        <>
+          {gift.type === 'moons' && (
+            <DailyGift
+              type='moons'
+              amount={gift.moons}
+              onClose={() => {
+                setShowDailyGift(false);
+              }}
+            />
+          )}
+          {gift.type === 'creature' && (
+            <DailyGift
+              type='creature'
+              src_image={gift.image}
+              onClose={() => {
+                setShowDailyGift(false);
+              }}
+            />
+          )}
+          {gift.type === 'visitor' && (
+            <DailyGift
+              type='visitor'
+              src_image={gift.image}
+              onClose={() => {
+                setShowDailyGift(false);
+              }}
+            />
+          )}
+        </>
+      ) : null}
+
       <Portal>
         <WelcomeGuide />
       </Portal>
@@ -26,7 +67,6 @@ export default function Home() {
         </div>
         <Menu />
       </header>
-
       {/* Display of 4 worlds */}
       <div className='mt-8 flex h-[95%] flex-col justify-around sm:grid sm:grid-cols-2 sm:gap-8'>
         {unlockedZones.map((zone) => (
