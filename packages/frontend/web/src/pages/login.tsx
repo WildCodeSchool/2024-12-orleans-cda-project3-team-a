@@ -29,6 +29,8 @@ export default function Login() {
     const data = (await res.json()) as {
       ok: boolean;
       user: {
+        id: number;
+        email: string;
         parkId: number | null;
       };
     };
