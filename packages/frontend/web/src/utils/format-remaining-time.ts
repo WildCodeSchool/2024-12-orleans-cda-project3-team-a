@@ -2,7 +2,7 @@ export function formatRemainingTime(comingDate: Date) {
   const now = new Date();
   const diff = comingDate.getTime() - now.getTime();
 
-  if (diff <= 0) return 'Feed me !';
+  if (diff <= 0) return 'Feed me!';
 
   const totalMins = Math.floor(diff / 1000 / 60);
   const days = Math.floor(totalMins / 1440);
