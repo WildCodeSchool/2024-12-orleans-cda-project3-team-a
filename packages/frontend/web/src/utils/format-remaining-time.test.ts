@@ -14,6 +14,6 @@ describe('Format remaining time', () => {
     date.setMinutes(date.getMinutes() + 2);
 
     const result = formatRemainingTime(date);
-    expect(result).toBe(' 2 m 0 s');
+    expect(result).toBe('2 m 0 s');
   });
 });

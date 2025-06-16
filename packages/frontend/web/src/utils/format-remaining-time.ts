@@ -15,5 +15,5 @@ export function formatRemainingTime(comingDate: Date) {
   if (hours > 0) remainingTime.push(`${hours} H`);
   if (minutes > 0 && days === 0) remainingTime.push(`${minutes} m`);
   if (hours === 0) remainingTime.push(`${seconds} s`);
-  return ` ${remainingTime.join(' ')}`;
+  return remainingTime.join(' ');
 }
