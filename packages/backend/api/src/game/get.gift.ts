@@ -11,7 +11,7 @@ function getLastGift(parkId: number) {
     .selectFrom('park_gifts')
     .select(['gift_date'])
     .where('park_id', '=', parkId)
-    .where('gift_date', '>', sql<Date>`NOW() - INTERVAL 1 MINUTE`)
+    .where('gift_date', '>', sql<Date>`NOW() - INTERVAL HOUR`)
     .execute();
 }
 
