@@ -6,7 +6,7 @@ import app from '..';
 describe('post /api/auth/log', () => {
   //root to login ok
   it('root login', async () => {
-    const email = 'relou@mail.com';
+    const email = 'test@mail.com';
     const password = '123456';
 
     const res = await supertest(app)
@@ -23,7 +23,7 @@ describe('post /api/auth/log', () => {
 
   //root to login KO user is BDD but passwork KO
   it('should return creature and visitor added', async () => {
-    const email = 'relou@mail.com';
+    const email = 'test@mail.com';
     const password = '1234';
 
     const res = await supertest(app)
@@ -39,7 +39,7 @@ describe('post /api/auth/log', () => {
 
   //root to login KO user is not in BDD
   it('should return creature and visitor added', async () => {
-    const email = 'relourelou@mail.com';
+    const email = 'reloutest@mail.com';
     const password = '123456';
 
     const res = await supertest(app)

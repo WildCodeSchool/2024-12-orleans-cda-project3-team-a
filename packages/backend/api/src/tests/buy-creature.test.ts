@@ -9,7 +9,7 @@ describe('post /api/game/creature/buy', () => {
 
   //login
   it('should return login ok true', async () => {
-    const email = 'relou@mail.com';
+    const email = 'test@mail.com';
     const password = '123456';
 
     const res = await agent.post('/api/auth/login').send({ email, password });
