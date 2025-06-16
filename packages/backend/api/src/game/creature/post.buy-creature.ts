@@ -161,12 +161,11 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     })
     .executeTakeFirst();
 
-  const [totalCreaturesByZone, creaturesUnlockedByZone, isNextZoneUnlocked] =
-    await Promise.all([
-      getTotalCreaturesByZone(zoneId),
-      getCreaturesUnlockedByZone(zoneId, parkId),
-      getIsNextZoneUnlocked(parkId, zoneId),
-    ]);
+  const [isNextZoneUnlocked] = await Promise.all([
+    getTotalCreaturesByZone(zoneId),
+    getCreaturesUnlockedByZone(zoneId, parkId),
+    getIsNextZoneUnlocked(parkId, zoneId),
+  ]);
 
   const zone = await db
     .selectFrom('zones')
