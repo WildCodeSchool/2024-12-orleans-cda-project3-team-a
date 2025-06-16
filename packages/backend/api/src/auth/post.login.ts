@@ -21,8 +21,13 @@ postLoginRouter.post('/login', async (req, res) => {
   const user = await db
     .selectFrom('users')
     .leftJoin('parks', 'parks.user_id', 'users.id')
-    .selectAll('users')
-    .select(['parks.id as parkId'])
+    .select([
+      'users.password_hash',
+      'users.id',
+      'parks.id as parkId',
+      'users.id',
+      'users.email',
+    ])
     .where('users.email', '=', email)
     .executeTakeFirst();
 
@@ -34,7 +39,9 @@ postLoginRouter.post('/login', async (req, res) => {
     return;
   }
 
-  const isCorrectPassword = await argon2.verify(user.password_hash, password);
+  const { password_hash: userPasswordHash, ...restUser } = user;
+
+  const isCorrectPassword = await argon2.verify(userPasswordHash, password);
 
   if (!isCorrectPassword) {
     res.json({
@@ -88,7 +95,7 @@ postLoginRouter.post('/login', async (req, res) => {
   res.json({
     message: 'User logged in!',
     ok: true,
-    user,
+    user: restUser,
   });
 });
 
