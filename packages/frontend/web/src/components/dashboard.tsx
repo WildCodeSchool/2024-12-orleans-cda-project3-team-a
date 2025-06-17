@@ -36,15 +36,15 @@ export default function Dashboard({ closeDashboard }: DashboardProps) {
   });
 
   return (
-    <div className='relative mb-[10%] overflow-auto'>
+    <div className='relative mb-15 overflow-auto'>
       <BgMenu>
         {/* Display the button to close the window */}
         <div className='flex flex-row-reverse'>
           <CloseWindow onClick={closeDashboard} />
         </div>
         {/* Container for display content of dashboard */}
-        <div className='h-full p-2 text-xs md:text-base'>
-          <h1 className='font-aerokids text-outline-white mb-10 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>
+        <div className='h-full text-xs md:text-base'>
+          <h1 className='font-aerokids text-outline-white mb-8 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:mb-6 md:text-6xl'>
             {parkName}
           </h1>
           {/* Container My park and My visitor */}
