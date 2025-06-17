@@ -8,62 +8,17 @@ const requiredbyZone: Record<number, number> = {
 };
 
 export default function InfoBulleHome() {
-  const { creaturesMenu, unlockedZones } = useGameInfoContext();
-  console.log(unlockedZones);
+  const { creaturesEnclos, unlockedZones } = useGameInfoContext();
 
-  if (!creaturesMenu.length) return null;
+  if (!creaturesEnclos.length) return null;
 
-  const zones = unlockedZones.map((zone) => zone.zone_id);
-
-  let currentZoneId = 1;
-
-  //filter creature by zone
-  for (const zoneId of zones) {
-    const creaturesInZone = creaturesMenu.filter(
-      (c) => c.zone_id === zoneId && Number(c.quantityCreature) > 0,
-    );
-
-    //extraction of creatures for advancement
-    const allSpeciesInZone = [
-      ...new Set(
-        creaturesMenu.filter((c) => c.zone_id === zoneId).map((c) => c.species),
-      ),
-    ];
-
-    //check if zone completed
-    const isZoneComplete = allSpeciesInZone.every((species) => {
-      const totalForSpecies = creaturesInZone
-        .filter((c) => c.species === species)
-        .reduce((sum, c) => sum + Number(c.quantityCreature), 0);
-      return totalForSpecies >= requiredbyZone[zoneId];
-    });
-
-    if (!isZoneComplete) {
-      currentZoneId = zoneId;
-      break;
-    } else {
-      currentZoneId = zoneId + 1;
-    }
-  }
-
-  if (currentZoneId >= 4) return null;
-
-  const creaturestotal = creaturesMenu.filter(
-    (c) => c.zone_id === currentZoneId,
-  );
-
-  //item that counts purchased creatures
-  const speciesMap: Record<string, number> = {};
-
-  //Count the total number of creatures purchased by species in a speciesMap object
-  creaturestotal.forEach((c) => {
-    const quantity = Number(c.quantityCreature);
-    if (!speciesMap[c.species]) speciesMap[c.species] = 0;
-    speciesMap[c.species] += quantity;
-  });
+  //recover the number of zone unlocked
+  const countZoneIdUnlocked = unlockedZones.reduce((count, element) => {
+    return count + (element.park_zone_id !== null ? 1 : 0);
+  }, 0);
 
   //recover the minimum number of creatures by zone
-  const required = requiredbyZone[currentZoneId];
+  const required = requiredbyZone[countZoneIdUnlocked - 1];
 
   return (
     <div className='absolute top-1/2 right-5 flex -translate-y-1/2 items-center justify-center md:left-1/2 md:-translate-x-1/2'>
@@ -80,32 +35,31 @@ export default function InfoBulleHome() {
         </div>
         <div className='flex flex-col justify-center gap-4 md:flex-row'>
           {/* Displays each creature species with its total number purchased */}
-          {Object.entries(speciesMap).map(([species, count]) => {
-            const creature = creaturestotal.find((c) => c.species === species);
-            if (!creature) return null;
-
-            return (
+          {creaturesEnclos
+            .filter((creature) => creature.zone_id === countZoneIdUnlocked)
+            .map((creature) => (
               <div
-                key={species}
+                key={creature.id}
                 className='flex min-w-[60px] flex-col items-center'
               >
                 <img
                   src={`/images/creatures/${creature.src_image}`}
-                  alt={species}
+                  alt={creature.species}
                   className='h-5 w-5 md:h-10 md:w-10'
                 />
                 <p
                   className={`mt-1 text-xs md:text-base ${
-                    count >= required
-                      ? 'font-semibold text-green-600'
+                    Number(creature.quantityCreature) >= required
+                      ? 'font-semibold text-green-500'
                       : 'text-gray-600'
                   }`}
                 >
-                  {count} {'/'} {required}
+                  {creature.quantityCreature}
+                  {'/'}
+                  {required}
                 </p>
               </div>
-            );
-          })}
+            ))}
         </div>
       </div>
     </div>
