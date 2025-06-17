@@ -1,4 +1,4 @@
-export function nameGenerator() {
+export function generateName() {
   const names = [
     'Ace',
     'Archie',

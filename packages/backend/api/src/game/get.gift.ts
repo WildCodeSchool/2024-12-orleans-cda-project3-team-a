@@ -2,7 +2,7 @@ import { type Request, Router } from 'express';
 import { sql } from 'kysely';
 
 import { db } from '@app/backend-shared';
-import { nameGenerator } from '@app/shared';
+import { generateName } from '@app/shared';
 
 const getGiftRoute = Router();
 
@@ -49,7 +49,7 @@ type Creature = {
 
 //function insert creature into park_creatures
 async function insertCreatureToPark(parkId: number, creature: Creature) {
-  const name = nameGenerator();
+  const name = generateName();
   const gender = Math.random() < 0.5 ? 'male' : 'female';
 
   await db

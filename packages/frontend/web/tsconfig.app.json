@@ -23,5 +23,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "../../shared/src/utils/name-generator.ts"]
+  "include": ["src"]
 }

@@ -1,4 +1,4 @@
 export type * from './types';
 
 export * from './utils/env';
-export * from './utils/name-generator';
+export * from './utils/generate-name';

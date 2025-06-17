@@ -14,11 +14,7 @@ import { useGameInfoContext } from '../contexts/game-info-context';
 export default function Home() {
   const [isShowDailyGift, setIsShowDailyGift] = useState(false);
   const { unlockedZones } = useGameInfoContext();
-  const { gift, fetchGift } = useGift();
-
-  useEffect(() => {
-    void fetchGift();
-  }, [fetchGift]);
+  const { gift } = useGift();
 
   useEffect(() => {
     if (gift !== undefined) {

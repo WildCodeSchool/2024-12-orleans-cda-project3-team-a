@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 type Gift =
   | { type: 'creature'; creatureId: number; image: string }
@@ -26,6 +26,10 @@ export default function useGift() {
       console.error('fetch gift failed');
     }
   }, []);
+
+  useEffect(() => {
+    void fetchGift();
+  }, [fetchGift]);
 
   return {
     gift,
