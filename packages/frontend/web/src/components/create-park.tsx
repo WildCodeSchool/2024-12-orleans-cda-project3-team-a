@@ -12,11 +12,11 @@ export default function CreatePark() {
 
   const { hasParkId, setHasParkId } = useAuth();
   const {
-    parkRefetch,
-    zonesRefetch,
-    creaturesRefetch,
-    visitorsRefetch,
-    decorationsRefetch,
+    refetchPark,
+    refetchZones,
+    refetchCreatures,
+    refetchVisitors,
+    refetchDecorations,
   } = useGameInfoContext();
 
   // if we have a parkid go Home
@@ -44,11 +44,11 @@ export default function CreatePark() {
       setHasParkId(true);
       //Refetch necessary fetch
       await Promise.all([
-        parkRefetch(),
-        zonesRefetch(),
-        creaturesRefetch(),
-        visitorsRefetch(),
-        decorationsRefetch(),
+        refetchPark(),
+        refetchZones(),
+        refetchCreatures(),
+        refetchVisitors(),
+        refetchDecorations(),
       ]);
     }
   };

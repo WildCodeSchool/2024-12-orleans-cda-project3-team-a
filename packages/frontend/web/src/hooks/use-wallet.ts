@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { formatNumber } from '@/utils/number-formatter';
-
 export default function useWallet() {
   const [wallet, setWallet] = useState(0);
 
@@ -12,11 +10,11 @@ export default function useWallet() {
       const data = (await response.json()) as {
         ok: boolean;
         park: {
-          wallet: number | null;
+          wallet: number;
         };
       };
 
-      if (!data.ok || data.park.wallet === null) {
+      if (!data.ok) {
         throw new Error('No park');
       }
 
@@ -28,7 +26,7 @@ export default function useWallet() {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('fetch for wallet failed');
-      return null;
+      return;
     }
   }, []);
 
@@ -36,11 +34,8 @@ export default function useWallet() {
     void fetchWallet();
   }, [fetchWallet]);
 
-  const walletFormated = formatNumber(wallet);
-
   return {
     wallet,
-    walletFormated,
     refetchWallet: fetchWallet,
   };
 }

@@ -202,7 +202,7 @@ getGiftRoute.get('/gift', async (req: Request, res) => {
     //else draw a visitor from the unlocked ones
     const chosen = visitors[Math.floor(Math.random() * visitors.length)];
 
-    await insertGift(parkId, 'visitor', `visitor- ${chosen.category}`);
+    await insertGift(parkId, 'visitor', `visitor-${chosen.category}`);
     await insertVisitorToPark(parkId, chosen);
     await updateWallet(parkId, chosen.entry_price);
 

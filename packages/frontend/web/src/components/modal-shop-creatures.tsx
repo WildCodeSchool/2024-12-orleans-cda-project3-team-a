@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import useCreaturesMenu from '@/hooks/use-creatures-menu';
 
 import BgMenu from './bg-menu';
 import CloseWindow from './close-window';
@@ -12,8 +11,7 @@ type ModalShopCreatures = {
 };
 
 export default function ModalShopCreatures({ closeShop }: ModalShopCreatures) {
-  const { creaturesMenu } = useCreaturesMenu();
-  const { unlockedZones: zones } = useGameInfoContext();
+  const { unlockedZones: zones, creaturesMenu } = useGameInfoContext();
 
   const [selectedZoneId, setSelectedZoneId] = useState<number>(1);
 

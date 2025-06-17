@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import DailyGift from '@/components/daily-gift';
 import Menu from '@/components/menu';
 import NbVisitorsMoons from '@/components/nb-visitors-moons';
+import NextUnlockZonePopup from '@/components/next-unlock-zone-popup';
 import Portal from '@/components/portal';
 import WelcomeGuide from '@/components/welcome-guide';
 import useGift from '@/hooks/use-gift';
@@ -31,27 +32,35 @@ export default function Home() {
       className='h-screen bg-cover bg-center p-3'
       style={{ backgroundImage: `url(${ParkMap})` }}
     >
-      {isShowDailyGift && gift !== undefined ? (
-        <>
-          {gift.type === 'moons' && (
-            <DailyGift type='moons' amount={gift.moons} onClick={handleClose} />
-          )}
-          {gift.type === 'creature' && (
-            <DailyGift
-              type='creature'
-              src_image={gift.image}
-              onClick={handleClose}
-            />
-          )}
-          {gift.type === 'visitor' && (
-            <DailyGift
-              type='visitor'
-              src_image={gift.image}
-              onClick={handleClose}
-            />
-          )}
-        </>
-      ) : null}
+      <NextUnlockZonePopup />
+
+      <div className='z-10'>
+        {isShowDailyGift && gift !== undefined ? (
+          <>
+            {gift.type === 'moons' && (
+              <DailyGift
+                type='moons'
+                amount={gift.moons}
+                onClick={handleClose}
+              />
+            )}
+            {gift.type === 'creature' && (
+              <DailyGift
+                type='creature'
+                src_image={gift.image}
+                onClick={handleClose}
+              />
+            )}
+            {gift.type === 'visitor' && (
+              <DailyGift
+                type='visitor'
+                src_image={gift.image}
+                onClick={handleClose}
+              />
+            )}
+          </>
+        ) : null}
+      </div>
 
       <Portal>
         <WelcomeGuide />
@@ -63,6 +72,7 @@ export default function Home() {
         </div>
         <Menu />
       </header>
+
       {/* Display of 4 worlds */}
       <div className='mt-8 flex h-[95%] flex-col justify-around sm:grid sm:grid-cols-2 sm:gap-8'>
         {unlockedZones.map((zone) => (

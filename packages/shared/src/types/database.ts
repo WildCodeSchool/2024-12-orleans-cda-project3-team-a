@@ -121,6 +121,7 @@ export interface Zones {
   id: Generated<number>;
   link: string;
   name: string;
+  required_qty: number;
   src_image: string;
   src_sign: string;
 }
