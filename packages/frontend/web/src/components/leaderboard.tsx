@@ -53,15 +53,15 @@ export default function Rank({ closeRank }: ModalRank) {
   };
 
   return (
-    <div className='relative mb-[20%] overflow-y-auto md:mb-[12%]'>
+    <div className='relative mb-[20%] overflow-y-auto md:mb-20'>
       <BgMenu>
+        <div className='flex flex-row-reverse'>
+          <CloseWindow onClick={closeRank} />
+        </div>
         <div>
           <h1 className='font-aerokids text-outline-white mb-5 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>
             {'Leaderboard'}
           </h1>
-        </div>
-        <div className='absolute top-5 left-[85%] md:left-[95%]'>
-          <CloseWindow onClick={closeRank} />
         </div>
         <div>
           <div className='flex justify-between p-2 text-xs md:w-full md:text-base'>

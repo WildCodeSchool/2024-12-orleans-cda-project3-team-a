@@ -29,6 +29,14 @@ getWallet.get('/wallet', async (req: Request, res) => {
     return;
   }
 
+  if (park.wallet === null) {
+    res.json({
+      ok: false,
+      message: 'no wallet for this user',
+    });
+    return;
+  }
+
   res.json({
     ok: true,
     park,

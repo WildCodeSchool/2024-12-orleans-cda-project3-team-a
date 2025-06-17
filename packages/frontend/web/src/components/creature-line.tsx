@@ -4,6 +4,7 @@ import type { Creatures } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
 import { formatRemainingTime } from '@/utils/format-remaining-time';
+import { formatNumber } from '@/utils/number-formatter';
 
 import Female from '../assets/images/icons-buttons/female.png';
 import Male from '../assets/images/icons-buttons/male.png';
@@ -36,7 +37,7 @@ export default function CreatureLine({
   creature,
   potionPrice,
 }: CreatureLineProps) {
-  const { wallet, parkRefetch, walletRefetch } = useGameInfoContext();
+  const { wallet, refetchPark, refetchWallet } = useGameInfoContext();
   const [isClicked, setIsClicked] = useState(false);
   const hasEnoughMoons = wallet >= Number(potionPrice);
 
@@ -57,7 +58,7 @@ export default function CreatureLine({
 
       const result = await response.json();
       if (result.ok === true) {
-        await Promise.all([fetchCreatures(), parkRefetch(), walletRefetch()]);
+        await Promise.all([fetchCreatures(), refetchPark(), refetchWallet()]);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -119,7 +120,7 @@ export default function CreatureLine({
           alt='potion'
           className='h-3 px-0 md:h-6 md:py-0.5'
         />
-        <p className='text-xs md:text-base'>{potionPrice}</p>
+        <p className='text-xs md:text-base'>{formatNumber(potionPrice)}</p>
         <img className='h-2 md:h-5 md:px-0.5' src={Moon} alt='moon' />
       </ButtonBuy>
     </div>

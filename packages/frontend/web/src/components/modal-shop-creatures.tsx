@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
-import useCreaturesMenu from '@/hooks/use-creatures-menu';
 
 import BgMenu from './bg-menu';
 import CloseWindow from './close-window';
@@ -12,8 +11,7 @@ type ModalShopCreatures = {
 };
 
 export default function ModalShopCreatures({ closeShop }: ModalShopCreatures) {
-  const { creaturesMenu } = useCreaturesMenu();
-  const { unlockedZones: zones } = useGameInfoContext();
+  const { unlockedZones: zones, creaturesMenu } = useGameInfoContext();
 
   const [selectedZoneId, setSelectedZoneId] = useState<number>(1);
 
@@ -24,19 +22,21 @@ export default function ModalShopCreatures({ closeShop }: ModalShopCreatures) {
   const isScreen = window.innerWidth < 768;
 
   return (
-    <div className='relative top-4 mb-10 overflow-y-auto md:min-w-[80%]'>
+    <div className='relative mb-15 overflow-y-auto md:min-w-[80%]'>
       <BgMenu>
+        <div className='flex flex-row-reverse'>
+          <CloseWindow onClick={closeShop} />
+        </div>
         <div>
-          <h1 className='font-aerokids text-outline-white mb-10 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:text-6xl'>
+          <h1 className='font-aerokids text-outline-white mb-4 bg-[linear-gradient(to_right,var(--color-winged-red),var(--color-fairy-blue),var(--color-fairy-green),var(--color-title-orange),var(--color-title-purple))] bg-clip-text text-4xl text-transparent md:mb-10 md:text-6xl'>
             {'Shop'}
           </h1>
         </div>
-        <div className='absolute top-5 left-[85%] md:left-[95%]'>
-          <CloseWindow onClick={closeShop} />
-        </div>
         {isScreen ? (
           <div className='flex flex-col items-center justify-center'>
-            <label>{'Choose the world'}</label>
+            <label className='text-secondary-blue mb-2 italic'>
+              {'Choose the world'}
+            </label>
             <select
               value={selectedZoneId}
               onChange={(event) => {

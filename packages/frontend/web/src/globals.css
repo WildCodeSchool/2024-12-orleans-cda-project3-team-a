@@ -70,6 +70,15 @@ body {
 
   /* wallet */
   --animate-wallet-up: walletUp 2s ease-in-out forwards;
+
+  /* gifts light */
+  --animate-lights-on: lightsOn 3s ease-in-out;
+
+  /* chest apparition */
+  --animate-scale: chestApparition 2s ease-in-out;
+
+  /* drop gift */
+  --animate-drop: dropGift 1s ease-out forwards;
 }
 
 @keyframes typing1 {
@@ -200,6 +209,64 @@ body {
   }
 }
 /* End animation wallet */
+
+/* Daily gift animations */
+/* lights on */
+@keyframes lightsOn {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 0;
+  }
+  7% {
+    opacity: 1;
+  }
+  10% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0;
+  }
+  33% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+}
+
+/* Chest apparition */
+@keyframes chestApparition {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Drop gift */
+@keyframes dropGift {
+  0% {
+    transform: translateY(-200px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* End of Daily gift animations */
 
 .text-outline-purple {
   -webkit-text-stroke-width: 4px;

@@ -18,6 +18,7 @@ function getZones(parkId: number) {
       'zones.src_image',
       'zones.link',
       'park_zones.id as park_zone_id',
+      'zones.required_qty',
     ])
     .execute();
 }
