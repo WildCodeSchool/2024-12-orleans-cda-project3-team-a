@@ -8,6 +8,7 @@ import getAvatars from './get.avatars';
 import getCreaturesMenuRoute from './get.creatures-menu';
 import getDecorations from './get.decorations';
 import getEnclosures from './get.enclosures';
+import getGiftRoute from './get.gift';
 import getLeaderboardRoute from './get.leaderboard';
 import getParkUser from './get.park-user';
 import getWallet from './get.wallet';
@@ -30,5 +31,6 @@ gameRouter.use('/visitors', visitorRouter);
 gameRouter.use(getLeaderboardRoute);
 gameRouter.use(getAvatars);
 gameRouter.use(getCreaturesMenuRoute);
+gameRouter.use(getGiftRoute);
 
 export default gameRouter;
