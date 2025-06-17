@@ -12,7 +12,7 @@ import ParkMap from '../assets/images/background/park-map.png';
 import { useGameInfoContext } from '../contexts/game-info-context';
 
 export default function Home() {
-  const [showDailyGift, setShowDailyGift] = useState(false);
+  const [isShowDailyGift, setIsShowDailyGift] = useState(false);
   const { unlockedZones } = useGameInfoContext();
   const { gift, fetchGift } = useGift();
 
@@ -22,12 +22,12 @@ export default function Home() {
 
   useEffect(() => {
     if (gift !== undefined) {
-      setShowDailyGift(true);
+      setIsShowDailyGift(true);
     }
   }, [gift]);
 
   const handleClose = () => {
-    setShowDailyGift(false);
+    setIsShowDailyGift(false);
   };
 
   return (
@@ -35,7 +35,7 @@ export default function Home() {
       className='h-screen bg-cover bg-center p-3'
       style={{ backgroundImage: `url(${ParkMap})` }}
     >
-      {showDailyGift && gift !== undefined ? (
+      {isShowDailyGift && gift !== undefined ? (
         <>
           {gift.type === 'moons' && (
             <DailyGift type='moons' amount={gift.moons} onClick={handleClose} />

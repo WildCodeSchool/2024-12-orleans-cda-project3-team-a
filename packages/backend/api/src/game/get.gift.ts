@@ -4,20 +4,90 @@ import { sql } from 'kysely';
 import { db } from '@app/backend-shared';
 import { nameGenerator } from '@app/shared';
 
-const getGiftsRoute = Router();
+const getGiftRoute = Router();
 
+//check if last received gift more than 24h
 function getLastGift(parkId: number) {
   return db
     .selectFrom('park_gifts')
     .select(['gift_date'])
     .where('park_id', '=', parkId)
-    .where('gift_date', '>', sql<Date>`NOW() - INTERVAL 1 MINUTE`)
+    .where('gift_date', '>', sql<Date>`NOW() - INTERVAL 24 HOUR`)
     .execute();
 }
 
-getGiftsRoute.get('/gift', async (req: Request, res) => {
-  const parkId = req.parkId;
+//function insert into parks_gift
+async function insertGift(parkId: number, type: string, value: string) {
+  await db
+    .insertInto('park_gifts')
+    .values({
+      type,
+      gift_date: sql`NOW()`,
+      value,
+      park_id: parkId,
+    })
+    .executeTakeFirst();
+}
 
+//function updateWllet
+async function updateWallet(parkId: number, amount: number) {
+  await db
+    .updateTable('parks')
+    .set((eb) => ({
+      wallet: eb('wallet', '+', amount),
+    }))
+    .where('id', '=', parkId)
+    .executeTakeFirst();
+}
+
+type Creature = {
+  id: number;
+  feed_timer: number | null;
+  src_image: string | null;
+  species: string;
+};
+
+//function insert creature into park_creatures
+async function insertCreatureToPark(parkId: number, creature: Creature) {
+  const name = nameGenerator();
+  const gender = Math.random() < 0.5 ? 'male' : 'female';
+
+  await db
+    .insertInto('park_creatures')
+    .values({
+      name,
+      gender,
+      is_adult: 1,
+      is_parent: 0,
+      feed_date: sql`NOW() + INTERVAL ${creature.feed_timer} MINUTE`,
+      adult_at: sql`NOW()`,
+      park_id: parkId,
+      creature_id: creature.id,
+    })
+    .executeTakeFirst();
+}
+
+type Visitor = {
+  id: number;
+  category: string;
+  src_image: string | null;
+};
+
+//function insert visitor into park_visitors
+async function insertVisitorToPark(parkId: number, visitor: Visitor) {
+  await db
+    .insertInto('park_visitors')
+    .values({
+      entry_time: sql`NOW()`,
+      exit_time: sql`NOW() + INTERVAL 4 HOUR`,
+      park_id: parkId,
+      visitor_id: visitor.id,
+    })
+    .executeTakeFirst();
+}
+
+getGiftRoute.get('/gift', async (req: Request, res) => {
+  const parkId = req.parkId;
   if (parkId === undefined) {
     res.json({
       ok: false,
@@ -27,6 +97,7 @@ getGiftsRoute.get('/gift', async (req: Request, res) => {
 
   const lastGift = await getLastGift(parkId);
 
+  //if last gift less than 24H
   if (lastGift.length > 0) {
     res.json({
       ok: false,
@@ -34,21 +105,18 @@ getGiftsRoute.get('/gift', async (req: Request, res) => {
     });
     return;
   }
-  const gifts = [{ type: 'creature' }, { type: 'visitor' }, { type: 'moons' }];
 
-  function getRandomGift() {
-    const randomGift = Math.floor(Math.random() * gifts.length);
-    return gifts[randomGift];
-  }
+  const gifts = ['creature', 'visitor', 'moons'];
+  const giftType = gifts[Math.floor(Math.random() * gifts.length)];
 
-  const gift = getRandomGift();
-
-  if (gift.type === 'creature') {
-    const creatureToDraw = await db
+  //if creature is drawn
+  if (giftType === 'creature') {
+    //check unlocked creatures
+    const creatures = await db
       .selectFrom('park_creatures')
       .innerJoin('creatures', 'creatures.id', 'park_creatures.creature_id')
       .select([
-        'park_creatures.creature_id',
+        'creatures.id',
         'creatures.feed_timer',
         'creatures.src_image',
         'creatures.species',
@@ -57,14 +125,15 @@ getGiftsRoute.get('/gift', async (req: Request, res) => {
       .distinct()
       .execute();
 
-    if (creatureToDraw.length === 0) {
-      const drawnCreature = await db
+    //if no creature unlocked yet insert a default creature
+    if (creatures.length === 0) {
+      const defaultCreature = await db
         .selectFrom('creatures')
-        .select(['id', 'species', 'feed_timer', 'creatures.src_image'])
+        .select(['id', 'species', 'feed_timer', 'src_image'])
         .where('id', '=', 1)
         .executeTakeFirst();
 
-      if (drawnCreature === undefined) {
+      if (defaultCreature === undefined) {
         res.json({
           ok: false,
           message: 'no creature available',
@@ -72,208 +141,105 @@ getGiftsRoute.get('/gift', async (req: Request, res) => {
         return;
       }
 
-      await db
-        .insertInto('park_gifts')
-        .values({
-          type: 'creature',
-          gift_date: sql`NOW()`,
-          value: drawnCreature.species,
-          park_id: parkId,
-        })
-        .executeTakeFirst();
-
-      const randomName = nameGenerator();
-      const gender = Math.random() < 0.5 ? 'male' : 'female';
-
-      await db
-        .insertInto('park_creatures')
-        .values({
-          name: randomName,
-          gender,
-          is_adult: 1,
-          is_parent: 0,
-          feed_date: sql`NOW() + INTERVAL ${drawnCreature.feed_timer} MINUTE`,
-          adult_at: sql`NOW()`,
-          park_id: parkId,
-          creature_id: drawnCreature.id,
-        })
-        .executeTakeFirst();
+      await insertGift(parkId, 'creature', defaultCreature.species);
+      await insertCreatureToPark(parkId, defaultCreature);
     }
 
-    function getRandomCreature() {
-      const randomCreature = Math.floor(Math.random() * creatureToDraw.length);
-      return creatureToDraw[randomCreature];
-    }
+    //else draw a creature from the unlocked ones
+    const chosen = creatures[Math.floor(Math.random() * creatures.length)];
 
-    const creature = getRandomCreature();
-
-    await db
-      .insertInto('park_gifts')
-      .values({
-        type: 'creature',
-        gift_date: sql`NOW()`,
-        value: creature.species,
-        park_id: parkId,
-      })
-      .executeTakeFirst();
-
-    const randomName = nameGenerator();
-    const gender = Math.random() < 0.5 ? 'male' : 'female';
-
-    await db
-      .insertInto('park_creatures')
-      .values({
-        name: randomName,
-        gender,
-        is_adult: 1,
-        is_parent: 0,
-        feed_date: sql`NOW() + INTERVAL ${creature.feed_timer} MINUTE`,
-        adult_at: sql`NOW()`,
-        park_id: parkId,
-        creature_id: creature.creature_id,
-      })
-      .executeTakeFirst();
+    await insertGift(parkId, 'creature', chosen.species);
+    await insertCreatureToPark(parkId, chosen);
 
     res.json({
       ok: true,
       gift: {
         type: 'creature',
-        creatureId: creature.creature_id,
-        image: creature.src_image,
+        creatureId: chosen.id,
+        image: chosen.src_image,
       },
     });
     return;
   }
 
-  if (gift.type === 'visitor') {
-    const visitorToDraw = await db
+  //if visitor is drawn
+  if (giftType === 'visitor') {
+    //check unlocked visitors
+    const visitors = await db
       .selectFrom('park_visitors')
       .innerJoin('visitors', 'visitors.zone_id', 'park_visitors.visitor_id')
       .select([
-        'park_visitors.visitor_id',
+        'visitors.id',
         'visitors.category',
         'visitors.src_image',
+        'visitors.entry_price',
       ])
       .where('park_id', '=', parkId)
       .distinct()
       .execute();
 
-    if (visitorToDraw.length === 0) {
-      const drawnVisitor = await db
+    //if no visitors unlocked yet insert a default visitor
+    if (visitors.length === 0) {
+      const defaultVisitor = await db
         .selectFrom('visitors')
-        .select(['id', 'category', 'visitors.src_image'])
+        .select(['id', 'category', 'src_image', 'entry_price'])
         .where('id', '=', 1)
         .executeTakeFirst();
 
-      if (drawnVisitor === undefined) {
+      if (defaultVisitor === undefined) {
         res.json({
           ok: false,
-          message: 'no visitor available',
+          message: 'no creature available',
         });
         return;
       }
 
-      await db
-        .insertInto('park_gifts')
-        .values({
-          type: 'visitor',
-          gift_date: sql`NOW()`,
-          value: `category- ${drawnVisitor.category}`,
-          park_id: parkId,
-        })
-        .executeTakeFirst();
-
-      await db
-        .insertInto('park_visitors')
-        .values({
-          entry_time: sql`NOW()`,
-          exit_time: sql`NOW() + INTERVAL 4 HOUR`,
-          park_id: parkId,
-          visitor_id: drawnVisitor.id,
-        })
-        .executeTakeFirst();
+      await insertGift(
+        parkId,
+        'visitor',
+        `visitor- ${defaultVisitor.category}`,
+      );
+      await insertVisitorToPark(parkId, defaultVisitor);
+      await updateWallet(parkId, defaultVisitor.entry_price);
     }
 
-    function getRandomVisitor() {
-      const randomVisitor = Math.floor(Math.random() * visitorToDraw.length);
-      return visitorToDraw[randomVisitor];
-    }
+    //else draw a visitor from the unlocked ones
+    const chosen = visitors[Math.floor(Math.random() * visitors.length)];
 
-    const visitor = getRandomVisitor();
-
-    await db
-      .insertInto('park_gifts')
-      .values({
-        type: 'visitor',
-        gift_date: sql`NOW()`,
-        value: `category- ${visitor.category}`,
-        park_id: parkId,
-      })
-      .executeTakeFirst();
-
-    await db
-      .insertInto('park_visitors')
-      .values({
-        entry_time: sql`NOW()`,
-        exit_time: sql`NOW() + INTERVAL 4 HOUR`,
-        park_id: parkId,
-        visitor_id: visitor.visitor_id,
-      })
-      .executeTakeFirst();
+    await insertGift(parkId, 'visitor', `visitor- ${chosen.category}`);
+    await insertVisitorToPark(parkId, chosen);
+    await updateWallet(parkId, chosen.entry_price);
 
     res.json({
       ok: true,
       gift: {
         type: 'visitor',
-        visitor: visitor.category,
-        image: visitor.src_image,
+        creatureId: chosen.category,
+        image: chosen.src_image,
       },
     });
     return;
   }
 
-  if (gift.type === 'moons') {
-    const amounts = [
-      { amount: 500 },
-      { amount: 1000 },
-      { amount: 1500 },
-      { amount: 2000 },
-    ];
+  //if moons is drawn
+  if (giftType === 'moons') {
+    const amounts = [500, 1000, 1500, 2000];
+    const prize = amounts[Math.floor(Math.random() * amounts.length)];
 
-    function getRandomAmount() {
-      const randomPrize = Math.floor(Math.random() * amounts.length);
-      return amounts[randomPrize];
-    }
-
-    const prize = getRandomAmount();
-
-    await db
-      .insertInto('park_gifts')
-      .values({
-        type: 'moons',
-        gift_date: sql`NOW()`,
-        value: String(prize.amount),
-        park_id: parkId,
-      })
-      .executeTakeFirst();
-
-    await db
-      .updateTable('parks')
-      .set((eb) => ({
-        wallet: eb('wallet', '+', prize.amount),
-      }))
-      .where('id', '=', parkId)
-      .executeTakeFirst();
+    await insertGift(parkId, 'moons', String(prize));
+    await updateWallet(parkId, prize);
 
     res.json({
       ok: true,
       gift: {
         type: 'moons',
-        moons: prize.amount,
+        moons: prize,
       },
     });
     return;
   }
+
+  res.json({ ok: false });
 });
 
-export default getGiftsRoute;
+export default getGiftRoute;
