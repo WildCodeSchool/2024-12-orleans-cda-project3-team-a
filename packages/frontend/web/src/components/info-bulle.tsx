@@ -16,7 +16,7 @@ export default function InfoBulleHome() {
     .map((zone) => Number(zone.required_qty));
 
   return (
-    <div className='absolute top-1/2 right-5 flex -translate-y-1/2 flex-col items-center justify-center rounded-md bg-white px-0 py-2 text-xs shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:left-1/2 md:-translate-x-1/2 md:p-4 md:text-base'>
+    <div className='absolute top-1/2 right-5 flex -translate-y-1/2 flex-col items-center justify-center rounded-md bg-white/90 px-0 py-2 text-xs shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:left-1/2 md:-translate-x-1/2 md:p-2 md:text-base'>
       <div className='mb-4 flex flex-row items-center justify-center gap-4 font-extrabold'>
         <img
           className='h-7 w-7 md:h-10 md:w-10'
@@ -24,7 +24,7 @@ export default function InfoBulleHome() {
           alt='Mingush'
           title='Mingush'
         />
-        <p className='text-secondary-blue hidden text-center md:flex'>
+        <p className='text-secondary-blue hidden text-center md:block'>
           {'To unlock the next zone you need:'}
         </p>
       </div>
@@ -40,6 +40,7 @@ export default function InfoBulleHome() {
               <img
                 src={`/images/creatures/${creature.src_image}`}
                 alt={creature.species}
+                title={creature.species}
                 className='h-5 w-5 md:h-10 md:w-10'
               />
               <p
