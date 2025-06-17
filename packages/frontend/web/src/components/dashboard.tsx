@@ -1,6 +1,5 @@
 import { useGameInfoContext } from '@/contexts/game-info-context';
 import useVisitors from '@/hooks/use-visitors';
-import useZones from '@/hooks/use-zones';
 import { formatNumber } from '@/utils/number-formatter';
 
 import moon from '../assets/images/icons-buttons/moon.png';
@@ -14,10 +13,14 @@ type DashboardProps = {
 };
 
 export default function Dashboard({ closeDashboard }: DashboardProps) {
-  const { parkName, wallet, countVisitorActiveFormated, creaturesMenu } =
-    useGameInfoContext();
+  const {
+    parkName,
+    wallet,
+    countVisitorActiveFormated,
+    creaturesMenu,
+    unlockedZones,
+  } = useGameInfoContext();
   const { visitors } = useVisitors();
-  const { unlockedZones } = useZones();
 
   const countCreaturesIdUnlocked = creaturesMenu.reduce((count, element) => {
     return count + (Number(element.quantityCreature) >= 1 ? 1 : 0);

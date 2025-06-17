@@ -19,7 +19,7 @@ type BarrierProps = {
 };
 
 export default function Barrier({ barrier, refetch }: BarrierProps) {
-  const { wallet, walletRefetch } = useGameInfoContext();
+  const { wallet, refetchWallet } = useGameInfoContext();
   const hasEnoughMoons = wallet >= barrier.price;
   const priceFormatted = formatNumber(barrier.price);
 
@@ -41,7 +41,7 @@ export default function Barrier({ barrier, refetch }: BarrierProps) {
 
       if (result.ok === true) {
         await refetch();
-        await walletRefetch();
+        await refetchWallet();
       }
     } catch (error) {
       // eslint-disable-next-line no-console

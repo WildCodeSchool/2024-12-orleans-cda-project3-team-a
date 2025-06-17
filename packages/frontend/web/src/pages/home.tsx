@@ -27,9 +27,7 @@ export default function Home() {
         </div>
         <Menu />
       </header>
-      {/* <div className='absolute top-1/2 right-5 flex -translate-y-1/2 items-center justify-center md:left-1/2 md:-translate-x-1/2'> */}
       <InfoBulle />
-      {/* </div> */}
 
       {/* Display of 4 worlds */}
       <div className='mt-8 flex h-[95%] flex-col justify-around sm:grid sm:grid-cols-2 sm:gap-8'>

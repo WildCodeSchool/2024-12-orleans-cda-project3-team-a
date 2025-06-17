@@ -22,16 +22,18 @@ export default function BuyCreature({
   const [name, setName] = useState('');
   const [nameError, setNameError] = useState('');
   const [isBought, setIsBought] = useState(false);
+
   const {
     wallet,
-    zonesRefetch,
-    creaturesRefetch,
-    visitorsRefetch,
-    parkRefetch,
-    walletRefetch,
+    refetchZones,
+    refetchCreatures,
+    refetchVisitors,
+    refetchPark,
+    refetchWallet,
     creaturesEnclos,
-    fetchCreaturesMenu,
+    refetchCreaturesMenu,
   } = useGameInfoContext();
+
   const { zone_id: zoneId } = useParams();
 
   const creaturesEnclosId = creaturesEnclos.find(
@@ -77,13 +79,13 @@ export default function BuyCreature({
 
       if (result.ok === true) {
         await Promise.all([
-          parkRefetch(),
-          zonesRefetch(),
+          refetchPark(),
+          refetchZones(),
           fetchCreatures(),
-          creaturesRefetch(),
-          visitorsRefetch(),
-          walletRefetch(),
-          fetchCreaturesMenu(),
+          refetchCreatures(),
+          refetchVisitors(),
+          refetchWallet(),
+          refetchCreaturesMenu(),
         ]);
 
         setName('');

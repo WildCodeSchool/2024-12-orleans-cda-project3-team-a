@@ -1,6 +1,5 @@
 import {
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -21,7 +20,6 @@ import useZones from '@/hooks/use-zones';
 import { formatNumber } from '@/utils/number-formatter';
 
 type GameInfoContextState = {
-  walletFormated: string;
   wallet: number;
   unlockedZones: UnlockedZones;
   isLoadingPark: boolean;
@@ -30,22 +28,21 @@ type GameInfoContextState = {
   decorations: Decorations;
   parkName: string;
   countVisitorActiveFormated: string;
-  parkRefetch: () => Promise<void>;
-  zonesRefetch: () => Promise<void>;
-  creaturesRefetch: () => Promise<void>;
-  visitorsRefetch: () => Promise<void>;
-  decorationsRefetch: () => Promise<void>;
-  walletRefetch: () => Promise<void>;
+  refetchPark: () => Promise<void>;
+  refetchZones: () => Promise<void>;
+  refetchCreatures: () => Promise<void>;
+  refetchVisitors: () => Promise<void>;
+  refetchDecorations: () => Promise<void>;
+  refetchWallet: () => Promise<number | undefined>;
   isWalletUpdated: boolean;
   profitWallet: number;
   creaturesMenu: Enclosure[];
-  fetchCreaturesMenu: () => Promise<void>;
+  refetchCreaturesMenu: () => Promise<void>;
 };
 
 type GameInfoContextProviderProps = PropsWithChildren;
 
 export const gameInfoContext = createContext<GameInfoContextState>({
-  walletFormated: '',
   wallet: 0,
   unlockedZones: [],
   isLoadingPark: true,
@@ -54,16 +51,16 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   decorations: [],
   parkName: '',
   countVisitorActiveFormated: '',
-  parkRefetch: () => Promise.resolve(),
-  zonesRefetch: () => Promise.resolve(),
-  creaturesRefetch: () => Promise.resolve(),
-  visitorsRefetch: () => Promise.resolve(),
-  decorationsRefetch: () => Promise.resolve(),
-  walletRefetch: () => Promise.resolve(),
+  refetchPark: () => Promise.resolve(),
+  refetchZones: () => Promise.resolve(),
+  refetchCreatures: () => Promise.resolve(),
+  refetchVisitors: () => Promise.resolve(),
+  refetchDecorations: () => Promise.resolve(),
+  refetchWallet: () => Promise.resolve(0),
   isWalletUpdated: false,
   profitWallet: 0,
   creaturesMenu: [],
-  fetchCreaturesMenu: () => Promise.resolve(),
+  refetchCreaturesMenu: () => Promise.resolve(),
 });
 
 export function GameInfoContextProvider({
@@ -71,7 +68,7 @@ export function GameInfoContextProvider({
 }: GameInfoContextProviderProps) {
   const { isLoadingPark, refetchPark, parkName } = usePark();
 
-  const { walletFormated, wallet, refetchWallet } = useWallet();
+  const { wallet, refetchWallet } = useWallet();
 
   const { unlockedZones, isLoadingZones, refetchZones } = useZones();
   const { creaturesEnclos, refetchCreatures } = useEnclos();
@@ -83,23 +80,7 @@ export function GameInfoContextProvider({
   const countVisitorActive = visitorsPark.filter(
     (visitorPark) => new Date(visitorPark.exit_time).getTime() > Date.now(),
   ).length;
-  const countVisitorActiveFormated = formatNumber(countVisitorActive);
-
-  const walletRefetch = useCallback(() => refetchWallet(), [refetchWallet]);
-  const parkRefetch = useCallback(() => refetchPark(), [refetchPark]);
-  const zonesRefetch = useCallback(() => refetchZones(), [refetchZones]);
-  const creaturesRefetch = useCallback(
-    () => refetchCreatures(),
-    [refetchCreatures],
-  );
-  const visitorsRefetch = useCallback(
-    () => refetchVisitors(),
-    [refetchVisitors],
-  );
-  const decorationsRefetch = useCallback(
-    () => refetchDecorations(),
-    [refetchDecorations],
-  );
+  const countVisitorActiveFormated = formatNumber(countVisitorActive) ?? '0';
 
   const [isWalletUpdated, setIsWalletUpdated] = useState(false);
   const [profitWallet, setProfitWallet] = useState(0);
@@ -107,42 +88,40 @@ export function GameInfoContextProvider({
   // memorize value to avoid unnecessary changes
   const value = useMemo(
     () => ({
-      walletFormated,
       unlockedZones,
       wallet,
-      walletRefetch,
+      refetchWallet,
       isLoadingPark,
       isLoadingZones,
       creaturesEnclos,
       decorations,
       parkName,
       countVisitorActiveFormated,
-      parkRefetch,
-      zonesRefetch,
-      creaturesRefetch,
-      visitorsRefetch,
-      decorationsRefetch,
+      refetchPark,
+      refetchZones,
+      refetchCreatures,
+      refetchVisitors,
+      refetchDecorations,
       isWalletUpdated,
       profitWallet,
       creaturesMenu,
       refetchCreaturesMenu,
     }),
     [
-      walletFormated,
       unlockedZones,
       wallet,
-      walletRefetch,
+      refetchWallet,
       isLoadingPark,
       isLoadingZones,
       creaturesEnclos,
       decorations,
       parkName,
       countVisitorActiveFormated,
-      parkRefetch,
-      zonesRefetch,
-      creaturesRefetch,
-      visitorsRefetch,
-      decorationsRefetch,
+      refetchPark,
+      refetchZones,
+      refetchCreatures,
+      refetchVisitors,
+      refetchDecorations,
       isWalletUpdated,
       profitWallet,
       creaturesMenu,
@@ -157,8 +136,8 @@ export function GameInfoContextProvider({
     const intervalId = setInterval(async () => {
       const previousWallet = previousWalletRef.current;
 
-      const newWallet = await walletRefetch();
-      if (newWallet === null) return;
+      const newWallet = await refetchWallet();
+      if (newWallet === undefined) return;
 
       if (newWallet > previousWallet) {
         setProfitWallet(newWallet - previousWallet);
@@ -174,7 +153,7 @@ export function GameInfoContextProvider({
     return () => {
       clearInterval(intervalId);
     };
-  }, [walletRefetch]);
+  }, [refetchWallet]);
 
   return (
     <gameInfoContext.Provider value={value}>

@@ -14,7 +14,7 @@ type LineShopCreatureProps = {
 
 export default function LineShopCreature({ creature }: LineShopCreatureProps) {
   const [name, setName] = useState('');
-  const { wallet, parkRefetch, visitorsRefetch, walletRefetch } =
+  const { wallet, refetchPark, refetchVisitors, refetchWallet } =
     useGameInfoContext();
   const [isBought, setIsBought] = useState(false);
   const [nameError, setNameError] = useState('');
@@ -51,7 +51,7 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
 
       const result = await response.json();
       if (result.ok === true) {
-        await Promise.all([parkRefetch(), walletRefetch(), visitorsRefetch()]);
+        await Promise.all([refetchPark(), refetchWallet(), refetchVisitors()]);
         setName('');
         setIsBought(true);
         //display for 2 seconds a message to inform that is bought

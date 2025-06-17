@@ -1,12 +1,5 @@
 import { useGameInfoContext } from '@/contexts/game-info-context';
 
-const requiredbyZone: Record<number, number> = {
-  1: 15,
-  2: 10,
-  3: 5,
-  4: 0,
-};
-
 export default function InfoBulleHome() {
   const { creaturesMenu, unlockedZones } = useGameInfoContext();
 

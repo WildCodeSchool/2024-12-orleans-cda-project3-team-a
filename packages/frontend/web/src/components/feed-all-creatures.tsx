@@ -39,11 +39,11 @@ export default function FeedAllCreatures({
 }: CreatureId) {
   const [isFeeding, setIsFeeding] = useState(false);
   const {
-    creaturesRefetch,
+    refetchCreatures,
     wallet,
-    parkRefetch,
+    refetchPark,
     creaturesEnclos,
-    walletRefetch,
+    refetchWallet,
   } = useGameInfoContext();
   const [isClicked, setIsClicked] = useState(false);
 
@@ -90,9 +90,9 @@ export default function FeedAllCreatures({
       if (result.ok === true) {
         await Promise.all([
           fetchCreatures(),
-          creaturesRefetch(),
-          parkRefetch(),
-          walletRefetch(),
+          refetchCreatures(),
+          refetchPark(),
+          refetchWallet(),
         ]);
         setIsFeeding(true);
         //display for 2 seconds a message to inform that is bought
