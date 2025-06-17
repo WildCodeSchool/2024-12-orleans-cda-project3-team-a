@@ -4,6 +4,7 @@ import type { Creatures } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
 import { formatRemainingTime } from '@/utils/format-remaining-time';
+import { formatNumber } from '@/utils/number-formatter';
 
 import Female from '../assets/images/icons-buttons/female.png';
 import Male from '../assets/images/icons-buttons/male.png';
@@ -119,7 +120,7 @@ export default function CreatureLine({
           alt='potion'
           className='h-3 px-0 md:h-6 md:py-0.5'
         />
-        <p className='text-xs md:text-base'>{potionPrice}</p>
+        <p className='text-xs md:text-base'>{formatNumber(potionPrice)}</p>
         <img className='h-2 md:h-5 md:px-0.5' src={Moon} alt='moon' />
       </ButtonBuy>
     </div>
