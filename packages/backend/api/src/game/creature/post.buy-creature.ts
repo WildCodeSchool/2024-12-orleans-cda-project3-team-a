@@ -174,9 +174,9 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     .executeTakeFirst();
 
   const countUnlock: Record<string, number> = {
-    fairy: 15,
-    winged: 10,
-    mythologic: 5,
+    Fairy: 15,
+    Winged: 10,
+    Mythologic: 5,
   };
 
   //if we have unlocked all creature in the zone, we add the next zone if is not already the case
