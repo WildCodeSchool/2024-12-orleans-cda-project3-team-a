@@ -28,6 +28,7 @@ export default function BuyCreature({
     creaturesRefetch,
     visitorsRefetch,
     parkRefetch,
+    walletRefetch,
     creaturesEnclos,
   } = useGameInfoContext();
   const { zone_id: zoneId } = useParams();
@@ -80,6 +81,7 @@ export default function BuyCreature({
           fetchCreatures(),
           creaturesRefetch(),
           visitorsRefetch(),
+          walletRefetch(),
         ]);
 
         setName('');
