@@ -7,18 +7,18 @@ type DailyGiftProps = PropsWithChildren<{
   readonly src_image?: string;
   readonly type: 'creature' | 'visitor' | 'moons';
   readonly amount?: number;
-  readonly onClose: () => void;
+  readonly onClick: () => void;
 }>;
 
 export default function DailyGift({
   src_image,
   type,
   amount,
-  onClose,
+  onClick,
 }: DailyGiftProps) {
   return (
     <div
-      onClick={onClose}
+      onClick={onClick}
       className='fixed inset-0 flex justify-center bg-black/70'
     >
       <div className='animate-lights-on h-screen w-70 bg-gradient-to-b from-white/50 to-white/0 [clip-path:polygon(45%_0%,55%_0%,100%_100%,0%_100%)]' />

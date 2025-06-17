@@ -12,7 +12,7 @@ import ParkMap from '../assets/images/background/park-map.png';
 import { useGameInfoContext } from '../contexts/game-info-context';
 
 export default function Home() {
-  const [showDailyGift, setShowDailyGift] = useState(true);
+  const [showDailyGift, setShowDailyGift] = useState(false);
   const { unlockedZones } = useGameInfoContext();
   const { gift, fetchGift } = useGift();
 
@@ -20,38 +20,38 @@ export default function Home() {
     void fetchGift();
   }, [fetchGift]);
 
+  useEffect(() => {
+    if (gift !== undefined) {
+      setShowDailyGift(true);
+    }
+  }, [gift]);
+
+  const handleClose = () => {
+    setShowDailyGift(false);
+  };
+
   return (
     <div
       className='h-screen bg-cover bg-center p-3'
       style={{ backgroundImage: `url(${ParkMap})` }}
     >
-      {gift !== undefined ? (
+      {showDailyGift && gift !== undefined ? (
         <>
           {gift.type === 'moons' && (
-            <DailyGift
-              type='moons'
-              amount={gift.moons}
-              onClose={() => {
-                setShowDailyGift(false);
-              }}
-            />
+            <DailyGift type='moons' amount={gift.moons} onClick={handleClose} />
           )}
           {gift.type === 'creature' && (
             <DailyGift
               type='creature'
               src_image={gift.image}
-              onClose={() => {
-                setShowDailyGift(false);
-              }}
+              onClick={handleClose}
             />
           )}
           {gift.type === 'visitor' && (
             <DailyGift
               type='visitor'
               src_image={gift.image}
-              onClose={() => {
-                setShowDailyGift(false);
-              }}
+              onClick={handleClose}
             />
           )}
         </>
