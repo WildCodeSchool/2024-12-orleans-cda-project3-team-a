@@ -101,7 +101,7 @@ export default function WorldEnclosure() {
         </div>
       )}
 
-      <div className='absolute top-1/2 z-3 -translate-y-1/2'>
+      <div className='absolute top-[calc(50%_-_20px)] z-3 -translate-y-1/2'>
         <Link to='/visitors'>
           <Visitor zoneId={zoneId} />
         </Link>

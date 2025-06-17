@@ -3,12 +3,14 @@ import { useGameInfoContext } from '@/contexts/game-info-context';
 export default function NextUnlockZonePopup() {
   const { creaturesMenu, unlockedZones } = useGameInfoContext();
 
-  if (!creaturesMenu.length) return null;
+  if (creaturesMenu.length === 0) return null;
 
   //recover the number of zone unlocked
   const countZoneIdUnlocked = unlockedZones.reduce((count, element) => {
     return count + (element.park_zone_id !== null ? 1 : 0);
   }, 0);
+
+  if (countZoneIdUnlocked >= 4) return null;
 
   //recover the minimum number of creatures by zone
   const required = unlockedZones
@@ -16,7 +18,7 @@ export default function NextUnlockZonePopup() {
     .map((zone) => Number(zone.required_qty));
 
   return (
-    <div className='absolute top-1/2 right-5 flex -translate-y-1/2 flex-col items-center justify-center rounded-md bg-white/90 px-0 py-2 text-xs shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:left-1/2 md:-translate-x-1/2 md:p-2 md:text-base'>
+    <div className='absolute top-1/2 right-5 flex -translate-y-1/2 flex-col items-center justify-center rounded-md bg-white/90 px-0 py-2 text-xs shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:right-[unset] md:left-1/2 md:-translate-x-1/2 md:p-2 md:text-base'>
       <div className='mb-4 flex flex-row items-center justify-center gap-4 font-extrabold'>
         <img
           className='h-7 w-7 md:h-10 md:w-10'
