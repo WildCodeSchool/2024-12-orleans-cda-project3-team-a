@@ -44,9 +44,7 @@ export default function InfoBulleHome() {
     }
   }
 
-  if (currentZoneId > 4) currentZoneId = 4;
-
-  if (currentZoneId === 4) return null;
+  if (currentZoneId >= 4) return null;
 
   const creaturestotal = creaturesMenu.filter(
     (c) => c.zone_id === currentZoneId,
@@ -66,46 +64,42 @@ export default function InfoBulleHome() {
   const required = requiredbyZone[currentZoneId];
 
   return (
-    <div className='hidden md:flex md:items-center md:justify-center'>
-      <div className='flex flex-row justify-center gap-6 rounded-md bg-white p-4 text-base shadow-[0px_4px_4px_rgba(0,0,0,0.25)]'>
-        <img className='h-10 w-10' src='/images/minguch.png' alt='Mingush' />
+    <div className='flex flex-row justify-center gap-6 rounded-md bg-white p-4 text-xs shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:text-base'>
+      <img className='h-10 w-10' src='/images/minguch.png' alt='Mingush' />
 
-        <div className='flex flex-col'>
-          <p className='mb-2 text-center'>
-            {'To unlock the next Zone you need:'}
-          </p>
+      <div className='flex flex-col'>
+        <p className='text-secondary-blue mb-2 text-center'>
+          {'To unlock the next Zone you need:'}
+        </p>
 
-          <div className='flex justify-center gap-4'>
-            {/* Displays each creature species with its total number purchased */}
-            {Object.entries(speciesMap).map(([species, count]) => {
-              const creature = creaturestotal.find(
-                (c) => c.species === species,
-              );
-              if (!creature) return null;
+        <div className='flex justify-center gap-4'>
+          {/* Displays each creature species with its total number purchased */}
+          {Object.entries(speciesMap).map(([species, count]) => {
+            const creature = creaturestotal.find((c) => c.species === species);
+            if (!creature) return null;
 
-              return (
-                <div
-                  key={species}
-                  className='flex min-w-[60px] flex-col items-center'
+            return (
+              <div
+                key={species}
+                className='flex min-w-[60px] flex-col items-center'
+              >
+                <img
+                  src={`/images/creatures/${creature.src_image}`}
+                  alt={species}
+                  className='h-10 w-10'
+                />
+                <p
+                  className={`mt-1 text-sm ${
+                    count >= required
+                      ? 'font-semibold text-green-600'
+                      : 'text-gray-600'
+                  }`}
                 >
-                  <img
-                    src={`/images/creatures/${creature.src_image}`}
-                    alt={species}
-                    className='h-10 w-10'
-                  />
-                  <p
-                    className={`mt-1 text-sm ${
-                      count >= required
-                        ? 'font-semibold text-green-600'
-                        : 'text-gray-600'
-                    }`}
-                  >
-                    {count} {'/'} {required}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
+                  {count} {'/'} {required}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

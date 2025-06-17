@@ -27,7 +27,7 @@ export default function Home() {
         </div>
         <Menu />
       </header>
-      <div className='absolute top-1/2 left-1/3'>
+      <div className='absolute bottom-15 left-1/2 z-5 flex -translate-x-1/2 items-center justify-center md:top-1/2 md:-translate-y-1/2'>
         <InfoBulle />
       </div>
 
