@@ -77,7 +77,7 @@ export default function Rank({ closeRank }: ModalRank) {
                 className='flex w-full justify-between gap-5 rounded bg-white/70 p-2 text-xs text-nowrap md:grid md:grid-cols-5 md:gap-20 md:rounded-md md:text-base'
                 key={park.id}
               >
-                <li className='flex w-20 items-center'>
+                <li className='flex w-20 items-center' title={park.park_name}>
                   {getMedal(index)}
                   {index > 2 && `${index + 1}. `}
                   {park.park_name.length > 15
@@ -97,7 +97,7 @@ export default function Rank({ closeRank }: ModalRank) {
                     className='max-w-7'
                   />
 
-                  <p>
+                  <p title={park.username ?? 'Unknown user'}>
                     {park.username !== null && park.username.length > 15
                       ? park.username.slice(0, 10) + '...'
                       : (park.username ?? 'Unknown user')}
