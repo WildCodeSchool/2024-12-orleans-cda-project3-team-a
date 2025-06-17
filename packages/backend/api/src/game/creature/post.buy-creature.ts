@@ -5,30 +5,6 @@ import { db } from '@app/backend-shared';
 
 const postBuyCreature = Router();
 
-// check how many creatures we can unlock in this zone
-function getTotalCreaturesByZone(zoneId: number) {
-  return db
-    .selectFrom('creatures')
-    .select([db.fn.count('creatures.id').as('quantityCreature')])
-    .where('creatures.zone_id', '=', zoneId)
-    .executeTakeFirst();
-}
-
-//check how many creatures user has unlocked in this zone
-function getCreaturesUnlockedByZone(zoneId: number, parkId: number) {
-  return db
-    .selectFrom('park_creatures')
-    .leftJoin('creatures', 'park_creatures.creature_id', 'creatures.id')
-    .select([
-      sql<number>`COUNT(DISTINCT ${sql.ref('park_creatures.creature_id')})`.as(
-        'countCreaturesUnlockedByZone',
-      ),
-    ])
-    .where('creatures.zone_id', '=', zoneId)
-    .where('park_creatures.park_id', '=', parkId)
-    .executeTakeFirst();
-}
-
 //Check if we have already the next zone in bdd
 function getIsNextZoneUnlocked(parkId: number, zoneId: number) {
   return db
@@ -161,12 +137,7 @@ postBuyCreature.post('/buy', async (req: Request, res) => {
     })
     .executeTakeFirst();
 
-  const [isNextZoneUnlocked] = await Promise.all([
-    getTotalCreaturesByZone(zoneId),
-    getCreaturesUnlockedByZone(zoneId, parkId),
-    getIsNextZoneUnlocked(parkId, zoneId),
-  ]);
-
+  const isNextZoneUnlocked = await getIsNextZoneUnlocked(parkId, zoneId);
   const zone = await db
     .selectFrom('zones')
     .select(['name'])

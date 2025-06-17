@@ -64,43 +64,45 @@ export default function InfoBulleHome() {
   const required = requiredbyZone[currentZoneId];
 
   return (
-    <div className='flex flex-row justify-center gap-6 rounded-md bg-white p-4 text-xs shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:text-base'>
-      <img className='h-10 w-10' src='/images/minguch.png' alt='Mingush' />
-
-      <div className='flex flex-col'>
-        <p className='text-secondary-blue mb-2 text-center'>
-          {'To unlock the next Zone you need:'}
+    <div className='flex flex-col justify-center rounded-md bg-white px-0 py-2 text-xs shadow-[0px_4px_4px_rgba(0,0,0,0.25)] md:p-4 md:text-base'>
+      <div className='mb-4 flex flex-row items-center justify-center gap-4 font-extrabold'>
+        <img
+          className='h-7 w-7 md:h-10 md:w-10'
+          src='/images/minguch.png'
+          alt='Mingush'
+        />
+        <p className='text-secondary-blue hidden text-center md:flex'>
+          {'To unlock the next zone you need:'}
         </p>
+      </div>
+      <div className='flex flex-col justify-center gap-4 md:flex-row'>
+        {/* Displays each creature species with its total number purchased */}
+        {Object.entries(speciesMap).map(([species, count]) => {
+          const creature = creaturestotal.find((c) => c.species === species);
+          if (!creature) return null;
 
-        <div className='flex justify-center gap-4'>
-          {/* Displays each creature species with its total number purchased */}
-          {Object.entries(speciesMap).map(([species, count]) => {
-            const creature = creaturestotal.find((c) => c.species === species);
-            if (!creature) return null;
-
-            return (
-              <div
-                key={species}
-                className='flex min-w-[60px] flex-col items-center'
+          return (
+            <div
+              key={species}
+              className='flex min-w-[60px] flex-col items-center'
+            >
+              <img
+                src={`/images/creatures/${creature.src_image}`}
+                alt={species}
+                className='h-5 w-5 md:h-10 md:w-10'
+              />
+              <p
+                className={`mt-1 text-xs md:text-base ${
+                  count >= required
+                    ? 'font-semibold text-green-600'
+                    : 'text-gray-600'
+                }`}
               >
-                <img
-                  src={`/images/creatures/${creature.src_image}`}
-                  alt={species}
-                  className='h-10 w-10'
-                />
-                <p
-                  className={`mt-1 text-sm ${
-                    count >= required
-                      ? 'font-semibold text-green-600'
-                      : 'text-gray-600'
-                  }`}
-                >
-                  {count} {'/'} {required}
-                </p>
-              </div>
-            );
-          })}
-        </div>
+                {count} {'/'} {required}
+              </p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
