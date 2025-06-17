@@ -194,11 +194,7 @@ getGiftRoute.get('/gift', async (req: Request, res) => {
         return;
       }
 
-      await insertGift(
-        parkId,
-        'visitor',
-        `visitor- ${defaultVisitor.category}`,
-      );
+      await insertGift(parkId, 'visitor', `visitor-${defaultVisitor.category}`);
       await insertVisitorToPark(parkId, defaultVisitor);
       await updateWallet(parkId, defaultVisitor.entry_price);
     }
