@@ -8,9 +8,9 @@ const requiredbyZone: Record<number, number> = {
 };
 
 export default function InfoBulleHome() {
-  const { creaturesEnclos, unlockedZones } = useGameInfoContext();
+  const { creaturesMenu, unlockedZones } = useGameInfoContext();
 
-  if (!creaturesEnclos.length) return null;
+  if (!creaturesMenu.length) return null;
 
   //recover the number of zone unlocked
   const countZoneIdUnlocked = unlockedZones.reduce((count, element) => {
@@ -18,7 +18,9 @@ export default function InfoBulleHome() {
   }, 0);
 
   //recover the minimum number of creatures by zone
-  const required = requiredbyZone[countZoneIdUnlocked - 1];
+  const required = unlockedZones
+    .filter((zone) => zone.zone_id === countZoneIdUnlocked)
+    .map((zone) => Number(zone.required_qty));
 
   return (
     <div className='absolute top-1/2 right-5 flex -translate-y-1/2 items-center justify-center md:left-1/2 md:-translate-x-1/2'>
@@ -35,7 +37,7 @@ export default function InfoBulleHome() {
         </div>
         <div className='flex flex-col justify-center gap-4 md:flex-row'>
           {/* Displays each creature species with its total number purchased */}
-          {creaturesEnclos
+          {creaturesMenu
             .filter((creature) => creature.zone_id === countZoneIdUnlocked)
             .map((creature) => (
               <div
@@ -49,7 +51,7 @@ export default function InfoBulleHome() {
                 />
                 <p
                   className={`mt-1 text-xs md:text-base ${
-                    Number(creature.quantityCreature) >= required
+                    Number(creature.quantityCreature) >= Number(required)
                       ? 'font-semibold text-green-500'
                       : 'text-gray-600'
                   }`}
