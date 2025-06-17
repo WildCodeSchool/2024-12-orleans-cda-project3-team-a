@@ -1,22 +1,67 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import DailyGift from '@/components/daily-gift';
 import InfoBulle from '@/components/info-bulle';
 import Menu from '@/components/menu';
 import NbVisitorsMoons from '@/components/nb-visitors-moons';
 import Portal from '@/components/portal';
 import WelcomeGuide from '@/components/welcome-guide';
+import useGift from '@/hooks/use-gift';
 
 import ParkMap from '../assets/images/background/park-map.png';
 import { useGameInfoContext } from '../contexts/game-info-context';
 
 export default function Home() {
+  const [isShowDailyGift, setIsShowDailyGift] = useState(false);
   const { unlockedZones } = useGameInfoContext();
+  const { gift } = useGift();
+
+  useEffect(() => {
+    if (gift !== undefined) {
+      setIsShowDailyGift(true);
+    }
+  }, [gift]);
+
+  const handleClose = () => {
+    setIsShowDailyGift(false);
+  };
 
   return (
     <div
       className='h-screen bg-cover bg-center p-3'
       style={{ backgroundImage: `url(${ParkMap})` }}
     >
+      <InfoBulle />
+
+      <div className='z-10'>
+        {isShowDailyGift && gift !== undefined ? (
+          <>
+            {gift.type === 'moons' && (
+              <DailyGift
+                type='moons'
+                amount={gift.moons}
+                onClick={handleClose}
+              />
+            )}
+            {gift.type === 'creature' && (
+              <DailyGift
+                type='creature'
+                src_image={gift.image}
+                onClick={handleClose}
+              />
+            )}
+            {gift.type === 'visitor' && (
+              <DailyGift
+                type='visitor'
+                src_image={gift.image}
+                onClick={handleClose}
+              />
+            )}
+          </>
+        ) : null}
+      </div>
+
       <Portal>
         <WelcomeGuide />
       </Portal>
@@ -27,7 +72,6 @@ export default function Home() {
         </div>
         <Menu />
       </header>
-      <InfoBulle />
 
       {/* Display of 4 worlds */}
       <div className='mt-8 flex h-[95%] flex-col justify-around sm:grid sm:grid-cols-2 sm:gap-8'>

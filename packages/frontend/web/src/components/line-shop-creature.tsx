@@ -3,6 +3,7 @@ import { useState } from 'react';
 import type { Enclosure } from '@app/api';
 
 import { useGameInfoContext } from '@/contexts/game-info-context';
+import { formatNumber } from '@/utils/number-formatter';
 
 import Moon from '../assets/images/icons-buttons/moon.png';
 import ButtonBuy from './button-buy';
@@ -106,7 +107,7 @@ export default function LineShopCreature({ creature }: LineShopCreatureProps) {
           isGrayscale={!hasEnoughMoons}
         >
           <div className='flex items-center justify-center gap-0.5 p-0.5'>
-            <p className=''>{creature.price}</p>
+            <p className=''>{formatNumber(creature.price)}</p>
             <img className='w-4' src={Moon} alt='money' />
           </div>
         </ButtonBuy>
