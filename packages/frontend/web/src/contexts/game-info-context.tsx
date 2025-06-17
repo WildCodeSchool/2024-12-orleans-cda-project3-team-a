@@ -11,6 +11,7 @@ import type { PropsWithChildren } from 'react';
 
 import type { Decorations, Enclosure, UnlockedZones } from '@app/api';
 
+import useCreaturesMenu from '@/hooks/use-creatures-menu';
 import useDecorations from '@/hooks/use-decorations';
 import useEnclos from '@/hooks/use-enclosure';
 import usePark from '@/hooks/use-park';
@@ -37,6 +38,8 @@ type GameInfoContextState = {
   walletRefetch: () => Promise<void>;
   isWalletUpdated: boolean;
   profitWallet: number;
+  creaturesMenu: Enclosure[];
+  fetchCreaturesMenu: () => Promise<void>;
 };
 
 type GameInfoContextProviderProps = PropsWithChildren;
@@ -59,6 +62,8 @@ export const gameInfoContext = createContext<GameInfoContextState>({
   walletRefetch: () => Promise.resolve(),
   isWalletUpdated: false,
   profitWallet: 0,
+  creaturesMenu: [],
+  fetchCreaturesMenu: () => Promise.resolve(),
 });
 
 export function GameInfoContextProvider({
@@ -72,6 +77,8 @@ export function GameInfoContextProvider({
   const { creaturesEnclos, refetchCreatures } = useEnclos();
   const { decorations, refetchDecorations } = useDecorations();
   const { visitorsPark, refetchVisitors } = useVisitors();
+
+  const { creaturesMenu, refetchCreaturesMenu } = useCreaturesMenu();
 
   const countVisitorActive = visitorsPark.filter(
     (visitorPark) => new Date(visitorPark.exit_time).getTime() > Date.now(),
@@ -117,6 +124,8 @@ export function GameInfoContextProvider({
       decorationsRefetch,
       isWalletUpdated,
       profitWallet,
+      creaturesMenu,
+      refetchCreaturesMenu,
     }),
     [
       walletFormated,
@@ -136,6 +145,8 @@ export function GameInfoContextProvider({
       decorationsRefetch,
       isWalletUpdated,
       profitWallet,
+      creaturesMenu,
+      refetchCreaturesMenu,
     ],
   );
 
