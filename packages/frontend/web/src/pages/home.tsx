@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import DailyGift from '@/components/daily-gift';
-import InfoBulle from '@/components/info-bulle';
 import Menu from '@/components/menu';
 import NbVisitorsMoons from '@/components/nb-visitors-moons';
+import NextUnlockZonePopup from '@/components/next-unlock-zone-popup';
 import Portal from '@/components/portal';
 import WelcomeGuide from '@/components/welcome-guide';
 import useGift from '@/hooks/use-gift';
@@ -32,7 +32,7 @@ export default function Home() {
       className='h-screen bg-cover bg-center p-3'
       style={{ backgroundImage: `url(${ParkMap})` }}
     >
-      <InfoBulle />
+      <NextUnlockZonePopup />
 
       <div className='z-10'>
         {isShowDailyGift && gift !== undefined ? (

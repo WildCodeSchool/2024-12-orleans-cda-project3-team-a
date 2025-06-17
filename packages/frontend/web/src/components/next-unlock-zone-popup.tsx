@@ -1,6 +1,6 @@
 import { useGameInfoContext } from '@/contexts/game-info-context';
 
-export default function InfoBulleHome() {
+export default function NextUnlockZonePopup() {
   const { creaturesMenu, unlockedZones } = useGameInfoContext();
 
   if (!creaturesMenu.length) return null;
